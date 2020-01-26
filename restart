@@ -1,0 +1,8 @@
+rm .compiled/main.ls.cache
+#npm un whitebox --save
+#npm i whitebox --save
+npm i
+rm -rf ../node_modules/whitebox/node_modules/bitcore-message/node_modules/bitcore-lib
+rm -rf ../node_modules/bitcore-message/node_modules/bitcore-lib
+
+lsxc -t index.html -skbhfwpc main.ls

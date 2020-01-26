@@ -1,0 +1,11 @@
+module.exports = (n)->
+    | n.length is 0 => \nickname@gmail.com
+    | n.match(/^[a-z][a-z0-9]+$/) => "#{n}@gmail.com"
+    | n.match(/^[a-z][a-z0-9\.]+@$/) => "#{n}gmail.com"
+    | n.match(/^[a-z][a-z0-9\.]+@[a-z]+$/) => "#{n}.com"
+    | n.match(/^[a-z][a-z0-9\.]+@[a-z]+\.$/) => "#{n}com"
+    | n.length is 0 => \nickname.domain.com
+    | n.match(/^[a-z][a-z0-9]+\.$/) => "#{n}web3.space"
+    | n.match(/^[a-z][a-z0-9]+\.[a-z]([a-z0-9]+)?\.$/) => "#{n}com"
+    | n.index-of('.') > -1 => n
+    | _ => "#{n}.web3.space"
