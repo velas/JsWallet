@@ -30,7 +30,6 @@ export web3t = web3 store
 export store
 Main = observer ({store})->
     app { store, web3t }
-    
 export bootstrap = (root, options)->
     store.root = root
     render do

@@ -18,7 +18,7 @@ require! {
         text-align: center
         left: 0
         img
-            width: 100px
+            width: 25px
             vertical-align: bottom
     >.menu-item
         &.syncing
@@ -77,7 +77,7 @@ module.exports = (store, web3)->
         filter: style.app.filterLogo
     .menu.pug(style=border-style)
         .pug.logo
-            img.iron.pug(src="#{info.branding.logo}" style=logo-style)
+            img.pug(src="#{info.branding.logo}" style=logo-style)
         if store.preference.refresh-visible is yes
             .menu-item.pug(on-click=refresh style=icon-style class="#{syncing}")
                 icon \Sync , 20

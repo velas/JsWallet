@@ -38,7 +38,7 @@ module.exports =
     get-nickname: "Get Nickname"
     register: "Register"
     new-seed-phrase: "New Seed Phrase"
-    new-seed-placeholder: "Click Generate or Put Your Seed Phrase here"
+    new-seed-placeholder: "Enter your secret twelve word phrase or click generate button"
     generate: "Generate"
     new-seed-warning: "The phrase is stored securely on your computer. Do not transfer it to a third party and keep the duplicate in a safe place"
     invoice : "Invoice"

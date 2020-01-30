@@ -195,6 +195,7 @@ require! {
                 overflow: hidden
                 .btn
                     width: auto
+                    min-width: 110px
                     padding: 0 6px
                     line-height: 36px
                     text-transform: uppercase

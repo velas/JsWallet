@@ -11,5 +11,5 @@ module.exports = (store)->
             |> filter filter-txs 
             |> sort-by (.time) 
             |> reverse
-    console.log \tx-length, store.transactions.all.length
-    console.log \atx-length, store.transactions.applied.length
+    #console.log \tx-length, store.transactions.all.length
+    #console.log \atx-length, store.transactions.applied.length
