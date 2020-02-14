@@ -51,8 +51,8 @@ require! {
             padding: 10px
             .close
                 position: absolute
-                padding: 5px 10px
-                font-size: 30px
+                padding: 10px 20px
+                font-size: 20px
                 right: 0
                 top: 0
                 cursor: pointer
@@ -184,8 +184,9 @@ module.exports = ({ store, web3t } )->
         .account-body.pug(style=account-body-style)
             .pug.title(style=account-body-style)
                 .pug
-                    .pug #{lang.plugin-registry}
-                    .pug.close(on-click=close) ×
+                    .pug #{lang.edit-wallet}
+                    .pug.close(on-click=close)
+                        icon \X, 20
                 .pug
                     input.search.pug(placeholder="#{lang.search}" on-change=filter-registery style=input-style)
             .pug.settings

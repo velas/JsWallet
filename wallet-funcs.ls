@@ -29,7 +29,6 @@ module.exports = (store, web3t, wallets, wallet)->
         navigate store, web3t, \invoice
     usd-rate = wallet?usd-rate ? 0
     uninstall = ->
-        return if store.current.refreshing
         <- web3t.uninstall wallet.coin.token
         <- web3t.refresh
     expand = ->

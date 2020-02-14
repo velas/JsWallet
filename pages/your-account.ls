@@ -34,10 +34,10 @@ require! {
             font-size: 12px
             color: black
             margin: 5px
-            padding: 10px 6px
+            padding: 10px
             font-weight: 600
-            height: 20px
-            line-height: 20px
+            height: 10px
+            line-height: 10px
             border-radius: 5px
             display: inline-block
             width: auto
@@ -74,5 +74,6 @@ module.exports = (store, web3t)->
                 .pug.nick #{current.account.account-name}
                 .pug.index #{account-index}
         .pug.buttons
-            .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
-            .pug.button.lock(on-click=add-coin(store) style=button-primary2-style) #{lang.add-coin}
+            if no
+                .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
+            .pug.button.lock(on-click=add-coin(store) style=button-primary2-style) #{lang.edit-wallet}

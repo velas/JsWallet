@@ -67,7 +67,7 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     #window.scroll-to 0, 0
     navigate store, cweb3, \send
     helps = titles ++ [network.mask]
-    show-cases store, helps, ->
+    #show-cases store, helps, ->
     err, data <- wait-form-result id
     return cb err if err?
     cb null, data
@@ -171,6 +171,7 @@ module.exports = (store, config)->
         return cb err if err?
         cb null
     refresh = (cb)->
+        #return if store.current.refreshing
         err <- refresh-interface
         return cb err if err?
         refresh-balances cb

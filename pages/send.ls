@@ -20,10 +20,8 @@ require! {
         width: 94%
         box-sizing: border-box
         border-radius: $border-radius
-        position: absolute
         left: 11px
     .more-buttons
-        position: absolute
         top: 30px
         right: 0
         width: 150px
@@ -47,8 +45,8 @@ require! {
                 display: inline-block
                 vertical-align: middle
     >.content-body
-        top: 15px
-        height: 520px
+        margin-top: 15px
+        height: 531px
         @import scheme
         color: gray
         a
@@ -189,10 +187,10 @@ require! {
             outline: none
             border: 0
             border-radius: 4px
-            font-size: 10px
-            line-height: 17px
+            font-size: 12px
+            line-height: 16px
             text-align: center
-            padding: 0 5px
+            padding: 2px 5px
             cursor: pointer
         .not-enough
             color: red
@@ -210,8 +208,9 @@ require! {
             display: flex
             margin-top: 5px
             >*
-                padding: 0 5px
-                font-size: 10px
+                padding: 2px 5px
+                font-size: 12px
+                line-height: 8px
                 border-radius: 4px
                 cursor: pointer
                 text-align: center
@@ -233,7 +232,7 @@ require! {
         .button-container
             text-align: center
             .buttons
-                margin-top: 10px
+                margin-top: 40px
                 text-align: center
                 border-radius: 5px
                 width: 100%
@@ -275,7 +274,7 @@ form-group = (title, style, content)->
         label.pug.control-label(style=style) #{title}
         content!
 send = ({ store, web3t })->
-    { token, fee-token, network, send, wallet, pending, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup, history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
+    { token, name, fee-token, network, send, wallet, pending, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup, history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
     style = get-primary-info store
@@ -303,7 +302,7 @@ send = ({ store, web3t })->
     expand-collapse = ->
         store.current.send-menu-open = not store.current.send-menu-open
     lang = get-lang store
-    wallet-title = "#{token + network} #{lang.wallet ? 'wallet'}"
+    wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->
         invoice store, wallet
     .pug.content
@@ -312,27 +311,30 @@ send = ({ store, web3t })->
                 span.head.pug.left
                     img.pug(src="#{send.coin.image}")
                 span.pug.head.center(style=more-text) #{wallet-title}
-                span.pug.head.right(on-click=expand-collapse style=icon-style)
-                    icon \KebabHorizontal
+                if store.current.device is \mobile
+                    span.pug.head.right(on-click=expand-collapse style=icon-style)
+                        icon \KebabHorizontal
             if store.current.send-menu-open
                 .pug.more-buttons(style=menu-style)
                     if store.preference.invoice-visible is yes
-                        a.pug.more.receive(on-click=open-invoice)
-                            .pug
-                                span.pug.more-icon(style=icon-style)
-                                    icon \Mail, 20
-                                span.pug.more-text(style=more-text) #{lang.invoice ? 'Invoice'}
+                        if store.current.device is \desktop
+                            a.pug.more.receive(on-click=open-invoice)
+                                .pug
+                                    span.pug.more-icon(style=icon-style)
+                                        icon \Mail, 20
+                                    span.pug.more-text(style=more-text) #{lang.invoice ? 'Invoice'}
                     if store.current.device is \mobile    
                         a.pug.more.history(on-click=history)
                             .pug
                                 span.pug.more-icon(style=icon-style)
                                     icon \Inbox, 20
                                 span.pug.more-text(style=more-text) #{lang.history ? 'History'}
-                    a.pug.more.history(on-click=topup)
-                        .pug
-                            span.pug.more-icon(style=icon-style)
-                                icon \DiffAdded, 20
-                            span.pug.more-text(style=more-text) #{lang.topup ? 'Topup'}
+                    if store.current.device is \desktop
+                        a.pug.more.history(on-click=topup)
+                            .pug
+                                span.pug.more-icon(style=icon-style)
+                                    icon \DiffAdded, 20
+                                span.pug.more-text(style=more-text) #{lang.topup ? 'Topup'}
             form.pug
                 form-group lang.send-from, icon-style, ->
                     .address.pug(style=border-style)

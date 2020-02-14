@@ -59,6 +59,7 @@ mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t
     style = get-primary-info store
+    lang = get-lang store
     border-style =
         border-top: "1px solid #{style.app.border}"
     row =
@@ -69,12 +70,21 @@ mobile = ({ store, web3t })->
     right-side =
         width: "60%"
         border-left: "1px solid #{style.app.border}"
+    header-style =
+        border-top: "1px solid #{style.app.border}"
+        padding: "10px 0"
+        color: style.app.text
+        text-align: "left"
+    header-left =
+        margin-left: "10px"
     .pug(key="wallets" style=row)
         .pug(style=left-side)
             menu { store, web3t }
             manage-account { store, web3t }
             add-coin-page { store, web3t }
             .wallets.pug(key="wallets-body")
+                .header.pug(style=header-style)
+                    span.pug.head.left(style=header-left) #{lang.your-wallets}
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
                     wallets |> map wallet store, web3t, wallets
         .pug(style=right-side)

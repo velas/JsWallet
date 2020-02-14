@@ -6,7 +6,7 @@ module.exports =
         primary1: \#9d41eb
         primary2: \#3cd5af
         primary3: \#ffffff
-        wallet: "rgba(80, 39, 144, 0.7)"
+        wallet: "rgb(67, 32, 124)"
         header: \#331463
         icon: \white
         border: \#6b268e

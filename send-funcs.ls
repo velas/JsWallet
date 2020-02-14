@@ -165,6 +165,7 @@ module.exports = (store, web3t)->
         store.current.invoice <<<< { coin, wallet, network }
         navigate store, web3t, \invoice
     token = send.coin.token.to-upper-case!
+    name = send.coin.name ? token
     fee-token = (wallet.network.tx-fee-in ? send.coin.token).to-upper-case!
     is-data = (send.data ? "").length > 0
     choose-auto = ->
@@ -211,4 +212,4 @@ module.exports = (store, web3t)->
     use-max-amount = ->
         err <- use-max-try-catch
         alert "#{err}" if err?
-    { invoice, token, network, send, wallet, pending, fee-token, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup: topup(store), history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount }
+    { invoice, token, name, network, send, wallet, pending, fee-token, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup: topup(store), history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount }

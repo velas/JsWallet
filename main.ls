@@ -19,7 +19,7 @@ lock-wallet = ->
     return if window.nolock is yes or store.current.page isnt \wallets
     store.current.page = \locked
 new-idle = ->
-    set-timeout lock-wallet, 30000
+    set-timeout lock-wallet, 60000
 reset-idle = ->
     clear-timeout state.timeout
     state.timeout = new-idle!

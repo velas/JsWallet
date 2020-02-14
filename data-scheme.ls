@@ -5,6 +5,8 @@ require! {
     \./langs/en.ls
     \./langs/ru.ls
     \./langs/ua.ls
+    \./langs/kr.ls
+    \./langs/cn.ls
     \./get-device.ls
 }
 saved-seed = saved!
@@ -32,7 +34,7 @@ store =
     root: null
     theme: \velas
     lang: \en
-    langs: { en, ru, ua }
+    langs: { en, ru, ua, kr, cn }
     registry: []
     terms: "Loading..."
     preference:
@@ -56,11 +58,14 @@ store =
         all: []
         applied: []
     current:
+        verify-seed: ""
+        verify-seed-error: no
         device: get-device!
         list: 0
         prompt-answer: ""
         prompt: no
         send-menu-open: no
+        langs-open: no
         add-coin: no
         wallet-index: 0
         account-index: 1

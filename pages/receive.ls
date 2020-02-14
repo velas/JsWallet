@@ -17,7 +17,7 @@ require! {
 qrcode = (store, wallet)->
     info = get-primary-info store
     return null if not wallet?address?
-    console.log \QRCode , { wallet?address }
+    #console.log \QRCode , { wallet?address }
     bgColor = info.background
     fgColor = info.color
     QRCode.pug(value="#{wallet.address}" size="256" bgColor=bgColor fgColor=fgColor)

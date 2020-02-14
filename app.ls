@@ -14,6 +14,7 @@ require! {
 .app
     *
         user-select: none
+        overflow: hidden
     user-select: none
     overflow: hidden
     @import scheme

@@ -22,7 +22,7 @@ module.exports = (store, web3t)->
         moment(time * 1000).format!
     filt = store.current.filter
     arrow = (type)->
-        | type is \IN => \INC
+        | type is \IN => \IN
         | _ => \OUT
     go-back = ->
         navigate store, web3t, \wallets

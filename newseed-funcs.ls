@@ -27,6 +27,8 @@ module.exports = (store, web3t)->
         confirmed <- confirm store, "Please confirm to have week seed?"
         return cb "not confirmed" if confirmed isnt yes
         cb null
+    next = ->
+        navigate store, web3t, \:init
     save = ->
         err <- week-seed
         return if err?
@@ -37,11 +39,11 @@ module.exports = (store, web3t)->
         return if confirmed isnt yes
         store.current.saved-seed = yes
         set store.current.seed
-        navigate store, web3t, \:init
+        next!
     has-issue = ->
         return no if store.current.seed.length is 0
         not store.current.seed.match(/^([a-z]+[ ]){0,11}([a-z]+)$/)?
     fix-issue = ->
         store.current.seed = fix store.current.seed
         store.current.seed-temp = store.current.seed
-    { save, change-seed, generate-seed, has-issue, fix-issue }
+    { save, change-seed, generate-seed, has-issue, fix-issue, next }

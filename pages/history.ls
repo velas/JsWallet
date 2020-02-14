@@ -99,11 +99,11 @@ require! {
             font-size: 10px
             margin-left: 7px
             color: #ffffff
-            background: #db5de8
+            background: #e6307a
             border-radius: 4px
             width: auto
             letter-spacing: 0px
-            padding: 0px 3px 0 2px
+            padding: 0px 3px 0 0px
     .fee
         display: inline-block
         margin-right: 5px

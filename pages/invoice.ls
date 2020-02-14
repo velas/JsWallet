@@ -221,7 +221,7 @@ form-group = (title, icon-style, content)->
         content!
 recaptchaRef = react.createRef!
 cancel-button = (store, web3t)->
-    return null if store.preference.disableInvoice isnt yes
+    #return null if store.preference.disableInvoice isnt yes
     lang = get-lang store
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
     .pug.button-container
@@ -288,10 +288,10 @@ send-by-email = (store, web3t)->
                     if send.sending
                         span.pug ...
                 a.pug.btn.btn-default(on-click=cancel style=default-button-style) #{lang.cancel}
+#send-by-email store, web3t
 send = ({ store, web3t })->
     { wallet } = invoice-funcs store, web3t
     .pug.content
         receive store, wallet
-        send-by-email store, web3t
         cancel-button store, web3t
 module.exports = send

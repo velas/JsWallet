@@ -91,6 +91,8 @@ require! {
         >.top-middle
             width: 20%
             text-align: center
+            @media screen and (max-width: 800px)
+                width: 30%
             >.balance
                 &:last-child
                     font-weight: bold
@@ -101,6 +103,8 @@ require! {
         >.top-right
             width: 45%
             text-align: right
+            @media screen and (max-width: 800px)
+                width: 35%
             >button
                 outline: none
                 margin-bottom: 5px
@@ -120,6 +124,9 @@ require! {
                 font-weight: bold
                 background: transparent
                 transition: all .5s
+                text-overflow: ellipsis
+                overflow: hidden
+                width: 40%
                 @media screen and (max-width: 800px)
                     width: 40px
                 &:hover
@@ -222,5 +229,5 @@ module.exports = (store, web3t, wallets, wallet)-->
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
-            if wallet.coin.token isnt \btc
+            if wallet.coin.token not in <[ btc vlx ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}

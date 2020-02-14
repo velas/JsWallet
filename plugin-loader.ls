@@ -34,5 +34,6 @@ export get-coins = (cb)->
     return cb err if err?
     installed =
         items |> filter (.type is \coin)
+            |> filter (.enabled isnt no)
     all = installed ++ base
     cb null, all

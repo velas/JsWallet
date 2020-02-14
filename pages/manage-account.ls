@@ -4,6 +4,7 @@ require! {
     \./naming.ls
     \../get-primary-info.ls
     \../get-lang.ls
+    \./icon.ls
 }
 .manage-account
     @import scheme
@@ -52,8 +53,8 @@ require! {
             background: black
             >.close
                 position: absolute
-                padding: 5px 10px
-                font-size: 30px
+                padding: 10px 20px
+                font-size: 20px
                 right: 0
                 top: 0
                 cursor: pointer
@@ -62,7 +63,7 @@ require! {
         >.settings
             padding-top: 60px
             overflow-y: auto
-            height: calc(65vh - 60px)
+            height: calc(65vh - 30px)
             .title
                 color: $primary
                 text-transform: uppercase
@@ -71,6 +72,7 @@ require! {
                     color: #ee8791
             input
                 border-radius: 5px
+                height: 26px
             textarea
                 border-radius: 5px
             input, textarea
@@ -84,7 +86,7 @@ require! {
                 border: 1px solid $primary
                 border-radius: 5px
                 color: white
-                padding: 5px 15px
+                padding: 6px 15px
                 margin-top: 5px
                 text-transform: uppercase
                 font-size: 10px
@@ -111,18 +113,25 @@ require! {
                     height: 16px
                     display: inline-block
                     color: white
+                    padding: 4px
                     border-radius: 5px
-                    margin: 0 5px
                     cursor: pointer
+                    vertical-align: top
                     &:hover
                         background: gray
+                    &.left
+                        border-radius: 5px 0 0 5px
+                    &.right
+                        border-radius: 0 5px 5px 0
+                .mb-12
+                    margin-bottom: 12px
         .bold
             color: #f0c16b
         .section
             border-bottom: 1px solid rgba(240, 237, 237, 0.16)
             &.last
                 border-bottom: 0
-            padding: 10px
+            padding: 20px
             .title
                 padding: 2px
             .description
@@ -133,6 +142,7 @@ require! {
         .change-index
             width: 80px
             padding: 1px
+            border-radius: 0 !important
             text-align: center
 switch-account = (store, web3t)->
     {  account-left, account-right, change-account-index } = menu-funcs store, web3t
@@ -144,15 +154,17 @@ switch-account = (store, web3t)->
     color =
         color: style.app.text
     button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
+        border: "1px solid #{style.app.wallet}"
         color: style.app.text
         background: style.app.primary2
     .pug.switch-account(style=color)
-        span.pug Account Index:
-        span.pug.button(on-click=account-left style=button-primary2-style) <
+        .pug.mb-12 Account Index:
+        span.pug.button.left(on-click=account-left style=button-primary2-style)
+            icon \ChevronLeft, 15
         span.pug.bold
             input.pug.change-index(value="#{store.current.account-index}" style=input-style on-change=change-account-index)
-        span.pug.button(on-click=account-right style=button-primary2-style) >
+        span.pug.button.right(on-click=account-right style=button-primary2-style)
+            icon \ChevronRight, 15
 naming-part = ({ store, web3t })->
     .pug.section
         .pug.title #{lang.your-nickname ? 'Your Nickname'}
@@ -181,7 +193,7 @@ manage-account = (store, web3t)->
                     case current.try-edit-seed is yes
                         .pug.box
                             .pug
-                                input.pug(on-change=enter-pin value="#{current.pin}" type="number" input-mode="numeric" style=input-style placeholder="#{lang.enter-pin ? 'Enter PIN'}")
+                                input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style placeholder="#{lang.enter-pin ? 'Enter PIN'}")
                             .pug    
                                 button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
                     case current.saved-seed is no
@@ -202,13 +214,14 @@ manage-account = (store, web3t)->
                 span.pug #{lang.switch-account-info ? 'You could have a lot of unique addresses by switching account index. By default, you are given an index of 1, but you can change it in range 0 - 2,147,483,647'}
             .pug.content
                 switch-account store, web3t
-        .pug.section.last
-            .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
-            .pug.description(style=color)
-                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
-                span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
-            .pug.content
-                button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
+        if no
+            .pug.section.last
+                .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
+                .pug.description(style=color)
+                    span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
+                    span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
+                .pug.content
+                    button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
 module.exports = ({ store, web3t } )->
     return null if store.current.manage-account isnt yes
     { close-account } = menu-funcs store, web3t
@@ -221,6 +234,7 @@ module.exports = ({ store, web3t } )->
         .account-body.pug(style=account-body-style)
             .pug.title(style=account-body-style)
                 .pug #{lang.manage-account}
-                .pug.close(on-click=close-account) ×
+                .pug.close(on-click=close-account)
+                    icon \X, 20
             .pug.settings
                 manage-account store, web3t
