@@ -216,15 +216,9 @@ module.exports = (store, web3t, wallets, wallet)-->
                             span.pug -#{pending}
             .top-right.pug
                 button.pug(on-click=send(wallet) style=button-primary3-style)
-                    if store.current.device is \mobile
-                        icon "ArrowSmallUp", 25
-                    if store.current.device is \desktop
-                        span.pug #{lang.send}
+                    icon "ArrowSmallUp", 25
                 button.pug(on-click=receive(wallet) style=button-primary1-style)
-                    if store.current.device is \mobile
-                        icon "ArrowSmallDown", 25
-                    if store.current.device is \desktop
-                        span.pug #{lang.receive}
+                    icon "ArrowSmallDown", 25
         .wallet-middle.pug
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)

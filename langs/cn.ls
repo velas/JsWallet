@@ -88,3 +88,4 @@ module.exports =
     restore-wallet: "恢复现有钱包"
     words-are-not-match: "单词不匹配"
     back: "背部"
+    your-language: "你的语言"

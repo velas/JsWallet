@@ -88,3 +88,4 @@ module.exports =
     restore-wallet: "Restore Existing Wallet"
     words-are-not-match: "Words are not match"
     back: "Back"
+    your-language: "Your language"

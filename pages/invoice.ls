@@ -184,37 +184,37 @@ require! {
             font-size: 14px
         .bold
             font-weight: bold
-        .button-container
+    .button-container
+        text-align: center
+        .buttons
+            margin-top: 10px
             text-align: center
-            .buttons
-                margin-top: 10px
+            border-radius: 5px
+            width: 100%
+            display: inline-block
+            overflow: hidden
+            .btn
+                width: auto
+                min-width: 110px
+                padding: 0 6px
+                line-height: 36px
+                text-transform: uppercase
                 text-align: center
+                font-weight: 600
+                border: 0
+                margin: 5px
+                font-size: 12px
                 border-radius: 5px
-                width: 100%
                 display: inline-block
-                overflow: hidden
-                .btn
-                    width: auto
-                    min-width: 110px
-                    padding: 0 6px
-                    line-height: 36px
-                    text-transform: uppercase
-                    text-align: center
-                    font-weight: 600
-                    border: 0
-                    margin: 5px
-                    font-size: 12px
-                    border-radius: 5px
-                    display: inline-block
-                    cursor: pointer
-                    box-sizing: border-box
-                    transaction: all .5s
-                    &.btn-primary
-                        background: #6CA7ED
-                        color: white
-                    &:hover
-                        background: rgba(#6CA7ED, 0.2)
-                        opacity: .9
+                cursor: pointer
+                box-sizing: border-box
+                transaction: all .5s
+                &.btn-primary
+                    background: #6CA7ED
+                    color: white
+                &:hover
+                    background: rgba(#6CA7ED, 0.2)
+                    opacity: .9
 form-group = (title, icon-style, content)->
     .pug.form-group
         label.pug.control-label(style=icon-style) #{title}

@@ -214,14 +214,13 @@ manage-account = (store, web3t)->
                 span.pug #{lang.switch-account-info ? 'You could have a lot of unique addresses by switching account index. By default, you are given an index of 1, but you can change it in range 0 - 2,147,483,647'}
             .pug.content
                 switch-account store, web3t
-        if no
-            .pug.section.last
-                .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
-                .pug.description(style=color)
-                    span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
-                    span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
-                .pug.content
-                    button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
+        .pug.section.last
+            .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
+            .pug.description(style=color)
+                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
+                span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
+            .pug.content
+                button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
 module.exports = ({ store, web3t } )->
     return null if store.current.manage-account isnt yes
     { close-account } = menu-funcs store, web3t

@@ -88,3 +88,4 @@ module.exports =
     restore-wallet: "기존 월렛 복원"
     words-are-not-match: "단어가 일치하지 않습니다"
     back: "뒤"
+    your-language: "당신의 언어"

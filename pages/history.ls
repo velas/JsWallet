@@ -47,7 +47,7 @@ require! {
                 margin-top: 8px
                 cursor: pointer
         .filter
-            width: 118px
+            width: 128px
             background: #321260
             position: absolute
             top: 39px
@@ -60,11 +60,16 @@ require! {
                 border-radius: 50px
                 margin: 2px
                 border: 2px solid hsla(0, 0%, 79%, 0.15)
-                opacity: .7
+                opacity: .85
+                border-width: 3px
                 &.active
                     opacity: 1
                 img
-                    height: 30px
+                    height: 33px
+                &.OUT
+                    color: #ef4444
+                &.IN
+                    color: #3cd5a4
         .separator
             min-width: 2px
             display: inline-block
@@ -80,9 +85,10 @@ require! {
             &.active
                 border-color: #9d40eb
                 background: rgba(59, 213, 175, 0.25)
+                border-width: 3px
             line-height: 12px
-            height: 40px
-            width: 40px
+            height: 45px
+            width: 45px
             font-size: 10px
             text-align: center
             >*
@@ -155,7 +161,7 @@ require! {
                 font-size: 11px
             &.OUT
                 .direction
-                    color: #ef44b1
+                    color: #ef4444
                 .txhash a
                     color: #c79b9b
             &.IN
@@ -216,8 +222,8 @@ module.exports = ({ store, web3t })->
         border-right: "1px solid #{style.app.border}"
         border-left: "1px solid #{style.app.border}"
     filter-style=
-        color: style.app.text
         background: style.app.header
+        font-weight: "600"
     menu-style=
         color: style.app.text
     border-b =
@@ -240,8 +246,14 @@ module.exports = ({ store, web3t })->
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)
-                        button.pug(class="#{is-active('IN')}" style=filter-style on-click=switch-type-in) IN
-                        button.pug(class="#{is-active('OUT')}" style=filter-style on-click=switch-type-out) OUT
+                        button.IN.pug(class="#{is-active('IN')}" style=filter-style on-click=switch-type-in)
+                            |↓
+                            br.pug
+                            |IN
+                        button.OUT.pug(class="#{is-active('OUT')}" style=filter-style on-click=switch-type-out)
+                            |↑
+                            br.pug
+                            |OUT
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))

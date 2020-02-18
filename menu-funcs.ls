@@ -7,7 +7,7 @@ require! {
     \./navigate.ls
     \./get-primary-info.ls
     \copy-to-clipboard
-    \./pages/confirmation.ls : { confirm, prompt }
+    \./pages/confirmation.ls : { confirm, prompt, alert }
     \./get-lang.ls
     \bip39
 }
@@ -97,11 +97,13 @@ module.exports = (store, web3t)->
     close-account = ->
         store.current.manage-account = no
     account-left = ->
-        return alert "0 is smallest account index" if store.current.account-index is 0
+        cb = console.log
+        return alert store, "0 is smallest account index", cb if store.current.account-index is 0
         store.current.account-index -= 1
         refresh!
     account-right = ->
-        return alert "999999999 is highest account index" if store.current.account-index > 999999999
+        cb = console.log
+        return alert store, "999999999 is highest account index", cb if store.current.account-index > 999999999
         store.current.account-index += 1
         refresh!
     change-account-index = (event)->
@@ -112,16 +114,18 @@ module.exports = (store, web3t)->
         change-account-index.timer = clear-timeout change-account-index.timer
         change-account-index.timer = set-timeout refresh, 2000
     export-private-key = ->
+        cb = console.log
         pin <- prompt store, lang.private-key-enter-pin
-        return if not check pin
+        return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
         token-input <- prompt store, lang.private-key-enter-coin
-        return if not token?
+        return alert store, "token is empty", cb if not token-input?
         token = (token-input ? "").to-lower-case!
         wallets = current.account?wallets ? []
         wallet =
             wallets |> find (.coin?token is token)
-        return alert "Wallet not found for #{token}" if not wallet?
+        return alert store, "Wallet not found for #{token}", cb if not wallet?
         message = "This is your Private KEY"
-        copy-to-clipboard wallet.private-key, { message }
+        copy-to-clipboard wallet.private-key
+        alert store, "Your Private KEY is copied into your clipboard", cb
     { export-private-key, change-account-index, account-left, account-right, open-account, close-account, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }

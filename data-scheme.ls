@@ -66,12 +66,14 @@ store =
         prompt: no
         send-menu-open: no
         langs-open: no
+        langs-open-start: no
         add-coin: no
         wallet-index: 0
         account-index: 1
         manage-account: no
         filter-plugins: ""
         confirmation: null
+        alert: null
         demo: location.href.index-of('web3.space/wallet') > -1 
         network: \mainnet
         pin: ""
