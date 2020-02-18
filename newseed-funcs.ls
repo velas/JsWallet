@@ -35,8 +35,8 @@ module.exports = (store, web3t)->
         perform-change-seed!
         #return alert "Secret key cannot be empty" if store.current.seed.length is 0
         #return alert "Secret key is so weak" if store.current.seed.length < 20
-        confirmed <- confirm store, lang.phrase-safe-place
-        return if confirmed isnt yes
+        #confirmed <- confirm store, lang.phrase-safe-place
+        #return if confirmed isnt yes
         store.current.saved-seed = yes
         set store.current.seed
         next!
