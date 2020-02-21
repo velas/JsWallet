@@ -87,8 +87,8 @@ require! {
                 background: rgba(59, 213, 175, 0.25)
                 border-width: 3px
             line-height: 12px
-            height: 45px
-            width: 45px
+            height: 40px
+            width: 40px
             font-size: 10px
             text-align: center
             >*
@@ -134,7 +134,7 @@ require! {
                 vertical-align: top
                 box-sizing: border-box
                 text-align: left
-                height: 60px
+                height: 59px
                 white-space: nowrap
                 overflow: scroll
                 &.network

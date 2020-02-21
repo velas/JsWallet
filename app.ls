@@ -15,6 +15,8 @@ require! {
     *
         user-select: none
         -ms-overflow-style: none
+        scrollbar-width: none
+        overflow: -moz-scrollbars-none
     user-select: none
     overflow: hidden
     @import scheme

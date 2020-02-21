@@ -1,6 +1,7 @@
 module.exports = 
     add-coin: "加币"
     edit-wallet: "编辑"
+    edit-coins: "编辑硬币"
     confirmation : "确认书"
     plugin-registry : "插件注册表"
     search: "搜索"
@@ -89,3 +90,10 @@ module.exports =
     words-are-not-match: "单词不匹配"
     back: "背部"
     your-language: "你的语言"
+    links-doc: "链接"
+    privacy-policy: "隐私政策"
+    terms-of-use: "使用条款"
+    read: "阅读更多"
+    version: "版"
+    about-wallet: "由一个助记词组管理的多币种钱包"
+    pls-read: "请阅读我们的 "

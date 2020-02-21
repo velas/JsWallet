@@ -11,12 +11,13 @@ require! {
 }
 .menu
     padding: 0 5px
-    height: 28vh
+    height: 219px
     line-height: 30vh
     >.menu-body
         display: inline-block
         line-height: normal
         vertical-align: middle
+        vertical-align: -webkit-baseline-middle
         width: 100%
         max-width: 450px
         >.balance
@@ -69,5 +70,6 @@ module.exports = ({ store, web3t })->
                 .amount.pug
                     .symbol.pug $
                     .number.pug #{money current.balance-usd}
-            your-account store, web3t
+            if store.current.device is \mobile    
+                your-account store, web3t
             project-links { store, web3t }

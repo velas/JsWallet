@@ -35,7 +35,7 @@ require! {
     &.over
         background: #CCC
     &.big
-        height: 135px
+        height: 120px
     &.active
         >.wallet-middle
             display: inline-block
@@ -145,7 +145,7 @@ require! {
         >.uninstall
             text-align: left
             font-size: 10px
-            padding-top: 10px
+            padding-top: 5px
         >img
             position: absolute
             right: 3%
@@ -174,7 +174,7 @@ require! {
             @media screen and (max-width: 390px)
                 padding-right: 35px
 module.exports = (store, web3t, wallets, wallet)-->
-    { button-style, uninstall, wallet, active, big, balance, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
+    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
@@ -198,17 +198,18 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.addressBg
     filter-icon=
         filter: style.app.filterIcon
+    name = wallet.coin.name ? wallet.coin.token
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
                 .img.pug
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug #{lang.price ? "Price"}
-                    .price.pug $#{ money(usd-rate)}
+                    .name.pug $#{ money(usd-rate)}
+                    .price.pug $#{balanceUsd}
             .top-middle.pug(style=wallet-style)
                 if +wallet.pending-sent is 0
-                    .balance.pug.title #{lang.balance ? 'Balance'}
+                    .balance.pug.title #{name}
                 .balance.pug
                     .pug #{ balance }
                     if +wallet.pending-sent >0

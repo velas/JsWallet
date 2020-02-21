@@ -5,9 +5,12 @@ require! {
     \../get-lang.ls
     \../add-coin.ls
     \../topup.ls
+    \./icon.ls
 }
 .your-account
     position: relative
+    width: auto
+    display: inline-block
     $size: 50px
     $color: rgba(#FFF, 0.5)
     >.username
@@ -76,4 +79,4 @@ module.exports = (store, web3t)->
         .pug.buttons
             if no
                 .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
-            .pug.button.lock(on-click=add-coin(store) style=button-primary2-style) #{lang.edit-wallet}
+            .pug.button.lock(on-click=add-coin(store) style=button-primary2-style) #{lang.edit-coins}

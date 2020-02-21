@@ -1,6 +1,7 @@
 module.exports = 
     add-coin: "Додати монету"
     edit-wallet: "Редагувати"
+    edit-coins: "Редагувати"
     confirmation : "Підтвердження"
     plugin-registry : "Реєстр плагінів"
     search: "Пошук"
@@ -89,3 +90,10 @@ module.exports =
     words-are-not-match: "Слова не збігаються"
     back: "Назад"
     your-language: "Ваша мова"
+    links-doc: "Посилання"
+    privacy-policy: "Політика конфіденційності"
+    terms-of-use: "Умови користування"
+    read: "Читати"
+    version: "Версія"
+    about-wallet: "Мультивалютний гаманець, що керується однією мнемонічною фразою"
+    pls-read: "Будь-ласка, ознайомтесь з "

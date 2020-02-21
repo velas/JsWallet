@@ -5,6 +5,7 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \./icon.ls
+    \../navigate.ls
 }
 .manage-account
     @import scheme
@@ -51,12 +52,13 @@ require! {
             padding: 10px
             height: 60px
             background: black
+            >.header
+                margin: 5px
             >.close
                 position: absolute
-                padding: 10px 20px
                 font-size: 20px
-                right: 0
-                top: 0
+                right: 20px
+                top: 13px
                 cursor: pointer
                 &:hover
                     color: #CCC
@@ -88,14 +90,18 @@ require! {
                 color: white
                 padding: 6px 15px
                 margin-top: 5px
+                text-decoration: none
                 text-transform: uppercase
                 font-size: 10px
                 font-weight: 600
                 cursor: pointer
                 outline: none
+                display: inline-block
                 &:hover
                     background: transparent
                     color: $primary
+                &.link
+                    min-width: 190px
             textarea
                 width: 244px
                 height: 37px
@@ -131,6 +137,10 @@ require! {
             border-bottom: 1px solid rgba(240, 237, 237, 0.16)
             &.last
                 border-bottom: 0
+            &:first-child
+                background: url("https://res.cloudinary.com/dfbhd7liw/image/upload/v1582209591/velas/logo-velas-opacity.png")
+                background-repeat: no-repeat
+                background-position: left 10px
             padding: 20px
             .title
                 padding: 2px
@@ -138,6 +148,20 @@ require! {
                 padding: 7px
                 font-size: 13px
                 color: #b0aeae
+            .logo
+                margin-bottom: 5px
+                img
+                    width: 30px
+            .cap
+                text-transform: capitalize
+            .low
+                text-transform: lowercase
+            .link
+                color: #6f6fe2
+                text-decoration: underline
+                cursor: pointer
+            .pb-0
+                padding-bottom: 0
             .content
         .change-index
             width: 80px
@@ -180,11 +204,33 @@ manage-account = (store, web3t)->
         color: style.app.text
     color =
         color: style.app.text
+    logo-style =
+        filter: style.app.filterLogo
     button-primary2-style=
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+    button-primary3-style=
+        border: "1px solid #{style.app.border}"
+        color: style.app.text2
+        background: style.app.primary3
+    goto-terms = ->
+        navigate store, web3t, \terms2
     .pug
+        .pug.section
+            .pug.logo
+                img.pug(src="#{style.branding.logo}" style=logo-style)
+            .pug.title(style=color)
+                span.pug Velas Wallet
+                span.pug.bold.low #{store.version}
+            .pug.description.pb-0(style=color)
+                span.pug #{lang.about-wallet ? 'Multi-currency Wallet Managed by one mnemonic phrase'}.
+                br.pug
+                span.pug #{lang.pls-read ? 'Please read our'} 
+                span.pug 
+                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy ? 'Privacy Policy'}
+                span.pug  & 
+                span.pug.link(on-click=goto-terms) #{lang.terms-of-use ? 'Terms of Use'}
         .pug.section
             .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
             .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}
@@ -228,11 +274,14 @@ module.exports = ({ store, web3t } )->
     account-body-style = 
         background: style.app.background
         color: style.app.text
+    border-style =
+        background: style.app.header
+        color: style.app.text
     lang = get-lang store
     .pug.manage-account
         .account-body.pug(style=account-body-style)
-            .pug.title(style=account-body-style)
-                .pug #{lang.manage-account}
+            .pug.title(style=border-style)
+                .pug.header #{lang.manage-account}
                 .pug.close(on-click=close-account)
                     icon \X, 20
             .pug.settings

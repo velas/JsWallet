@@ -103,4 +103,5 @@ store =
         filter-open: no
     rates: {}
     coins: []
+    version: "v0.2"
 module.exports = store

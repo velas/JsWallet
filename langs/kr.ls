@@ -1,6 +1,7 @@
 module.exports = 
     add-coin: "동전 추가"
     edit-wallet: "편집하다"
+    edit-coins: "동전 편집"
     confirmation : "확인"
     plugin-registry : "플러그인 레지스트리"
     search: "검색"
@@ -89,3 +90,10 @@ module.exports =
     words-are-not-match: "단어가 일치하지 않습니다"
     back: "뒤"
     your-language: "당신의 언어"
+    links-doc: "연결"
+    privacy-policy: "개인 정보 정책"
+    terms-of-use: "이용 약관"
+    read: "더 읽어보기"
+    version: "버전"
+    about-wallet: "하나의 니모닉 문구로 관리되는 다중 통화 월렛"
+    pls-read: "우리를 읽으십시오 "

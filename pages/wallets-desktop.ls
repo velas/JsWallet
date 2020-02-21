@@ -11,6 +11,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \./history.ls
+    \./your-account.ls
 }
 .wallets
     @import scheme
@@ -18,14 +19,20 @@ require! {
     $cards-height: 296px
     $pad: 20px
     $radius: 15px    
-    height: 395px
+    height: auto
     box-sizing: border-box
     position: relative
     left: 0
-    bottom: 5px
+    bottom: 0
     $cards-pad: 15px
     right: 0
     z-index: 2
+    .your-account
+        position: absolute
+        width: auto
+        display: inline-block
+        right: 10px
+        top: 10px
     >*
         width: 100%
     >.arrow
@@ -47,11 +54,10 @@ require! {
             width: 100%
             max-width: 450px
             position: relative
-    padding-top: 10px
     >.wallet-container
         overflow: hidden
         overflow-y: auto
-        height: 315px
+        height: 300px
         width: 100%
         border-top: 1px solid #213040
         display: inline-block
@@ -72,7 +78,7 @@ mobile = ({ store, web3t })->
         border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
-        padding: "10px 0"
+        padding: "17px 0px 20px"
         color: style.app.text
         text-align: "left"
     header-left =
@@ -85,6 +91,7 @@ mobile = ({ store, web3t })->
             .wallets.pug(key="wallets-body")
                 .header.pug(style=header-style)
                     span.pug.head.left(style=header-left) #{lang.your-wallets}
+                    your-account store, web3t
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
                     wallets |> map wallet store, web3t, wallets
         .pug(style=right-side)

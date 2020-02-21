@@ -1,6 +1,7 @@
 module.exports = 
     add-coin: "Добавить монету"
     edit-wallet: "Редактировать"
+    edit-coins: "Редактировать"
     confirmation : "Подтверждение"
     plugin-registry : "Реестр плагинов"
     search: "Поиск"
@@ -89,3 +90,10 @@ module.exports =
     words-are-not-match: "Слова не совпадают"
     back: "Назад"
     your-language: "Ваш язык"
+    links-doc: "Ссылки"
+    privacy-policy: "Политика конфиденциальности"
+    terms-of-use: "Условия пользования"
+    read: "Читать"
+    version: "Версия"
+    about-wallet: "Мультивалютный кошелек, управляемый одной мнемонической фразой"
+    pls-read: "Пожалуйста, ознакомьтесь с "

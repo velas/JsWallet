@@ -206,7 +206,7 @@ module.exports = ({ store, web3t } )->
         .account-body.pug(style=account-body-style)
             .pug.title(style=account-body-style)
                 .pug
-                    .pug #{lang.edit-wallet}
+                    .pug #{lang.edit-coins}
                     .pug.close(on-click=close)
                         icon \X, 20
                 .pug.search-content
