@@ -13,6 +13,7 @@ require! {
 }
 #
 .wallet
+    @import scheme
     $cards-height: 324px
     $pad: 20px
     $radius: 15px 
@@ -114,7 +115,7 @@ require! {
                 $round: 36px
                 padding: 0
                 box-sizing: border-box
-                border-radius: 6px
+                border-radius: $border
                 font-size: 10px
                 width: auto
                 padding: 0 6px
@@ -126,7 +127,7 @@ require! {
                 transition: all .5s
                 text-overflow: ellipsis
                 overflow: hidden
-                width: 40%
+                width: 80px
                 @media screen and (max-width: 800px)
                     width: 40px
                 &:hover
@@ -156,7 +157,7 @@ require! {
             width: 100%
             z-index: 1
             position: relative
-            border-radius: 5px
+            border-radius: $border
             border: 0
             background: #E6F0FF
             box-sizing: border-box
@@ -186,11 +187,11 @@ module.exports = (store, web3t, wallets, wallet)-->
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.wallet
     button-primary1-style=
-        border: "1px solid #{style.app.border}"
+        border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
     button-primary3-style=
-        border: "1px solid #{style.app.border}"
+        border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
     address-input=
@@ -198,6 +199,9 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.addressBg
     filter-icon=
         filter: style.app.filterIcon
+    placeholder = 
+        | store.current.refreshing => "placeholder"
+        | _ => ""
     name = wallet.coin.name ? wallet.coin.token
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
@@ -205,21 +209,27 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .img.pug
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug $#{ money(usd-rate)}
-                    .price.pug $#{balanceUsd}
+                    .name.pug(class="#{placeholder}") $#{ money(usd-rate)}
+                    .price.pug(class="#{placeholder}") $#{balanceUsd}
             .top-middle.pug(style=wallet-style)
                 if +wallet.pending-sent is 0
-                    .balance.pug.title #{name}
-                .balance.pug
+                    .balance.pug.title(class="#{placeholder}") #{name}
+                .balance.pug(class="#{placeholder}")
                     .pug #{ balance }
                     if +wallet.pending-sent >0
                         .pug.pending 
                             span.pug -#{pending}
             .top-right.pug
                 button.pug(on-click=send(wallet) style=button-primary3-style)
-                    icon "ArrowSmallUp", 25
+                    if store.current.device is \mobile
+                        icon "ArrowSmallUp", 25
+                    if store.current.device is \desktop
+                        span.pug #{lang.send}
                 button.pug(on-click=receive(wallet) style=button-primary1-style)
-                    icon "ArrowSmallDown", 25
+                    if store.current.device is \mobile
+                        icon "ArrowSmallDown", 25
+                    if store.current.device is \desktop
+                        span.pug #{lang.receive}
         .wallet-middle.pug
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)

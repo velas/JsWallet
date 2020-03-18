@@ -7,6 +7,7 @@ require! {
     \../web3.ls
     \../wallets-funcs.ls
     \./manage-account.ls
+    \./token-migration.ls
     \./add-coin.ls : add-coin-page
     \../get-lang.ls
     \../get-primary-info.ls
@@ -48,12 +49,12 @@ require! {
             width: 100%
             max-width: 450px
             position: relative
-    padding-top: 10px
+    padding-top: 20px
     >.wallet-container
         overflow: hidden
         overflow-y: auto
-        border-radius: 5px
-        height: 315px
+        border-radius: $border
+        height: 299px
         max-width: 450px
         border-top: 1px solid #213040
         display: inline-block
@@ -67,6 +68,7 @@ mobile = ({ store, web3t })->
     .pug(key="wallets")
         menu { store, web3t }
         manage-account { store, web3t }
+        token-migration { store, web3t }
         add-coin-page { store, web3t }
         .wallets.pug(key="wallets-body")
             .wallet-container.pug(key="wallets-viewport" style=border-style)

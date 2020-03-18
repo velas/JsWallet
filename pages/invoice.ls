@@ -14,7 +14,7 @@ require! {
 .content
     position: relative
     @import scheme
-    $border-radius: 5px
+    $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
     .pending
@@ -86,7 +86,7 @@ require! {
                         width: 100%
                         z-index: 1
                         position: relative
-                        border-radius: 5px
+                        border-radius: $border
                         border: 0
                         box-sizing: border-box
                         vertical-align: top
@@ -163,7 +163,7 @@ require! {
             color: orange
             vertical-align: top
             padding: 0 5px
-            border-radius: 3px
+            border-radius: $border
             line-height: 12px
             font-size: 12px
         .balance
@@ -173,7 +173,7 @@ require! {
             outline: none
             border: 0
             color: white
-            border-radius: 4px
+            border-radius: $border
             font-size: 10px
             text-align: center
             padding: 0 5px
@@ -195,7 +195,7 @@ require! {
             >*
                 padding: 0 5px
                 font-size: 10px
-                border-radius: 4px
+                border-radius: $border
                 cursor: pointer
                 text-align: center
                 &.chosen
@@ -218,22 +218,23 @@ require! {
         .buttons
             margin-top: 10px
             text-align: center
-            border-radius: 5px
+            border-radius: $border
             width: 100%
             display: inline-block
             overflow: hidden
             .btn
                 width: auto
-                min-width: 110px
+                min-width: 80px
                 padding: 0 6px
                 line-height: 36px
+                height: 36px
                 text-transform: uppercase
                 text-align: center
-                font-weight: 600
+                font-weight: bold
                 border: 0
                 margin: 5px
-                font-size: 12px
-                border-radius: 5px
+                font-size: 10px
+                border-radius: $border
                 display: inline-block
                 cursor: pointer
                 box-sizing: border-box

@@ -96,6 +96,11 @@ module.exports = (store, web3t)->
         store.current.manage-account = yes
     close-account = ->
         store.current.manage-account = no
+    open-migration = ->
+        { account-name } = store.current.account
+        store.current.token-migration = yes
+    close-migration = ->
+        store.current.token-migration = no
     account-left = ->
         cb = console.log
         return alert store, "0 is smallest account index", cb if store.current.account-index is 0
@@ -128,4 +133,4 @@ module.exports = (store, web3t)->
         message = "This is your Private KEY"
         copy-to-clipboard wallet.private-key
         alert store, "Your Private KEY is copied into your clipboard", cb
-    { export-private-key, change-account-index, account-left, account-right, open-account, close-account, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }
+    { export-private-key, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }

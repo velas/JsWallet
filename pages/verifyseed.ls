@@ -17,11 +17,11 @@ require! {
         font-size: 22px
         margin-bottom: 20px
     input
-        min-width: 250px
+        min-width: 180px
         height: 36px
-        border-radius: 7px
+        border-radius: $border
         resize: none
-        font-size: 17px
+        font-size: 13px
         border: 0
         text-align: center
         outline: none
@@ -30,25 +30,29 @@ require! {
     button
         outline: none
         width: auto
-        min-width: 250px
+        min-width: 180px
+        height: 36px
         margin: 15px 5px 0
         text-transform: uppercase
         font-weight: 600
-        padding: 10px 6px
+        padding: 0px 6px
         border: 0
         cursor: pointer
         background: #248295
-        border-radius: 7px
-        font-size: 12px
+        border-radius: $border
+        font-size: 10px
         color: white
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
         &:hover
             background: #248295 - 20
     .warning
         padding: 10px 0
         border: 1px solid orange
         margin: 20px auto 0
-        max-width: 250px
-        border-radius: 5px
+        max-width: 180px
+        border-radius: $border
         font-size: 13px
         background: rgba(orange, 0.2)
     .hint
@@ -67,11 +71,11 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.wallet
     button-primary1-style=
-        border: "1px solid #{style.app.border}"
+        border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
     button-primary3-style=
-        border: "1px solid #{style.app.border}"
+        border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
     newseed-style=

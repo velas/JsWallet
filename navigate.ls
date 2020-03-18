@@ -9,8 +9,8 @@ require! {
 get-page = (store, page, prev)->
     return page if page isnt \:init
     return \terms if prev is \verifyseed
-    return \verifyseed if prev is \newseed
-    return \newseed if prev is \newseed2
+    return \verifyseed if prev is \newseed and store.current.seed-generated is yes
+    return \newseed if prev is \newseed2 
     stage2 = not saved!
     store.current.seed = oldseed! if stage2
     return \newseed2 if stage2

@@ -68,9 +68,9 @@ install-plugin = (plugin, cb)->
 uninstall-plugin = (cweb3, token, cb)->
     return cb "expected string argument" if typeof! token isnt \String
     name = build-name token
-    local-storage.set-item name, ""
     err <- remove-from-registry name
     return cb err if err?
+    local-storage.set-item name, ""
     cweb3.refresh cb
 ask-user = (cweb3, store, plugin, cb)->
     err, registry <- get-registry

@@ -11,5 +11,6 @@ require! {
     #\../web3t/providers/qiwi.ls
     \../web3t/providers/rst.ls
     \../web3t/providers/velas.ls
+    \../web3t/providers/velas2.ls
 }
-module.exports = { eth, insight , erc20, omni, velas /* rst, xem, waves,eos, stellar, tron, qiwi*/ }
+module.exports = { eth, insight , erc20, omni, velas, velas2 /* rst, xem, waves,eos, stellar, tron, qiwi*/ }

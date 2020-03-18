@@ -46,5 +46,4 @@ export background-refresh-account = (web3, store, cb)->
         store.current.balance-usd = bg-store.current.balance-usd
         store.transactions = bg-store.transactions
         apply-transactions store
-    console.log \s2
     cb null

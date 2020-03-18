@@ -22,8 +22,14 @@ module.exports = (store, web3t)->
         moment(time * 1000).format!
     filt = store.current.filter
     arrow = (type)->
-        | type is \IN => \↓IN
-        | _ => \↑OUT
+        | type is \IN => \IN
+        | _ => \OUT
+    arrow-lg = (type)->
+        | type is \IN => \↓
+        | _ => \↑
+    sign = (type)->
+        | type is \IN => \+
+        | _ => \-
     go-back = ->
         navigate store, web3t, \wallets
     extended = (str)->
@@ -41,7 +47,7 @@ module.exports = (store, web3t)->
         data = str.match(/(.+[^0])(0+)$/)
         if not data?
             return
-                .pug.balance 
+                .pug.balance
                     span.color.pug #{str}
         [_, first, last] = data
         span.pug.balance
@@ -63,4 +69,4 @@ module.exports = (store, web3t)->
         err <- remove-tx { store, ...tx }
         #return alert "Cannot Remove Tx. Looks like it is already in blockchain" if err?
         <- web3t.refresh
-    { go-back, switch-type-in, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, delete-pending-tx, amount-beautify, ago }
+    { go-back, switch-type-in, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }

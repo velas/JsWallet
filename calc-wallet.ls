@@ -24,7 +24,7 @@ calc-wallet = (store, cb)->
         #return cb "Coin Not Found" if not coin?
         #coin.wallet = wallet
         wallet.usd-rate =
-            | usd-rate is \.. => \..
+            | usd-rate is \.. => 0
             | _ => round5 usd-rate
         eur-rate = 0.893191
         wallet.eur-rate =
@@ -43,11 +43,16 @@ calc-wallet = (store, cb)->
         wallet.pending-sent = pending-sent
         wallet.balance = balance
         wallet.balance-usd =
-            | usd-rate is \.. => \..
+            | usd-rate is \.. => 0
             | _ => balance `times` usd-rate
+        balance-usd-current =
+            | wallet.balance-usd is \.. => 0
+            | _ => wallet.balance-usd
+        state-before = state.balance-usd
         state.balance-usd =
-            | usd-rate is \.. => \..
-            | _ => state.balance-usd `plus` wallet.balance-usd
+            | usd-rate is \.. => 0
+            | _ => state.balance-usd `plus` balance-usd-current
+        #console.log { state-before, state.balance-usd, balance-usd-current }
         cb!
     loaders =
         wallets |> map build-loader

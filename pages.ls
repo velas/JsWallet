@@ -7,14 +7,20 @@ require! {
     \./pages/newseed.ls
     \./pages/sent.ls
     \./pages/loading.ls
+    \./pages/loading2.ls
     \./pages/invoice.ls
     \./pages/terms.ls
     \./pages/terms2.ls
+    \./pages/filestorage.ls
+    \./pages/settings.ls
     \./pages/newseed2.ls
     \./pages/verifyseed.ls
+    \./pages/staking.ls
 }
+export staking
 export verifyseed
 export loading
+export loading2
 export wallets
 export history
 export send
@@ -25,4 +31,6 @@ export sent
 export invoice
 export terms
 export terms2
+export filestorage
+export settings
 export newseed2

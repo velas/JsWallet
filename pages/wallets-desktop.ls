@@ -7,6 +7,7 @@ require! {
     \../web3.ls
     \../wallets-funcs.ls
     \./manage-account.ls
+    \./token-migration.ls
     \./add-coin.ls : add-coin-page
     \../get-lang.ls
     \../get-primary-info.ls
@@ -27,12 +28,30 @@ require! {
     $cards-pad: 15px
     right: 0
     z-index: 2
+    .header 
+        &:after
+            position: absolute
+            font-weight: bold
+            font-size: 40px
+            opacity: .05
+            top: 20px
+            left: -5px
+    .h1
+        font-size: 12px
+        text-transform: uppercase
+        letter-spacing: 2px
+        opacity: .8
     .your-account
         position: absolute
         width: auto
         display: inline-block
-        right: 10px
-        top: 10px
+        right: 12.1px
+        top: 12.1px
+        .buttons
+            >.button
+                width: 20px
+                padding: 0
+                outline: none
     >*
         width: 100%
     >.arrow
@@ -71,10 +90,11 @@ mobile = ({ store, web3t })->
     row =
         display: "flex"
         height: "100vh"
+        margin-left: "60px"
     left-side =
-        width: "40%"
+        width: "45%"
     right-side =
-        width: "60%"
+        width: "55%"
         border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
@@ -87,10 +107,11 @@ mobile = ({ store, web3t })->
         .pug(style=left-side)
             menu { store, web3t }
             manage-account { store, web3t }
+            token-migration { store, web3t }
             add-coin-page { store, web3t }
             .wallets.pug(key="wallets-body")
                 .header.pug(style=header-style)
-                    span.pug.head.left(style=header-left) #{lang.your-wallets}
+                    span.pug.head.left.h1(style=header-left) #{lang.your-wallets}
                     your-account store, web3t
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
                     wallets |> map wallet store, web3t, wallets

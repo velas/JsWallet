@@ -40,18 +40,20 @@ require! {
             min-width: 100px
             margin: 15px 5px 0
             text-transform: uppercase
-            font-weight: 600
-            padding: 10px 16px
+            font-weight: bold
+            padding: 0px 6px
+            height: 36px
+            line-height: 36px
             border: 0
             cursor: pointer
-            border-radius: 7px
-            font-size: 12px
+            border-radius: $border
+            font-size: 10px
             img
-                width: 20px
-                height: 20px
+                width: 15px
+                height: 15px
                 position: absolute
                 right: 15px
-                top: 25px
+                top: 27px
             span
                 line-height: 20px
                 text-align: center
@@ -66,11 +68,12 @@ require! {
             position: relative
             top: 0px
             right: 0
-            margin: -5px 5px 0
+            margin: -1px 5px 0
             display: inline-grid
             z-index: 1
-            padding: 10px 15px
-            border-radius: 0 0 7px 7px
+            padding: 10px 10px
+            justify-content: center
+            border-radius: 0 0 $border $border
             z-index: 11
             .langs-item
                 display: inline-flex
@@ -80,35 +83,39 @@ require! {
                 &:last-child
                     margin-bottom: 0
                 img
-                    width: 20px
-                    height: 20px
+                    width: 17px
+                    height: 17px
                     border-radius: 20px
                 span
                     margin-left: 10px
-                    font-size: 12px
-                    text-transform: uppercase
-                    font-weight: 600
-                    line-height: 21px
+                    font-size: 13px
+                    text-transform: capitalize
+                    line-height: 17px
         button
             outline: none
             width: auto
             margin: 15px 5px 0
             text-transform: uppercase
-            font-weight: 600
-            padding: 10px 16px
+            font-weight: bold
+            padding: 0px 6px
             border: 0
+            height: 36px
+            width: 180px
             cursor: pointer
             background: #248295
-            border-radius: 7px
-            font-size: 12px
+            border-radius: $border
+            font-size: 10px
             color: white
+            text-overflow: ellipsis
+            overflow: hidden
+            white-space: nowrap
             &:hover
                 background: #248295 - 20
     .warning
-        padding: 15px;
-        border: 1px solid orange;
-        margin: 10px;
-        border-radius: 5px;
+        padding: 15px
+        border: 1px solid orange
+        margin: 10px
+        border-radius: $border
         background: rgba(orange, 0.2)
     .hint
         color: #f2eeee
@@ -139,7 +146,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.primary2
     button-primary3-style=
-        border: "1px solid #{style.app.border}"
+        border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
     logo-style =
@@ -176,8 +183,10 @@ newseed = ({ store, web3t })->
         fr: "data:image/png;base64,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"
     new-wallet = ->
         generate-seed!
+        store.current.seed-generated = yes
         next!
     restore-wallet = ->
+        store.current.seed-generated = no
         next!
     .newseed.pug
         .pug.logo
@@ -185,9 +194,10 @@ newseed = ({ store, web3t })->
             .title.pug #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.welcome-wallet ? 'Welcome!'}
         .pug.align-v
-            .pug.select(on-click=expand-collapse style=langs-menu-body)
-                img.pug(alt="" src="#{langs[store.lang]}")
-                span.pug #{lang.your-language ? 'Your language'}
+            if no    
+                .pug.select(on-click=expand-collapse style=langs-menu-body)
+                    img.pug(alt="" src="#{langs[store.lang]}")
+                    span.pug #{lang.your-language ? 'Your language'}
             if store.current.langs-open-start
                 .pug.langs-menu(style=langs-menu-body)
                     .pug.langs-item(on-click=change-lang-en)

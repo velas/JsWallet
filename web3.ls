@@ -17,6 +17,7 @@ require! {
     \./set-page-theme.ls
     \./mirror.ls
     \./plugin-loader.ls : { get-coins }
+    \./velas/velas-api.ls
 }
 state =
     time: null
@@ -150,6 +151,7 @@ build-get-address = (store, coin)-> (cb)->
     cb null, address
 module.exports = (store, config)->
     cweb3 = {}
+    #velas-web3
     refresh-timer = config?refresh-timer
     use = build-use cweb3, store
     install = build-install cweb3, store
@@ -194,5 +196,6 @@ module.exports = (store, config)->
     #set-preference config if typeof! config is \Object
     refresh-interface ->
     web3 = new Web3!
-    cweb3 <<<< { web3.utils, unlock, set-preference, get-supported-tokens, use, refresh, lock, init, install, uninstall, install-by-name, naming, get-account-name, set-theme, set-lang, install-quick }
+    velas = velas-api
+    cweb3 <<<< { velas, web3.utils, unlock, set-preference, get-supported-tokens, use, refresh, lock, init, install, uninstall, install-by-name, naming, get-account-name, set-theme, set-lang, install-quick }
     cweb3

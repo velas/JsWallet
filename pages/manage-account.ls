@@ -37,7 +37,7 @@ require! {
         margin-top: 5vh
         margin-bottom: 25vh
         padding-bottom: 50px
-        border-radius: 5px
+        border-radius: $border
         position: relative
         max-height: 70vh
         box-sizing: border-box
@@ -72,11 +72,18 @@ require! {
                 font-size: 14px
                 a
                     color: #ee8791
+            .box
+                input
+                    width: 104px
             input
-                border-radius: 5px
-                height: 26px
+                border-radius: $border
+                height: 36px
+                width: 40px
+                line-height: 36px
+                text-align: center
+                font-size: 13px
             textarea
-                border-radius: 5px
+                border-radius: $border
             input, textarea
                 outline: none
                 margin-bottom: 3px
@@ -86,27 +93,32 @@ require! {
             button
                 background-color: $primary
                 border: 1px solid $primary
-                border-radius: 5px
+                border-radius: $border
                 color: white
-                padding: 6px 15px
+                height: 36px
+                width: 104px
                 margin-top: 5px
+                padding: 0 6px
                 text-decoration: none
                 text-transform: uppercase
                 font-size: 10px
-                font-weight: 600
+                font-weight: bold
                 cursor: pointer
                 outline: none
                 display: inline-block
+                text-overflow: ellipsis
+                overflow: hidden
+                white-space: nowrap
                 &:hover
                     background: transparent
                     color: $primary
                 &.link
                     min-width: 190px
             textarea
-                width: 244px
-                height: 37px
+                width: 250px
+                height: 72px
                 resize: none
-                font-size: 12px
+                font-size: 15px
             .switch-account
                 color: #8e8e93
                 font-size: 12px
@@ -115,20 +127,20 @@ require! {
                     font-weight: bold
                 .button
                     background: #8e8e93
-                    width: 16px
+                    width: 12px
                     height: 16px
                     display: inline-block
                     color: white
-                    padding: 4px
-                    border-radius: 5px
+                    padding: 9px
+                    border-radius: $border
                     cursor: pointer
                     vertical-align: top
                     &:hover
                         background: gray
                     &.left
-                        border-radius: 5px 0 0 5px
+                        border-radius: $border 0 0 $border
                     &.right
-                        border-radius: 0 5px 5px 0
+                        border-radius: 0 $border $border 0
                 .mb-12
                     margin-bottom: 12px
         .bold

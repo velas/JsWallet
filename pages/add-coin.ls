@@ -1,7 +1,7 @@
 require! {
     \react
     \prelude-ls : { map, filter }
-    \./loading.ls
+    \./loading2.ls
     \../web3.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -35,7 +35,7 @@ require! {
         width: 100%
         margin-top: 5vh
         margin-bottom: 25vh
-        border-radius: 5px
+        border-radius: $border
         position: relative
         height: 65vh
         overflow: hidden
@@ -60,19 +60,20 @@ require! {
                     color: #CCC
             .search-content
                 position: relative
+                padding: 0 10px
                 .search
                     margin-top: 10px
                     border: 1px solid #CCC
                     padding: 9px
-                    border-radius: 6px
-                    width: 97%
+                    border-radius: $border
+                    width: 100%
                     padding-left: 35px
                     box-sizing: border-box
                     font-size: 13px
                     outline: none
                 .icon
                     top: 6px
-                    left: 18px
+                    left: 20px
                     position: absolute
         >.settings
             padding-top: 90px
@@ -93,7 +94,7 @@ require! {
                         margin-bottom: 10px
                         display: inline-block
                         background: #642dbd
-                        border-radius: 7px
+                        border-radius: $border
                         padding: 10px
                         text-align: left
                         float: left
@@ -113,10 +114,11 @@ require! {
                             box-sizing: border-box
                         input
                             margin: 0 5px
-                            border-radius: 5px
+                            border-radius: $border
                             width: calc(100% - 90px)
                             border: 0
-                            padding: 5px
+                            padding: 5px 10px
+                            outline: none
                             font-size: 15px
                         img
                             width: 40px
@@ -129,7 +131,7 @@ require! {
                             width: 40px
                             height: 40px
                             line-height: 45px
-                            border-radius: 40px
+                            border-radius: $border
                             border: 0 !important
                             box-sizing: border-box
                             padding: 0
@@ -154,9 +156,12 @@ create-item = ({ store, web3t }, item)-->
         color: style.app.text
     menu-style=
         color: style.app.text
+    placeholder = 
+        | store.current.refreshing => "placeholder"
+        | _ => ""
     .item.pug
         img.pug(src="#{item.image}")
-        span.pug.title(style=menu-style) #{title}
+        span.pug.title(style=menu-style class="#{placeholder}") #{title}
         button.pug(on-click=add style=button-style)
             icon \Plus, 20
 filter-item = (store)-> (item)->
@@ -223,4 +228,4 @@ module.exports = ({ store, web3t } )->
                                 |> map create-item { store, web3t }
                         else
                             .loading.pug
-                                loading \black
+                                loading2 \black

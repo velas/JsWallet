@@ -39,11 +39,11 @@ require! {
         margin-bottom: 5px
         margin-left: 5px
         cursor: pointer
-        padding: 0
+        padding: 0 6px
         box-sizing: border-box
-        border-radius: 6px
+        border-radius: $border
         font-size: 10px
-        width: 60px
+        width: 80px
         height: 36px
         color: #6CA7ED
         text-transform: uppercase

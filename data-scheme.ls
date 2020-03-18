@@ -37,12 +37,40 @@ store =
     langs: { en, ru, ua, kr, cn }
     registry: []
     terms: "Loading..."
+    collapse: ""
     preference:
         settings-visible: yes
         invoice-visible: yes
         username-visible: no
         refresh-visible: yes
         lock-visible: yes
+    staking: 
+        add:
+            add-validator: ""
+            add-validator-stake: ""
+            result: ""
+        validators:
+            pending: []
+            active: []
+    filestore:
+        extension-icons: 
+            pdf: ""
+            xls: ""
+            unknown: ""
+        path: "/"
+        structure:
+            *   type: \dir
+                name: 'some dir'
+            *   type: \dir
+                name: 'some dir 2'
+            *   type: \dir
+                name: 'some dir 3'
+            *   type: \file
+                name: 'presentation'
+                extension: \pdf
+            *   type: \file
+                name: 'report'
+                extension: \xls
     receive: 
         wallet: null
     menu:
@@ -66,8 +94,13 @@ store =
         prompt: no
         send-menu-open: no
         langs-open: no
+        langs-open-side: no
         langs-open-start: no
         add-coin: no
+        token-migration: no
+        banner: no
+        active: no
+        hide-btn: no
         wallet-index: 0
         account-index: 1
         manage-account: no
@@ -93,6 +126,7 @@ store =
         checking-name: no
         seed: ""
         seed-temp: ""
+        seed-generated: no
         saved-seed: saved-seed
         balance-usd: \...
         filter: <[ IN OUT ]>
@@ -101,6 +135,10 @@ store =
         invoice : create-send!
     history:
         filter-open: no
+        tx-details: no
+    seed:
+        no-copy: no
+        about: no
     rates: {}
     coins: []
     version: "v0.2"

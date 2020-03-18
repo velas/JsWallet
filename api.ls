@@ -5,7 +5,8 @@ require! {
 }
 action = (func)-> (config, cb)->
     return cb "provider is not defined" if not config?network?api?provider?
-    provider = providers[config.network.api.provider] ? insight 
+    provider = providers[config.network.api.provider]
+    return cb "providr not found for #{config.network.api.provider}" if not provider?
     func provider, config, cb
 export calc-fee = action (provider, config, cb)->
     provider.calc-fee config, cb

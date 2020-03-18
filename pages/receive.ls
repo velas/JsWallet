@@ -5,6 +5,7 @@ require! {
     \../get-lang.ls
 }
 .receive
+    @import scheme
     text-align: center
     .receive-body
         padding: 20px 20px 10px
@@ -44,7 +45,7 @@ require! {
             height: auto
             padding: 10px
             background: #fff
-            border-radius: 7px
+            border-radius: $border
 qrcode = (store, wallet)->
     info = get-primary-info store
     return null if not wallet?address?

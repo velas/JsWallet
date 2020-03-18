@@ -4,9 +4,11 @@ module.exports =
         background-image: "none"
         input: \#FFF
         primary1: \#9d41eb
+        primaryOpct: "rgb(157, 65, 235, 0.5)"
         primary2: \#3cd5af
         primary3: \#ffffff
         wallet: "rgb(67, 32, 124)"
+        wallet-light: "rgb(76, 40, 136)"
         header: \#331463
         icon: \white
         border: \#6b268e
@@ -23,9 +25,11 @@ module.exports =
         background-image: "none"
         input: \#FFF
         primary1: \#FFF
+        primaryOpct: \#FFF
         primary2: \#FFF
         primary3: \#FFF
         wallet: \#FFF
+        wallet-light: \#FFF
         header: \#FFF
         icon: \gray
         border: \#CCCCCC
@@ -42,9 +46,11 @@ module.exports =
         background-image: "none"
         input: \#213040
         primary1: \#2d4967
+        primaryOpct: \#2d4967
         primary2: \#2f475a
         primary3: \#2d4967
         wallet: \#213040
+        wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
         border: \#405b77
@@ -61,9 +67,11 @@ module.exports =
         background-image: "none"
         input: \#213040
         primary1: \#213040
+        primaryOpct: \#213040
         primary2: \#213040
         primary3: \#213040
         wallet: \#213040
+        wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
         border: \#213040
@@ -80,9 +88,11 @@ module.exports =
         background-image: "none"
         input: \#213040
         primary1: \#213040
+        primaryOpct: \#213040
         primary2: \#213040
         primary3: \#213040
         wallet: \#213040
+        wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
         border: \#213040

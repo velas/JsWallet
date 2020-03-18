@@ -4,6 +4,7 @@ require! {
     \./browser/window.ls
 }
 gobyte = require \../web3t/plugins/gobyte-coin.ls
+zec = require \../web3t/plugins/zec-coin.ls
 #stt = require \../web3t/plugins/stt-coin.json
 #qiwi = require \../web3t/plugins/qiwi-coin.ls
 #ym = require \../web3t/plugins/ym-coin.ls
@@ -15,8 +16,10 @@ query-related = (token, coin)->
     if window.location.search.index-of("plugin=#{token}") > -1 then coin
 common =
     * require \../web3t/plugins/vlx-coin.ls
+    #* require \../web3t/plugins/vlx2-coin.ls
     * require \../web3t/plugins/btc-coin.ls
     * query-related \gbx         , gobyte
+#    * zec
 #    * require \../web3t/plugins/usdt-coin.ls
 #    
 #    * require \../web3t/plugins/eth-coin.ls

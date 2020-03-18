@@ -25,7 +25,6 @@ export rebuild-history = (store, wallet, cb)->
     return cb err if err?
     ids = 
         data |> map (.tx.to-upper-case!)
-    console.log ids
     dummy = (err, data)->
         console.log err, data
     err, ptxs <- get-pending-txs { network, store, coin.token }
@@ -48,7 +47,6 @@ export rebuild-history = (store, wallet, cb)->
         |> map transform-ptx
         |> each extend { address, coin, network, pending: yes }
         |> each txs~push
-    console.log \tx-length, store.transactions.all.length
     cb!
 window.load-test =->
     err, data <- get "https://gist.githubusercontent.com/askucher/63685e1aa495113fc848bbd112902c61/raw/08ff221d6c0a40681d6b02c53f72764bdfad5f02/test.json" .end

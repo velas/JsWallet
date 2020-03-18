@@ -8,10 +8,16 @@ require! {
     \./loading.ls
 }
 .history
+    @import scheme
     width: 100%
     position: relative
     padding-bottom: 20px
     display: inline-block
+    .sign
+        margin-right: 5px
+        font-size: 15px !important
+        font-weight: 600
+        vertical-align: text-top
     .nothin-to-show
         color: rgba(white, 0.5)
         padding-top: 50px
@@ -29,7 +35,26 @@ require! {
         .content
             font-size: 14px
             opacity: .7
-    .header
+    .header-table
+        .cell
+            font-size: 12px
+            padding: 10px 15px
+            margin: 0
+            display: inline-block
+            vertical-align: top
+            box-sizing: border-box
+            color: rgb(204, 204, 204)
+            overflow-y: hidden
+            &.network
+                width: 10%
+                text-align: center
+            &.txhash
+                width: 55%
+                text-align: left
+            &.amount
+                width: 35%
+                text-align: right
+    .header, .header-table
         text-align: left
         height: 40px
         box-sizing: border-box
@@ -40,22 +65,78 @@ require! {
             display: inline-block
             &.left
                 padding: 0px 0 10px 10px
-                margin-top: 8px
+                margin-top: 12px
             &.right
                 float: right
                 padding: 0px 10px 0px 0
                 margin-top: 8px
                 cursor: pointer
+            &.h1
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 2px
+                opacity: .8
         .filter
-            width: 128px
+            width: 226px
             background: #321260
             position: absolute
             top: 39px
             right: 0
             display: inline-grid
             z-index: 1
-            .top, .bottom
-                padding: 15px
+            .bottom, .middle
+                padding: 10px
+            .top
+                padding: 0
+                display: flex
+                button
+                    width: 50% !important
+                    border: 0 !important
+                    border-radius: 0 !important
+                    margin: 0 !important
+                    height: 39px
+                    &.active
+                        filter: brightness(1.3)
+            .middle
+                div
+                    line-height: 7px
+                    &:first-child
+                        margin-bottom: 10px
+                label
+                    font-size: 10px
+                    text-transform: uppercase
+                input
+                    outline: none
+                    width: 100%
+                    box-sizing: border-box
+                    height: 36px
+                    line-height: 36px
+                    border-radius: $border
+                    padding: 0px 10px
+                    font-size: 14px
+                    border: 0px
+                    box-shadow: none
+                button
+                    outline: none
+                    cursor: pointer
+                    border: 1px solid
+                    padding: 0
+                    box-sizing: border-box
+                    border-radius: $border
+                    font-size: 10px
+                    padding: 0 6px
+                    height: 36px
+                    color: #6CA7ED
+                    text-transform: uppercase
+                    font-weight: bold
+                    background: transparent
+                    transition: all .5s
+                    text-overflow: ellipsis
+                    overflow: hidden
+                    width: 100%
+                    margin: 0 auto
+                    opacity: 1
+                    margin-top: 10px
             button
                 border-radius: 50px
                 margin: 2px
@@ -67,9 +148,9 @@ require! {
                 img
                     height: 33px
                 &.OUT
-                    color: #ef4444
+                    color: #be6ed2
                 &.IN
-                    color: #3cd5a4
+                    color: #71c5aa
         .separator
             min-width: 2px
             display: inline-block
@@ -87,10 +168,13 @@ require! {
                 background: rgba(59, 213, 175, 0.25)
                 border-width: 3px
             line-height: 12px
-            height: 40px
-            width: 40px
+            height: 45px
+            width: 45px
             font-size: 10px
             text-align: center
+            &.back
+                height: 40px
+                width: 40px
             >*
                 vertical-align: middle
                 display: inline-block
@@ -106,7 +190,7 @@ require! {
             margin-left: 7px
             color: #ffffff
             background: #e6307a
-            border-radius: 4px
+            border-radius: $border
             width: auto
             letter-spacing: 0px
             padding: 0px 3px 0 0px
@@ -123,11 +207,13 @@ require! {
             color: #CCC
     .table
         width: 100%
-        height: calc(100vh - 100px)
+        height: calc(100vh - 140px)
         overflow-y: scroll
         .head, .record
             &.record
                 border-radius: 0px
+                .tx-top
+                    cursor: pointer
             .cell
                 padding: 10px 15px
                 display: inline-block
@@ -136,7 +222,10 @@ require! {
                 text-align: left
                 height: 59px
                 white-space: nowrap
-                overflow: scroll
+                overflow: hidden
+                @media screen and (max-width: 800px)
+                    overflow-x: scroll
+                    overflow-y: hidden
                 &.network
                     width: 10%
                     div
@@ -148,6 +237,26 @@ require! {
                 &.amount
                     width: 35%
                     text-align: right
+                &.divider
+                    width: 10%
+                    .direction
+                        font-size: 20px
+                        text-align: center
+                        line-height: 40px
+                &.arrow
+                    width: 10%
+                    text-align: center
+                    line-height: 40px
+                &.details-from, &.details-to
+                    width: 40%
+                    text-align: left
+                    height: 60px
+                    a
+                        display: block
+                        text-overflow: ellipsis
+                        overflow: hidden
+                        width: 100%
+                        font-size: 16px
             .gray
                 $gray: #8290ad
                 color: $gray
@@ -161,14 +270,14 @@ require! {
                 font-size: 11px
             &.OUT
                 .direction
-                    color: #ef4444
+                    color: #be6ed2
                 .txhash a
-                    color: #c79b9b
+                    color: #be6ed2
             &.IN
                 .direction
-                    color: #3cd5a4
+                    color: #71c5aa
                 .txhash a
-                    color: #80ad80
+                    color: #71c5aa
     .panel-footer
         padding: 10px
     img
@@ -177,39 +286,64 @@ require! {
     .hidden
         display: none !important
 render-transaction = (store, web3t, tran)-->
-    { coins, cut-tx, arrow, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
+    { coins, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
     lang = get-lang store
     menu-style=
         color: style.app.text
     border-style =
         border-bottom: "1px solid #{style.app.border}"
+    line-style =
         background: style.app.wallet
+    light-style =
+        background: style.app.wallet-light
     lightText=
         color: style.app.addressText
-    { token, tx, amount, fee, time, url, type, pending } = tran
+    { token, tx, amount, fee, time, url, type, pending, from, to } = tran
+    #console.log tran
     coin = 
         coins |> find (.token is token)
+    return null if not coin?
+    tx-details = ->
+        store.history.tx-details = 
+            | store.history.tx-details is tx => null
+            | _ => tx
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
-        .cell.pug.text-center.network
-            .pug
-                img.pug(src="#{coin.image}")
-            .pug.direction #{arrow(type)}
-        .cell.pug.txhash
-            a.pug(href="#{url}" target="_blank") #{cut-tx tx}
-            .pug.gray(style=lightText)
-                span.pug #{lang.created}: 
-                    | #{ago time}
-                if pending is yes
-                    span.pug
-                        span.pug.bold (#{lang.pending})
-                        span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
-        .cell.pug.amount(style=menu-style)
-            .pug(title="#{amount}") 
-                amount-beautify amount, 8
-            .pug.gray(style=lightText)
-                span.pug.fee #{lang.fee}:
-                amount-beautify fee, 10
+        .pug.tx-top(on-click=tx-details style=line-style)
+            .cell.pug.text-center.network
+                .pug
+                    img.pug(src="#{coin.image}")
+                .pug.direction #{arrow(type)}
+            .cell.pug.txhash
+                a.pug(href="#{url}" target="_blank") #{cut-tx tx}
+                .pug.gray(style=lightText)
+                    span.pug #{lang.created}: 
+                        | #{ago time}
+                    if pending is yes
+                        span.pug
+                            span.pug.bold (#{lang.pending})
+                            span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
+            .cell.pug.amount(style=menu-style)
+                .pug(title="#{amount}")
+                    span.sign.direction.pug #{sign(type)}
+                    amount-beautify amount, 8
+                .pug.gray(style=lightText)
+                    span.pug.fee #{lang.fee}:
+                    amount-beautify fee, 10
+        if store.history.tx-details is tx
+            .pug.tx-middle(style=light-style)
+                .cell.pug.divider
+                    .pug.direction #{arrow-lg(type)}
+                .cell.pug.details-from
+                    .pug.gray(style=lightText)
+                        span.pug Sender:
+                    a.pug(target="_blank" href="#" style=menu-style) #{from}
+                .cell.pug.arrow
+                    icon "ChevronRight", 20
+                .cell.pug.details-to
+                    .pug.gray(style=lightText)
+                        span.pug Recipient:
+                    a.pug(target="_blank" href="#" style=menu-style) #{to}
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store
@@ -224,6 +358,10 @@ module.exports = ({ store, web3t })->
     filter-style=
         background: style.app.header
         font-weight: "600"
+    btn-style=
+        background: style.app.header
+        border-right: "1px solid #{style.app.border}"
+        font-weight: "600"
     menu-style=
         color: style.app.text
     border-b =
@@ -231,33 +369,63 @@ module.exports = ({ store, web3t })->
     filter-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
+    input-style=
+        background: style.app.wallet
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
+    button-primary3-style=
+        border: "1px solid #{style.app.primary3}"
+        color: style.app.text2
+        background: style.app.primary3
+    button-primary1-style=
+        border: "1px solid #{style.app.primary1}"
+        color: style.app.text
+        background: style.app.primary1
+    lightText=
+        color: style.app.addressText
     nothing-icon=
         filter: style.app.nothingIcon
+    header-table-style=
+        border-bottom: "1px solid #{style.app.border}"
+        background: style.app.wallet-light
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
     .pug.normalheader.history
         .header.pug(style=header-style)
             if store.current.device is \mobile
-                button.pug(on-click=go-back style=button-style)
+                button.back.pug(on-click=go-back style=button-style)
                     icon "ChevronLeft", 25
-            span.pug.head.left #{lang.your-transactions}
+            span.pug.head.left.h1 #{lang.your-transactions}
             span.pug.head.right(on-click=expand-collapse)
                 icon \Settings, 20
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)
-                        button.IN.pug(class="#{is-active('IN')}" style=filter-style on-click=switch-type-in)
+                        button.IN.pug(class="#{is-active('IN')}" style=btn-style on-click=switch-type-in)
                             |↓
                             br.pug
                             |IN
-                        button.OUT.pug(class="#{is-active('OUT')}" style=filter-style on-click=switch-type-out)
+                        .pug(style=btn-style)
+                        button.OUT.pug(class="#{is-active('OUT')}" style=btn-style on-click=switch-type-out)
                             |↑
                             br.pug
                             |OUT
+                    .pug.middle(style=border-b)
+                        .pug
+                            input.pug(type='text' style=input-style placeholder="From")
+                        .pug
+                            input.pug(type='text' style=input-style placeholder="To")
+                        button.pug(on-click style=button-primary1-style)
+                            span.pug Apply
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
+        if store.transactions.applied.length > 0
+            .header-table.pug(style=header-table-style)
+                span.pug.cell.network(style=lightText) Network
+                span.pug.cell.txhash(style=lightText) Transaction ID
+                span.pug.cell.amount(style=lightText) Amount
         .pug
             .pug.table
                 if store.transactions.applied.length > 0

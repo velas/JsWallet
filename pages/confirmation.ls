@@ -4,6 +4,7 @@ require! {
     \../get-lang.ls
 }
 .confirmation
+    @import scheme
     position: absolute
     z-index: 999999
     height: 100vh
@@ -15,6 +16,14 @@ require! {
     >.confirmation-body
         background: white
         text-align: center
+        input
+            border-radius: $border
+            height: 36px
+            width: 90px
+            line-height: 36px
+            text-align: center
+            font-size: 13px
+            outline: none
         >.header
             padding: 15px 0 0
             font-size: 17px
@@ -23,20 +32,25 @@ require! {
         >.text
             padding: 10px
             input
-                border-radius: 5px
+                border-radius: $border
         >.buttons
             text-align: center
             >.button
                 display: inline-block
                 cursor: pointer
-                width: auto
-                font-weight: 300
-                font-size: 14px
-                border-radius: 5px
+                height: 36px
+                width: 90px
+                font-weight: bold
+                font-size: 10px
+                text-transform: uppercase
+                border-radius: $border
                 border: 1px solid #CCC
                 margin: 15px 5px
-                padding: 5px 10px
-                line-height: 14px
+                padding: 0px 6px
+                background: transparent
+                text-overflow: ellipsis
+                overflow: hidden
+                white-space: nowrap
 alert-modal = (store)->
     return null if typeof! store.current.alert isnt \String
     cancel = ->
@@ -61,7 +75,7 @@ alert-modal = (store)->
             .pug.header(style=confirmation-style) Alert
             .pug.text(style=confirmation-style2) #{store.current.alert}
             .pug.buttons
-                .pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
 confirmation-modal = (store)->
     return null if typeof! store.current.confirmation isnt \String
     confirm = ->
@@ -91,8 +105,8 @@ confirmation-modal = (store)->
             .pug.header(style=confirmation-style) #{lang.confirmation}
             .pug.text(style=confirmation-style2) #{store.current.confirmation}
             .pug.buttons
-                .pug.button(on-click=confirm style=button-style) #{lang.confirm}
-                .pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=confirm style=button-style) #{lang.confirm}
+                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
 prompt-modal = (store)->
     return null if typeof! store.current.prompt isnt \String
     confirm = ->
@@ -130,8 +144,8 @@ prompt-modal = (store)->
             .pug
                 input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style)
             .pug.buttons
-                .pug.button(on-click=confirm style=button-style) #{lang.confirm}
-                .pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=confirm style=button-style) #{lang.confirm}
+                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
 export confirmation-control = (store)->
     .pug
         confirmation-modal store
