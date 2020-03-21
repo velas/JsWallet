@@ -8,6 +8,15 @@ require! {
     text-align: center
     overflow: hidden
     height: 100%
+    .placeholder
+        width: 100%
+        margin-bottom: 10px
+        display: inline-block
+        border-radius: 0px
+        padding: 10px
+        height: 60px
+        text-align: left
+        box-sizing: border-box
     >.loading
         position: absolute
         top: calc(50% - 32px)
@@ -61,7 +70,4 @@ require! {
 module.exports = (add-class)->
     .loading-page.pug(key="loading")
         .loading.pug
-            .inner.one.pug(key="loading-1" class="#{add-class}")
-            .inner.two.pug(key="loading-2" class="#{add-class}")
-            .inner.three.pug(key="loading-3" class="#{add-class}")
-        .pug
+        .pug.placeholder

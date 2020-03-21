@@ -7,6 +7,7 @@ module.exports =
         primaryOpct: "rgb(157, 65, 235, 0.5)"
         primary2: \#3cd5af
         primary3: \#ffffff
+        primary4: \#c35c5f
         wallet: "rgb(67, 32, 124)"
         wallet-light: "rgb(76, 40, 136)"
         header: \#331463
@@ -28,6 +29,7 @@ module.exports =
         primaryOpct: \#FFF
         primary2: \#FFF
         primary3: \#FFF
+        primary4: \#FFF
         wallet: \#FFF
         wallet-light: \#FFF
         header: \#FFF
@@ -49,6 +51,7 @@ module.exports =
         primaryOpct: \#2d4967
         primary2: \#2f475a
         primary3: \#2d4967
+        primary4: \#c35c5f
         wallet: \#213040
         wallet-light: \#213040
         header: \#213040
@@ -70,6 +73,7 @@ module.exports =
         primaryOpct: \#213040
         primary2: \#213040
         primary3: \#213040
+        primary4: \#213040
         wallet: \#213040
         wallet-light: \#213040
         header: \#213040
@@ -91,6 +95,7 @@ module.exports =
         primaryOpct: \#213040
         primary2: \#213040
         primary3: \#213040
+        primary4: \#213040
         wallet: \#213040
         wallet-light: \#213040
         header: \#213040

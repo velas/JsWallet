@@ -16,7 +16,9 @@ require! {
     \./pages/newseed2.ls
     \./pages/verifyseed.ls
     \./pages/staking.ls
+    \./pages/resources.ls
 }
+export resources
 export staking
 export verifyseed
 export loading

@@ -156,12 +156,9 @@ create-item = ({ store, web3t }, item)-->
         color: style.app.text
     menu-style=
         color: style.app.text
-    placeholder = 
-        | store.current.refreshing => "placeholder"
-        | _ => ""
     .item.pug
         img.pug(src="#{item.image}")
-        span.pug.title(style=menu-style class="#{placeholder}") #{title}
+        span.pug.title(style=menu-style) #{title}
         button.pug(on-click=add style=button-style)
             icon \Plus, 20
 filter-item = (store)-> (item)->

@@ -52,7 +52,7 @@ change-amount-generic = (field)-> (store, amount-send)->
     send.amount-obtain-usd = send.amount-obtain `times` usd-rate
     send.amount-send-usd = calc-usd store, amount-send
     send.amount-send-eur = calc-eur store, amount-send
-    err, calced-fee <- calc-fee-proxy { token, send.network, amount: result-amount-send, fee-type, tx-type, account }
+    err, calced-fee <- calc-fee-proxy { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, tx-type, account }
     return send.error = "Calc Fee Error: #{err.message ? err}" if err?
     tx-fee = 
         | calced-fee? => calced-fee 

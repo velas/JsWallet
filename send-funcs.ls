@@ -182,7 +182,7 @@ module.exports = (store, web3t)->
         return cb "Cannot estimate max amount. Please try to type manually" if trials <= 0
         return cb "Balance is not enough to send tx" if +amount-send is 0
         account = { wallet.address, wallet.private-key }
-        err, amount-send-fee <- calc-fee { token, send.network, amount: amount-send, send.fee-type, send.tx-type, account }
+        err, amount-send-fee <- calc-fee { token, send.network, amount: amount-send, send.fee-type, send.tx-type, send.to, send.data, account }
         #console.log amount-send, err
         return cb null, { amount-send, amount-send-fee } if not err?
         return cb err if err? and err isnt "Balance is not enough to send tx"

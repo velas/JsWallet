@@ -1,7 +1,7 @@
 require! {
     \react
     \../tools.ls : { money }
-    \prelude-ls : { each }
+    \prelude-ls : { each, find }
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
@@ -10,6 +10,7 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \../get-primary-info.ls
+    \../../web3t/providers/superagent.ls : { get }
 }
 #
 .wallet
@@ -190,6 +191,10 @@ module.exports = (store, web3t, wallets, wallet)-->
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
+    button-primary1-style-m=
+        border: "1px solid rgb(195, 92, 95)"
+        color: style.app.text
+        background: "rgb(195, 92, 95)"
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -203,6 +208,17 @@ module.exports = (store, web3t, wallets, wallet)-->
         | store.current.refreshing => "placeholder"
         | _ => ""
     name = wallet.coin.name ? wallet.coin.token
+    migrate = (wallet)-> ->
+        address = 
+            store.current.account.wallets 
+                |> find (-> it.coin.token is \vlx2) 
+                |> (.address)
+        return alert "addres #{address} is wrong" if typeof! address isnt \String
+        err, data <- get "/topup-velas-address/#{address}" .end
+        return alert "#{err}" if err?
+        error = data.text.index-of('V') isnt 0
+        return alert "cannot create address" if error
+        store.current.token-migration = yes
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
@@ -225,11 +241,15 @@ module.exports = (store, web3t, wallets, wallet)-->
                         icon "ArrowSmallUp", 25
                     if store.current.device is \desktop
                         span.pug #{lang.send}
-                button.pug(on-click=receive(wallet) style=button-primary1-style)
-                    if store.current.device is \mobile
-                        icon "ArrowSmallDown", 25
-                    if store.current.device is \desktop
-                        span.pug #{lang.receive}
+                if wallet.coin.token isnt \vlx or store.current.device isnt \desktop
+                    button.pug(on-click=receive(wallet) style=button-primary1-style)
+                        if store.current.device is \mobile
+                            icon "ArrowSmallDown", 25
+                        if store.current.device is \desktop
+                            span.pug #{lang.receive}
+                else
+                    button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
+                        span.pug Migrate
         .wallet-middle.pug
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)

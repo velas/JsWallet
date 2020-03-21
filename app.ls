@@ -18,7 +18,7 @@ require! {
         user-select: none
         -ms-overflow-style: none
     user-select: none
-    overflow: hidden
+    overflow: scroll
     @import scheme
     background: $primary
     height: 100vh
@@ -26,6 +26,16 @@ require! {
     color: white
     text-align: center
     width: 100vw
+    .title
+        >.header
+            text-align: center
+            font-size: 17px
+            text-transform: uppercase
+            letter-spacing: 2px
+            opacity: .8
+            line-height: 30px
+            font-weight: 400
+            margin: 0
     .manage-account
         margin-left: -60px
         @media (max-width: 800px)

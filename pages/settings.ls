@@ -25,7 +25,9 @@ require! {
         width: 100%
         margin: 0
     >.title
-        position: relative
+        position: sticky
+        z-index: 1
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -33,7 +35,6 @@ require! {
         font-size: 22px
         padding: 10px
         height: 60px
-        background: transparent
         >.header
             margin: 5px
             text-align: center
@@ -51,20 +52,21 @@ require! {
         overflow: hidden
         background: transparent
         width: 100%
-        margin-bottom: 25vh
         padding-bottom: 50px
         border-radius: $border
         position: relative
-        max-height: 70vh
         box-sizing: border-box
         >.settings
             padding-top: 0px
             overflow-y: auto
-            height: calc(65vh - 30px)
             .title
                 color: $primary
                 text-transform: uppercase
-                font-size: 14px
+                font-size: 12px
+                letter-spacing: 2px
+                opacity: .8
+                font-weight: 400
+                margin: 0
                 a
                     color: #ee8791
             .box

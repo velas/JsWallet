@@ -26,6 +26,10 @@ require! {
         animation: top 0.5s forwards
     .mb-5
         margin-bottom: 5px
+    .content
+        height: 35px
+        overflow: hidden
+        text-overflow: ellipsis
 module.exports = (store)->
     { copied } = store.current
     return null if copied is ''
@@ -38,4 +42,4 @@ module.exports = (store)->
         border-bottom: "1px solid #{style.app.border}"
     .copied.pug(class="#{copied-class}" key="copy-message" style=copy-style)
         .pug.mb-5 #{lang.copied}
-        .pug #{copied}
+        .pug.content #{copied}
