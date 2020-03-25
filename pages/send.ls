@@ -364,9 +364,7 @@ send = ({ store, web3t })->
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->
-                        .pug
-                            input.pug(read-only="readonly" value="#{show-data!}")
-                            button.pug(type="button" on-click=encode-decode) Show #{show-label!}
+                        input.pug(read-only="readonly" style=input-style value="#{show-data!}")
                 table.pug(style=border-style)
                     tbody.pug
                         tr.pug

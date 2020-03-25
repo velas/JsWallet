@@ -97,10 +97,8 @@ module.exports = (store, web3t)->
     close-account = ->
         store.current.manage-account = no
     open-migration = ->
-        { account-name } = store.current.account
-        store.current.token-migration = yes
     close-migration = ->
-        store.current.token-migration = no
+        store.current.token-migration = null
     account-left = ->
         cb = console.log
         return alert store, "0 is smallest account index", cb if store.current.account-index is 0

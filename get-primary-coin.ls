@@ -4,7 +4,7 @@ require! {
 load-first = (store)->
     return null if store.coins.length is 0
     store.coins |> head
-max = 4
+max = 10
 get-list = (store)->
     return [] if not store.current?account?
     { list } = store.current

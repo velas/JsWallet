@@ -7,12 +7,14 @@ require! {
     \./icon.ls
     \./loading.ls
     \../navigate.ls
+    \../setup-pages.ls
 }
 .menu
     width: 100%
     text-align: right
     padding: 20px 15px
     box-sizing: border-box
+    $smooth: color .15s ease-in-out
     &.side-menu
         position: fixed
         left: 0
@@ -53,6 +55,11 @@ require! {
     .menu-item
         &.active
             color: #9264b6 !important
+            transition: $smooth
+            -webkit-transition: $smooth
+            -moz-transition: $smooth
+            -ms-transition: $smooth
+            -o-transition: $smooth
             img
                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
         &.syncing
@@ -91,7 +98,8 @@ require! {
             padding: 2px
         &.class
             position: absolute
-            top: 590px
+            top: 530px
+            left: 0
             color: transparent !important
     .langs-menu
         background: #45217e !important
@@ -131,11 +139,13 @@ require! {
             -webkit-mask-position: right
         100%
             -webkit-mask-position: left
+#setup-pages = <[ locked newseed newseed2 loading loading2 verifyseed terms terms2 ]>
 module.exports = (store, web3)->
-    return null if not store? or store.current.page in <[ locked newseed newseed2 verifyseed terms terms2 ]>
+    return null if not store? or store.current.page in setup-pages
     { current, open-account, lock, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, refresh, lock } = menu-funcs store, web3t
     style = get-primary-info store
     wallets = if store.current.page is \wallets then \active else \not-active
+    search = if store.current.page is \search then \active else \not-active
     settings = if store.current.page is \settings then \active else \not-active
     filestorage = if store.current.page is \filestorage then \active else \not-active
     staking = if store.current.page is \staking then \active else \not-active
@@ -176,6 +186,8 @@ module.exports = (store, web3)->
         color: style.app.text
     wallet = ->
         navigate store, web3t, \wallets
+    goto-search = ->
+        navigate store, web3t, \search
     goto-settings = ->
         navigate store, web3t, \settings
     goto-file-storage = ->
@@ -209,11 +221,16 @@ module.exports = (store, web3)->
                 .menu-item.pug(on-click=goto-staking style=icon-style class="#{staking}")
                     icon \Database , 20
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-file-storage style=icon-style class="#{filestorage}")
-                    icon \FileDirectory , 20
-            if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-resources style=icon-style class="#{resources}")
-                    icon \Project , 20
+                .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
+                    icon \Search , 20
+            if no        
+                if store.preference.settings-visible is yes
+                    .menu-item.pug(on-click=goto-file-storage style=icon-style class="#{filestorage}")
+                        icon \FileDirectory , 20
+            if no
+                if store.preference.settings-visible is yes
+                    .menu-item.pug(on-click=goto-resources style=icon-style class="#{resources}")
+                        icon \Project , 20
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     icon \Gear , 20

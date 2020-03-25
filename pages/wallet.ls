@@ -214,11 +214,10 @@ module.exports = (store, web3t, wallets, wallet)-->
                 |> find (-> it.coin.token is \vlx2) 
                 |> (.address)
         return alert "addres #{address} is wrong" if typeof! address isnt \String
-        err, data <- get "/topup-velas-address/#{address}" .end
+        err, data <- get "https://mainnet-v2.velas.com/migration/topup-velas-address/#{address}" .end
         return alert "#{err}" if err?
-        error = data.text.index-of('V') isnt 0
-        return alert "cannot create address" if error
-        store.current.token-migration = yes
+        return alert "cannot create address" if not data.body?address?
+        store.current.token-migration = data.body.address
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)

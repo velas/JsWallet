@@ -6,6 +6,8 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \../navigate.ls
+    \../../web3t/providers/superagent.ls : { get }
+    \prelude-ls : { find }
 }
 .manage-account
     @import scheme
@@ -204,6 +206,17 @@ token-migration = (store, web3t)->
         border: "1px solid #{style.app.border}"
         color: style.app.text2
         background: style.app.primary3
+    swap = ->
+        return if store.current.token-migration is 'Loading...'
+        address = 
+            store.current.account.wallets 
+                |> find (-> it.coin.token is \vlx2) 
+                |> (.address)
+        store.current.token-migration = 'Loading...'
+        err <- get "https://mainnet-v2.velas.com/migration/try-migrate/#{address}" .end
+        #return alert "#{err}" if err?
+        <- web3t.refresh
+        store.current.token-migration = null
     .pug
         .pug.section.last
             .pug.migrate-img
@@ -212,12 +225,14 @@ token-migration = (store, web3t)->
                 span.pug Please make a deposit of all your coins at this address to get the same amount of coins vlx2
                 br.pug
                 br.pug
-                span.address.pug
-                    a.pug.link VLT1bBeEj7phmjioUBmzspPVSU7YTRcAnjJ
+                span.pug Once you sent your coins please click this button
+                if no
+                    span.address.pug
+                        a.pug.link #{store.current.token-migration}
             .pug.content
-                button.pug(on-click style=button-primary2-style) Swap Tokens
+                button.pug(on-click=swap style=button-primary2-style) Swap Tokens
 module.exports = ({ store, web3t } )->
-    return null if store.current.token-migration isnt yes
+    return null if not store.current.token-migration?
     { close-migration } = menu-funcs store, web3t
     style = get-primary-info store
     account-body-style = 

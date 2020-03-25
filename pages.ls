@@ -17,12 +17,13 @@ require! {
     \./pages/verifyseed.ls
     \./pages/staking.ls
     \./pages/resources.ls
+    \./pages/search.ls
 }
 export resources
 export staking
 export verifyseed
 export loading
-export loading2
+export loading2 
 export wallets
 export history
 export send
@@ -36,3 +37,4 @@ export terms2
 export filestorage
 export settings
 export newseed2
+export search

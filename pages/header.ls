@@ -7,6 +7,7 @@ require! {
     \./icon.ls
     \./loading.ls
     \../navigate.ls
+    \../setup-pages.ls
 }
 .menu
     width: 100%
@@ -87,7 +88,8 @@ require! {
         100%
             -webkit-mask-position: left
 module.exports = (store, web3)->
-    return null if not store? or store.current.page in <[ locked ]>
+    #return null if not store? or store.current.page in <[ locked ]>
+    return null if not store? or store.current.page in setup-pages
     { current, open-account, lock, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, refresh, lock } = menu-funcs store, web3t
     style = get-primary-info store
     menu-style=

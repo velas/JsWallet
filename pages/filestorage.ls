@@ -11,6 +11,7 @@ require! {
 }
 .filestore
     @import scheme
+    $smooth: opacity .15s ease-in-out
     position: relative
     display: block
     width: auto
@@ -23,6 +24,92 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
+    .active-download
+        bottom: 10px
+        right: 10px
+        width: 226px
+        background: #321260
+        position: absolute
+        display: inline-grid
+        z-index: 1
+        >.hide-progress
+            display: none
+        .file-name
+            text-overflow: ellipsis
+            overflow: hidden
+            width: 90px
+        progress
+            width: 45px
+            height: 16px
+        .pending
+            opacity: .5
+        .progress
+            float: right
+        .cancel
+            text-transform: uppercase
+            float: right
+            cursor: pointer
+            font-weight: 600
+            font-size: 11px !important
+            text-align: right
+            color: #6f6fe2 !important
+        .action
+            position: absolute
+            right: 0px
+            li
+                display: inline-block
+                margin-left: 12px
+                cursor: pointer
+                &.hide-progress
+                    transform: rotate(180deg)
+        .top
+            border: 0
+        img
+            width: 20px
+            height: 15px
+            margin-right: 10px
+        .col
+            font-size: 12px
+            padding: 10px 15px
+            margin: 0
+            display: inline-block
+            vertical-align: top
+            box-sizing: border-box
+            color: rgb(204, 204, 204)
+            overflow-y: hidden
+            &.folder-menu
+                text-align: left
+                display: inline-flex
+                span
+                    margin-right: 10px
+        .table-row-menu
+            text-align: left
+            &.active
+                background: rgba(75, 40, 136, 0.2)
+        .bottom, .middle
+            padding: 10px
+        .middle
+            button
+                outline: none
+                cursor: pointer
+                border: 1px solid
+                padding: 0
+                box-sizing: border-box
+                border-radius: $border
+                font-size: 10px
+                padding: 0 6px
+                height: 36px
+                color: #6CA7ED
+                text-transform: uppercase
+                font-weight: bold
+                background: transparent
+                transition: all .5s
+                text-overflow: ellipsis
+                overflow: hidden
+                width: 100%
+                margin: 0 auto
+                opacity: 1
+                margin-top: 10px
     .menu
         width: 226px
         background: #321260
@@ -132,16 +219,40 @@ require! {
     >.toolbar
         position: relative
         height: 60px
+        .files
+            float: left
+            top: 15px
+            position: relative
+            right: 0px
+            margin-left: 20px
+            cursor: pointer
+            line-height: 2
+            img
+                width: 15px
+                transition: $smooth
+                -webkit-transition: $smooth
+                -moz-transition: $smooth
+                -ms-transition: $smooth
+                -o-transition: $smooth
+            &.file-tree
+                img
+                    opacity: .5
+                    transition: $smooth
+                    -webkit-transition: $smooth
+                    -moz-transition: $smooth
+                    -ms-transition: $smooth
+                    -o-transition: $smooth
         .add-file
             float: right
-            top: 18px
+            top: 15px
             position: relative
             right: 20px
             margin-left: 20px
             cursor: pointer
+            line-height: 1.8
         .action
             float: right
-            margin: 18px 20px 0
+            margin: 15px 20px 0
             padding: 0
             visibility: hidden
             &.active
@@ -153,17 +264,53 @@ require! {
             display: inline-flex
             float: left
             list-style: none
-            padding: 0 10px
+            padding: 0 20px
+            line-height: 1.8
             &.path
     >.wrapper
         height: 100vh
         display: flex
         >.panel-content
             width: 30%
+            &.file-tree
+                display: none
+            @media(max-width: 800px)
+                position: absolute
+                z-index: 1;
+                height: 100%
+                background: #2d125b
+                box-shadow: -6px 9px 19px 0px rgb(19, 9, 37)
         >.store-content
-            width: 70%
+            width: 100%
             overflow: scroll
+            position: relative
             margin-bottom: 25vh
+            &.dragarea
+                overflow: inherit
+            .dragfile
+                position: absolute
+                height: 100vh
+                background: rgba(35, 16, 68, 0.85)
+                display: none
+                &.dragarea
+                    display: block
+                div
+                    top: 12rem
+                    text-align: center !important
+                    position: relative
+                    width: 60% !important
+                    padding: 50px 20px
+                    border: 1px dashed
+                    margin: 0 auto
+                    display: block
+                    img
+                        display: block
+                        width: 40px
+                        margin: 0 auto 20px
+                    span
+                        color: #6f6fe2
+                        cursor: pointer
+                        display: block
         .header-table, .table-row
             text-align: left
             height: 40px
@@ -221,14 +368,46 @@ require! {
                 background: rgba(75, 40, 136, 0.2)
             &.active
                 background: rgba(75, 40, 136, 0.2)
+    .bounce
+        animation: bounce_9418 3.6s ease infinite
+        transform-origin: 50% 50%
+    @keyframes bounce_9418
+        0%
+            transform: translateY(0)
+        5.55556%
+            transform: translateY(0)
+        11.11111%
+            transform: translateY(0)
+        22.22222%
+            transform: translateY(-5px)
+        27.77778%
+            transform: translateY(0)
+        33.33333%
+            transform: translateY(-5px)
+        44.44444%
+            transform: translateY(0)
+        100%
+            transform: translateY(0)
 filestorage = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
+    goto-search = ->
+        navigate store, web3t, \search
     info = get-primary-info store
+    switch-progress = ->
+        store.current.progress = not store.current.progress
+    hide-progress =
+        if store.current.progress then \hide-progress else \ ""
+    switch-files = ->
+        store.current.files = not store.current.files
+    file-tree =
+        if store.current.files then \file-tree else \ ""
     action = ->
         store.current.active = not store.current.active
     active =
         if store.current.active then \active else \ ""
+    dragarea =
+        if store.current.dragfile then \dragarea else \ ""
     style=
         background: info.app.wallet
         color: info.app.text
@@ -250,6 +429,9 @@ filestorage = ({ store, web3t })->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
         position: "sticky"
+    dashed-border=
+        border-color: "#{info.app.border}"
+        color: info.app.addressText
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -261,9 +443,14 @@ filestorage = ({ store, web3t })->
         background: info.app.primary1
     lightText=
         color: info.app.addressText
+    icon-style=
+        filter: info.app.nothingIcon
     expand-collapse = ->
         store.filestore.menu-open = not store.filestore.menu-open
+        store.current.dragfile = not store.current.dragfile
     file =
+        side-menu: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAArCAYAAADhXXHAAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAK6ADAAQAAAABAAAAKwAAAABu3Ef4AAAA/UlEQVRYCe2WAQrDIBAENe9oH5SP5OP1H/a2jWAhEPeMJcIKEpvs3elocUPOebX+ss406NewN4ytsznoehFFrOajFCaeKcb4hL4jB1EuJEw2MxG11iYb8bsnR53vbLycCe70XZMdtRsiK7JGQMdg5DFIzuTeOGe57zHYLJotDD3i/to+12VvRV23BwQXo+Kxdz8W8SDvkFdXWUS3c2NWJYvI0GK0usEYWoxWZBlajFZkGVqMdjqyrOMqMLxxJZ5+gqwsIo2tIWCuMyuL2LClHoksoodaS8xcf7CWFd1FI7KjdkJkRdYI4Bh4rV4dV49HgU2Y7BUW0ZODWRRgbG+hLmHk4GXL8gAAAABJRU5ErkJggg=="
+        drag: "data:image/png;base64,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"
         icon-folder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAghJREFUSA3tlU0oRFEUxz0k7OyULGZlo0SxsLLClBVlJUohIcmKlSyUBXYaLGxE2MyKHTYoSvkYs5iRJMspSr4Zv//tvTFlPt4oZeHU7937zv3fc8877777sqLRaA0EIFM7ZUJJVhqzEAXQPMMcfCTRV+DvgyPwQTaMwgvUWZZ1Q5vY7LR7Eo9+edGN2doReel74ApCkPRJcu0QyTKPrUCWWsDCMUFbSLsF4zALO/j6afVEsncIMCeiTGRdxu3iglYLubF7RPV6B1HidrPagov4RsIUlaQghT6PsXmNOyVKof0+lPKl2nKS2KXbot3wq/a/QNry/t0SsUtyYBhO4Bm07/egC2KJ/2ibEsBDbVahEvywBPlQC9r/7XAO5kxBn9GXrMwPQGdQlQkSd8HnhQh8QPgnR4XK8gqx4PSnoNdZh34ryMKxWjmDLtoONH6+Zh3djqk01c4NY2v09Rsw57rjd9uWITyUmAynYZ9uOTSpDwMaw4xGT6CjWoeTW3tCqBcqC0EQHuHW7l/TyqS502mqDIphHdL+F9DoaD+kDI20xuwYQXydcnCvxC9gW9u0DWagGfRDSWcPCBoI4iXgpi1epnUyl2sQSkG/18yMwNqmW6Ct2Bo/m/tsGIInmIwfy6jP5CLYANkZLMIKXMIbTIJ5r25KknBxAmiuF1Ri7SzZMfgo3YG54/IJvxqnI9ioSBcAAAAASUVORK5CYII="
         icon-download-folder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAf5JREFUSA3tlU0oRFEUx+cNCTtrSbOyNCx8lbKi2VKzkt2woCRKrGShZmWnwcJGSRas2GHDYpTyMVKmZCErSUk+5/n9X3fGlJl5b6aUhVO/uefde+4555175j6fbdstkIBi5YwNtT4XsTBKYPMKi5DKY9/I/DAcQwz8MA1v0GVZ1i1jbjFpD+Ve/Z7FbsbYTmkWPQA3cAV536TcuMiXeSYCWSqAxcQcYzXjLszCAuwzN8KoN5J8QoI998pEEnGmPfxgq0Be5Amjbp2Bjd9Boi178O+YsEUlqSpgX8HaktbTJSpg+3Op4KEac5I4QO1TN/yq/AdwLe/fLRFdUgbjcAqvoL4/hAhkEi+pTXEQoDbr0ARbsAqV0AHq/wG4AOdOwb6of7Iyj4PuoGbjoxW91egh9HtIQbKUq0JleYe083Z0lUe0myBhdElJAVTzDeMoiP4AdwbpQbN2jp4s5QwacKCaSzZBNVf9JS+gOZ3REXTqtHVV63LyKnKSdhjiXppMbzR6yDzL5lFvEIcJXqee0fW7gM0HqFt8OLzUmC2aw5cSb4M9BeiHeegFfVDc5BmDHpwo+x1jrCs/W0Z5qINY9qQnHcdq011QK4a1ibHR4GccgxeIenKYy4jNNbANEnXLCqzBNXxAFJxz9VKSXDGUtfbqQFVidZbkBGKUTufqyBcXrM9u+/H4sQAAAABJRU5ErkJggg=="
         icon-download-files: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAYCAYAAAD3Va0xAAAAAXNSR0IArs4c6QAAAY5JREFUOBGdlb1Kw2AUhpPq5KCDFyIiehO9BHFxEIcoFvdaxJ/FQZGqi4OCiKvgLTj5A26Org6KWBBbbXzetGmb9CT97IEnPed857z5fpLU81IWhuEu/ICLNSl6ghm/V4fEHvE6fMALHEGejTC4DM1OkURAtgY3cN0ZzHGoW4FGQTU48UxKvu/v5/RZQ5qNX0BkB0fL6RWZIP4GZxulsgSfUES0yO84zMEiOJuEtGHPoA2WvUKVJZ5HkeNFQrJTGg9b7nDXWCjRzRIXSMwnkt3gkpuedcOWZwoxVIevdHE7Ng/BFOKOVzQJZ4ueo7xqlhnAal6NxswZxU0IbOBXFONPMlPFpmUK9YjU2p1lcl6WmClEQ0BzBcowC3rWbmGLsTfEDvATZgpR8Q4BDVUao5cXf1si5PUW9JkpRNNFXyUJ8sdWXrmBp5bVmM6bM0oV/aZiM3QR2qQz8SW1lAYKsS+PVmM6pz3SF07HO6xJI/Q50jucMTgBp/2gLjZNYAkaevSn4B7qoL+h/6CeB5j+A5cX9sWjFllAAAAAAElFTkSuQmCC"
@@ -274,9 +461,11 @@ filestorage = ({ store, web3t })->
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
             .pug.header File Storage
-            .pug.close(on-click=go-back)
+            .pug.close(on-click=goto-search)
                 icon "ChevronLeft", 20
         .pug.toolbar(style=border-style)
+            span.files.pug(on-click=switch-files class="#{file-tree}")
+                img.pug(src="#{file.side-menu}")
             ul.path.pug
                 li.pug
                     span.pug Files  #{store.filestore.path} 
@@ -296,7 +485,7 @@ filestorage = ({ store, web3t })->
                         icon "Trashcan", 20
             if store.filestore.menu-open
                 .pug.menu(style=filter-body)
-                    .pug.middle(style=border-b)
+                    .pug.middle
                         .pug.table-row-menu
                             .col.folder-menu.pug
                                 span.pug
@@ -306,14 +495,14 @@ filestorage = ({ store, web3t })->
                             .col.folder-menu.pug
                                 span.pug
                                     icon "CloudDownload", 20
-                                .pug Download Files
+                                .pug Upload Files
                         .pug.table-row-menu
                             .col.folder-menu.pug
                                 span.pug
                                     icon "CloudDownload", 20
-                                .pug Download Folder
+                                .pug Upload Folder
         .pug.wrapper
-            .pug.panel-content(style=border-right)
+            .pug.panel-content(style=border-right class="#{file-tree}")
                 .pug.table-row
                     .cell.arrow.pug
                         icon "ChevronDown", 20
@@ -334,7 +523,14 @@ filestorage = ({ store, web3t })->
                     .cell.folder.pug
                         img.pug(src="#{file.folder}")
                         .pug Documents
-            .pug.store-content
+            .pug.store-content(class="#{dragarea}")
+                .header-table.dragfile.pug(class="#{dragarea}")
+                    .pug.cell.network(style=dashed-border)
+                        img.pug.bounce(src="#{file.drag}" style=icon-style)
+                        | Drag and Drop here
+                        br.pug
+                        | or
+                        span.pug Browse files
                 .header-table.pug(style=header-table-style)
                     span.pug.cell.network(style=lightText) Name
                     span.pug.cell.txhash(style=lightText) Date Modified
@@ -347,4 +543,28 @@ filestorage = ({ store, web3t })->
                         .pug 16/03/2020
                     .cell.size.pug
                         .pug 2 KB
+            .pug.active-download(style=filter-body)
+                .pug.top(style=header-table-style)
+                    .pug.table-row-menu
+                        span.col.folder-menu.pug
+                            .pug Uploading 1 item
+                        ul.action.col.pug(class="#{active}")
+                            li.pug(on-click=switch-progress class="#{hide-progress}")
+                                span.pug
+                                    icon "ChevronDown", 15
+                            li.pug
+                                span.pug
+                                    icon \X, 15
+                .pug(style=header-table-style class="#{hide-progress}")
+                    .pug.table-row-menu
+                        span.col.folder-menu.pug
+                            .pug Left 7min.
+                        span.col.cancel.pug Cancel
+                .pug(class="#{hide-progress}")
+                    .pug.table-row-menu
+                        .col.folder-menu.pending.pug
+                            img.pug(src="#{store.filestore.extension-icons.txt}")
+                            .pug.file-name File.txt
+                        .col.folder-menu.progress.pug
+                            progress.pug(value="30" max="100")
 module.exports = filestorage

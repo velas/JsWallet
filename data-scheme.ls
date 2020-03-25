@@ -54,6 +54,7 @@ store =
         validators:
             pending: []
             active: []
+        reward: null
         keystore: {}
         tab: "line"
     filestore:
@@ -102,9 +103,12 @@ store =
         langs-open-side: no
         langs-open-start: no
         add-coin: no
-        token-migration: no
+        token-migration: null
         banner: no
         active: no
+        dragfile: no
+        files: no
+        progress: no
         hide-btn: no
         wallet-index: 0
         account-index: 1
