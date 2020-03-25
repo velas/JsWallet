@@ -62,8 +62,8 @@ export get-pending-txs = (config, cb)->
     cb null, arr
 get-name = ({ network, store, token })->
     mode = store.current.network #testnet or mainnet
-    #{ token } = network
-    "ptx-#{mode}-#{token}"
+    index = store.current.account-index
+    "ptx-#{mode}-#{token}-#{index}"
 export create-pending-tx = (config, cb)->
     { store, network, token, tx, amount-send, amount-send-fee } = config
     return cb "token is required" if typeof! token isnt \String

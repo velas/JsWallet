@@ -253,5 +253,5 @@ module.exports = (store, web3t, wallets, wallet)-->
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
-            if wallet.coin.token not in <[ btc vlx ]>
+            if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}

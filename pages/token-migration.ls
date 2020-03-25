@@ -222,13 +222,13 @@ token-migration = (store, web3t)->
             .pug.migrate-img
                 img.pug(src="#{style.branding.logo}" style=logo-style)
             .pug.description(style=color)
-                span.pug Please make a deposit of all your coins at this address to get the same amount of coins vlx2
+                span.pug 1 - Please make a deposit of all your coins at this address to get the same amount of coins vlx2
                 br.pug
                 br.pug
-                span.pug Once you sent your coins please click this button
-                if no
-                    span.address.pug
-                        a.pug.link #{store.current.token-migration}
+                span.address.pug
+                    a.pug.link #{store.current.token-migration}
+                br.pug
+                span.pug 2 - Click to Swap Tokens after deposited account
             .pug.content
                 button.pug(on-click=swap style=button-primary2-style) Swap Tokens
 module.exports = ({ store, web3t } )->
