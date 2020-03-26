@@ -18,6 +18,7 @@ require! {
     \./pages/staking.ls
     \./pages/resources.ls
     \./pages/search.ls
+    \./pages/resources2.ls
 }
 export resources
 export staking
@@ -38,3 +39,4 @@ export filestorage
 export settings
 export newseed2
 export search
+export resources2

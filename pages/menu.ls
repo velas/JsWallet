@@ -125,7 +125,7 @@ module.exports = ({ store, web3t })->
     placeholder = 
         | store.current.refreshing => "placeholder"
         | _ => ""
-    .menu.pug(style=menu-style)
+    .menu.wallet-main.pug(style=menu-style)
         .menu-body.pug
             .balance.pug
                 .pug

@@ -6,6 +6,8 @@ require! {
     \../add-coin.ls
     \../topup.ls
     \./icon.ls
+    \prelude-ls : { map }
+    \localStorage
 }
 .your-account
     @import scheme
@@ -14,6 +16,37 @@ require! {
     display: inline-block
     $size: 50px
     $color: rgba(#FFF, 0.5)
+    .switch-menu
+        position: absolute
+        right: 60px
+        top: 60px
+        width: 150px
+        background: #321260
+        display: inline-grid
+        z-index: 3
+        .col
+            font-size: 14px
+            padding: 10px 15px
+            margin: 0
+            display: inline-block
+            vertical-align: top
+            box-sizing: border-box
+            color: #fff
+            overflow-y: hidden
+            &.folder-menu
+                text-align: left
+                display: inline-flex
+                span
+                    margin-right: 10px
+        .table-row-menu
+            text-align: left
+            &:hover
+                cursor: pointer
+                background: rgba(75, 40, 136, 0.2)
+            &.active
+                background: rgba(75, 40, 136, 0.2)
+        .bottom, .middle
+            padding: 10px
     >.username
         color: $color
         font-size: 13px
@@ -51,7 +84,7 @@ require! {
             &.mt-5
                 margin-top: 15px
             &:last-child
-                margin-left: 10px
+                margin-left: 0px
             &.lock
                 background: transparent
                 border: 1px solid white
@@ -79,6 +112,11 @@ module.exports = (store, web3t)->
         border: "0"
         color: style.app.text
         background: "transparent"
+    filter-body =
+        border: "1px solid #{style.app.border}"
+        background: style.app.header
+    border-top=
+        border-top: "1px solid #{style.app.border}"
     lang = get-lang store
     account-index = "#{lang.account-index ? 'Account index'}: #{current.account-index}"
     .pug.your-account
@@ -101,3 +139,30 @@ module.exports = (store, web3t)->
                 if store.current.device is \desktop
                     button.pug.button.lock(on-click=open-migration style=button-primary0-style)
                         icon "Zap", 20
+        length = +(localStorage.get-item('Accounts') ? 3)
+        create-account-position = (index)->
+            change-account = ->
+                store.current.account-index = index
+                store.current.switch-account = no
+                <- web3t.refresh
+            default-account-name = -> "Account #{index}"
+            current-account-name = ->
+                local-storage.get-item(default-account-name!) ? default-account-name!
+            account-name = current-account-name!
+            .pug.table-row-menu(on-click=change-account key="account#{index}")
+                .col.folder-menu.pug
+                    .pug #{account-name}
+        create-account = ->
+            new-length = 1 + length
+            store.current.account-index = new-length
+            localStorage.set-item('Accounts', new-length)
+            store.current.switch-account = no
+            <- web3t.refresh
+        if store.current.switch-account
+            .pug.switch-menu(style=filter-body)
+                .pug.middle
+                    [1 to length] |> map create-account-position
+                .pug.middle(style=border-top)
+                    .pug.table-row-menu
+                        .col.folder-menu.pug(on-click=create-account)
+                            .pug Create Account

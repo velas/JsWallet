@@ -8,6 +8,8 @@ mem =
     encrypt: null
 get-key = (value)->
     value + 'cb562eb3-c442-4866-a1a9-70a9'
+export del = ->
+    local-storage.set-item \spin, ""
 export set = (value)->
     key = get-key value
     res = aes.encrypt(value, key)
@@ -19,7 +21,7 @@ export encrypt = (str)->
     \unsecure
 export check = (value)->
     return no if typeof! value isnt \String
-    return no if value.length isnt 4
+    return no if value.length < 4
     mem.encrypt = (str)->
         md5(value + '234ef' + str).toString!
     res = local-storage.get-item(\spin) ? ""

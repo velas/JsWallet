@@ -13,6 +13,8 @@ require! {
     \../get-primary-info.ls
     \./history.ls
     \./your-account.ls
+    \./icon.ls
+    \localStorage
 }
 .wallets
     @import scheme
@@ -36,6 +38,26 @@ require! {
             opacity: .05
             top: 20px
             left: -5px
+    .switch-account
+        float: right
+        line-height: 2
+        right: 80px
+        position: relative
+        input
+            outline: none
+            width: 100px
+            margin-top: -6px
+            height: 36px
+            line-height: 36px
+            border-radius: 0px
+            padding: 0px 10px
+            font-size: 12px
+            opacity: 1
+        span
+            cursor: pointer
+        .icon
+            vertical-align: middle
+            margin-left: 20px
     .h1
         font-size: 12px
         text-transform: uppercase
@@ -45,8 +67,10 @@ require! {
         position: absolute
         width: auto
         display: inline-block
-        right: 12.1px
-        top: 12.1px
+        right: 0
+        top: 0
+        padding: 12px 20px
+        border-left: 1px solid #6b258e
         .buttons
             >.button
                 width: 20px
@@ -101,8 +125,44 @@ mobile = ({ store, web3t })->
         padding: "17px 0px 20px"
         color: style.app.text
         text-align: "left"
+    input=
+        background: style.app.wallet
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
     header-left =
         margin-left: "10px"
+    border-right=
+        border-right: "1px solid #{style.app.border}"
+    open-account = ->
+        store.current.switch-account = not store.current.switch-account
+    edit-account-name = ->
+        store.current.edit-account-name = current-account-name!
+    default-account-name = -> "Account #{store.current.account-index}"
+    edit-account = (e)->
+        console.log e
+        store.current.edit-account-name = e.target.value
+    done-edit = ->
+        local-storage.set-item default-account-name!, store.current.edit-account-name
+        cancel-edit-account-name!
+    cancel-edit-account-name = ->
+        store.current.edit-account-name = ""
+    current-account-name = ->
+        local-storage.get-item(default-account-name!) ? default-account-name!
+    account-name = current-account-name!
+    view-account-template = ->
+        .pug.switch-account.h1
+            span.pug(on-click=open-account) #{account-name}
+            span.pug.icon(on-click=edit-account-name)
+                icon "Pencil", 20
+    edit-account-template = ->
+        .pug.switch-account.h1
+            input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)
+            span.pug.icon(on-click=done-edit)
+                icon "Check", 20
+            span.pug.icon(on-click=cancel-edit-account-name)
+                icon "X", 20
+    chosen-account-template =
+        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
     .pug(key="wallets" style=row)
         .pug(style=left-side)
             menu { store, web3t }
@@ -112,6 +172,7 @@ mobile = ({ store, web3t })->
             .wallets.pug(key="wallets-body")
                 .header.pug(style=header-style)
                     span.pug.head.left.h1(style=header-left) #{lang.your-wallets}
+                    chosen-account-template
                     your-account store, web3t
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
                     wallets |> map wallet store, web3t, wallets

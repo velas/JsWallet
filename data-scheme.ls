@@ -46,6 +46,8 @@ store =
         lock-visible: yes
     wallet-tab:
         tab: 0
+    search:
+        tab: "dapps"
     staking: 
         add:
             add-validator: ""
@@ -98,6 +100,7 @@ store =
         list: 0
         prompt-answer: ""
         prompt: no
+        switch-account: no
         send-menu-open: no
         langs-open: no
         langs-open-side: no
@@ -111,6 +114,7 @@ store =
         progress: no
         hide-btn: no
         wallet-index: 0
+        edit-account-name: ""
         account-index: 1
         manage-account: no
         filter-plugins: ""

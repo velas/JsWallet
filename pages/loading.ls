@@ -8,59 +8,47 @@ require! {
     text-align: center
     overflow: hidden
     height: 100%
-    >.loading
+    $base-line-height: 34px
+    $white: rgb(157, 65, 235)
+    $off-white: rgba($white, 0.2)
+    $spin-duration: 1s
+    $pulse-duration: 750ms
+    @keyframes spin 
+        0% 
+            transform: rotate(0deg)
+        100% 
+            transform: rotate(360deg)
+    @keyframes pulse 
+        50%  
+            background: $white;
+    .loading-flex
+        display: flex
+        justify-content: center
+        align-items: center
+    .loading-pulse
         position: absolute
         top: calc(50% - 32px)
-        left: calc(50% - 32px)
-        width: 64px
-        height: 64px
-        border-radius: 50%
-        perspective: 800px
-        >.inner
+        width: ($base-line-height / 4)
+        height: $base-line-height
+        background: $off-white
+        animation: pulse $pulse-duration infinite
+        animation-delay: ($pulse-duration / 3)
+        &:before, &:after 
+            content: ''
             position: absolute
-            box-sizing: border-box
-            width: 100%
-            height: 100%
-            border-radius: 50%
-            &.one
-                left: 0%
-                top: 0%
-                animation: rotate-one 1s linear infinite
-                border-bottom: 3px solid #EFEFFA
-                &.black
-                    border-bottom: 3px solid #7083e8   
-            &.two
-                right: 0%
-                top: 0%
-                animation: rotate-two 1s linear infinite
-                border-right: 3px solid #EFEFFA
-                &.black
-                    border-right: 3px solid #7083e8
-            &.three
-                right: 0%
-                bottom: 0%
-                animation: rotate-three 1s linear infinite
-                border-top: 3px solid #EFEFFA
-                &.black
-                    border-right: 3px solid #7083e8
-        @keyframes rotate-one
-            0%
-                transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg)
-            100%
-                transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg)
-        @keyframes rotate-two
-            0%
-                transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg)
-            100%
-                transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg)
-        @keyframes rotate-three
-            0%
-                transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg)
-            100%
-                transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg)
+            display: block
+            height: ($base-line-height / 1.5)
+            width: ($base-line-height / 4)
+            background: $off-white
+            top: 50%
+            transform: translateY(-50%)
+            animation: pulse $pulse-duration infinite
+        &:before
+            left: -($base-line-height / 2)
+        &:after
+            left: ($base-line-height / 2)
+            animation-delay: ($pulse-duration / 1.5)
 module.exports = (add-class)->
     .loading-page.pug(key="loading")
-        .loading.pug
-            .inner.one.pug(key="loading-1" class="#{add-class}")
-            .inner.two.pug(key="loading-2" class="#{add-class}")
-            .inner.three.pug(key="loading-3" class="#{add-class}")
+        .loading-flex.pug
+            .loading-pulse.pug

@@ -5,6 +5,8 @@ require! {
     \./words-to-utf8.ls
 }
 name = \sseed
+export del = ->
+    local-storage.set-item name, ""
 export set = (value)->
     key = encrypt name
     res = aes.encrypt(value, key)

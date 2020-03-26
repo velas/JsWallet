@@ -8,6 +8,9 @@ require! {
     \../navigate.ls
     \../../web3t/providers/superagent.ls : { get }
     \prelude-ls : { find }
+    \react-copy-to-clipboard : { CopyToClipboard }
+    \../copied-inform.ls
+    \../copy.ls
 }
 .manage-account
     @import scheme
@@ -160,12 +163,27 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 display: block
+                position: relative
+                img
+                    top: 3px
+                    right: 30px
+                    width: 15px
+                    position: absolute
             .title
                 padding: 2px
             .description
                 padding: 7px
                 font-size: 16px
                 color: #b0aeae
+                .step
+                    color: #fff
+                    font-weight: 600
+                    border: 1px solid orange
+                    border-radius: 50px
+                    padding: 3px 10px
+                    margin-right: 10px
+                    box-shadow: 0 0 0 rgba(204,169,44, 0.4)
+                    animation: pulse 2s infinite
             .migrate-img
                 margin-bottom: 5px
                 img
@@ -188,6 +206,32 @@ require! {
             padding: 1px
             border-radius: 0 !important
             text-align: center
+    .iron
+        -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
+        -webkit-mask-size: 50%
+        animation: shine 2s infinite
+    @keyframes shine
+        0%
+            -webkit-mask-position: right
+        100%
+            -webkit-mask-position: left
+    @-webkit-keyframes pulse
+        0%
+            -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4)
+        70%
+            -webkit-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0)
+        100%
+            -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0)
+    @keyframes pulse
+        0%
+            -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4)
+            box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4)
+        70%
+            -moz-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0)
+            box-shadow: 0 0 0 10px rgba(204, 169, 44, 0)
+        100%
+            -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0)
+            box-shadow: 0 0 0 0 rgba(204, 169, 44, 0)
 token-migration = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
@@ -206,6 +250,8 @@ token-migration = (store, web3t)->
         border: "1px solid #{style.app.border}"
         color: style.app.text2
         background: style.app.primary3
+    filter-icon=
+        filter: style.app.filterIcon
     swap = ->
         return if store.current.token-migration is 'Loading...'
         address = 
@@ -220,15 +266,21 @@ token-migration = (store, web3t)->
     .pug
         .pug.section.last
             .pug.migrate-img
-                img.pug(src="#{style.branding.logo}" style=logo-style)
+                img.iron.pug(src="#{style.branding.logo}" style=logo-style)
             .pug.description(style=color)
-                span.pug 1 - Please make a deposit of all your coins at this address to get the same amount of coins vlx2
+                span.pug
+                    span.step.pug 1
+                    | Please make a deposit of all your coins at this address to get the same amount of coins vlx2
                 br.pug
                 br.pug
                 span.address.pug
                     a.pug.link #{store.current.token-migration}
+                    CopyToClipboard.pug(text="#{store.current.token-migration}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
                 br.pug
-                span.pug 2 - Click to Swap Tokens after deposited account
+                span.pug
+                    span.step.pug 2
+                    | Click to "Swap Tokens" after deposited account
             .pug.content
                 button.pug(on-click=swap style=button-primary2-style) Swap Tokens
 module.exports = ({ store, web3t } )->

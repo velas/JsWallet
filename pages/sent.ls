@@ -13,6 +13,8 @@ require! {
             height: calc(50vh - 90px)
         .nothin-to-show
             top: 10%
+    .history
+        margin: 0
     @import scheme
     text-align: center
     color: #5bb03e
@@ -37,7 +39,6 @@ require! {
         line-height: 36px
         outline: none
         margin-bottom: 5px
-        margin-left: 5px
         cursor: pointer
         padding: 0 6px
         box-sizing: border-box

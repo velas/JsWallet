@@ -313,8 +313,8 @@ send = ({ store, web3t })->
                     img.pug(src="#{send.coin.image}")
                 span.pug.head.center(style=more-text) #{wallet-title}
                 if store.current.device is \mobile
-                    span.pug.head.right(on-click=expand-collapse style=icon-style)
-                        icon \KebabHorizontal
+                    span.pug.head.right(on-click=history style=icon-style)
+                        icon \Inbox, 25
             if store.current.send-menu-open
                 .pug.more-buttons(style=menu-style)
                     if store.preference.invoice-visible is yes

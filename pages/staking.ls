@@ -29,7 +29,7 @@ require! {
     width: auto
     margin-left: 60px
     top: 0
-    height: 100%
+    height: auto
     min-height: 100vh
     padding-top: 5%
     box-sizing: border-box
@@ -67,6 +67,9 @@ require! {
                 border-bottom: 1px solid rgba(240, 237, 237, 0.16)
                 padding: 30px 20px
                 display: flex
+                @media (max-width: 800px)
+                    display: flow-root
+                    padding: 20px
                 &:last-child
                     border: 0
                 .title
@@ -75,6 +78,10 @@ require! {
                     text-align: left
                     text-transform: uppercase
                     font-size: 14px
+                    @media (max-width: 800px)
+                        width: 100%
+                        margin-bottom: 20px
+                        text-align: center
                     .less
                         font-size: 10px
                         opacity: 0.9
@@ -83,14 +90,31 @@ require! {
                     font-size: 14px
                     width: 70%
                     text-align: left
+                    @media (max-width: 800px)
+                        width: 100%
+                        text-align: center
+                    .important
+                        color: orange
                     .left-node
                         width: 40%
                         float: left
+                        @media (max-width: 800px)
+                            width: 100%
+                            text-align: center
+                            margin-bottom: 20px
+                        @media (min-width: 801px) and (max-width: 992px)
+                            width: 50%
                         img
                             width: 240px
                     .right-node
                         width: 60%
                         float: right
+                        @media (max-width: 800px)
+                            width: 100%
+                            text-align: center
+                        @media (min-width: 801px) and (max-width: 992px)
+                            width: 50%
+                            text-align: left
                     &.node
                         width: 80%
                     .tabs
@@ -111,6 +135,8 @@ require! {
                             height: 36px
                             background: #2c0d5f
                             border-color: #6b258e
+                            @media (max-width: 800px)
+                                width: 50%
                             &.active
                                 opacity: 1
                                 border-bottom: 1px solid #6e1d96
@@ -120,6 +146,7 @@ require! {
                     .code
                         overflow: scroll
                         background: #1b1b1b
+                        text-align: left
                         .copy
                             float: right
                             margin-top: 11px
@@ -232,12 +259,20 @@ require! {
     ul
         padding: 0
         margin: 0
+        min-width: 100%
+        max-width: 300px
         li 
             list-style: none
             margin-left: 0
             font-size: 13px
             color: #6f6fe2
             font-size: 16px
+            list-style-position: inside
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            @media (max-width: 800px)
+                text-align: center
     button
         background-color: $primary
         border: 1px solid $primary
@@ -441,7 +476,9 @@ staking-content = (store, web3t)->
                     .pug.right-node
                         .pug This script automatically deploys your node through the terminal. Also, it uses addresses associated with your current account to manage the node in the wallet.
                         br.pug
-                        .pug Important: Do not transfer this script to anyone, as it is generated in your wallet, using personal wallet data.
+                        .pug 
+                            span.important.pug Important: 
+                            | Do not transfer this script to anyone, as it is generated in your wallet, using personal wallet data.
                         if pairs.mining.keystore.length is 0
                             .pug
                                 .pug.btn

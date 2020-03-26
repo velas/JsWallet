@@ -1,11 +1,12 @@
 require! {
     \react
     \prelude-ls : { map }
-    \../pin.ls : { set, check, exists } 
+    \../pin.ls : { set, check, exists, del } 
     \../navigate.ls
     \../get-primary-info.ls
     \../get-lang.ls
     \../send-form.ls : { notify-form-result }
+    \../seed.ls
 }
 .locked
     @import scheme
@@ -52,8 +53,10 @@ require! {
                 color: $primary + 40
     >.wrong
         color: red
-        font-size: 12px
-        margin-top: 10px
+        font-size: 15px
+        margin-top: 15px
+        max-width: 400px
+        display: inline-block
     button.setup
         font-weight: bold
         cursor: pointer
@@ -97,6 +100,8 @@ wrong-pin = (store)->
     #console.log \wrong-pin, 
     store.current.pin = ""
     store.current.pin-trial += 1
+    left-trials = total-trials - store.current.pin-trial
+    reset-wallet store if left-trials <= 0
 check-pin = (store, web3t)->
     <- set-timeout _, 100
     return if not exists!
@@ -111,25 +116,44 @@ check-pin = (store, web3t)->
 version = (store, web3t)->
     .version.pug #{store.version}
 input = (store, web3t)->
-    info = get-primary-info store
+    style = get-primary-info store
+    button-primary1-style=
+        border: "1px solid #{style.app.primary1}"
+        color: style.app.text
+        background: style.app.primary1
+        width: "100px"
+        height: "36px"
+        margin-top: "10px"
     locked-style=
-        color: info.app.text
-        background: info.app.wallet
+        color: style.app.text
+        background: style.app.wallet
         border: "0"
+    enter = ->
+        check-pin store, web3t
     change = (e)->
         store.current.pin = e.target.value
-        check-pin store, web3t if store.current.pin.length is 4
-    input.pug.password(key="pin" style=locked-style type="number" value="#{store.current.pin}" placeholder="••••" on-change=change pattern="[0-9]*" input-mode="numeric" auto-complete="off")
+    .pug
+        input.pug.password(key="pin" style=locked-style type="text" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
+        if exists!
+            .pug
+                button.setup.pug(on-click=enter style=button-primary1-style) Enter
+reset-wallet = (store)->
+    del!
+    seed.del!
+    store.current.pin = ""
+    store.current.pin-trial = 0
+total-trials = 8
 wrong-trials = (store)->
     return null if store.current.pin-trial is 0
     lang = get-lang store
-    wrong-pin-text = "#{lang.wrong-pin-trials ? 'Wrong PIN. Trials'}: #{store.current.pin-trial}"
+    left-trials = total-trials - store.current.pin-trial
+    wrong-pin-text = "#{left-trials}/#{total-trials} attempts left till wallet reset to default"
     .pug.wrong(key="wrong-trial") #{wrong-pin-text}
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
     setup = ->
-        return alert(lang.wrong-pin-should ? 'PIN should be 4 digits') if not store.current.pin.match(/^[0-9]{4}$/)?
+        return alert(lang.wrong-pin-should ? 'PIN should be 4 at least 4 chars length') if store.current.pin.length < 4
         set store.current.pin
         check-pin store, web3t
     text-color=
@@ -140,7 +164,7 @@ setup-button = (store, web3t)->
         background: style.app.primary3
     .pug(key="setup-button")
         button.setup.pug(on-click=setup style=button-style) #{lang.setup ? 'Setup'}
-        .hint.pug(style=text-color) #{lang.pin-info ? 'Please memorize this PIN and do not provide it to third party.'}
+        .hint.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
 create-wallet = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
@@ -158,8 +182,8 @@ locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
     title = 
-        | not exists! => lang.setup-pin ? "Setup PIN"
-        | _ => lang.enter-pin ? "Enter PIN"
+        | not exists! => lang.setup-pin ? "Setup Password"
+        | _ => lang.enter-pin ? "Enter Password"
     footer =
         | not exists! => setup-button
         | _ => wrong-trials

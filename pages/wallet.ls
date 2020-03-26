@@ -57,7 +57,7 @@ require! {
             padding-top: 12px
             height: $card-top-height
         >.top-left
-            width: 35%
+            width: 30%
             text-align: left
             overflow: hidden
             text-overflow: ellipsis
@@ -91,7 +91,7 @@ require! {
                     overflow: hidden
                     text-overflow: ellipsis
         >.top-middle
-            width: 20%
+            width: 30%
             text-align: center
             @media screen and (max-width: 800px)
                 width: 30%
@@ -103,7 +103,7 @@ require! {
                     @media screen and (max-width: 220px)
                         display: none
         >.top-right
-            width: 45%
+            width: 40%
             text-align: right
             @media screen and (max-width: 800px)
                 width: 35%

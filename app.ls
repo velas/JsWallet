@@ -36,6 +36,11 @@ require! {
             line-height: 30px
             font-weight: 400
             margin: 0
+        &.alert
+            height: auto
+            padding: 2px
+            .header    
+                line-height: 1.6
     .manage-account
         margin-left: -60px
         @media (max-width: 800px)
@@ -87,6 +92,9 @@ require! {
             background-position: -468px 0
         100%
             background-position: 468px 0
+    @media (max-width: 800px)
+        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu
+            margin: 60px 0 0
 module.exports = ({ store, web3t })->
     return null if not store?
     current-page =
