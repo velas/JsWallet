@@ -25,6 +25,11 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
+    .search-input
+        position: fixed
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        z-index: 11
+        width: 100%
     @media(max-width:800px)
         width: 100%
         margin: 0
@@ -124,7 +129,8 @@ require! {
         margin-top: 12px
         margin-right: 10px
     >.title
-        position: relative
+        position: sticky
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -132,9 +138,6 @@ require! {
         font-size: 22px
         padding: 10px
         height: 60px
-        background: transparent
-        &.alert
-            height: auto
         >.header
             margin: 5px
             text-align: center
@@ -163,6 +166,7 @@ require! {
         display: flex
         overflow-y: scroll
         padding: 0 20px
+        margin-top: 129px
         >.panel-content
             width: 50%
             margin-left: 10%
@@ -443,38 +447,39 @@ search = ({ store, web3t })->
             .pug.header Search page
             .pug.close(on-click=go-back)
                 icon "ChevronLeft", 20
-        .pug.section(style=border-style3)
-            .title.pug
-                h2.iron.pug Voogle
-            .description.search-field.pug
-                .pug.left
-                    input.pug(type='text' style=input-style value="dapps" placeholder="dapps")
-                    .pug.icon
-                        icon \Search, 15
-        .pug.section.filter(style=border-style)
-            .title.pug
-            .description.tabs.pug
-                ul.pug
-                    li.pug(on-click=activate-all class="#{active-all}")
-                        span.icon.pug
+        .pug.search-input
+            .pug.section(style=border-style3)
+                .title.pug
+                    h2.iron.pug Voogle
+                .description.search-field.pug
+                    .pug.left
+                        input.pug(type='text' style=input-style value="dapps" placeholder="dapps")
+                        .pug.icon
                             icon \Search, 15
-                        span.pug All
-                    li.pug(on-click=activate-dapps class="#{active-dapps}")
-                        span.icon.pug
-                            icon \Rocket, 15
-                        span.pug Dapps
-                    li.pug(on-click=activate-web class="#{active-web}")
-                        span.icon.pug
-                            icon \Globe, 15
-                        span.pug Web
-                    li.pug(on-click=activate-images class="#{active-images}")
-                        span.icon.pug
-                            icon \FileMedia, 15
-                        span.pug Images
-                    li.pug(on-click=activate-files class="#{active-files}")
-                        span.icon.pug
-                            icon \FileDirectory, 15
-                        span.pug Public Files
+            .pug.section.filter(style=border-style)
+                .title.pug
+                .description.tabs.pug
+                    ul.pug
+                        li.pug(on-click=activate-all class="#{active-all}")
+                            span.icon.pug
+                                icon \Search, 15
+                            span.pug All
+                        li.pug(on-click=activate-dapps class="#{active-dapps}")
+                            span.icon.pug
+                                icon \Rocket, 15
+                            span.pug Dapps
+                        li.pug(on-click=activate-web class="#{active-web}")
+                            span.icon.pug
+                                icon \Globe, 15
+                            span.pug Web
+                        li.pug(on-click=activate-images class="#{active-images}")
+                            span.icon.pug
+                                icon \FileMedia, 15
+                            span.pug Images
+                        li.pug(on-click=activate-files class="#{active-files}")
+                            span.icon.pug
+                                icon \FileDirectory, 15
+                            span.pug Public Files
         .pug.wrapper
             if active-all is \active
                 all store, web3t

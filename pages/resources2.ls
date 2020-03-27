@@ -22,7 +22,7 @@ require! {
     \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
 }
-.staking
+.staking-res
     @import scheme
     position: relative
     display: block
@@ -68,7 +68,7 @@ require! {
                 padding: 30px 20px
                 display: flex
                 @media (max-width: 800px)
-                    display: grid
+                    display: flow-root
                     padding: 20px
                 &:last-child
                     border: 0
@@ -146,6 +146,7 @@ require! {
                     .code
                         overflow: scroll
                         background: #1b1b1b
+                        text-align: left
                         .copy
                             float: right
                             margin-top: 11px
@@ -297,9 +298,9 @@ require! {
         &.link
             min-width: 190px
     >.title
-        position: relative
-        z-index: 1
-        background: linear-gradient(100deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)
+        position: sticky
+        z-index: 1111
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -368,9 +369,8 @@ staking-content = (store, web3t)->
     become-validator = ->
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
-        data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
-        #data = web3t.velas.Staking.add-pool.get-data stake, pairs.mining.address
-        #data = "0xadc9772e0000000000000000000000003e04c4067e2857d0f3da8be6f753b85aea07e86900000000000000000000000000000000000000000000d3c21bcecceda1000000"
+        #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
+        data = web3t.velas.Staking.add-pool.get-data stake, pairs.mining.address
         to = web3t.velas.Staking.address
         #console.log \to, { to, data, amount }
         amount = store.staking.add.add-validator-stake
@@ -448,9 +448,9 @@ staking-content = (store, web3t)->
         staking-address = store.staking.keystore.staking.address
         mining-address =  store.staking.keystore.mining.address
         err, epochs <- web3t.velas.BlockReward.epochsPoolGotRewardFor(mining-address)
-        console.log { epochs }
+        #console.log { epochs }
         err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(staking-address, mining-address)
-        console.log { epochs }
+        #console.log { epochs }
         return alert err if err?
         data = web3t.velas.Staking.claimReward.get-data(epochs, staking-address)
         to = web3t.velas.Staking.address
@@ -607,7 +607,7 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
-    .pug.staking
+    .pug.staking-res
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
@@ -616,6 +616,9 @@ staking = ({ store, web3t })->
                 icon "ChevronLeft", 20
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
+    store.staking.keystore = to-keystore store, no
+    #exit for now
+    #return cb null
     err, data <- web3t.velas.Staking.candidateMinStake
     return cb err if err?
     store.staking.add.add-validator-stake = data `div` (10^18)
@@ -625,7 +628,6 @@ staking.init = ({ store, web3t }, cb)->
     err, data <- web3t.velas.ValidatorSet.getPendingValidators
     return cb err if err?
     store.staking.validators.pending = data
-    store.staking.keystore = to-keystore store, no
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
     cb null

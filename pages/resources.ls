@@ -157,16 +157,15 @@ require! {
         float: center
         margin-top: 20px
     >.title
-        position: relative
+        position: sticky
+        z-index: 1111
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
         color: gray
         font-size: 22px
         padding: 10px
-        background: transparent
-        &.alert
-            height: auto
         >.header
             margin: 5px
             text-align: center

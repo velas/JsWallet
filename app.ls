@@ -17,8 +17,9 @@ require! {
     *
         user-select: none
         -ms-overflow-style: none
+        outline: none
     user-select: none
-    overflow: scroll
+    overflow-y: scroll
     @import scheme
     background: $primary
     height: 100vh
@@ -37,10 +38,11 @@ require! {
             font-weight: 400
             margin: 0
         &.alert
-            height: auto
             padding: 2px
             .header    
-                line-height: 1.6
+                line-height: 44px
+            @media(max-width: 800px)
+                visibility: hidden
     .manage-account
         margin-left: -60px
         @media (max-width: 800px)
@@ -93,8 +95,12 @@ require! {
         100%
             background-position: 468px 0
     @media (max-width: 800px)
-        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu
-            margin: 60px 0 0
+        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res
+            margin: 120px 0 0
+            >.title
+                margin: 60px 0 0
+                position: fixed
+                z-index: 1111111
 module.exports = ({ store, web3t })->
     return null if not store?
     current-page =

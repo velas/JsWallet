@@ -13,6 +13,9 @@ require! {
     position: relative
     padding-bottom: 20px
     display: inline-block
+    &.normalheader
+        @media(max-width: 800px)
+            margin: 60px 0 0
     .sign
         margin-right: 5px
         font-size: 15px !important
@@ -95,6 +98,7 @@ require! {
                     border-radius: 0 !important
                     margin: 0 !important
                     height: 39px
+                    text-transform: uppercase
                     &.active
                         filter: brightness(1.3)
             .middle
@@ -300,7 +304,6 @@ render-transaction = (store, web3t, tran)-->
     lightText=
         color: style.app.addressText
     { token, tx, amount, fee, time, url, type, pending, from, to } = tran
-    #console.log tran
     coin = 
         coins |> find (.token is token)
     return null if not coin?
@@ -404,28 +407,28 @@ module.exports = ({ store, web3t })->
                         button.IN.pug(class="#{is-active('IN')}" style=btn-style on-click=switch-type-in)
                             |↓
                             br.pug
-                            |IN
+                            |#{lang.in}
                         .pug(style=btn-style)
                         button.OUT.pug(class="#{is-active('OUT')}" style=btn-style on-click=switch-type-out)
                             |↑
                             br.pug
-                            |OUT
+                            |#{lang.out}
                     .pug.middle(style=border-b)
                         .pug
-                            input.pug(type='text' style=input-style placeholder="From")
+                            input.pug(type='text' style=input-style placeholder="#{lang.from}")
                         .pug
-                            input.pug(type='text' style=input-style placeholder="To")
+                            input.pug(type='text' style=input-style placeholder="#{lang.to}")
                         button.pug(on-click style=button-primary1-style)
-                            span.pug Apply
+                            span.pug #{lang.apply}
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
         if store.transactions.applied.length > 0
             .header-table.pug(style=header-table-style)
-                span.pug.cell.network(style=lightText) Network
-                span.pug.cell.txhash(style=lightText) Transaction ID
-                span.pug.cell.amount(style=lightText) Amount
+                span.pug.cell.network(style=lightText) #{lang.network}
+                span.pug.cell.txhash(style=lightText) #{lang.trx-id}
+                span.pug.cell.amount(style=lightText) #{lang.trx-amount}
         .pug
             .pug.table
                 if store.transactions.applied.length > 0

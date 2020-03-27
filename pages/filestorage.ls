@@ -194,7 +194,9 @@ require! {
         margin-top: 12px
         margin-right: 10px
     >.title
-        position: relative
+        position: sticky
+        z-index: 1111
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -202,9 +204,6 @@ require! {
         font-size: 22px
         padding: 10px
         height: 60px
-        background: transparent
-        &.alert
-            height: auto
         >.header
             margin: 5px
             text-align: center
@@ -221,6 +220,11 @@ require! {
     >.toolbar
         position: relative
         height: 60px
+        @media (max-width: 800px)
+            position: fixed
+            height: 60px
+            z-index: 11
+            width: 100%
         .files
             float: left
             top: 15px
@@ -272,6 +276,8 @@ require! {
     >.wrapper
         height: 100vh
         display: flex
+        @media (max-width: 800px)
+            margin-top: 60px
         >.panel-content
             width: 30%
             &.file-tree

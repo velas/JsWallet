@@ -94,7 +94,7 @@ require! {
             width: 30%
             text-align: center
             @media screen and (max-width: 800px)
-                width: 30%
+                width: 35%
             >.balance
                 &:last-child
                     font-weight: bold
@@ -181,7 +181,7 @@ module.exports = (store, web3t, wallets, wallet)-->
     style = get-primary-info store
     label-uninstall =
         | store.current.refreshing => \...
-        | _ => \HIDE
+        | _ => \ "#{lang.hide}"
     wallet-style=
         color: style.app.text3
     border-style =
@@ -248,7 +248,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                             span.pug #{lang.receive}
                 else
                     button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
-                        span.pug Migrate
+                        span.pug #{lang.btn-migrate}
         .wallet-middle.pug
             a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)

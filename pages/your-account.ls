@@ -6,7 +6,7 @@ require! {
     \../add-coin.ls
     \../topup.ls
     \./icon.ls
-    \prelude-ls : { map }
+    \prelude-ls : { map, filter }
     \localStorage
 }
 .your-account
@@ -24,9 +24,15 @@ require! {
         background: #321260
         display: inline-grid
         z-index: 3
+        .folder-menu
+            width: 130px
+            div
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
         .col
-            font-size: 14px
-            padding: 10px 15px
+            font-size: 12px
+            padding: 10px
             margin: 0
             display: inline-block
             vertical-align: top
@@ -45,8 +51,13 @@ require! {
                 background: rgba(75, 40, 136, 0.2)
             &.active
                 background: rgba(75, 40, 136, 0.2)
-        .bottom, .middle
-            padding: 10px
+        .middle
+            padding: 5px 10px
+            height: 39px
+            &.account
+                padding: 10px
+                min-height: 109px
+                overflow: scroll
     >.username
         color: $color
         font-size: 13px
@@ -119,6 +130,21 @@ module.exports = (store, web3t)->
         border-top: "1px solid #{style.app.border}"
     lang = get-lang store
     account-index = "#{lang.account-index ? 'Account index'}: #{current.account-index}"
+    length = +(localStorage.get-item('Accounts') ? 3)
+    exclude-current = ->
+        it isnt store.current.account-index
+    create-account-position = (index)->
+        change-account = ->
+            store.current.account-index = index
+            store.current.switch-account = no
+            <- web3t.refresh
+        default-account-name = -> "Account #{index}"
+        current-account-name = ->
+            local-storage.get-item(default-account-name!) ? default-account-name!
+        account-name = current-account-name!
+        .pug.table-row-menu(on-click=change-account key="account#{index}")
+            .col.folder-menu.pug
+                .pug #{account-name}
     .pug.your-account
         if store.preference.username-visible is yes
             .pug.username 
@@ -139,19 +165,6 @@ module.exports = (store, web3t)->
                 if store.current.device is \desktop
                     button.pug.button.lock(on-click=open-migration style=button-primary0-style)
                         icon "Zap", 20
-        length = +(localStorage.get-item('Accounts') ? 3)
-        create-account-position = (index)->
-            change-account = ->
-                store.current.account-index = index
-                store.current.switch-account = no
-                <- web3t.refresh
-            default-account-name = -> "Account #{index}"
-            current-account-name = ->
-                local-storage.get-item(default-account-name!) ? default-account-name!
-            account-name = current-account-name!
-            .pug.table-row-menu(on-click=change-account key="account#{index}")
-                .col.folder-menu.pug
-                    .pug #{account-name}
         create-account = ->
             new-length = 1 + length
             store.current.account-index = new-length
@@ -160,7 +173,7 @@ module.exports = (store, web3t)->
             <- web3t.refresh
         if store.current.switch-account
             .pug.switch-menu(style=filter-body)
-                .pug.middle
+                .pug.middle.account
                     [1 to length] |> map create-account-position
                 .pug.middle(style=border-top)
                     .pug.table-row-menu

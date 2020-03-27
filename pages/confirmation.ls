@@ -6,16 +6,17 @@ require! {
 .confirmation
     @import scheme
     position: absolute
-    z-index: 999999
+    z-index: 99999999
     height: 100vh
     top: 0
     left: 0
     width: 100%
     box-sizing: border-box
-    background: rgba(black, 0.8)
     >.confirmation-body
         background: white
         text-align: center
+        position: fixed
+        width: 100%
         input
             border-radius: $border
             height: 36px
@@ -69,6 +70,7 @@ alert-modal = (store)->
     confirmation=
         background: style.app.background
         color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
     .pug.confirmation
         .pug.confirmation-body(style=confirmation)
@@ -99,6 +101,7 @@ confirmation-modal = (store)->
     confirmation=
         background: style.app.background
         color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
     .pug.confirmation
         .pug.confirmation-body(style=confirmation)
@@ -136,6 +139,7 @@ prompt-modal = (store)->
     confirmation=
         background: style.app.background
         color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
     .pug.confirmation
         .pug.confirmation-body(style=confirmation)

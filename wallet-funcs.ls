@@ -21,7 +21,7 @@ module.exports = (store, web3t, wallets, wallet)->
         to = ""
         value = 0
         err <- send-transaction { to, value }
-        console.log err if err?
+        #console.log err if err?
     receive = (wallet, event)-->
         store.current.send-menu-open = no
         #{ coin, network, wallet } = store.current.send

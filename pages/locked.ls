@@ -97,7 +97,6 @@ require! {
         position: absolute
         width: 100%
 wrong-pin = (store)->
-    #console.log \wrong-pin, 
     store.current.pin = ""
     store.current.pin-trial += 1
     left-trials = total-trials - store.current.pin-trial
@@ -109,8 +108,6 @@ check-pin = (store, web3t)->
     store.current.pin-trial = 0
     store.current.pin = ""
     store.current.loading = yes
-    #console.log \start
-    #<- set-timeout _, 1
     navigate store, web3t, \:init
     notify-form-result \unlock, null
 version = (store, web3t)->
@@ -132,11 +129,12 @@ input = (store, web3t)->
         check-pin store, web3t
     change = (e)->
         store.current.pin = e.target.value
+    lang = get-lang store
     .pug
         input.pug.password(key="pin" style=locked-style type="text" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
         if exists!
             .pug
-                button.setup.pug(on-click=enter style=button-primary1-style) Enter
+                button.setup.pug(on-click=enter style=button-primary1-style) #{lang.enter}
 reset-wallet = (store)->
     del!
     seed.del!

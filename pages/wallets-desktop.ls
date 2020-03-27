@@ -43,6 +43,13 @@ require! {
         line-height: 2
         right: 80px
         position: relative
+        display: inline-flex
+        .name
+            text-overflow: ellipsis
+            white-space: nowrap
+            overflow: hidden
+            width: 110px
+            text-align: right
         input
             outline: none
             width: 100px
@@ -139,7 +146,7 @@ mobile = ({ store, web3t })->
         store.current.edit-account-name = current-account-name!
     default-account-name = -> "Account #{store.current.account-index}"
     edit-account = (e)->
-        console.log e
+        #console.log e
         store.current.edit-account-name = e.target.value
     done-edit = ->
         local-storage.set-item default-account-name!, store.current.edit-account-name
@@ -151,7 +158,7 @@ mobile = ({ store, web3t })->
     account-name = current-account-name!
     view-account-template = ->
         .pug.switch-account.h1
-            span.pug(on-click=open-account) #{account-name}
+            span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
                 icon "Pencil", 20
     edit-account-template = ->
