@@ -50,9 +50,9 @@ module.exports = (store, web3t)->
         err, data <- create-transaction tx
         #console.log 'after create tx', err
         return cb err if err?
-        agree <- confirm store, "Are you sure to send #{tx.amount} #{send.coin.token} to #{send.to}"
+        agree <- confirm store, "Are you sure to send #{round5 tx.amount} #{send.coin.token} to #{send.to}"
         #console.log 'after confirm', agree
-        return cb "You are not agree" if not agree
+        return cb "Cancelled" if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
         return cb err if err?
         err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee }

@@ -9,7 +9,7 @@ require! {
     \copy-to-clipboard
     \./pages/confirmation.ls : { confirm, prompt, alert }
     \./get-lang.ls
-    \bip39
+    \../web3t/providers/deps.ls : { bip39 }
 }
 export generate-wallet = ->
     bip39.generate-mnemonic!
@@ -100,6 +100,10 @@ module.exports = (store, web3t)->
     open-migration = ->
     close-migration = ->
         store.current.token-migration = null
+    open-language = ->
+        store.current.choose-language = yes
+    close-language = ->
+        store.current.choose-language = no
     account-left = ->
         cb = console.log
         return alert store, "0 is smallest account index", cb if store.current.account-index is 0
@@ -132,4 +136,4 @@ module.exports = (store, web3t)->
         message = "This is your Private KEY"
         copy-to-clipboard wallet.private-key
         alert store, "Your Private KEY is copied into your clipboard", cb
-    { export-private-key, check-pin, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }
+    { export-private-key, check-pin, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, open-language, close-language, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }

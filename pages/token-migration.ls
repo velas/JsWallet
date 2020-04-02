@@ -89,6 +89,8 @@ require! {
                 font-size: 13px
             textarea
                 border-radius: $border
+                height: 200px
+                width: 400px
             input, textarea
                 outline: none
                 margin-bottom: 3px
@@ -200,7 +202,29 @@ require! {
                 font-size: 16px
             .pb-0
                 padding-bottom: 0
-            .content
+            .terms-migrate
+                .terms-body
+                    >.header
+                        font-size: 19px
+                        padding: 10px
+                    display: inline-block
+                    min-width: 250px
+                    textarea
+                        padding: 10px
+                        overflow: auto
+                        width: 100%
+                        box-sizing: border-box
+                        height: 100px
+                        width: 300px
+                        border: 0
+                        border-radius: $border
+                        outline: none
+                &.hide
+                    display: none
+            .content-migrate
+                display: none
+                &.visible
+                    display: block
         .change-index
             width: 80px
             padding: 1px
@@ -240,6 +264,9 @@ token-migration = (store, web3t)->
         color: style.app.text
     color =
         color: style.app.text
+    style-textarea=
+        background: style.app.wallet
+        color: style.app.text
     logo-style =
         filter: style.app.filterLogo
     button-primary2-style=
@@ -252,8 +279,18 @@ token-migration = (store, web3t)->
         background: style.app.primary3
     filter-icon=
         filter: style.app.filterIcon
+    goto-terms = ->
+        navigate store, web3t, \terms2
+    visible-migrate = ->
+        #err <- load-terms
+        store.current.content-migrate = not store.current.content-migrate
+    visible-class =
+        if store.current.content-migrate then \visible else \ ""
+    hide-class =
+        if store.current.content-migrate then \hide else \ ""
     swap = ->
         return if store.current.token-migration is 'Loading...'
+        #err <- load-terms
         address = 
             store.current.account.wallets 
                 |> find (-> it.coin.token is \vlx2) 
@@ -268,21 +305,28 @@ token-migration = (store, web3t)->
             .pug.migrate-img
                 img.iron.pug(src="#{style.branding.logo}" style=logo-style)
             .pug.description(style=color)
-                span.pug
-                    span.step.pug 1
-                    | Please make a deposit of all your coins at this address to get the same amount of coins vlx2
-                br.pug
-                br.pug
-                span.address.pug
-                    a.pug.link #{store.current.token-migration}
-                    CopyToClipboard.pug(text="#{store.current.token-migration}" on-copy=copied-inform(store) style=filter-icon)
-                        copy store
-                br.pug
-                span.pug
-                    span.step.pug 2
-                    | Click to "Swap Tokens" after deposited account
-            .pug.content
-                button.pug(on-click=swap style=button-primary2-style) Swap Tokens
+                .pug.terms-migrate(class="#{hide-class}")
+                    .pug.terms-body
+                        .pug.header Terms of Swap
+                        textarea.pug(value="#{store.terms2}" style=style-textarea)
+                    .pug.content
+                        button.pug(on-click=visible-migrate style=button-primary3-style) Accept
+                .pug.content-migrate(class="#{visible-class}")
+                    span.pug
+                        span.step.pug 1
+                        | Please make a deposit of all your coins at this address to get the same amount of coins vlx2
+                    br.pug
+                    br.pug
+                    span.address.pug
+                        a.pug.link #{store.current.token-migration}
+                        CopyToClipboard.pug(text="#{store.current.token-migration}" on-copy=copied-inform(store) style=filter-icon)
+                            copy store
+                    br.pug
+                    span.pug
+                        span.step.pug 2
+                        | Click to "Swap Tokens" after deposited account
+                    .pug.content
+                        button.pug(on-click=swap style=button-primary2-style) Swap Tokens
 module.exports = ({ store, web3t } )->
     return null if not store.current.token-migration?
     { close-migration } = menu-funcs store, web3t

@@ -1,7 +1,7 @@
 require! {
     \react
     \./wallet.ls
-    \prelude-ls : { map, take, drop }
+    \prelude-ls : { map, take, drop, filter }
     \./menu.ls
     \../seed.ls : { get }
     \../web3.ls
@@ -182,7 +182,9 @@ mobile = ({ store, web3t })->
                     chosen-account-template
                     your-account store, web3t
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
-                    wallets |> map wallet store, web3t, wallets
+                    wallets
+                        |> filter -> it.coin.token isnt \vlx2 or window.location.href.index-of('internal') > -1
+                        |> map wallet store, web3t, wallets
         .pug(style=right-side)
             history { store, web3t }
 module.exports = mobile

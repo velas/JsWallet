@@ -21,13 +21,10 @@ require! {
     @keyframes pulse 
         50%  
             background: $white;
-    .loading-flex
-        display: flex
-        justify-content: center
-        align-items: center
     .loading-pulse
         position: absolute
         top: calc(50% - 32px)
+        left: 50%
         width: ($base-line-height / 4)
         height: $base-line-height
         background: $off-white
@@ -50,5 +47,4 @@ require! {
             animation-delay: ($pulse-duration / 1.5)
 module.exports = (add-class)->
     .loading-page.pug(key="loading")
-        .loading-flex.pug
-            .loading-pulse.pug
+        .loading-pulse.pug

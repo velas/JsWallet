@@ -2,6 +2,7 @@ require! {
     \react
     \../get-primary-info.ls
     \../get-lang.ls
+    \./icon.ls
 }
 .confirmation
     @import scheme
@@ -40,7 +41,7 @@ require! {
                 display: inline-block
                 cursor: pointer
                 height: 36px
-                width: 90px
+                width: 110px
                 font-weight: bold
                 font-size: 10px
                 text-transform: uppercase
@@ -52,6 +53,14 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 white-space: nowrap
+                .apply
+                    color: green
+                    vertical-align: middle
+                    margin-right: 2px
+                .cancel
+                    color: red
+                    vertical-align: middle
+                    margin-right: 2px
 alert-modal = (store)->
     return null if typeof! store.current.alert isnt \String
     cancel = ->
@@ -77,7 +86,10 @@ alert-modal = (store)->
             .pug.header(style=confirmation-style) Alert
             .pug.text(style=confirmation-style2) #{store.current.alert}
             .pug.buttons
-                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=cancel style=button-style)
+                    span.cancel.pug
+                        icon \X, 15 
+                    span.pug #{lang.cancel}
 confirmation-modal = (store)->
     return null if typeof! store.current.confirmation isnt \String
     confirm = ->
@@ -108,8 +120,14 @@ confirmation-modal = (store)->
             .pug.header(style=confirmation-style) #{lang.confirmation}
             .pug.text(style=confirmation-style2) #{store.current.confirmation}
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style) #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=confirm style=button-style)
+                    span.apply.pug
+                        icon \Check, 15 
+                    span.pug #{lang.confirm}
+                button.pug.button(on-click=cancel style=button-style)
+                    span.cancel.pug
+                        icon \X, 15 
+                    span.pug #{lang.cancel}
 prompt-modal = (store)->
     return null if typeof! store.current.prompt isnt \String
     confirm = ->
@@ -148,8 +166,14 @@ prompt-modal = (store)->
             .pug
                 input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style)
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style) #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style) #{lang.cancel}
+                button.pug.button(on-click=confirm style=button-style)
+                    span.apply.pug
+                        icon \Check, 15 
+                    span.pug #{lang.confirm}
+                button.pug.button(on-click=cancel style=button-style)
+                    span.cancel.pug
+                        icon \X, 15 
+                    span.pug #{lang.cancel}
 export confirmation-control = (store)->
     .pug
         confirmation-modal store

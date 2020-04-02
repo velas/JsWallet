@@ -8,6 +8,7 @@ require! {
     \mobx : { toJS }
     \./pages/confirmation.ls : { confirm, prompt }
     \./apply-transactions.ls
+    \./get-lang.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -21,9 +22,10 @@ module.exports = (store, web3t)->
     date = (time)->
         moment(time * 1000).format!
     filt = store.current.filter
+    lang = get-lang store
     arrow = (type)->
-        | type is \IN => \IN
-        | _ => \OUT
+        | type is \IN => \ "#{lang.in}"
+        | _ => \ "#{lang.out}"
     arrow-lg = (type)->
         | type is \IN => \↓
         | _ => \↑

@@ -56,7 +56,7 @@ require! {
             height: 39px
             &.account
                 padding: 10px
-                min-height: 109px
+                min-height: 118px
                 overflow: scroll
     >.username
         color: $color

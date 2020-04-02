@@ -53,6 +53,49 @@ require! {
             width: 25px
             vertical-align: bottom
     .menu-item
+        span
+            opacity: 0
+            position: absolute
+            left: 0
+        svg, img
+            transition: transform .5s
+        &:hover
+            svg, img
+                transform: scale(1.2)
+                transition: transform .5s
+            span
+                position: absolute
+                text-transform: uppercase
+                left: 70px
+                top: 17px
+                font-size: 10px
+                font-weight: 600
+                color: #fff
+                padding: 5px
+                background: #210b4a
+                opacity: 1
+                transition: opacity .5s
+                &.arrow_box
+                    border: 1px solid #6b268e
+                    &:after, &:before
+                        right: 100%
+                        top: 21%
+                        border: solid transparent
+                        content: " "
+                        height: 0
+                        width: 0
+                        position: absolute
+                        pointer-events: none
+                    &:after
+                        border-color: rgba(136, 183, 213, 0)
+                        border-right-color: #210b4a
+                        border-width: 6px
+                        margin-top: 2px
+                    &:before
+                        border-color: rgba(194, 225, 245, 0)
+                        border-right-color: #6b268e
+                        border-width: 8px
+                        margin-top: 0px
         &.active
             color: #9264b6 !important
             transition: $smooth
@@ -216,12 +259,15 @@ module.exports = (store, web3)->
         .pug.menu-items
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
+                    span.arrow_box.pug wallets
                     img.pug(src="#{icons.wallet}")
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-staking style=icon-style class="#{staking}")
+                    span.arrow_box.pug staking
                     icon \Database , 20
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
+                    span.arrow_box.pug search
                     icon \Search , 20
             if no        
                 if store.preference.settings-visible is yes
@@ -233,4 +279,5 @@ module.exports = (store, web3)->
                         icon \Project , 20
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
+                    span.arrow_box.pug settings
                     icon \Gear , 20

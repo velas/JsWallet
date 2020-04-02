@@ -14,14 +14,21 @@ require! {
     \./pages/confirmation.ls : { confirmation-control }
 }
 .app
+    input
+        line-height: normal !important
+    &::-webkit-scrollbar
+        display: none
     *
-        user-select: none
         -ms-overflow-style: none
+        scrollbar-width: none
         outline: none
+    ::-webkit-scrollbar
+        display: none
     user-select: none
     overflow-y: scroll
     @import scheme
     background: $primary
+    scrollbar-width: none
     height: 100vh
     position: relative
     color: white
@@ -61,6 +68,8 @@ require! {
             background-position: 100% 50%
         100%
             background-position: 0% 50%
+    .placeholder-coin
+        display: none !important
     .placeholder
         -webkit-animation-duration: 1s
         animation-duration: 1s

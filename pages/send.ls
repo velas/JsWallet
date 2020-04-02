@@ -5,6 +5,7 @@ require! {
     \../get-primary-info.ls
     \./icon.ls
     \../get-lang.ls
+    \../round5.ls
 }
 .content
     position: relative
@@ -67,6 +68,12 @@ require! {
                     td
                         padding: 3px 10px
                         font-size: 14px
+                        .label-coin
+                            left: 3px
+                            top: 3px
+                            padding: 0 2px 0 2px
+                            height: 16px
+                            position: relative
                         &:last-child
                             text-align: right
             text-align: left
@@ -97,7 +104,6 @@ require! {
                     border-radius: $border-radius
                     padding: 0px 10px
                     font-size: 14px
-                    margin: 1px
                     border: 0px
                     box-shadow: none
                 .amount-field
@@ -171,6 +177,12 @@ require! {
             padding-left: 3px
             color: gray
             margin-top: 5px
+            .label-coin
+                left: 3px
+                top: 3px
+                padding: 0 2px 0 2px
+                height: 13px
+                position: relative
         .topup
             display: inline-block
             margin-left: 5px
@@ -278,6 +290,11 @@ send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup, history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
+    cut-tx = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 10) + \.. + t.substr(t.length - 4, 4)
+        r.to-upper-case!
     style = get-primary-info store
     menu-style=
         background: style.app.background
@@ -295,6 +312,8 @@ send = ({ store, web3t })->
     use-max-style =
         background: style.app.wallet
         color: style.app.text
+    crypto-background =
+        background: style.app.wallet
     more-text=
         color: style.app.text
     address-input=
@@ -346,7 +365,7 @@ send = ({ store, web3t })->
                     .pug
                         .pug.amount-field
                             .input-wrapper.pug
-                                .label.crypto.pug #{token}
+                                .label.crypto.pug(style=crypto-background) #{token}
                                 input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}")
                             .input-wrapper.small.pug(style=amount-style)
                                 .label.lusd.pug $
@@ -358,29 +377,37 @@ send = ({ store, web3t })->
                             button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max ? 'USE MAX'}
                             span.pug #{lang.balance ? 'balance'}
                             span.pug.balance
-                                span.pug #{wallet.balance + ' ' + token}
+                                span.pug #{wallet.balance}
+                                    img.label-coin.pug(src="#{send.coin.image}")
+                                    span.pug #{token}
                                 if +wallet.pending-sent >0
-                                    span.pug.pending - #{pending + ' ' + lang.pending}
+                                    span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->
-                        input.pug(read-only="readonly" style=input-style value="#{show-data!}")
+                        input.pug(read-only="readonly" style=input-style value="#{cut-tx show-data!}")
                 table.pug(style=border-style)
                     tbody.pug
                         tr.pug
                             td.pug #{lang.you-spend ? 'You Spend'}
                             td.pug
-                                .pug(title="#{send.amount-charged}") #{round5(send.amount-charged) + '  ' + token}
+                                span.pug(title="#{send.amount-charged}") #{round5(send.amount-charged)}
+                                    img.label-coin.pug(src="#{send.coin.image}")
+                                    span.pug(title="#{send.amount-charged}") #{token}
                                 .pug.usd $ #{round5 send.amount-charged-usd}
                         tr.pug.green
                             td.pug #{lang.recipient-obtains ? 'Recipient Obtains'}
                             td.pug
-                                .pug.bold #{round5(send.amount-obtain) + '  ' + token}
+                                span.pug.bold #{round5(send.amount-obtain)}
+                                    img.label-coin.pug(src="#{send.coin.image}")
+                                    span.pug.bold #{token}
                                 .pug.usd $ #{round5 send.amount-obtain-usd}
                         tr.pug.orange
                             td.pug #{lang.transaction-fee ? 'Transaction Fee'}
                             td.pug
-                                .pug(title="#{send.amount-send-fee}") #{round5(send.amount-send-fee) + '  ' + fee-token}
+                                span.pug(title="#{send.amount-send-fee}") #{round5(send.amount-send-fee)}
+                                    img.label-coin.pug(src="#{send.coin.image}")
+                                    span.pug(title="#{send.amount-send-fee}") #{fee-token}
                                 .pug.usd $ #{round5(send.amount-send-fee-usd)}
                 .pug.fast-cheap
                     send-options |> map build-send-option { store, change-amount }

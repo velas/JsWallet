@@ -12,7 +12,6 @@ require! {
     \./install-plugin.ls : { build-install, build-uninstall, build-install-by-name, build-quick-install }
     \./refresh-account.ls : { background-refresh-account, set-account }
     \web3 : \Web3
-    \../api/ethnamed.ls
     \./get-record.ls
     \./set-page-theme.ls
     \./mirror.ls
@@ -158,7 +157,7 @@ module.exports = (store, config)->
     install-quick = build-quick-install cweb3, store 
     uninstall = build-uninstall cweb3, store
     install-by-name = build-install-by-name cweb3, store
-    naming = ethnamed cweb3
+    naming = {}
     get-supported-tokens = build-get-supported-tokens cweb3, store
     get-account-name = build-get-account-name cweb3, naming
     refresh-balances = (cb)->

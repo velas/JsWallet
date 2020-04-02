@@ -37,6 +37,7 @@ store =
     langs: { en, ru, ua, kr, cn }
     registry: []
     terms: "Loading..."
+    terms2: "Loading..."
     collapse: ""
     preference:
         settings-visible: yes
@@ -107,7 +108,9 @@ store =
         langs-open-start: no
         add-coin: no
         token-migration: null
+        choose-language: yes
         banner: no
+        content-migrate: no
         active: no
         dragfile: no
         files: no

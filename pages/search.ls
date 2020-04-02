@@ -28,7 +28,7 @@ require! {
     .search-input
         position: fixed
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
-        z-index: 11
+        z-index: 1
         width: 100%
     @media(max-width:800px)
         width: 100%
@@ -67,7 +67,8 @@ require! {
             &.tabs
                 overflow: hidden
                 ul
-                    overflow: scroll
+                    overflow-x: scroll
+                    scrollbar-width: none
                     white-space: nowrap
             @media(max-width: 800px)
                 width: 100%
@@ -165,6 +166,7 @@ require! {
         height: 540px
         display: flex
         overflow-y: scroll
+        scrollbar-width: none
         padding: 0 20px
         margin-top: 129px
         >.panel-content
@@ -235,7 +237,6 @@ require! {
                             margin-left: 0
         >.store-content
             width: 40%
-            overflow: scroll
             position: relative
             @media(max-width: 800px)
                 display: none

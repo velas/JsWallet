@@ -4,7 +4,7 @@ module.exports =
         background-image: "none"
         input: \#FFF
         primary1: \#9d41eb
-        primaryOpct: "rgb(157, 65, 235, 0.5)"
+        primaryOpct: "rgb(106, 39, 161)"
         primary2: \#3cd5af
         primary3: \#ffffff
         primary4: \#c35c5f
@@ -12,6 +12,7 @@ module.exports =
         wallet-light: "rgb(76, 40, 136)"
         header: \#331463
         icon: \white
+        loader: "rgb(60, 213, 175)"
         border: \#6b268e
         text: \#fff     
         text2: \#9d41eb     
@@ -34,6 +35,7 @@ module.exports =
         wallet-light: \#FFF
         header: \#FFF
         icon: \gray
+        loader: \gray
         border: \#CCCCCC
         text: \black
         text2: \black
@@ -56,6 +58,7 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        loader: \#276A9F
         border: \#405b77
         text: \#FFF
         text2: \#FFF
@@ -78,6 +81,7 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        loader: \#276A9F
         border: \#213040
         text: \#FFF
         text2: \#FFF
@@ -100,6 +104,7 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        loader: \#276A9F
         border: \#213040
         text: \#FFF
         text2: \#FFF

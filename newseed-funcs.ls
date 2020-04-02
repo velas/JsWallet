@@ -1,7 +1,7 @@
 require! {
     \./navigate.ls
     \./seed.ls : { set }
-    \bip39 : { generate-mnemonic }
+    \../web3t/providers/deps.ls : { bip39 }
     \./pages/confirmation.ls : { confirm }
     \prelude-ls : { words, map, filter, join }
     \./get-lang.ls
@@ -14,7 +14,7 @@ module.exports = (store, web3t)->
     return null if not store? or not web3t?
     lang = get-lang store
     generate-seed = ->
-        store.current.seed = generate-mnemonic!
+        store.current.seed = bip39.generate-mnemonic!
         store.current.seed-temp = store.current.seed
     perform-change-seed = ->
         store.current.seed = store.current.seed-temp

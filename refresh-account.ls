@@ -2,13 +2,18 @@ require! {
     \./new-account.ls
     \./refresh-wallet.ls
     \mobx : { toJS, transaction }
-    \prelude-ls : { map, pairs-to-obj }
+    \prelude-ls : { map, pairs-to-obj, find }
     \./mirror.ls
     \./apply-transactions.ls
 }
 export set-account = (web3, store, cb)->
     err, account <- new-account store, store.current.seed
     return cb err if err?
+    #vlx =
+    #    account.wallets 
+    #        |> find -> it.coin.token is 'vlx'
+    #vlx.address = 'VLZXHUUZYToqjvSJgT61DrULHy2mmxkSgxd'
+    #console.log account
     store.current.account = account
     mirror.account-addresses =
         account.wallets 

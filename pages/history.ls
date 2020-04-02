@@ -6,6 +6,9 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \./loading.ls
+    \react-copy-to-clipboard : { CopyToClipboard }
+    \../copied-inform.ls
+    \../copy.ls
 }
 .history
     @import scheme
@@ -198,6 +201,21 @@ require! {
             width: auto
             letter-spacing: 0px
             padding: 0px 3px 0 0px
+    .syncing
+        svg
+            color: orange
+            height: 12px
+            width: 15px
+            margin-left: 4px
+            @keyframes spin
+                from
+                    transform: rotate(0deg)
+                to 
+                    transform: rotate(360deg)
+            animation-name: spin
+            animation-duration: 4000ms
+            animation-iteration-count: infinite
+            animation-timing-function: linear
     .fee
         display: inline-block
         margin-right: 5px
@@ -238,6 +256,13 @@ require! {
                     width: 55%
                     a
                         color: black
+                    img
+                        border-radius: inherit
+                        border: none
+                        margin-left: 3px
+                        height: 12px
+                        left: 3px
+                        position: relative
                 &.amount
                     width: 35%
                     text-align: right
@@ -268,10 +293,21 @@ require! {
                 .color
                     font-size: 12px
                     color: $gray
+                img
+                    border-radius: inherit
+                    border: none
+                    margin-left: 3px
+                    height: 12px
+                    left: 3px
+                    position: relative
             .type
                 text-align: center
             .direction
                 font-size: 11px
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
+                text-transform: uppercase
             &.OUT
                 .direction
                     color: #be6ed2
@@ -292,6 +328,8 @@ require! {
 render-transaction = (store, web3t, tran)-->
     { coins, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
+    filter-icon=
+        filter: style.app.filterIcon
     lang = get-lang store
     menu-style=
         color: style.app.text
@@ -319,12 +357,15 @@ render-transaction = (store, web3t, tran)-->
                 .pug.direction #{arrow(type)}
             .cell.pug.txhash
                 a.pug(href="#{url}" target="_blank") #{cut-tx tx}
+                CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
+                    copy store
                 .pug.gray(style=lightText)
                     span.pug #{lang.created}: 
                         | #{ago time}
                     if pending is yes
                         span.pug
-                            span.pug.bold (#{lang.pending})
+                            span.pug.bold.syncing
+                                icon \Sync, 10
                             span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}")
@@ -339,13 +380,17 @@ render-transaction = (store, web3t, tran)-->
                     .pug.direction #{arrow-lg(type)}
                 .cell.pug.details-from
                     .pug.gray(style=lightText)
-                        span.pug Sender:
+                        span.pug #{lang.sender}:
+                        CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
+                            copy store
                     a.pug(target="_blank" href="#" style=menu-style) #{from}
                 .cell.pug.arrow
                     icon "ChevronRight", 20
                 .cell.pug.details-to
                     .pug.gray(style=lightText)
-                        span.pug Recipient:
+                        span.pug #{lang.recipient}:
+                        CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
+                            copy store
                     a.pug(target="_blank" href="#" style=menu-style) #{to}
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t

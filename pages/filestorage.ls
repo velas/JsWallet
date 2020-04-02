@@ -29,7 +29,7 @@ require! {
         right: 10px
         width: 226px
         background: #321260
-        position: absolute
+        position: fixed
         display: inline-grid
         z-index: 1
         >.hide-progress
@@ -195,7 +195,7 @@ require! {
         margin-right: 10px
     >.title
         position: sticky
-        z-index: 1111
+        z-index: 1
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
@@ -225,6 +225,10 @@ require! {
             height: 60px
             z-index: 11
             width: 100%
+            background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        ul.path
+            @media (max-width: 800px)
+                display: none
         .files
             float: left
             top: 15px
@@ -278,10 +282,16 @@ require! {
         display: flex
         @media (max-width: 800px)
             margin-top: 60px
+            position: fixed
+            width: 100%
         >.panel-content
             width: 30%
+            @media(max-width: 800px)
+                display: none
             &.file-tree
                 display: none
+                @media(max-width: 800px)
+                    display: block
             @media(max-width: 800px)
                 position: absolute
                 z-index: 1
@@ -304,7 +314,7 @@ require! {
                 &.dragarea
                     display: block
                 div
-                    top: 12rem
+                    top: 10rem
                     text-align: center !important
                     position: relative
                     width: 60% !important
@@ -312,6 +322,8 @@ require! {
                     border: 1px dashed
                     margin: 0 auto
                     display: block
+                    @media (max-width: 800px)
+                        width: 80% !important
                     img
                         display: block
                         width: 40px
@@ -336,6 +348,9 @@ require! {
                 box-sizing: border-box
                 color: rgb(204, 204, 204)
                 overflow-y: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
                 &.network
                     width: 50%
                     text-align: left

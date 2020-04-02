@@ -7,6 +7,8 @@ require! {
     \../get-lang.ls
     \../send-form.ls : { notify-form-result }
     \../seed.ls
+    \../menu-funcs.ls
+    \./choose-language.ls
 }
 .locked
     @import scheme
@@ -15,6 +17,8 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    .language
+        position: absolute
     .password
         -webkit-text-security: disc
         text-security: disc
@@ -131,7 +135,7 @@ input = (store, web3t)->
         store.current.pin = e.target.value
     lang = get-lang store
     .pug
-        input.pug.password(key="pin" style=locked-style type="text" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
+        input.pug.password(key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
         if exists!
             .pug
                 button.setup.pug(on-click=enter style=button-primary1-style) #{lang.enter}
@@ -150,6 +154,7 @@ wrong-trials = (store)->
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
+    { open-language } = menu-funcs store, web3t
     setup = ->
         return alert(lang.wrong-pin-should ? 'PIN should be 4 at least 4 chars length') if store.current.pin.length < 4
         set store.current.pin
@@ -162,7 +167,8 @@ setup-button = (store, web3t)->
         background: style.app.primary3
     .pug(key="setup-button")
         button.setup.pug(on-click=setup style=button-style) #{lang.setup ? 'Setup'}
-        .hint.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
+        .hint.p.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
+        choose-language { store, web3t }
 create-wallet = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store

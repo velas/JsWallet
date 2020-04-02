@@ -29,9 +29,10 @@ require! {
     .loader
         display: inline-block
         cursor: pointer
+        color: #00ffdc
         svg
             vertical-align: sub !important
-            width: 12px
+            width: 20px
     >.menu-body
         display: inline-block
         line-height: normal
@@ -75,11 +76,14 @@ require! {
                     opacity: .8
             >.amount
                 font-size: 40px
+                .symbol
+                    font-size: 20px
+                    vertical-align: super
                 >*
                     display: inline-block
     .placeholder
         width: auto !important
-        height: 34px !important
+        height: 54px !important
         line-height: 34px !important
         -webkit-animation-duration: 1s
         animation-duration: 1s
@@ -120,7 +124,8 @@ module.exports = ({ store, web3t })->
     menu-style=
         color: style.app.text
     icon-style =
-        color: style.app.icon
+        color: style.app.loader
+        margin-top: "10px"
     lang = get-lang store
     syncing = 
         | store.current.refreshing => \syncing
@@ -131,14 +136,14 @@ module.exports = ({ store, web3t })->
     .menu.wallet-main.pug(style=menu-style)
         .menu-body.pug
             .balance.pug
-                .pug
-                    if store.preference.refresh-visible is yes
-                        .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")
-                            icon \Sync, 20
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
                     .number.pug #{money current.balance-usd}
                 .currency.h1.pug #{lang.total-balance ? 'Total Balance'}
+                .pug
+                    if store.preference.refresh-visible is yes
+                        .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")
+                            icon \Sync, 25
             if store.current.device is \mobile    
                 your-account store, web3t
             project-links { store, web3t }

@@ -93,6 +93,11 @@ require! {
         >.top-middle
             width: 30%
             text-align: center
+            .label-coin
+                height: 16px
+                top: 3px
+                padding-left: 4px
+                position: relative
             @media screen and (max-width: 800px)
                 width: 35%
             >.balance
@@ -154,7 +159,7 @@ require! {
             margin: 10px
             margin-left: 50px
             z-index: 2
-        >a
+        >span
             width: 100%
             z-index: 1
             position: relative
@@ -173,8 +178,31 @@ require! {
             display: inline-block
             text-overflow: ellipsis
             overflow: hidden
+            user-select: text !important
+            cursor: auto
             @media screen and (max-width: 390px)
-                padding-right: 35px
+                padding-right: 25px
+            a
+                width: auto
+                z-index: 1
+                position: relative
+                border-radius: $border
+                border: 0
+                background: transparent
+                box-sizing: border-box
+                vertical-align: top
+                text-align: center
+                height: $card-top-height - 14px
+                color: rgb(204, 204, 204)
+                font-size: 14px
+                line-height: $card-top-height - 14px
+                display: inline-block
+                text-overflow: ellipsis
+                overflow: hidden
+                cursor: pointer
+                user-select: text !important
+                @media screen and (max-width: 390px)
+                    width: 90%
 module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
@@ -207,8 +235,19 @@ module.exports = (store, web3t, wallets, wallet)-->
     placeholder = 
         | store.current.refreshing => "placeholder"
         | _ => ""
+    placeholder-coin = 
+        | store.current.refreshing => "placeholder-coin"
+        | _ => ""
     name = wallet.coin.name ? wallet.coin.token
+    load-terms = (cb)->
+        #return cb null if store.current.content-migrate?
+        err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+        return cb err if err?
+        store.terms2 = res.text
+        cb null
     migrate = (wallet)-> ->
+        return alert "disabled" if window.location.href.index-of('internal') is -1
+        err <- load-terms
         address = 
             store.current.account.wallets 
                 |> find (-> it.coin.token is \vlx2) 
@@ -218,10 +257,11 @@ module.exports = (store, web3t, wallets, wallet)-->
         return alert "#{err}" if err?
         return alert "cannot create address" if not data.body?address?
         store.current.token-migration = data.body.address
+        #store.current.token-migration = "V123"
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
-                .img.pug
+                .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
                     .name.pug(class="#{placeholder}") $#{ money(usd-rate)}
@@ -230,7 +270,9 @@ module.exports = (store, web3t, wallets, wallet)-->
                 if +wallet.pending-sent is 0
                     .balance.pug.title(class="#{placeholder}") #{name}
                 .balance.pug(class="#{placeholder}")
-                    .pug #{ balance }
+                    span.pug #{ wallet.balance }
+                        img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
+                        span.pug #{ wallet.coin.token.to-upper-case! }
                     if +wallet.pending-sent >0
                         .pug.pending 
                             span.pug -#{pending}
@@ -250,7 +292,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                     button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
                         span.pug #{lang.btn-migrate}
         .wallet-middle.pug
-            a.pug(target="_blank" href="#{get-address-link wallet}" style=address-input) #{get-address-title wallet}
+            span.pug(style=address-input)
+                a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
