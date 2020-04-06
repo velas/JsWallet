@@ -12,13 +12,6 @@ require! {
 }
 .choose-language
     @import scheme
-    @keyframes fadeIn
-        from
-            opacity: 0
-            transform: translate3d(0, -20%, 0)
-        to
-            opacity: 1
-            transform: translate3d(0, 0, 0)
     @keyframes bounceIn
         from
             opacity: 0
@@ -120,7 +113,7 @@ require! {
                     display: none
             .langs
                 width: 100%
-                margin: 30px auto
+                margin: 50px auto
                 @media(max-width: 800px)
                     width: 100%
                     margin: 0
@@ -160,7 +153,7 @@ require! {
                 background: url("https://res.cloudinary.com/dfbhd7liw/image/upload/v1582209591/velas/logo-velas-opacity.png")
                 background-repeat: no-repeat
                 background-position: left 10px
-            padding: 40px 10%
+            padding: 50px 10%
             .title
                 padding: 2px
             .description
@@ -205,6 +198,7 @@ language = (store, web3t)->
     set-lang = (lang)->
         return alert "lang is not available" if not store.langs[store.lang]?
         store.lang = lang
+        store.current.choose-language = no
     change-lang-en = ->
         return set-lang \en 
     change-lang-ru = ->
@@ -215,6 +209,8 @@ language = (store, web3t)->
         return set-lang \cn
     change-lang-kr = ->
         return set-lang \kr
+    change-lang-fr = ->
+        return set-lang \fr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -239,7 +235,7 @@ language = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Deutsch
                         img.pug(src="#{langs.gr}")
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(on-click=change-lang-fr style=color)
                         | Français
                         img.pug(src="#{langs.fr}")
                     li.pug.lang-item(on-click=change-lang-en style=color)
@@ -271,8 +267,9 @@ language = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Қазақ
                         img.pug(src="#{langs.kz}")
-        .pug.content
-            button.pug(on-click=close-language style=button-primary2-style) #{lang.next}
+        if no
+            .pug.content
+                button.pug(on-click=close-language style=button-primary2-style) #{lang.next}
 module.exports = ({ store, web3t } )->
     return null if store.current.choose-language isnt yes
     { close-language } = menu-funcs store, web3t

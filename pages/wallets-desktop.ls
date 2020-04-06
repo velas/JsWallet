@@ -38,18 +38,26 @@ require! {
             opacity: .05
             top: 20px
             left: -5px
+        .hidden
+            @media(max-width: 940px)
+                visibility: hidden
     .switch-account
         float: right
         line-height: 2
         right: 80px
         position: relative
         display: inline-flex
+        .ckeck
+            color: #3cd5af
+        .cancel
+            color: #c25b5f
         .name
             text-overflow: ellipsis
             white-space: nowrap
             overflow: hidden
             width: 110px
             text-align: right
+            cursor: default
         input
             outline: none
             width: 100px
@@ -65,6 +73,10 @@ require! {
         .icon
             vertical-align: middle
             margin-left: 20px
+            transition: transform .5s
+            &.rotate
+                transform: rotate(180deg)
+                transition: transform .5s
     .h1
         font-size: 12px
         text-transform: uppercase
@@ -156,17 +168,21 @@ mobile = ({ store, web3t })->
     current-account-name = ->
         local-storage.get-item(default-account-name!) ? default-account-name!
     account-name = current-account-name!
+    rotate-class =
+        if store.current.switch-account then \rotate else \ ""
     view-account-template = ->
         .pug.switch-account.h1
-            span.name.pug(on-click=open-account) #{account-name}
+            span.name.pug #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                icon "Pencil", 20
+                icon "Pencil", 17
+            span.pug.icon(on-click=open-account class="#{rotate-class}")
+                icon "ChevronDown", 22
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)
-            span.pug.icon(on-click=done-edit)
+            span.ckeck.pug.icon(on-click=done-edit)
                 icon "Check", 20
-            span.pug.icon(on-click=cancel-edit-account-name)
+            span.cancel.pug.icon(on-click=cancel-edit-account-name)
                 icon "X", 20
     chosen-account-template =
         if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
@@ -178,12 +194,12 @@ mobile = ({ store, web3t })->
             add-coin-page { store, web3t }
             .wallets.pug(key="wallets-body")
                 .header.pug(style=header-style)
-                    span.pug.head.left.h1(style=header-left) #{lang.your-wallets}
+                    span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
                     chosen-account-template
                     your-account store, web3t
                 .wallet-container.pug(key="wallets-viewport" style=border-style)
                     wallets
-                        |> filter -> it.coin.token isnt \vlx2 or window.location.href.index-of('internal') > -1
+                        #|> filter -> it.coin.token isnt \vlx2 or window.location.href.index-of('internal') > -1
                         |> map wallet store, web3t, wallets
         .pug(style=right-side)
             history { store, web3t }

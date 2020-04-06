@@ -27,7 +27,6 @@ module.exports =
     secret-phrase-change: "이것을 편집하면 기존 지갑이 사라지고 모든 동전이 손실됩니다."
     save: "저장"
     print: "인쇄"
-    edit-phrase: "비밀 편집"
     your-nickname: "닉네임"
     your-nickname-info: "당신은 당신의 계정에 별명, 이메일 또는 전화 번호를 첨��하고 친구들과 공유 할 수 있습니다. 그들은 당신의 암호를 해결하기 위해 당신의 닉을 사용합니다"
     switch-account-index: "계정 인덱스 전환"
@@ -136,3 +135,4 @@ module.exports =
     exit-btn-pool: "Exit"
     choose-language: "언어를 선택하십시오"
     next: "계속하다"
+    your-seed-phrase: "씨구"

@@ -27,7 +27,6 @@ module.exports =
     secret-phrase-change: "If you edit this, you lose your old wallet and the associated coins."
     save: "Save"
     print: "Print"
-    edit-phrase: "Edit Secret"
     your-nickname: "Your Nickname"
     your-nickname-info: "You are able to attach nickname, email or phone number to your account and share it with friends. They will use your nick to resolve your crypto-address"
     switch-account-index: "Switch Account Index"
@@ -136,3 +135,4 @@ module.exports =
     exit-btn-pool: "Exit"
     choose-language: "Choose Language"
     next: "Continue"
+    your-seed-phrase: "Your Seed Phrase"

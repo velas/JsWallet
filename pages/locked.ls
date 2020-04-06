@@ -92,14 +92,15 @@ require! {
         100%
             -webkit-mask-position: left
     .version
-        font-size: 10px
-        font-weight: 600
-        letter-spacing: 0px
-        text-align: center
-        opacity: .4
-        bottom: 30px
-        position: absolute
-        width: 100%
+        letter-spacing: 1px
+        font-size: 8px
+        padding: 6px
+        color: #89829d
+        border-radius: 8px
+        height: 5px
+        line-height: 5px
+        width: 20px
+        margin: 5px auto
 wrong-pin = (store)->
     store.current.pin = ""
     store.current.pin-trial += 1
@@ -202,11 +203,11 @@ locked = ({ store, web3t })->
         .pug.logo
             img.iron.pug(style=logo-style src="#{info.branding.logo}")
             .title.pug #{info.branding.title}
+            version store, web3t
         .pug.title(key="locked-title") #{title}
         .pug.inputs(key="locked-inputs")
             input store, web3t
         footer store, web3t
-        version store, web3t
 focus = ({ store }, cb)->
     cb null
 locked.focus = focus

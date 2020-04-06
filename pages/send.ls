@@ -13,6 +13,52 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
+    .switch-account
+        float: right
+        position: relative
+        display: inline-flex
+        .ckeck
+            color: #3cd5af
+        .cancel
+            color: #c25b5f
+        .name
+            left: 12px
+            position: relative
+        input
+            outline: none
+            width: 100px
+            margin-top: -6px
+            height: 36px
+            line-height: 36px
+            border-radius: 0px
+            padding: 0px 10px
+            font-size: 12px
+            opacity: 1
+        span
+            cursor: pointer
+        .icon
+            vertical-align: middle
+            margin-left: 20px
+    .switch-menu
+        position: absolute
+        top: 35px
+        right: 0px
+        width: 25%
+        background: #321260
+        display: inline-grid
+        z-index: 3
+        .middle
+            padding: 5px 10px
+            height: 37px
+            &.account
+                padding: 10px
+                min-height: 50px
+                overflow: scroll
+    .h1
+        font-size: 17px
+        text-transform: uppercase
+        letter-spacing: 2px
+        opacity: .8
     .pending
         color: orange
     >*
@@ -107,11 +153,35 @@ require! {
                     border: 0px
                     box-shadow: none
                 .amount-field
+                    position: relative
                     >.input-wrapper
                         position: relative
-                        width: 50%
+                        width: 65%
+                        &.choose-currency
+                            display: inline-flex
+                            width: 45% !important
+                        select
+                            -webkit-appearance: none
+                            -moz-appearance: none
+                            padding-right: 30px
+                            padding-left: 10px
+                            background-position: right 5px top 50%
+                            background-repeat: no-repeat
+                            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=")
+                            display: block
+                            width: 30%
+                            height: 36px
+                            font-size: 14px
+                            line-height: 1.5
+                            color: #fff
+                            background-color: #421f7c
+                            background-clip: padding-box
+                            border-radius: 0
+                            border-color: #6b258e
+                            border-left: 0 solid
+                            margin-left: -1px
                         &.small
-                            width: 25%
+                            width: 35%
                         display: inline-block
                         box-sizing: border-box
                         margin: 0
@@ -123,6 +193,13 @@ require! {
                                 left: 5px
                             &.crypto
                                 right: 5px
+                                top: 7px
+                                height: 22px
+                        .label-coin
+                            height: 18px
+                            top: 3px
+                            position: relative
+                            padding: 0 0px 0 8px;
                         input
                             width: 100%
                             color: white
@@ -140,8 +217,8 @@ require! {
                                 border-left: 0
                             &.amount-usd
                                 background: #f1eeee
-                                padding-left: 20px
                                 border-radius: 0
+                                padding-left: 20px
         >.header
             margin: 0
             padding: 10px
@@ -177,6 +254,13 @@ require! {
             padding-left: 3px
             color: gray
             margin-top: 5px
+            .switch-currency
+                float: right
+                background: transparent !important
+                &.active
+                    background: rgb(67, 32, 124) !important
+                &:last-child
+                    margin-right: 2px
             .label-coin
                 left: 3px
                 top: 3px
@@ -319,12 +403,31 @@ send = ({ store, web3t })->
     address-input=
         color: style.app.addressText
         background: style.app.addressBg
+    filter-body =
+        border: "1px solid #{style.app.border}"
+        background: style.app.header
+    button-primary2-style=
+        border: "1px solid #{style.app.primary2}"
+        color: style.app.text
+        background: style.app.primary2
+    button-primary3-style=
+        border: "1px solid #{style.app.primary3}"
+        color: style.app.text2
+        background: style.app.primary3
     expand-collapse = ->
         store.current.send-menu-open = not store.current.send-menu-open
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->
         invoice store, wallet
+    activate = (convert)-> ->
+        store.current.convert = convert 
+    activate-usd = activate \usd
+    activate-eur = activate \eur
+    active-class = (convert)->
+        if store.current.convert is convert then 'active' else ''
+    active-usd = active-class \usd
+    active-eur = active-class \eur
     .pug.content
         .pug.content-body(style=more-text)
             .pug.header
@@ -365,14 +468,18 @@ send = ({ store, web3t })->
                     .pug
                         .pug.amount-field
                             .input-wrapper.pug
-                                .label.crypto.pug(style=crypto-background) #{token}
+                                .label.crypto.pug(style=crypto-background)
+                                    img.label-coin.pug(src="#{send.coin.image}")
+                                    | #{token}
                                 input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}")
-                            .input-wrapper.small.pug(style=amount-style)
-                                .label.lusd.pug $
-                                input.pug.amount-usd(type='text' style=input-style on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}")
-                            .input-wrapper.small.pug(style=amount-style)
-                                .label.lusd.pug €
-                                input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
+                            if active-usd is \active
+                                .input-wrapper.small.pug(style=amount-style)
+                                    .label.lusd.pug $
+                                    input.pug.amount-usd(type='text' style=input-style on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}")
+                            if active-eur is \active
+                                .input-wrapper.small.pug(style=amount-style)
+                                    .label.lusd.pug €
+                                    input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
                         .pug.usd
                             button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max ? 'USE MAX'}
                             span.pug #{lang.balance ? 'balance'}
@@ -382,6 +489,8 @@ send = ({ store, web3t })->
                                     span.pug #{token}
                                 if +wallet.pending-sent >0
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
+                            button.pug.send-all.switch-currency(on-click=activate-eur class="#{active-eur}" style=use-max-style type="button") eur
+                            button.pug.send-all.switch-currency(on-click=activate-usd class="#{active-usd}" style=use-max-style type="button") usd
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->
@@ -416,9 +525,9 @@ send = ({ store, web3t })->
                     .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
             .pug.button-container
                 .pug.buttons
-                    a.pug.btn.btn-primary(on-click=send-anyway style=primary-button-style)
+                    a.pug.btn.btn-primary(on-click=send-anyway style=button-primary2-style)
                         span.pug #{send-title}
                         if send.sending
                             span.pug ...
-                    a.pug.btn.btn-default(on-click=cancel style=default-button-style) #{lang.cancel}
+                    a.pug.btn.btn-default(on-click=cancel style=button-primary3-style) #{lang.cancel}
 module.exports = send

@@ -300,6 +300,8 @@ manage-account = (store, web3t)->
         return set-lang \cn
     change-lang-kr = ->
         return set-lang \kr
+    change-lang-fr = ->
+        return set-lang \fr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -326,7 +328,7 @@ manage-account = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Deutsch
                         img.pug(src="#{langs.gr}")
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(on-click=change-lang-fr style=color)
                         | Français
                         img.pug(src="#{langs.fr}")
                     li.pug.lang-item(on-click=change-lang-en style=color)

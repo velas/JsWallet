@@ -14,7 +14,7 @@ require! {
     @import scheme
     width: 100%
     position: relative
-    padding-bottom: 20px
+    padding-bottom: 0px
     display: inline-block
     &.normalheader
         @media(max-width: 800px)
@@ -229,7 +229,7 @@ require! {
             color: #CCC
     .table
         width: 100%
-        height: calc(100vh - 140px)
+        height: calc(100vh - 80px)
         overflow-y: scroll
         .head, .record
             &.record
@@ -326,7 +326,7 @@ require! {
     .hidden
         display: none !important
 render-transaction = (store, web3t, tran)-->
-    { coins, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
+    { transaction-info, coins, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
     filter-icon=
         filter: style.app.filterIcon
@@ -345,6 +345,8 @@ render-transaction = (store, web3t, tran)-->
     coin = 
         coins |> find (.token is token)
     return null if not coin?
+    network = coin[store.current.network]
+    request = { network, tx }
     tx-details = ->
         store.history.tx-details = 
             | store.history.tx-details is tx => null
@@ -375,7 +377,7 @@ render-transaction = (store, web3t, tran)-->
                     span.pug.fee #{lang.fee}:
                     amount-beautify fee, 10
         if store.history.tx-details is tx
-            .pug.tx-middle(style=light-style)
+            .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider
                     .pug.direction #{arrow-lg(type)}
                 .cell.pug.details-from

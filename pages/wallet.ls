@@ -11,6 +11,7 @@ require! {
     \./icon.ls
     \../get-primary-info.ls
     \../../web3t/providers/superagent.ls : { get }
+    \../round5.ls
 }
 #
 .wallet
@@ -241,12 +242,12 @@ module.exports = (store, web3t, wallets, wallet)-->
     name = wallet.coin.name ? wallet.coin.token
     load-terms = (cb)->
         #return cb null if store.current.content-migrate?
-        err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+        err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
         return cb err if err?
         store.terms2 = res.text
         cb null
     migrate = (wallet)-> ->
-        return alert "disabled" if window.location.href.index-of('internal') is -1
+        #return alert "disabled" if window.location.href.index-of('internal') is -1
         err <- load-terms
         address = 
             store.current.account.wallets 
@@ -270,7 +271,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                 if +wallet.pending-sent is 0
                     .balance.pug.title(class="#{placeholder}") #{name}
                 .balance.pug(class="#{placeholder}")
-                    span.pug #{ wallet.balance }
+                    span.pug #{ round5 wallet.balance }
                         img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
                         span.pug #{ wallet.coin.token.to-upper-case! }
                     if +wallet.pending-sent >0

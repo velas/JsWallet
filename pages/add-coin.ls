@@ -149,7 +149,7 @@ create-item = ({ store, web3t }, item)-->
     add = ->
         store.current.add-coin = no
         <- web3t.install-quick item
-    title = "#{item.token} #{item.type}"
+    title = "#{item.name}"
     style = get-primary-info store
     button-style =
         border: "1px solid #{style.app.text}"

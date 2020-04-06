@@ -16,8 +16,10 @@ extend = ({ address, coin, pending, network }, tx)-->
     tx.token = coin.token ? tx.token
     tx.pending = pending ? tx.pending
     tx.network = network ? tx.network
-transform-ptx = ([tx, amount, fee, time])->
-    { tx, amount, to: \pending , url: '#', fee: fee, time }
+transform-ptx = (config, [tx, amount, fee, time, from, to2])-->
+    { url } = config.network?api ? {}
+    url = "#{url}/tx/#{tx}"
+    { tx, amount, url, fee: fee, time, from, to: to2 }
 export rebuild-history = (store, wallet, cb)->
     { address, network, coin, private-key } = wallet
     err, data <- get-transactions { address, network, coin.token, account: { address, private-key } }
@@ -44,7 +46,7 @@ export rebuild-history = (store, wallet, cb)->
         |> each extend { address, coin, network }
         |> each txs~push
     ptxs 
-        |> map transform-ptx
+        |> map transform-ptx { address, coin, network }
         |> each extend { address, coin, network, pending: yes }
         |> each txs~push
     cb!

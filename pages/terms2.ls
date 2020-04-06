@@ -70,7 +70,7 @@ terms = ({ store, web3t })->
             .pug.buttons
                 button.pug(on-click=go-back style=button-primary1-style) #{lang.back}
 terms.init = ({ store }, cb)->
-    err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+    err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
     return cb err if err?
     store.terms = res.text
     cb null

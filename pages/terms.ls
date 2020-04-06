@@ -69,7 +69,7 @@ terms = ({ store, web3t })->
                 .pug #{lang.terms ? 'Please accept terms of use'}
                 button.pug(on-click=accept style=button-primary1-style) #{lang.accept ? 'Accept'}
 terms.init = ({ store }, cb)->
-    err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+    err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
     return cb err if err?
     store.terms = res.text
     cb null

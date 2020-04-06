@@ -35,7 +35,7 @@ module.exports = (store, web3t)->
     primary-button-style =
         background: color
     default-button-style = { color }
-    send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type }, cb)->
+    send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price }, cb)->
         { token } = send.coin
         tx =
             account: { wallet.address, wallet.private-key } 
@@ -46,11 +46,13 @@ module.exports = (store, web3t)->
             amount: amount-send
             amount-fee: amount-send-fee
             data: data
+            gas: gas
+            gas-price: gas-price
         #console.log 'before create tx'
         err, data <- create-transaction tx
         #console.log 'after create tx', err
         return cb err if err?
-        agree <- confirm store, "Are you sure to send #{round5 tx.amount} #{send.coin.token} to #{send.to}"
+        agree <- confirm store, "Send #{round5 tx.amount} #{send.coin.token} to #{send.to}"
         #console.log 'after confirm', agree
         return cb "Cancelled" if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
@@ -95,7 +97,7 @@ module.exports = (store, web3t)->
         amount-ethers = send.amount-send
         err <- send-to { name, amount-ethers }
     send-anyway = ->
-        return send-escrow! if send.propose-escrow
+        #return send-escrow! if send.propose-escrow
         send-money!
     send-title = 
         | send.propose-escrow then 'SEND (Escrow)'
@@ -192,7 +194,7 @@ module.exports = (store, web3t)->
         next-trials = trials - 1
         calc-amount-and-fee next-amount, next-trials, cb 
     use-max = (cb)->
-        return cb "Data is not ready yet" if +(send.amount-send-fee ? 0) is 0
+        return cb "Fee is not calculated" if +(send.amount-send-fee ? 0) is 0
         amount = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
         return cb "Amount is too small" if +amount <= 0
         #console.log { amount }
@@ -212,4 +214,4 @@ module.exports = (store, web3t)->
     use-max-amount = ->
         err <- use-max-try-catch
         alert "#{err}" if err?
-    { invoice, token, name, network, send, wallet, pending, fee-token, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup: topup(store), history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount }
+    { change-amount, invoice, token, name, network, send, wallet, pending, fee-token, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup: topup(store), history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, calc-amount-and-fee, send-title, is-data, encode-decode }

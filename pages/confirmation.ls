@@ -13,6 +13,7 @@ require! {
     left: 0
     width: 100%
     box-sizing: border-box
+    background: rgba(black, 0.7)
     >.confirmation-body
         background: white
         text-align: center

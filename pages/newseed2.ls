@@ -171,6 +171,8 @@ newseed = ({ store, web3t })->
         return set-lang \cn
     change-lang-kr = ->
         return set-lang \kr
+    change-lang-fr = ->
+        return set-lang \fr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -220,7 +222,7 @@ newseed = ({ store, web3t })->
                         .pug
                             img.pug(alt="" src="#{langs.cn}")
                         span.pug(style=text-style) Chinese
-                    .pug.langs-item(style=comming-soon)
+                    .pug.langs-item(on-click=change-lang-fr)
                         .pug
                             img.pug(alt="" src="#{langs.fr}")
                         span.pug(style=text-style) French

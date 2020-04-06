@@ -20,3 +20,6 @@ export create-transaction = action (provider, config, cb)->
     provider.create-transaction config, cb
 export push-tx = action (provider, config, cb)->
     provider.push-tx config, cb
+export get-transaction-info = action (provider, config, cb)->
+    return cb "method is not supported" if typeof! provider.get-transaction-info isnt \Function
+    provider.get-transaction-info config, cb

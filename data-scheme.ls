@@ -7,6 +7,7 @@ require! {
     \./langs/ua.ls
     \./langs/kr.ls
     \./langs/cn.ls
+    \./langs/fr.ls
     \./get-device.ls
 }
 saved-seed = saved!
@@ -34,7 +35,7 @@ store =
     root: null
     theme: \velas
     lang: \en
-    langs: { en, ru, ua, kr, cn }
+    langs: { en, ru, ua, kr, cn, fr }
     registry: []
     terms: "Loading..."
     terms2: "Loading..."
@@ -58,8 +59,11 @@ store =
             pending: []
             active: []
         reward: null
+        reward-claim: 0
+        rewards: []
         keystore: {}
         tab: "line"
+        stake-amount-total: 0
     filestore:
         menu-open: no
         extension-icons: 
@@ -102,6 +106,7 @@ store =
         prompt-answer: ""
         prompt: no
         switch-account: no
+        switch-currency: no
         send-menu-open: no
         langs-open: no
         langs-open-side: no
@@ -149,6 +154,8 @@ store =
         loading: no
         send : create-send!
         invoice : create-send!
+        currency: ""
+        convert: "usd"
     history:
         filter-open: no
         tx-details: no

@@ -27,7 +27,6 @@ module.exports =
     secret-phrase-change: "如果您对此进行编辑，则旧钱包不见了，所有硬币都丢失了"
     save: "保存"
     print: "打印"
-    edit-phrase: "编辑秘密"
     your-nickname: "您的昵称"
     your-nickname-info: "您可以将昵称，电子邮件或电话号码附加到您的帐户，并与朋友分享。 他们将使用您的昵称来解析您的加密地址"
     switch-account-index: "切换帐户索引"
@@ -136,3 +135,4 @@ module.exports =
     exit-btn-pool: "Exit"
     choose-language: "選擇語言"
     next: "繼續"
+    your-seed-phrase: "您的種子短語"

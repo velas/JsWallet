@@ -24,12 +24,16 @@ require! {
         background: #321260
         display: inline-grid
         z-index: 3
+        box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
         .folder-menu
             width: 130px
             div
                 text-overflow: ellipsis
                 white-space: nowrap
                 overflow: hidden
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 2px
         .col
             font-size: 12px
             padding: 10px
@@ -37,7 +41,6 @@ require! {
             display: inline-block
             vertical-align: top
             box-sizing: border-box
-            color: #fff
             overflow-y: hidden
             &.folder-menu
                 text-align: left
@@ -48,16 +51,81 @@ require! {
             text-align: left
             &:hover
                 cursor: pointer
-                background: rgba(75, 40, 136, 0.2)
+                background: rgba(75, 40, 136, 0.6)
             &.active
-                background: rgba(75, 40, 136, 0.2)
+                background: rgba(75, 40, 136, 0.6)
         .middle
-            padding: 5px 10px
-            height: 39px
+            padding: 11px 10px
+            height: 37px
             &.account
                 padding: 10px
-                min-height: 118px
+                min-height: 155px
                 overflow: scroll
+                background: linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%
+                background-color: #321260
+                background-repeat: no-repeat
+                background-attachment: local, local, scroll, scroll
+                background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+                animation: breathe 3s ease-in infinite
+                -moz-transition: breathe 3s ease-in infinite
+                -web-kit-transition: breathe 3s ease-in infinite
+            @keyframes breathe
+                0%
+                    background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+                15%
+                    background-size: 100% 30px, 100% 30px, 100% 17px, 100% 17px
+                30%
+                    background-size: 100% 30px, 100% 30px, 100% 20px, 100% 20px
+                45%
+                    background-size: 100% 30px, 100% 30px, 100% 23px, 100% 23px
+                60%
+                    background-size: 100% 30px, 100% 30px, 100% 23px, 100% 23px
+                75%
+                    background-size: 100% 30px, 100% 30px, 100% 20px, 100% 20px
+                90%
+                    background-size: 100% 30px, 100% 30px, 100% 17px, 100% 17px
+                100%
+                    background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+            @-webkit-keyframes breathe
+                0%
+                    background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+                15%
+                    background-size: 100% 30px, 100% 30px, 100% 17px, 100% 17px
+                30%
+                    background-size: 100% 30px, 100% 30px, 100% 20px, 100% 20px
+                45%
+                    background-size: 100% 30px, 100% 30px, 100% 23px, 100% 23px
+                60%
+                    background-size: 100% 30px, 100% 30px, 100% 23px, 100% 23px
+                75%
+                    background-size: 100% 30px, 100% 30px, 100% 20px, 100% 20px
+                90%
+                    background-size: 100% 30px, 100% 30px, 100% 17px, 100% 17px
+                100%
+                    background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+            .buttons
+                padding: 0
+                width: 100%
+                button
+                    outline: none
+                    cursor: pointer
+                    border: 1px solid
+                    padding: 0
+                    box-sizing: border-box
+                    border-radius: $border
+                    font-size: 10px
+                    padding: 0 6px
+                    height: 36px
+                    color: #6CA7ED
+                    text-transform: uppercase
+                    font-weight: bold
+                    background: transparent
+                    transition: all .5s
+                    text-overflow: ellipsis
+                    overflow: hidden
+                    width: 100%
+                    margin: 0 auto
+                    opacity: 1
     >.username
         color: $color
         font-size: 13px
@@ -123,17 +191,26 @@ module.exports = (store, web3t)->
         border: "0"
         color: style.app.text
         background: "transparent"
+    button-primary3-style=
+        border: "0px"
+        color: style.app.text2
+        background: style.app.primary3
     filter-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
     border-top=
         border-top: "1px solid #{style.app.border}"
+    button-primary1-style=
+        border: "1px solid #{style.app.primary1}"
+        color: style.app.text
+        background: style.app.primary1
     lang = get-lang store
     account-index = "#{lang.account-index ? 'Account index'}: #{current.account-index}"
     length = +(localStorage.get-item('Accounts') ? 3)
     exclude-current = ->
         it isnt store.current.account-index
     create-account-position = (index)->
+        #ref = react.create-ref!
         change-account = ->
             store.current.account-index = index
             store.current.switch-account = no
@@ -142,7 +219,9 @@ module.exports = (store, web3t)->
         current-account-name = ->
             local-storage.get-item(default-account-name!) ? default-account-name!
         account-name = current-account-name!
-        .pug.table-row-menu(on-click=change-account key="account#{index}")
+        position-style =
+            color: if store.current.account-index is index then '#3cd5af' else ''
+        .pug.table-row-menu(on-click=change-account key="account#{index}" style=position-style)
             .col.folder-menu.pug
                 .pug #{account-name}
     .pug.your-account
@@ -177,5 +256,5 @@ module.exports = (store, web3t)->
                     [1 to length] |> map create-account-position
                 .pug.middle(style=border-top)
                     .pug.table-row-menu
-                        .col.folder-menu.pug(on-click=create-account)
-                            .pug Create Account
+                        .col.buttons.folder-menu.pug(on-click=create-account)
+                            button.pug(style=button-primary2-style) Create Account

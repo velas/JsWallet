@@ -4,6 +4,7 @@ require! {
     \./navigate.ls
     \react
     \./pending-tx.ls : { remove-tx }
+    \./api.ls : { get-transaction-info }
     \./web3.ls
     \mobx : { toJS }
     \./pages/confirmation.ls : { confirm, prompt }
@@ -71,4 +72,7 @@ module.exports = (store, web3t)->
         err <- remove-tx { store, ...tx }
         #return alert "Cannot Remove Tx. Looks like it is already in blockchain" if err?
         <- web3t.refresh
-    { go-back, switch-type-in, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }
+    transaction-info = (config)-> (event)->
+        err, info <- get-transaction-info config
+        console.log err, info
+    { go-back, switch-type-in, transaction-info, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }
