@@ -31,6 +31,8 @@ require! {
     right: 0
     z-index: 2
     &.hide-detail
+        .big
+            height: 60px
         .big.active
             background: rgb(98, 52, 171) !important
             transition: .5s !important
@@ -45,6 +47,10 @@ require! {
         .top-middle
             width: 50% !important
             text-align: right !important
+            .price
+                display: none
+        .title-balance
+            display: none
     .header 
         &:after
             position: absolute

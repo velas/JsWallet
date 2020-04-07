@@ -38,7 +38,7 @@ require! {
     &.over
         background: #CCC
     &.big
-        height: 60px
+        height: 120px
     &.active
         >.wallet-middle
             display: inline-block
@@ -279,7 +279,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                     if +wallet.pending-sent >0
                         .pug.pending 
                             span.pug -#{pending}
-                .price.title-balance.pug(class="#{placeholder}") $#{balanceUsd}
+                .price.pug(class="#{placeholder}") $#{balanceUsd}
             .top-right.pug
                 button.pug(on-click=send(wallet) style=button-primary3-style)
                     if store.current.device is \mobile
@@ -296,9 +296,13 @@ module.exports = (store, web3t, wallets, wallet)-->
                     button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
                         span.pug #{lang.btn-migrate}
         .wallet-middle.pug
+            .title-balance.pug Your #{name} Address
             span.pug(style=address-input)
                 a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
+        .wallet-middle.pug
+            .name.pug(class="#{placeholder}") $#{ money(usd-rate)}
+            .name.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }

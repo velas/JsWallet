@@ -90,6 +90,11 @@ require! {
                 border-bottom: 1px solid rgba(240, 237, 237, 0.16)
                 padding: 30px 20px
                 display: flex
+                .chosen-pool
+                    .buttons
+                        text-align: left
+                        @media(max-width:800px)
+                            text-align: center
                 @media (max-width: 800px)
                     display: flow-root
                     padding: 20px
@@ -432,7 +437,6 @@ require! {
             cursor: pointer
             &:hover
                 color: #CCC
-        display: none
         &:checked + label:before
             background-color: #3cd5af
             border-color: #3cd5af
@@ -665,15 +669,25 @@ staking-content = (store, web3t)->
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
-        check = ->
+        choose-pull = ->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item.address
             calc-reward store, web3t
+            address = store.staking.keystore.staking.address
+            err, amount <- web3t.velas.Staking.stakeAmount item.address, address
+            return cb err if err?
+            console.log "web3t.velas.Staking.stakeAmount #{item.address}, #{address} => #{amount}"
+            store.staking.stake-amount-total = amount
+        to-eth = ->
+            item.eth = not item.eth
         tr.pug
             td.pug(data-column='Choose')
-                input.pug(type='radio' checked=checked on-change=check)
-            td.pug(data-column='Staker Address' title="#{item.address}") #{ethToVlx item.address}
+                input.pug(type='radio' checked=checked on-change=choose-pull)
+            if item.eth is yes
+                td.pug(data-column='Staker Address' title="#{item.address}" on-click=to-eth) #{item.address}
+            else
+                td.pug(data-column='Staker Address' title="#{item.address}" on-click=to-eth) #{ethToVlx item.address}
             td.pug(data-column='Amount') #{item.stake} VLX
             td.pug(data-column='Stakers') #{item.stakers}
     cancel-pool = ->
@@ -697,8 +711,8 @@ staking-content = (store, web3t)->
                 else
                     .pug.chosen-pool(title="#{store.staking.chosen-pool}")
                         span.pug #{ethToVlx store.staking.chosen-pool}
-                        span.pug
-                            button.pug(on-click=cancel-pool) Choose pull
+                        .buttons.pug
+                            button.pug(on-click=cancel-pool style=button-primary2-style) Choose pull
             if store.staking.chosen-pool and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -818,11 +832,11 @@ staking.init = ({ store, web3t }, cb)->
     err, pools <- web3t.velas.Staking.getPoolsToBeElected
     return cb err if err?
     store.staking.pools =
-        pools |> map -> { address: it , checked: no, stake: '...', stakers: '...' }
+        pools |> map -> { address: it , checked: no, stake: '...', stakers: '...', eth: no }
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
-    err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
-    store.staking.stake-amount-total = amount.to-fixed!
+    #err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
+    #store.staking.stake-amount-total = amount.to-fixed!
     cb null
 module.exports = staking
 fill-pools = ({ store, web3t }, [item, ...rest], cb)->

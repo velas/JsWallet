@@ -288,7 +288,6 @@ require! {
                             left: 0
                         &:active:before
                             transform: scale(0)
-                    display: none
                     &:checked + label:before
                         background-color: #3cd5af
                         border-color: #3cd5af
@@ -435,7 +434,7 @@ token-migration = (store, web3t)->
                         .pug.header Terms of Swap
                         textarea.pug(value="#{store.terms2}" style=style-textarea)
                         form.pug
-                            input.pug(type='radio')
+                            input.pug(type='checkbox')
                             span.pug I accept and agree to the Terms & Conditions relating to the Velas Token Swap.
                     .pug.content
                         button.pug(on-click=visible-migrate style=button-primary3-style) Accept
@@ -446,7 +445,7 @@ token-migration = (store, web3t)->
                     .pug.terms-body
                         .pug.header Confirm to continue
                         form.pug
-                            input.pug(type='radio')
+                            input.pug(type='checkbox')
                             span.pug
                                 span.pug.orange I am not:
                                 ol.pug(type='I')

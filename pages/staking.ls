@@ -521,11 +521,18 @@ staking-content = (store, web3t)->
     comming-soon =
         opacity: ".3"
     pairs = store.staking.keystore
+    become-or-extend-validator = (stake, pairs, cb)->
+        err, pool <- web3t.velas.Staking.getStakerPools(pairs.staking.address)
+        return cb err if err?
+        console.log pool
+        return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address) if pool.length is 0
+        cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
-        data = web3t.velas.Staking.add-pool.get-data stake, pairs.mining.address
+        err, data <- become-or-extend-validator stake, pairs
+        return alert "#{err}" if err?
         to = web3t.velas.Staking.address
         #console.log \to, { to, data, amount }
         amount = store.staking.add.add-validator-stake
@@ -835,7 +842,7 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.add.add-validator-stake = 0
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
-    err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
+    err, amount <- web3t.velas.Staking.stakeAmount(store.staking.keystore.staking.address, store.staking.keystore.staking.address)
     store.staking.stake-amount-total = amount.to-fixed!
     cb null
 module.exports = staking

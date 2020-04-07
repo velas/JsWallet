@@ -112,18 +112,51 @@ require! {
                 z-index: 1111111
     .show-detail
         overflow: hidden
-        .wallet-top    
+        .wallet-top  
+            height: 50%
             .top-left
+                width: auto
+                float: left
+                height: auto
                 color: #fff
+                img
+                    height: 60px !important
+                    width: 60px !important
+                    max-width: 60px !important
+                .info
+                    display: none
             .top-middle
+                width: 35%
+                float: left
                 color: #fff
                 text-align: left
                 .title-balance
                     display: inline-block !important
                 .title
-                    display: none
+                    font-size: 18px
+                    font-weight: 700
             .top-right
+                width: auto
+                float: right
                 color: #fff
+                position: relative
+                top: 20px
+        .wallet-middle
+            width: 70%
+            float: left
+            padding: 10px
+            border-top: 1px solid rgb(107, 38, 142)
+            border-right: 1px solid rgb(107, 38, 142)
+            &:last-child
+                width: 30%
+                border-right: 0
+            .name
+                color: #fff
+                font-size: 14px
+            .title-balance
+                color: #fff
+                font-size: 14px
+                text-align: left
         .info
             text-align: left
             margin-left: 0px
@@ -148,7 +181,7 @@ require! {
             display: none
             &.big
                 height: 200px
-                padding-top: 40px
+                padding-top: 20px
             &.active
                 display: block
 module.exports = ({ store, web3t })->
