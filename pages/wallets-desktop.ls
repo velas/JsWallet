@@ -30,6 +30,21 @@ require! {
     $cards-pad: 15px
     right: 0
     z-index: 2
+    &.hide-detail
+        .big.active
+            background: rgb(98, 52, 171) !important
+            transition: .5s !important
+        .wallet
+            &:hover
+                background: rgb(98, 52, 171) !important
+                transition: .5s !important
+        .top-right
+            display: none
+        .top-left
+            width: 50% !important
+        .top-middle
+            width: 50% !important
+            text-align: right !important
     .header 
         &:after
             position: absolute
@@ -192,7 +207,7 @@ mobile = ({ store, web3t })->
             manage-account { store, web3t }
             token-migration { store, web3t }
             add-coin-page { store, web3t }
-            .wallets.pug(key="wallets-body")
+            .wallets.hide-detail.pug(key="wallets-body")
                 .header.pug(style=header-style)
                     span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
                     chosen-account-template
@@ -201,6 +216,8 @@ mobile = ({ store, web3t })->
                     wallets
                         #|> filter -> it.coin.token isnt \vlx2 or window.location.href.index-of('internal') > -1
                         |> map wallet store, web3t, wallets
-        .pug(style=right-side)
+        .pug.show-detail(style=right-side)
+            wallets
+                |> map wallet store, web3t, wallets
             history { store, web3t }
 module.exports = mobile

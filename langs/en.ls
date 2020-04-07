@@ -122,7 +122,7 @@ module.exports =
     as-one: "As one single string"
     install-ssh: "Install via ssh"
     install-do: "Install on Digital Ocean"
-    validator: "Become Validator"
+    validator: "Become Staker"
     stake: "Your Stake"
     mining-address: "Your Mining Address"
     stake-placeholder: "stake"

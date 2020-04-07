@@ -124,6 +124,7 @@ store =
         files: no
         progress: no
         hide-btn: no
+        submenu: no
         wallet-index: 0
         edit-account-name: ""
         account-index: 1

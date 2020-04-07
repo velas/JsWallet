@@ -84,8 +84,6 @@ require! {
                     width: 104px
             input
                 border-radius: $border
-                height: 36px
-                width: 40px
                 line-height: 36px
                 text-align: center
                 font-size: 13px
@@ -99,6 +97,7 @@ require! {
                 border: 0px
                 padding: 3px 10px
                 box-sizing: border-box
+                position: relative
             button
                 background-color: $primary
                 border: 1px solid $primary
@@ -241,6 +240,13 @@ require! {
                         @media(max-width: 400px)
                             width: 100%
                     form
+                        text-align: left
+                        display: flex
+                        span
+                            padding-left: 10px
+                            font-size: 13px
+                            &.orange
+                                color: orange
                         ol
                             margin: 0
                             padding: 0
@@ -429,9 +435,8 @@ token-migration = (store, web3t)->
                         .pug.header Terms of Swap
                         textarea.pug(value="#{store.terms2}" style=style-textarea)
                         form.pug
-                            input.pug#choose2(type='checkbox')
-                            label.pug(for='choose2')
-                                span.pug I accept and agree to the Terms & Conditions relating to the Velas Token Swap.
+                            input.pug(type='radio')
+                            span.pug I accept and agree to the Terms & Conditions relating to the Velas Token Swap.
                     .pug.content
                         button.pug(on-click=visible-migrate style=button-primary3-style) Accept
                         button.pug(on-click=close-migration style=button-primary4-style) Deny
@@ -441,15 +446,14 @@ token-migration = (store, web3t)->
                     .pug.terms-body
                         .pug.header Confirm to continue
                         form.pug
-                            input.pug#choose1(type='checkbox')
-                            label.pug(for='choose1')
-                                span.pug
-                                    span.pug.orange I am not:
-                                    ol.pug(type='a')
-                                        li.pug a citizen or resident of, or domiciled in;
-                                        li.pug participating in the token swap from a location in;
-                                        li.pug representing or acting on behalf of a person residing or located in,
-                                        li.pug representing or acting on behalf of an entity (including, but not limited to, any company or partnership) incorporated, established or registered in or under the laws of: the United States of America (USA) and its territories (American Samoa, Guam, the Northern Mariana Islands, Puerto Rico, and the U.S. Virgin Islands), Peoples Republic of China (except for Hong Kong and Macao), Cuba, Democratic Republic of Congo, Iran, Iraq, Malaysia, North Korea, Sudan, Syria, Zimbabwe.
+                            input.pug(type='radio')
+                            span.pug
+                                span.pug.orange I am not:
+                                ol.pug(type='I')
+                                    li.pug a citizen or resident of, or domiciled in;
+                                    li.pug participating in the token swap from a location in;
+                                    li.pug representing or acting on behalf of a person residing or located in,
+                                    li.pug representing or acting on behalf of an entity (including, but not limited to, any company or partnership) incorporated, established or registered in or under the laws of: the United States of America (USA) and its territories (American Samoa, Guam, the Northern Mariana Islands, Puerto Rico, and the U.S. Virgin Islands), Peoples Republic of China (except for Hong Kong and Macao), Cuba, Democratic Republic of Congo, Iran, Iraq, Malaysia, North Korea, Sudan, Syria, Zimbabwe.
                     .pug.content
                         button.pug(on-click=visible-migrate-accept style=button-primary3-style) Accept
                         button.pug(on-click=close-migration style=button-primary4-style) Deny

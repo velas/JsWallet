@@ -38,7 +38,7 @@ require! {
     &.over
         background: #CCC
     &.big
-        height: 120px
+        height: 60px
     &.active
         >.wallet-middle
             display: inline-block
@@ -108,6 +108,8 @@ require! {
                 &.title
                     @media screen and (max-width: 220px)
                         display: none
+                .title-balance
+                    display: none
         >.top-right
             width: 40%
             text-align: right
@@ -277,6 +279,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                     if +wallet.pending-sent >0
                         .pug.pending 
                             span.pug -#{pending}
+                .price.title-balance.pug(class="#{placeholder}") $#{balanceUsd}
             .top-right.pug
                 button.pug(on-click=send(wallet) style=button-primary3-style)
                     if store.current.device is \mobile

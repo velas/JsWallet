@@ -110,6 +110,47 @@ require! {
                 margin: 60px 0 0
                 position: fixed
                 z-index: 1111111
+    .show-detail
+        overflow: hidden
+        .wallet-top    
+            .top-left
+                color: #fff
+            .top-middle
+                color: #fff
+                text-align: left
+                .title-balance
+                    display: inline-block !important
+                .title
+                    display: none
+            .top-right
+                color: #fff
+        .info
+            text-align: left
+            margin-left: 0px
+            text-overflow: ellipsis
+            overflow: hidden
+            width: 65px
+            @media screen and (max-width: 390px)
+                display: none
+            .name
+                padding-left: 3px
+                font-size: 16px
+            .price
+                padding-left: 3px
+                font-size: 12px
+                font-weight: bold
+                overflow: hidden
+                text-overflow: ellipsis
+        .table
+            width: 100%
+            height: calc(100vh - 280px)
+        .wallet
+            display: none
+            &.big
+                height: 200px
+                padding-top: 40px
+            &.active
+                display: block
 module.exports = ({ store, web3t })->
     return null if not store?
     current-page =
