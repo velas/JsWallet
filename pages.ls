@@ -19,6 +19,7 @@ require! {
     \./pages/resources.ls
     \./pages/search.ls
     \./pages/resources2.ls
+    \./pages/choosestaker.ls
 }
 export resources
 export staking
@@ -40,3 +41,4 @@ export settings
 export newseed2
 export search
 export resources2
+export choosestaker

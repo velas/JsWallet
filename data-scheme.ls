@@ -63,6 +63,8 @@ store =
         rewards: []
         keystore: {}
         tab: "line"
+        pools: []
+        chosen-pool: null
         stake-amount-total: 0
     filestore:
         menu-open: no
@@ -116,6 +118,7 @@ store =
         choose-language: yes
         banner: no
         content-migrate: no
+        accept-migrate: no
         active: no
         dragfile: no
         files: no

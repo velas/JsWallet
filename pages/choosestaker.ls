@@ -118,6 +118,31 @@ require! {
                     font-size: 14px
                     width: 70%
                     text-align: left
+                    &.table-scroll
+                        overflow-x: scroll
+                        max-height: 200px
+                    table
+                        width: 100%
+                        border-collapse: collapse
+                        margin: 0px auto
+                    tr:nth-of-type(odd)
+                        background: rgba(107, 38, 142, 0.2)
+                    th
+                        background: rgb(67, 32, 124)
+                        color: white
+                        font-weight: 400
+                        &:first-child
+                            text-align: center
+                            width: 5%
+                        &:nth-child(2)
+                            width: 25%
+                        &:nth-child(3)
+                            width: 45%
+                        &:nth-child(4)
+                            width: 15%
+                    td, th
+                        padding: 10px
+                        border: 1px solid rgba(240, 237, 237, 0.16)
                     .left
                         position: relative
                         .small-btns
@@ -376,6 +401,11 @@ require! {
             cursor: pointer
             &:hover
                 color: #CCC
+        display: none
+        &:checked + label:before
+            background-color: #3cd5af
+            border-color: #3cd5af
+            color: #fff
 get-pair = (wallet, path, index, password, with-keystore)->
     w = wallet.derive-path(path).derive-child(index).get-wallet!
     address  = "0x" + w.get-address!.to-string(\hex)
@@ -471,10 +501,11 @@ staking-content = (store, web3t)->
         opacity: ".3"
     pairs = store.staking.keystore
     become-validator = ->
+        return alert "please choose the pool" if store.staking.chosen-pool is 'n/a'
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
-        data = web3t.velas.Staking.add-pool.get-data stake, pairs.mining.address
+        data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool, stake
         to = web3t.velas.Staking.address
         #console.log \to, { to, data, amount }
         amount = store.staking.add.add-validator-stake
@@ -554,11 +585,12 @@ staking-content = (store, web3t)->
                 |> find -> it.coin.token is \vlx2
         wallet.balance
     get-options = (cb)->
-        err, data <- web3t.velas.Staking.candidateMinStake
-        return cb err if err?
-        min = 
-            | +store.staking.stake-amount-total >= 1000000 => 1
-            | _ => data `div` (10^18)
+        #err, data <- web3t.velas.Staking.candidateMinStake
+        #return cb err if err?
+        #min = 
+        #    | +store.staking.stake-amount-total >= 1000000 => 1
+        #    | _ => data `div` (10^18)
+        min = 10000
         max = get-balance! `minus` 0.1
         return cb "You balance is less than minimum staking amount" if +min > + max
         cb null, { min, max }
@@ -599,75 +631,42 @@ staking-content = (store, web3t)->
         to = web3t.velas.Staking.address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
+    build-staker = (store, web3t)-> (item)->
+        checked = item.checked
+        check = ->
+            store.staking.pools |> map (-> it.checked = no)
+            item.checked = yes
+            store.staking.chosen-pool = item.address
+        tr.pug
+            td.pug(data-column='Choose')
+                input.pug(type='radio' checked=checked on-change=check)
+            td.pug(data-column='Staker Address') #{item.address}
+            td.pug(data-column='Amount') #{item.stake} VLX
+            td.pug(data-column='Stakers') #{item.stakers}
     .pug.staking-content
         .form-group.pug
             .pug.section
                 .title.pug
-                    h3.pug #{lang.install-node}
-                .description.pug
-                    .pug.left-node
-                        img.pug(src="#{img.node}")
-                    .pug.right-node
-                        .pug #{lang.txt-install-node}
-                        br.pug
-                        .pug 
-                            span.important.pug #{lang.important}: 
-                            | #{lang.important-dont}
-                        if pairs.mining.keystore.length is 0
-                            .pug
-                                .pug.btn
-                                    button.pug(style=button-primary2-style on-click=show-script) #{lang.generate-script}
-                                .pug #{lang.pls-allow}
-                    if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
-                        .pug
-                            .pug.tabs
-                                span.tab.pug(on-click=activate-line class="#{active-line}") #{lang.line-by-line}
-                                span.tab.pug(on-click=activate-string class="#{active-string}") #{lang.as-one}
-                                span.tab.pug(on-click=activate-ssh class="#{active-ssh}") #{lang.install-ssh}
-                                span.tab.pug(on-click=activate-do class="#{active-do}") #{lang.install-do}
-                            if active-line is \active
-                                .pug.code
-                                    section.pug.window
-                                        section.pug.icons
-                                            span.pug
-                                        CopyToClipboard.pug.copy(text="#{velas-node-applied-template.join('\n')}" on-copy=copied-inform(store) style=filter-icon)
-                                            copy store
-                                    velas-node-applied-template |> map build-template-line
-                            if active-string is \active
-                                .pug.code
-                                    section.pug.window
-                                        section.pug.icons
-                                            span.pug
-                                        CopyToClipboard.pug.copy(text="#{velas-node-applied-template-line}" on-copy=copied-inform(store) style=filter-icon)
-                                            copy store
-                                    .pug(style=line-style)
-                                        velas-node-applied-template-line
-                            if active-ssh is \active
-                                .pug.code
-                                    section.pug.window
-                                        section.pug.icons
-                                            span.pug
-                                        CopyToClipboard.pug.copy(text="some code" on-copy=copied-inform(store) style=filter-icon)
-                                            copy store
-                                    .pug(style=line-style)
-                                        | Comming Soon
-                                        span.cursor.pug |
-                            if active-do is \active
-                                .pug.code
-                                    section.pug.window
-                                        section.pug.icons
-                                            span.pug
-                                        CopyToClipboard.pug.copy(text="some code" on-copy=copied-inform(store) style=filter-icon)
-                                            copy store
-                                    .pug(style=line-style)
-                                        | Comming Soon
-                                        span.cursor.pug |
+                    h3.pug Choose pool
+                .description.pug.table-scroll
+                    table.pug
+                        thead.pug
+                            tr.pug
+                                th.pug Choose
+                                th.pug Staker Pool
+                                th.pug Amount
+                                th.pug Stakers
+                        tbody.pug
+                            store.staking.pools |> map build-staker store, web3t
             if +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
                         h3.pug #{lang.validator}
                     .description.pug
                         .pug.left
+                            .pug.chosen-pool 
+                                span.pug Chosen Pool: 
+                                span.pug #{store.staking.chosen-pool}
                             label.pug #{lang.stake}
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake} VLX" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
                             .pug.balance
@@ -690,6 +689,9 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-staking}
                                 span.pug.color #{vlx-token}
                             hr.pug
+                            .pug.chosen-pool 
+                                span.pug Chosen Pool: 
+                                span.pug #{store.staking.chosen-pool}
                             label.pug Stake More
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake} VLX" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
                             .pug.balance
@@ -772,23 +774,38 @@ staking = ({ store, web3t })->
         color: info.app.addressText
     .pug.staking
         .pug.title(style=border-style)
-            .pug.header #{lang.title-staking}
+            .pug.header Delegate Stake
             .pug.close(on-click=goto-search)
                 icon "ChevronLeft", 20
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
     store.staking.keystore = to-keystore store, no
     store.staking.reward = null
+    store.staking.chosen-pool = 'n/a'
     #exit for now
     #return cb null
     store.staking.add.add-validator-stake = 0
+    err, pools <- web3t.velas.Staking.get-pools
+    return cb err if err?
+    store.staking.pools =
+        pools |> map -> { address: it , checked: no, stake: 'n/a', stakers: 'n/a' }
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
     store.staking.stake-amount-total = amount.to-fixed!
     cb null
 module.exports = staking
+fill-pools = ({ store, web3t }, [item, ...rest], cb)->
+    return cb null if not item?
+    err, data <- web3t.velas.Staking.stakeAmountTotal item.address
+    return cb err if err?
+    item.stake = data `div` (10^18)
+    err, data <- web3t.velas.Staking.getStakerPoolsLength(item.address)
+    return cb err if err?
+    item.stakers = data.to-fixed!
+    fill-pools { store, web3t }, rest, cb
 staking.focus = ({ store, web3t }, cb)->
     calc-reward store, web3t
+    err <- fill-pools { store, web3t }, store.staking.pools
     cb null
 #V31V1kD7DpT9eoRcdXf7T1fbFqcNh

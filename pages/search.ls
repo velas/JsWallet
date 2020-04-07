@@ -308,6 +308,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \staking
     goto-resources2 = ->
         navigate store, web3t, \resources2
+    goto-choose-staker = ->
+        navigate store, web3t, \choosestaker
     .pug.panel-content
         p.results.pug Estimated Results: 2,000 (0.30sec)
         .pug.section
@@ -345,6 +347,9 @@ dapps = (store, web3t)->
                 .pug.address velas blockchain
                 .pug.header Velas Staking Dapp
             .pug.description Help the blockchain be more decentralized by launching an additional validator.
+            ul.pug.links
+                li.pug
+                    span.pug(on-click=goto-choose-staker) Choose Staker
         .pug.section.developing
             .source.pug
                 .pug.address wallet.velas.com

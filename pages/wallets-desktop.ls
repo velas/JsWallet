@@ -172,7 +172,7 @@ mobile = ({ store, web3t })->
         if store.current.switch-account then \rotate else \ ""
     view-account-template = ->
         .pug.switch-account.h1
-            span.name.pug #{account-name}
+            span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
                 icon "Pencil", 17
             span.pug.icon(on-click=open-account class="#{rotate-class}")
