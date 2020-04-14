@@ -1,7 +1,7 @@
 module.exports = 
     add-coin: "Ajouter"
     edit-wallet: "Portefeuilles"
-    edit-coins: "Editer"
+    edit-coins: "Ajouter une pièce"
     confirmation : "Confirmation"
     plugin-registry : "Registre de Plugin"
     search: "Recherche"
@@ -49,7 +49,7 @@ module.exports =
     seed-warning: "Nous avons trouvé un problème dans votre phrase de départ qui peut conduire à des soldes nuls. Nous pouvons essayer de résoudre le problème de formatage lorsque vous cliquez sur ce bouton"
     topup: "Recharger"
     fix-issue: "Resoudre le probleme"
-    you-spend: "Vous Dépensez"
+    you-spend: "Total"
     recipient-obtains: "Le bénéficiaire Obtient"
     transaction-fee: "Frais de Transaction"
     auto: "auto"

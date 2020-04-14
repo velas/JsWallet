@@ -1,11 +1,15 @@
 require! {
     \react
     \../send-funcs.ls
-    \prelude-ls : { map }
+    \prelude-ls : { map, find }
     \../get-primary-info.ls
     \./icon.ls
     \../get-lang.ls
     \../round5.ls
+    \./switch-account.ls
+    \../icons.ls
+    \../round-human.ls
+    \../wallets-funcs.ls
 }
 .content
     position: relative
@@ -13,6 +17,44 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
+    width: calc(100% - 60px) !important
+    margin-left: 60px !important
+    max-width: none !important
+    @media(max-width:800px)
+        margin-left: 0 !important
+    .icon-svg
+        position: relative
+        height: 12px
+        top: 2px
+        padding: 0px 5px 0 0px
+    .content-body
+        max-width: 450px !important
+    >.title
+        position: sticky
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        box-sizing: border-box
+        top: 0
+        width: 100%
+        color: gray
+        font-size: 22px
+        padding: 10px
+        height: 60px
+        z-index: 2
+        @media(max-width:800px)
+            left: 0
+        >.header
+            margin: 5px
+            text-align: center
+            @media(max-width:800px)
+                text-align: center
+        >.close
+            position: absolute
+            font-size: 20px
+            left: 20px
+            top: 13px
+            cursor: pointer
+            &:hover
+                color: #CCC
     .switch-account
         float: right
         position: relative
@@ -364,7 +406,7 @@ build-send-option = ({ store, change-amount} , option)-->
         | _ => ""
     select-option = ->
         send.tx-type = option
-        change-amount store, send.amount-send
+        <- change-amount store, send.amount-send, no
     .pug.switch(class="#{chosen}" on-click=select-option) #{option.to-upper-case!}
 form-group = (title, style, content)->
     .pug.form-group
@@ -393,6 +435,8 @@ send = ({ store, web3t })->
         border: "1px solid #{style.app.background}"
     icon-style =
         color: style.app.icon
+    btn-icon =
+        filter: style.app.btn-icon
     use-max-style =
         background: style.app.wallet
         color: style.app.text
@@ -414,6 +458,9 @@ send = ({ store, web3t })->
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
+    border-header =
+        color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
     expand-collapse = ->
         store.current.send-menu-open = not store.current.send-menu-open
     lang = get-lang store
@@ -429,6 +476,11 @@ send = ({ store, web3t })->
     active-usd = active-class \usd
     active-eur = active-class \eur
     .pug.content
+        .pug.title(style=border-header)
+            .pug.header Send
+            .pug.close(on-click=cancel)
+                icon "ChevronLeft", 20
+            switch-account store, web3t
         .pug.content-body(style=more-text)
             .pug.header
                 span.head.pug.left
@@ -484,7 +536,7 @@ send = ({ store, web3t })->
                             button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max ? 'USE MAX'}
                             span.pug #{lang.balance ? 'balance'}
                             span.pug.balance
-                                span.pug #{wallet.balance}
+                                span.pug #{round-human wallet.balance}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug #{token}
                                 if +wallet.pending-sent >0
@@ -498,19 +550,20 @@ send = ({ store, web3t })->
                 table.pug(style=border-style)
                     tbody.pug
                         tr.pug
-                            td.pug #{lang.you-spend ? 'You Spend'}
+                            td.pug #{lang.you-spend ? 'Total'}
                             td.pug
                                 span.pug(title="#{send.amount-charged}") #{round5(send.amount-charged)}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-charged}") #{token}
                                 .pug.usd $ #{round5 send.amount-charged-usd}
-                        tr.pug.green
-                            td.pug #{lang.recipient-obtains ? 'Recipient Obtains'}
-                            td.pug
-                                span.pug.bold #{round5(send.amount-obtain)}
-                                    img.label-coin.pug(src="#{send.coin.image}")
-                                    span.pug.bold #{token}
-                                .pug.usd $ #{round5 send.amount-obtain-usd}
+                        if no    
+                            tr.pug.green
+                                td.pug #{lang.recipient-obtains ? 'Recipient Obtains'}
+                                td.pug
+                                    span.pug.bold #{round5(send.amount-obtain)}
+                                        img.label-coin.pug(src="#{send.coin.image}")
+                                        span.pug.bold #{token}
+                                    .pug.usd $ #{round5 send.amount-obtain-usd}
                         tr.pug.orange
                             td.pug #{lang.transaction-fee ? 'Transaction Fee'}
                             td.pug
@@ -518,16 +571,35 @@ send = ({ store, web3t })->
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-send-fee}") #{fee-token}
                                 .pug.usd $ #{round5(send.amount-send-fee-usd)}
-                .pug.fast-cheap
-                    send-options |> map build-send-option { store, change-amount }
-                    .pug.space
-                    .pug.switch(on-click=choose-auto class="#{chosen-auto}") #{lang.auto ? 'auto'}
-                    .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
+                if false
+                    .pug.fast-cheap
+                        send-options |> map build-send-option { store, change-amount }
+                        .pug.space
+                        .pug.switch(on-click=choose-auto class="#{chosen-auto}") #{lang.auto ? 'auto'}
+                        .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
             .pug.button-container
                 .pug.buttons
                     a.pug.btn.btn-primary(on-click=send-anyway style=button-primary2-style)
-                        span.pug #{send-title}
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.send}")
+                            | #{send-title}
                         if send.sending
                             span.pug ...
-                    a.pug.btn.btn-default(on-click=cancel style=button-primary3-style) #{lang.cancel}
+                    a.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
+                            | #{lang.cancel}
 module.exports = send
+module.exports.init = ({ store, web3t }, cb)->
+    { wallet } = send-funcs store, web3t
+    { wallets } = wallets-funcs store, web3t
+    current-wallet = 
+        wallets |> find (-> it.coin.token is wallet.coin.token)
+    console.log \match, current-wallet.address, wallet.address
+    return cb null if current-wallet.address is wallet.address 
+    { wallet } = send-funcs store, web3t
+    { send-transaction } = web3t[wallet.coin.token]
+    to = ""
+    value = 0
+    err <- send-transaction { to, value }
+    cb null

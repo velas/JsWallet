@@ -8,6 +8,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
+    \./switch-account.ls
 }
 .filestore
     @import scheme
@@ -255,7 +256,7 @@ require! {
         .add-file
             float: right
             top: 15px
-            position: relative
+            position: absolute
             right: 20px
             margin-left: 20px
             cursor: pointer
@@ -265,6 +266,8 @@ require! {
             margin: 15px 20px 0
             padding: 0
             visibility: hidden
+            right: 35px
+            position: absolute
             &.active
                 visibility: visible
             li
@@ -487,6 +490,7 @@ filestorage = ({ store, web3t })->
             .pug.header File Storage
             .pug.close(on-click=goto-search)
                 icon "ChevronLeft", 20
+            switch-account store, web3t
         .pug.toolbar(style=border-style)
             span.files.pug(on-click=switch-files class="#{file-tree}")
                 img.pug(src="#{file.side-menu}")

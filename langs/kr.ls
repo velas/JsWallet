@@ -1,7 +1,7 @@
 module.exports = 
     add-coin: "동전 추가"
     edit-wallet: "편집하다"
-    edit-coins: "동전 편집"
+    edit-coins: "동전 추가"
     confirmation : "확인"
     plugin-registry : "플러그인 레지스트리"
     search: "검색"
@@ -49,7 +49,7 @@ module.exports =
     seed-warning: "시드 문구에서 잔액이 0이 될 수있는 문제가 있습니다. 이 버튼을 클릭하면 서식 문제를 해결할 수 있습니���"
     topup: "충전"
     fix-issue: "문제 해결"
-    you-spend: "너는 쓴다"
+    you-spend: "합계"
     recipient-obtains: "받는 사람"
     transaction-fee: "거래 수수료"
     auto: "자동"

@@ -4,6 +4,7 @@ require! {
     \prelude-ls : { find, map, pairs-to-obj, foldl, filter }
     \./workflow.ls : { run, task }
     \./round5.ls
+    \./round-human.ls
     #\./pending-tx.ls : { get-pending-amount }
 }
 calc-wallet = (store, cb)->
@@ -62,6 +63,6 @@ calc-wallet = (store, cb)->
             |> pairs-to-obj
     <- run [tasks] .then
     return cb err if err?
-    store.current.balance-usd = round5 state.balance-usd
+    store.current.balance-usd = state.balance-usd
     cb null
 module.exports = calc-wallet

@@ -62,13 +62,13 @@ require! {
         .menu
             opacity: 0
             position: absolute
-            left: 0
+            left: -100px
         &.submenu
             .menu
                 padding: 15px !important
                 position: absolute
                 text-transform: uppercase
-                left: 70px
+                left: 59px
                 top: 17px
                 z-index: 1
                 width: 120px
@@ -76,9 +76,10 @@ require! {
                 font-weight: 600
                 color: #fff
                 padding: 5px
-                background: #210b4a
+                background: rgb(51, 20, 99)
                 opacity: 1
                 transition: opacity .5s
+                box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
                 ul
                     list-style: none
                     padding: 0
@@ -95,25 +96,6 @@ require! {
                             color: #9264b6 !important
                 &.arrow_box
                     border: 1px solid #6b268e
-                    &:after, &:before
-                        right: 100%
-                        top: 5%
-                        border: solid transparent
-                        content: " "
-                        height: 0
-                        width: 0
-                        position: absolute
-                        pointer-events: none
-                    &:after
-                        border-color: rgba(136, 183, 213, 0)
-                        border-right-color: #210b4a
-                        border-width: 6px
-                        margin-top: 2px
-                    &:before
-                        border-color: rgba(194, 225, 245, 0)
-                        border-right-color: #6b268e
-                        border-width: 8px
-                        margin-top: 0px
         &:hover
             svg, img
                 transform: scale(1.2)
@@ -249,6 +231,7 @@ module.exports = (store, web3)->
     staking = if store.current.page is \staking then \active else \not-active
     staking-active = if store.current.page is \staking then \active else \not-active
     delegate-active = if store.current.page is \choosestaker then \active else \not-active
+    info-active = if store.current.page is \info then \active else \not-active
     resources = if store.current.page is \resources then \active else \not-active
     menu-style=
         color: style.app.text
@@ -298,6 +281,8 @@ module.exports = (store, web3)->
         navigate store, web3t, \resources
     goto-choose-staker = ->
         navigate store, web3t, \choosestaker
+    goto-info = ->
+        navigate store, web3t, \info
     comming-soon =
         opacity: ".3"
     open-submenu = ->
@@ -336,6 +321,7 @@ module.exports = (store, web3)->
                         ul.pug
                             li.pug(on-click=goto-staking style=icon-style class="#{staking-active}") Your Node
                             li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}") Delegate Stake
+                            li.pug(on-click=goto-info style=icon-style class="#{info-active}") Info
                     span.arrow_box.pug staking
                     icon \Database , 20
             if store.preference.settings-visible is yes

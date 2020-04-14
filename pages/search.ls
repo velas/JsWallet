@@ -8,6 +8,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
+    \./switch-account.ls
 }
 .search
     @import scheme
@@ -139,6 +140,7 @@ require! {
         font-size: 22px
         padding: 10px
         height: 60px
+        z-index: 2
         >.header
             margin: 5px
             text-align: center
@@ -164,7 +166,7 @@ require! {
             &.path
     >.wrapper
         height: 540px
-        display: flex
+        display: block
         overflow-y: scroll
         scrollbar-width: none
         padding: 0 20px
@@ -310,6 +312,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \resources2
     goto-choose-staker = ->
         navigate store, web3t, \choosestaker
+    goto-videostorage = ->
+        navigate store, web3t, \videostorage
     .pug.panel-content
         p.results.pug Estimated Results: 2,000 (0.30sec)
         .pug.section
@@ -319,7 +323,7 @@ dapps = (store, web3t)->
             .pug.description Keep your data on encrypted distributed servers with censorship resistance. Get access to them in a convenient and familiar way.
             ul.pug.links
                 li.pug
-                    span.pug Learn More
+                    span.pug(on-click=goto-videostorage) Video Storage
                 li.pug
                     span.pug About Storage
         .pug.section
@@ -349,7 +353,7 @@ dapps = (store, web3t)->
             .pug.description Help the blockchain be more decentralized by launching an additional validator.
             ul.pug.links
                 li.pug
-                    span.pug(on-click=goto-choose-staker) Choose Staker
+                    span.pug(on-click=goto-choose-staker) Delegate Stake
         .pug.section.developing
             .source.pug
                 .pug.address wallet.velas.com
@@ -453,6 +457,7 @@ search = ({ store, web3t })->
             .pug.header Search page
             .pug.close(on-click=go-back)
                 icon "ChevronLeft", 20
+            switch-account store, web3t
         .pug.search-input
             .pug.section(style=border-style3)
                 .title.pug

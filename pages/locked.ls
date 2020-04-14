@@ -9,6 +9,7 @@ require! {
     \../seed.ls
     \../menu-funcs.ls
     \./choose-language.ls
+    \../icons.ls
 }
 .locked
     @import scheme
@@ -17,6 +18,11 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    .icon-svg
+        position: relative
+        height: 12px
+        top: 2px
+        padding: 0px 5px 0 0px
     .language
         position: absolute
     .password
@@ -39,6 +45,25 @@ require! {
         font-size: 22px
         margin-bottom: 1rem
     >.inputs
+        div
+            position: relative
+            .division
+                float: none
+                margin: 15px auto 0
+                overflow: hidden
+                position: relative
+                text-align: center
+                width: 100px
+                font-size: 10px
+                .line
+                    border-top: 1px solid rgba(223, 223, 223, 0.2)
+                    position: absolute
+                    top: 6px
+                    width: 34%
+                    &.l
+                        left: 0
+                    &.r
+                        right: 0
         input
             text-align: center
             font-size: 17px
@@ -126,6 +151,13 @@ input = (store, web3t)->
         width: "100px"
         height: "36px"
         margin-top: "10px"
+    button-primary0-style=
+        border: "0"
+        color: style.app.text
+        background: "transparent"
+        width: "100px"
+        height: "36px"
+        margin-top: "0px"
     locked-style=
         color: style.app.text
         background: style.app.wallet
@@ -139,7 +171,17 @@ input = (store, web3t)->
         input.pug.password(key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
         if exists!
             .pug
-                button.setup.pug(on-click=enter style=button-primary1-style) #{lang.enter}
+                button.setup.pug(on-click=enter style=button-primary1-style)
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.enter}")
+                        | #{lang.enter}
+                if no    
+                    .division.pug
+                        .line.l.pug
+                        span.pug OR
+                        .line.r.pug
+                    .pug
+                        button.setup.pug(style=button-primary0-style) NEW ACCOUNT
 reset-wallet = (store)->
     del!
     seed.del!

@@ -62,7 +62,7 @@ require! {
                 text-align: right
     .header, .header-table
         text-align: left
-        height: 40px
+        height: 60px
         box-sizing: border-box
         left: 0
         top: 0
@@ -71,11 +71,11 @@ require! {
             display: inline-block
             &.left
                 padding: 0px 0 10px 10px
-                margin-top: 12px
+                margin-top: 21px
             &.right
                 float: right
                 padding: 0px 10px 0px 0
-                margin-top: 8px
+                margin-top: 17px
                 cursor: pointer
             &.h1
                 font-size: 12px
@@ -86,7 +86,7 @@ require! {
             width: 226px
             background: #321260
             position: absolute
-            top: 39px
+            top: 59px
             right: 0
             display: inline-grid
             z-index: 1
@@ -180,8 +180,8 @@ require! {
             font-size: 10px
             text-align: center
             &.back
-                height: 40px
-                width: 40px
+                height: 60px
+                width: 60px
             >*
                 vertical-align: middle
                 display: inline-block
@@ -231,11 +231,14 @@ require! {
         width: 100%
         height: calc(100vh - 80px)
         overflow-y: scroll
+        margin-top: -1px
         .head, .record
             &.record
                 border-radius: 0px
                 .tx-top
                     cursor: pointer
+                &:first-child
+                    border-top: 1px solid rgb(107, 38, 142)
             .cell
                 padding: 10px 15px
                 display: inline-block
@@ -269,7 +272,6 @@ require! {
                 &.divider
                     width: 10%
                     .direction
-                        font-size: 20px
                         text-align: center
                         line-height: 40px
                 &.arrow
@@ -356,7 +358,9 @@ render-transaction = (store, web3t, tran)-->
             .cell.pug.text-center.network
                 .pug
                     img.pug(src="#{coin.image}")
-                .pug.direction #{arrow(type)}
+                if no    
+                    .pug.direction #{arrow(type)}
+                .pug.direction #{arrow-lg(type)}
             .cell.pug.txhash
                 a.pug(href="#{url}" target="_blank") #{cut-tx tx}
                 CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
@@ -379,7 +383,8 @@ render-transaction = (store, web3t, tran)-->
         if store.history.tx-details is tx
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider
-                    .pug.direction #{arrow-lg(type)}
+                    if no
+                        .pug.direction #{arrow(type)}
                 .cell.pug.details-from
                     .pug.gray(style=lightText)
                         span.pug #{lang.sender}:
@@ -400,6 +405,9 @@ module.exports = ({ store, web3t })->
     lang = get-lang store
     header-style =
         border-bottom: "1px solid #{style.app.border}"
+        color: style.app.text
+    header-style-light =
+        border-bottom: "1px solid #{style.app.border-light}"
         color: style.app.text
     button-style=
         color: style.app.text
@@ -441,7 +449,7 @@ module.exports = ({ store, web3t })->
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
     .pug.normalheader.history
-        .header.pug(style=header-style)
+        .header.pug(style=header-style-light)
             if store.current.device is \mobile
                 button.back.pug(on-click=go-back style=button-style)
                     icon "ChevronLeft", 25
@@ -471,11 +479,12 @@ module.exports = ({ store, web3t })->
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
-        if store.transactions.applied.length > 0
-            .header-table.pug(style=header-table-style)
-                span.pug.cell.network(style=lightText) #{lang.network}
-                span.pug.cell.txhash(style=lightText) #{lang.trx-id}
-                span.pug.cell.amount(style=lightText) #{lang.trx-amount}
+        if no    
+            if store.transactions.applied.length > 0
+                .header-table.pug(style=header-table-style)
+                    span.pug.cell.network(style=lightText) #{lang.network}
+                    span.pug.cell.txhash(style=lightText) #{lang.trx-id}
+                    span.pug.cell.amount(style=lightText) #{lang.trx-amount}
         .pug
             .pug.table
                 if store.transactions.applied.length > 0

@@ -12,6 +12,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
+    \./switch-account.ls
 }
 .resources
     @import scheme
@@ -166,6 +167,7 @@ require! {
         color: gray
         font-size: 22px
         padding: 10px
+        height: 60px
         >.header
             margin: 5px
             text-align: center
@@ -349,6 +351,7 @@ resources = ({ store, web3t })->
             .pug.header Resources Center
             .pug.close(on-click=goto-search)
                 icon "ChevronLeft", 20
+            switch-account store, web3t
         .container-price.pug
             .plan.pug
                 .plan-inner.pug

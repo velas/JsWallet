@@ -1,7 +1,7 @@
 module.exports = 
     add-coin: "加币"
     edit-wallet: "编辑"
-    edit-coins: "编辑硬币"
+    edit-coins: "添加硬幣"
     confirmation : "确认书"
     plugin-registry : "插件注册表"
     search: "搜索"
@@ -49,7 +49,7 @@ module.exports =
     seed-warning: "我们在您的种子短语中发现了一些问题，可能会导致余额为零。 当您单击此按钮时，我们可以尝试解决格式问题"
     topup: "充值"
     fix-issue: "解决问题"
-    you-spend: "你花费"
+    you-spend: "總"
     recipient-obtains: "收件人获取"
     transaction-fee: "手续费"
     auto: "汽车"

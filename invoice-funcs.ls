@@ -39,11 +39,11 @@ module.exports = (store, web3t)->
         value2
     amount-change = (event)->
         value = get-value event
-        change-amount-invoice store, value
+        <- change-amount-invoice store, value, no
     amount-usd-change = (event)->
         value = get-value event
         to-send = calc-crypto store, value
-        change-amount-invoice store, to-send
+        <- change-amount-invoice store, to-send, no
     network =
         | store.current.network is \testnet => " (TESTNET) "
         | _ => ""

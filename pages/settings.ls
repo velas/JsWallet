@@ -359,29 +359,29 @@ manage-account = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Қазақ
                         img.pug(src="#{langs.kz}")
-        .pug.section
-            .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
-            .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}
-            .pug.content
-                switch
-                    case current.try-edit-seed is yes
-                        .pug.box
+        if window.location.href.index-of('internal') > -1
+            .pug.section
+                .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
+                .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}
+                .pug.content
+                    switch
+                        case current.try-edit-seed is yes
+                            .pug.box
+                                .pug
+                                    input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin ? 'Enter PIN'}")
+                                    button.pug(on-click=check-pin style=button-style2) >
+                                .pug    
+                                    button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
+                        case current.saved-seed is no
+                            .pug.box
+                                .pug.title
+                                    span.pug #{lang.secret-phrase ? 'Secret Phrase'}
+                                textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase ? 'Secret Phrase'}")
+                                .pug
+                                    button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
+                        case current.saved-seed is yes
                             .pug
-                                input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin ? 'Enter PIN'}")
-                                button.pug(on-click=check-pin style=button-style2) >
-                            .pug    
-                                button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
-                    case current.saved-seed is no
-                        .pug.box
-                            .pug.title 
-                                span.pug #{lang.secret-phrase ? 'Secret Phrase'}
-                                a.pug.generate(on-click=generate) (generate)
-                            textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase ? 'Secret Phrase'}")
-                            .pug
-                                button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
-                    case current.saved-seed is yes
-                        .pug
-                            button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret ? 'Edit Secret'}
+                                button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret ? 'Edit Secret'}
         .pug.section
             .pug.title(style=color) #{lang.switch-account-index ? 'Switch Account Index'}
             .pug.description(style=color)

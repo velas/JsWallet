@@ -34,6 +34,13 @@ require! {
     color: white
     text-align: center
     width: 100vw
+    .icon-svg
+        position: relative
+        height: 12px
+        top: 2px
+        padding: 0px 5px 0 0px
+    .amount
+        font-family: 'Roboto', sans-serif
     .title
         >.header
             text-align: center
@@ -112,13 +119,18 @@ require! {
                 z-index: 1111111
     .show-detail
         overflow: hidden
-        .wallet-top  
+        .wallet-top
+            padding: 0 20px
             height: 50%
+            @media (max-width: 920px)
+                display: flex
             .top-left
                 width: auto
                 float: left
                 height: auto
                 color: #fff
+                overflow: auto
+                text-overflow: unset
                 img
                     height: 60px !important
                     width: 60px !important
@@ -133,30 +145,79 @@ require! {
                 .title-balance
                     display: inline-block !important
                 .title
-                    font-size: 18px
+                    font-size: 17px
                     font-weight: 700
+                .balance
+                    font-weight: 600
+                    font-size: 16px
+                .price
+                    opacity: .8
+                    overflow: hidden
+                    text-overflow: ellipsis
             .top-right
                 width: auto
                 float: right
                 color: #fff
                 position: relative
-                top: 20px
+                top: 25px
+                button
+                    width: 100px
+                    &.btn-open
+                        display: none
+                    span
+                        line-height: 26px
+                    svg
+                        float: left
+                @media (max-width: 920px)
+                    top: 0px
         .wallet-middle
             width: 70%
+            height: 85px
             float: left
-            padding: 10px
+            padding: 20px
             border-top: 1px solid rgb(107, 38, 142)
             border-right: 1px solid rgb(107, 38, 142)
+            &:last-child
+                display: block
             &:last-child
                 width: 30%
                 border-right: 0
             .name
                 color: #fff
-                font-size: 14px
+                font-size: 16px
+                font-weight: 700
+                &.per
+                    font-size: 10px
+                    color: orange
+                    font-weight: 100
+                &:last-child
+                    font-size: 10px
+                    text-transform: uppercase
+                    letter-spacing: 2px
+                    margin-top: 5px
+                    opacity: .8
             .title-balance
                 color: #fff
                 font-size: 14px
                 text-align: left
+            span
+                padding-left: 10px
+            a
+                width: 85%
+                float: left
+                text-align: left
+            img
+                margin-right: 20px
+            .browse
+                display: inline-block
+                position: absolute
+                top: 3px
+                right: 40px
+                width: auto
+                img
+                    width: 16px
+                    margin: 0
+                    display: inline-block
         .info
             text-align: left
             margin-left: 0px
@@ -176,12 +237,13 @@ require! {
                 text-overflow: ellipsis
         .table
             width: 100%
-            height: calc(100vh - 280px)
+            height: calc(100vh - 260px)
+            margin-top: -1px
         .wallet
             display: none
             &.big
                 height: 200px
-                padding-top: 20px
+                padding-top: 10px
             &.active
                 display: block
 module.exports = ({ store, web3t })->

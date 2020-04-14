@@ -12,7 +12,8 @@ require! {
         margin-top: 20px
         overflow: scroll
         .table
-            height: calc(50vh - 90px)
+            height: calc(50vh - 60px)
+            margin-top: -1px
         .nothin-to-show
             top: 10%
         button.back

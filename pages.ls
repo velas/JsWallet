@@ -20,6 +20,9 @@ require! {
     \./pages/search.ls
     \./pages/resources2.ls
     \./pages/choosestaker.ls
+    \./pages/videostorage.ls
+    \./pages/videostoragedetails.ls
+    \./pages/info.ls
 }
 export resources
 export staking
@@ -42,3 +45,6 @@ export newseed2
 export search
 export resources2
 export choosestaker
+export videostorage
+export videostoragedetails
+export info

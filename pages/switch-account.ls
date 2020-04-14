@@ -16,7 +16,7 @@ require! {
     \./icon.ls
     \localStorage
 }
-.wallets
+.choose-account
     @import scheme
     $real-height: 300px
     $cards-height: 296px
@@ -25,37 +25,13 @@ require! {
     height: auto
     box-sizing: border-box
     position: relative
-    left: 0
-    bottom: 0
+    right: 10px
+    bottom: 30px
     $cards-pad: 15px
-    right: 0
     z-index: 2
-    &.hide-detail
-        .big
-            height: 60px
-        .big.active
-            background: rgb(98, 52, 171) !important
-            transition: .5s !important
-        .wallet
-            &:hover
-                background: rgb(98, 52, 171) !important
-                transition: .5s !important
-        .top-right
-            width: 33% !important
-            button
-                &.btn-open
-                    display: block
-                    float: right !important
-                display: none
-        .top-left
-            width: 35% !important
-        .top-middle
-            width: 32% !important
-            text-align: center !important
-            .price
-                display: none
-        .title-balance
-            display: none
+    .switch-menu
+        right: -20px
+        top: 39px
     .header 
         &:after
             position: absolute
@@ -69,10 +45,14 @@ require! {
                 visibility: hidden
     .switch-account
         float: right
-        line-height: 2
-        right: 80px
-        position: relative
-        display: inline-flex
+        line-height: 10px
+        width: auto
+        top: 0px
+        right: 5px
+        position: absolute
+        text-align: right
+        display: block
+        z-index: 2
         .ckeck
             color: #3cd5af
         .cancel
@@ -84,10 +64,13 @@ require! {
             width: 110px
             text-align: right
             cursor: default
+            display: inline-block
+            @media(max-width:500px)
+                width: 40px
         input
             outline: none
             width: 100px
-            margin-top: -6px
+            margin-top: -10px
             height: 36px
             line-height: 36px
             border-radius: 0px
@@ -100,9 +83,11 @@ require! {
             vertical-align: middle
             margin-left: 20px
             transition: transform .5s
+            display: inline-block
             &.rotate
                 transform: rotate(180deg)
                 transition: transform .5s
+                display: inline-block
     .h1
         font-size: 12px
         text-transform: uppercase
@@ -115,7 +100,9 @@ require! {
         right: 0
         top: 0
         padding: 12px 20px
-        border-left: 1px solid #6b258e
+        border-left: 0
+        >.buttons
+            display: none !important
         .buttons
             >.button
                 width: 20px
@@ -149,22 +136,13 @@ require! {
         width: 100%
         border-top: 1px solid #213040
         display: inline-block
-mobile = ({ store, web3t })->
+module.exports = (store, web3t)->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t
     style = get-primary-info store
     lang = get-lang store
     border-style =
         border-top: "1px solid #{style.app.border}"
-    row =
-        display: "flex"
-        height: "100vh"
-        margin-left: "60px"
-    left-side =
-        width: "45%"
-    right-side =
-        width: "55%"
-        border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
         padding: "17px 0px 20px"
@@ -212,23 +190,6 @@ mobile = ({ store, web3t })->
                 icon "X", 20
     chosen-account-template =
         if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
-    .pug(key="wallets" style=row)
-        .pug(style=left-side)
-            menu { store, web3t }
-            manage-account { store, web3t }
-            token-migration { store, web3t }
-            add-coin-page { store, web3t }
-            .wallets.hide-detail.pug(key="wallets-body")
-                .header.pug(style=header-style)
-                    span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
-                    chosen-account-template
-                    your-account store, web3t
-                .wallet-container.pug(key="wallets-viewport" style=border-style)
-                    wallets
-                        #|> filter -> it.coin.token isnt \vlx2 or window.location.href.index-of('internal') > -1
-                        |> map wallet store, web3t, wallets
-        .pug.show-detail(style=right-side)
-            wallets
-                |> map wallet store, web3t, wallets
-            history { store, web3t }
-module.exports = mobile
+    .choose-account.pug
+        chosen-account-template
+        your-account store, web3t

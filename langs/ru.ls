@@ -1,7 +1,7 @@
 module.exports = 
     add-coin: "Добавить монету"
     edit-wallet: "Редактировать"
-    edit-coins: "Редактировать"
+    edit-coins: "Добавить монету"
     confirmation : "Подтверждение"
     plugin-registry : "Реестр плагинов"
     search: "Поиск"
@@ -49,7 +49,7 @@ module.exports =
     receive: "Получить"
     history: "История"
     topup: "Пополнить"
-    you-spend: "Вы тратите"
+    you-spend: "Общее"
     recipient-obtains: "Получатель получает"
     transaction-fee: "Комиссия"
     auto: "авто"

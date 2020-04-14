@@ -11,7 +11,8 @@ require! {
     \./icon.ls
     \../get-primary-info.ls
     \../../web3t/providers/superagent.ls : { get }
-    \../round5.ls
+    \../icons.ls
+    \../round-human.ls
 }
 #
 .wallet
@@ -137,6 +138,10 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 width: 80px
+                .icon
+                    position: relative
+                    height: 12px
+                    top: 2px
                 @media screen and (max-width: 800px)
                     width: 40px
                 &:hover
@@ -152,6 +157,10 @@ require! {
         margin-top: 10px
         text-align: center
         position: relative
+        .browse
+            display: none
+        &:last-child
+            display: none
         >.uninstall
             text-align: left
             font-size: 10px
@@ -210,6 +219,8 @@ module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
+    icons-browse =
+        browse: "data:image/png;base64,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"
     label-uninstall =
         | store.current.refreshing => \...
         | _ => \ "#{lang.hide}"
@@ -235,6 +246,8 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.addressBg
     filter-icon=
         filter: style.app.filterIcon
+    btn-icon =
+        filter: style.app.btn-icon
     placeholder = 
         | store.current.refreshing => "placeholder"
         | _ => ""
@@ -267,42 +280,52 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug(class="#{placeholder}") $#{ money(usd-rate)}
-                    .price.pug(class="#{placeholder}") $#{balanceUsd}
+                    .name.pug(class="#{placeholder}") $#{ round-human usd-rate}
+                    .price.pug(class="#{placeholder}") $#{ round-human balance-usd}
             .top-middle.pug(style=wallet-style)
                 if +wallet.pending-sent is 0
                     .balance.pug.title(class="#{placeholder}") #{name}
                 .balance.pug(class="#{placeholder}")
-                    span.pug #{ round5 wallet.balance }
+                    span.pug #{ round-human wallet.balance }
                         img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
                         span.pug #{ wallet.coin.token.to-upper-case! }
                     if +wallet.pending-sent >0
                         .pug.pending 
-                            span.pug -#{pending}
-                .price.pug(class="#{placeholder}") $#{balanceUsd}
+                            span.pug -#{ round-human pending }
+                .price.pug(class="#{placeholder}") $#{ round-human balance-usd }
             .top-right.pug
+                if store.current.device is \desktop
+                    button.btn-open.pug(on-click=expand style=button-primary3-style)
+                        img.icon.pug(src="#{icons.open}" style=btn-icon)
                 button.pug(on-click=send(wallet) style=button-primary3-style)
                     if store.current.device is \mobile
                         icon "ArrowSmallUp", 25
                     if store.current.device is \desktop
-                        span.pug #{lang.send}
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.send}" style=btn-icon)
+                            | #{lang.send}
                 if wallet.coin.token isnt \vlx or store.current.device isnt \desktop
                     button.pug(on-click=receive(wallet) style=button-primary1-style)
                         if store.current.device is \mobile
                             icon "ArrowSmallDown", 25
                         if store.current.device is \desktop
-                            span.pug #{lang.receive}
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.get}")
+                                | #{lang.receive}
                 else
                     button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
-                        span.pug #{lang.btn-migrate}
+                        span.pug 
+                            img.icon-svg.pug(src="#{icons.migrate}")
+                            | #{lang.btn-migrate}
         .wallet-middle.pug
-            .title-balance.pug Your #{name} Address
             span.pug(style=address-input)
+                a.browse.pug(target="_blank" href="#{get-address-link wallet}")
+                    img.pug(src="#{icons-browse.browse}")
                 a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
-        .wallet-middle.pug
-            .name.pug(class="#{placeholder}") $#{ money(usd-rate)}
-            .name.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }
+        .wallet-middle.title-balance.pug
+            .name.pug(class="#{placeholder}") $#{ round-human(usd-rate)}
+            .name.per.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }

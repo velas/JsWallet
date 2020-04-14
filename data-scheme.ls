@@ -8,6 +8,7 @@ require! {
     \./langs/kr.ls
     \./langs/cn.ls
     \./langs/fr.ls
+    \./icons.ls
     \./get-device.ls
 }
 saved-seed = saved!
@@ -36,6 +37,7 @@ store =
     theme: \velas
     lang: \en
     langs: { en, ru, ua, kr, cn, fr }
+    icons: \icons
     registry: []
     terms: "Loading..."
     terms2: "Loading..."
@@ -50,6 +52,10 @@ store =
         tab: 0
     search:
         tab: "dapps"
+    video:
+        tab: "trend"
+        menu-open: no
+        drag: no
     staking: 
         add:
             add-validator: ""
@@ -66,6 +72,7 @@ store =
         pools: []
         chosen-pool: null
         stake-amount-total: 0
+        withdraw-amount: 0
     filestore:
         menu-open: no
         extension-icons: 

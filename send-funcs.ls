@@ -115,23 +115,23 @@ module.exports = (store, web3t)->
         value2
     amount-change = (event)->
         value = get-value event
-        change-amount store, value
+        <- change-amount store, value, no
     perform-amount-eur-change = (value)->
         to-send = calc-crypto-from-eur store, value
-        change-amount store, to-send        
+        <- change-amount store, to-send , no       
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
-        change-amount store, to-send
+        <- change-amount store, to-send, no
     amount-eur-change = (event)->
         value = get-value event
         send.amount-send-eur = value
         amount-eur-change.timer = clear-timeout amount-eur-change.timer
-        amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 1000
+        amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 500
     amount-usd-change = (event)->
         value = get-value event
         send.amount-send-usd = value
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
-        amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 1000
+        amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500
     encode-decode = ->
         send.show-data-mode =
             | send.show-data-mode is \decoded => \encoded 
@@ -172,10 +172,10 @@ module.exports = (store, web3t)->
     is-data = (send.data ? "").length > 0
     choose-auto = ->
         send.fee-type = \auto
-        change-amount store, send.amount-send
+        <- change-amount store, send.amount-send, no
     choose-cheap = ->
         send.fee-type = \cheap
-        change-amount store, send.amount-send
+        <- change-amount store, send.amount-send, no
     chosen-cheap =  if send.fee-type is \cheap then \chosen else ""
     chosen-auto  =  if send.fee-type is \auto then \chosen else ""
     send-options = send.coin.tx-types ? []
@@ -204,7 +204,7 @@ module.exports = (store, web3t)->
         return cb "Amount is 0" if +info.amount-send is 0
         send.amount-send = info.amount-send
         send.amount-send-fee = info.amount-send-fee
-        change-amount store, send.amount-send
+        <- change-amount store, send.amount-send, no
         cb null
     use-max-try-catch = (cb)->
         try

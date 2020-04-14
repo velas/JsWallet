@@ -17,6 +17,7 @@ require! {
     \./plugin-loader.ls : { get-coins }
     \./velas/velas-api.ls
     \./send-funcs.ls
+    \./pages.ls
 }
 state =
     time: null
@@ -63,7 +64,7 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         amount-send-fee, amount-send-fee-usd, propose-escrow
     }
     { send-anyway, change-amount } = send-funcs store, web3t
-    change-amount store, amount-send
+    <- change-amount store, amount-send, yes
     #console.log \before, 1
     #err <- calc-amount-and-fee amount-send, 3
     #console.log \after, err
@@ -179,11 +180,21 @@ module.exports = (store, config)->
         err <- refresh-apis cweb3, store
         return cb err if err?
         cb null
+    refresh-page = (cb)->
+        return cb null if store.current.page in  <[ wallets ]>
+        page = pages[store.current.page]
+        return cb null if not page?
+        return cb null if typeof! page.init isnt \Function
+        <- page.init { store, web3t }
+        return cb null if typeof! page.focus isnt \Function
+        <- page.focus { store, web3t }
     refresh = (cb)->
         #return if store.current.refreshing
         err <- refresh-interface
         return cb err if err?
-        refresh-balances cb
+        err <- refresh-balances
+        return cb err if err?
+        refresh-page cb
     set-theme = (it, cb)->
         return cb "support only dark an light" if it not in <[ dark light monochrome dark_mojave ]>
         store.theme = it

@@ -12,8 +12,10 @@ module.exports =
         wallet-light: "rgb(76, 40, 136)"
         header: \#331463
         icon: \white
+        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
         loader: "rgb(60, 213, 175)"
         border: \#6b268e
+        border-light: "rgba(107, 38, 142, 0.40)"
         text: \#fff     
         text2: \#9d41eb     
         text3: \#fff
@@ -35,8 +37,10 @@ module.exports =
         wallet-light: \#FFF
         header: \#FFF
         icon: \gray
+        btn-icon: "none"
         loader: \gray
         border: \#CCCCCC
+        border-light: \#CCCCCC
         text: \black
         text2: \black
         text3: \#677897
@@ -58,8 +62,10 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        btn-icon: "none"
         loader: \#276A9F
         border: \#405b77
+        border-light: \#405b77
         text: \#FFF
         text2: \#FFF
         text3: \#677897
@@ -81,8 +87,10 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        btn-icon: "none"
         loader: \#276A9F
         border: \#213040
+        border-light: \#213040
         text: \#FFF
         text2: \#FFF
         text3: \#677897
@@ -104,8 +112,10 @@ module.exports =
         wallet-light: \#213040
         header: \#213040
         icon: \#276A9F
+        btn-icon: "none"
         loader: \#276A9F
         border: \#213040
+        border-light: \#213040
         text: \#FFF
         text2: \#FFF
         text3: \#677897

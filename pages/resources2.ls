@@ -21,6 +21,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
+    \./switch-account.ls
 }
 .staking-res
     @import scheme
@@ -614,6 +615,7 @@ staking = ({ store, web3t })->
             .pug.header Resource Staking
             .pug.close(on-click=goto-search)
                 icon "ChevronLeft", 20
+            switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
     store.staking.keystore = to-keystore store, no

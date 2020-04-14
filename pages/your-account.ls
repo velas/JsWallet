@@ -156,7 +156,7 @@ require! {
             line-height: 10px
             border-radius: $border
             display: inline-block
-            width: 80px
+            width: 100%
             vertical-align: middle
             text-align: center
             white-space: nowrap
@@ -183,6 +183,15 @@ module.exports = (store, web3t)->
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
+    button-primary4-style=
+        color: style.app.text
+        border-radius: "50px"
+        border: "0"
+        background: "rgba(157, 127, 206, 0.3)"
+        line-height: "25px"
+        padding: "10px"
+        width: "40px"
+        height: "40px"
     button-primary2-style=
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
@@ -233,7 +242,8 @@ module.exports = (store, web3t)->
             if no
                 .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
             if store.current.device is \mobile
-                button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary2-style) #{lang.edit-coins}
+                button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary4-style)
+                    icon "Plus", 15
             if no
                 if store.current.device is \mobile
                     button.pug.button.lock.mt-5(on-click=open-migration style=button-primary1-style) Migration

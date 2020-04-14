@@ -8,6 +8,7 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \./header.ls
+    \../round-human.ls
 }
 .menu
     padding: 0 5px
@@ -138,7 +139,7 @@ module.exports = ({ store, web3t })->
             .balance.pug
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
-                    .number.pug #{money current.balance-usd}
+                    .number.pug #{round-human current.balance-usd}
                 .currency.h1.pug #{lang.total-balance ? 'Total Balance'}
                 .pug
                     if store.preference.refresh-visible is yes
