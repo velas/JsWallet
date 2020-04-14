@@ -903,7 +903,10 @@ staking-content = (store, web3t)->
                                         span.color.pug #{store.staking.reward-claim}
                                         img.label-coin.pug(src="#{image-token}")
                                         span.color.pug  VLX
-                                    button.pug(on-click=claim style=button-primary2-style) Claim Reward
+                                    button.pug(on-click=claim style=button-primary2-style)
+                                        span.pug
+                                            img.icon-svg.pug(src="#{icons.reward}")
+                                            | Claim Reward
                 else
                     .pug Loading... Please wait
             if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0 and +store.staking.withdraw-amount is 0

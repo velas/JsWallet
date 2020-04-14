@@ -291,7 +291,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                         span.pug #{ wallet.coin.token.to-upper-case! }
                     if +wallet.pending-sent >0
                         .pug.pending 
-                            span.pug -#{ round-human pending }
+                            span.pug -#{ pending }
                 .price.pug(class="#{placeholder}") $#{ round-human balance-usd }
             .top-right.pug
                 if store.current.device is \desktop
