@@ -73,6 +73,7 @@ store =
         chosen-pool: null
         stake-amount-total: 0
         withdraw-amount: 0
+        reward-loading: no
     filestore:
         menu-open: no
         extension-icons: 
@@ -114,6 +115,7 @@ store =
         list: 0
         prompt-answer: ""
         prompt: no
+        step: "first"
         switch-account: no
         switch-currency: no
         send-menu-open: no

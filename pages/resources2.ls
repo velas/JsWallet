@@ -22,6 +22,7 @@ require! {
     \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
     \./switch-account.ls
+    \../icons.ls
 }
 .staking-res
     @import scheme
@@ -107,6 +108,10 @@ require! {
                             width: 50%
                         img
                             width: 240px
+                            &.icon-svg
+                                height: 12px
+                                width: auto
+                                padding-right: 5px
                     .right-node
                         width: 60%
                         float: right
@@ -280,7 +285,7 @@ require! {
         border-radius: $border
         color: white
         height: 36px
-        width: 125px
+        width: 130px
         margin-top: 10px
         padding: 0 6px
         text-decoration: none
@@ -482,7 +487,10 @@ staking-content = (store, web3t)->
                         if pairs.mining.keystore.length is 0
                             .pug
                                 .pug.btn
-                                    button.pug(style=button-primary2-style on-click=show-script) Generate Script
+                                    button.pug(style=button-primary2-style on-click=show-script)
+                                        span.pug
+                                            img.icon-svg.pug(src="#{icons.generate}")
+                                            | Generate Script
                                 .pug Please allow 30 seconds
                     if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
                         .pug
@@ -538,7 +546,10 @@ staking-content = (store, web3t)->
                     .pug.left
                         label.pug Your Stake (VLX)
                         input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="stake")
-                    button.pug(style=button-primary2-style on-click=become-validator) Apply
+                    button.pug(style=button-primary2-style on-click=become-validator)
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.apply}")
+                            | Apply
             if store.staking.validators.pending.length > 0
                 .pug.section
                     .title.pug
@@ -561,9 +572,15 @@ staking-content = (store, web3t)->
                             .pug.balance
                                 span.pug #{store.staking.reward}
                                 span.pug  VLX
-                            button.pug(style=button-primary2-style on-click=claim) Claim Reward
+                            button.pug(style=button-primary2-style on-click=claim)
+                                span.pug
+                                    img.icon-svg.pug(src="#{icons.reward}")
+                                    | Claim Reward
                     else
-                        button.pug(style=button-primary2-style on-click=calc-reward) Calculate Reward
+                        button.pug(style=button-primary2-style on-click=calc-reward)
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.calculate}")
+                                | Calculate Reward
             .pug.section
                 .title.pug
                     h3.pug Account Index
@@ -579,7 +596,10 @@ staking-content = (store, web3t)->
                 .title.pug
                     h3.pug Exit from Validator Pool
                 .description.pug
-                    button.pug(style=button-primary4-style on-click=exit) Exit
+                    button.pug(style=button-primary4-style on-click=exit)
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.exit}")
+                            | Exit
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t

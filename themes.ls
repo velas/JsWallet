@@ -13,6 +13,7 @@ module.exports =
         header: \#331463
         icon: \white
         btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
+        btn-icon2: "grayscale(100%) brightness(50%) sepia(120%) hue-rotate(-240deg) saturate(790%) contrast(0.5)"
         loader: "rgb(60, 213, 175)"
         border: \#6b268e
         border-light: "rgba(107, 38, 142, 0.40)"

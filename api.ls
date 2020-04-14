@@ -23,3 +23,13 @@ export push-tx = action (provider, config, cb)->
 export get-transaction-info = action (provider, config, cb)->
     return cb "method is not supported" if typeof! provider.get-transaction-info isnt \Function
     provider.get-transaction-info config, cb
+#
+#
+#
+#
+export get-sync-status = action (provider, config, cb)->
+    return cb "method is not supported" if typeof! provider.get-sync-status isnt \Function
+    provider.get-sync-status cb
+export get-peer-count = action (provider, config, cb)->
+    return cb "method is not supported" if typeof! provider.get-peer-count isnt \Function
+    provider.get-peer-count cb

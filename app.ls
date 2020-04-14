@@ -119,6 +119,8 @@ require! {
                 z-index: 1111111
     .show-detail
         overflow: hidden
+        .wallet
+            background: rgb(67, 32, 124) !important
         .wallet-top
             padding: 0 20px
             height: 50%
@@ -216,6 +218,8 @@ require! {
                 width: auto
                 img
                     width: 16px
+                    top: 1px
+                    position: relative
                     margin: 0
                     display: inline-block
         .info

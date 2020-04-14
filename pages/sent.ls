@@ -4,6 +4,7 @@ require! {
     \./history.ls
     \../get-primary-info.ls
     \../get-lang.ls
+    \../icons.ls
 }
 .sent
     .animation
@@ -50,7 +51,7 @@ require! {
         box-sizing: border-box
         border-radius: $border
         font-size: 10px
-        width: 80px
+        width: 90px
         height: 36px
         color: #6CA7ED
         text-transform: uppercase
@@ -62,6 +63,9 @@ require! {
         margin-bottom: 20px
         animation: passing_1361 2s cubic-bezier(0, 0, 0.79, 0.04) 1
         transform-origin: 50% 50%
+    .icon-svg
+        height: 12px
+        padding: 0px 5px 0 0px
     @-webkit-keyframes passing_1361
         0%
             transform: translateY(0%)
@@ -161,6 +165,8 @@ module.exports = ({ store, web3t })->
         color: style.app.text2
     sent-icon=
         filter: style.app.nothingIcon
+    btn-icon =
+        filter: style.app.btn-icon
     go-home = ->
         navigate store, web3t, \wallets
     lang = get-lang store
@@ -174,6 +180,9 @@ module.exports = ({ store, web3t })->
             span.pug #{lang.your} 
             a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction ? 'transaction'}
             span.pug  #{lang.has-been-sent ? 'has been sent'}
-        a.button.pug(on-click=go-home style=button-primary3-style) #{lang.home ? 'Home'}
+        a.button.pug(on-click=go-home style=button-primary3-style)
+            span.pug
+                img.icon-svg.pug(src="#{icons.home}" style=btn-icon)
+                | #{lang.home ? 'Home'}
         .limited-history.pug
             history { store, web3t }

@@ -10,6 +10,7 @@ require! {
     \./pages/confirmation.ls : { confirm, prompt }
     \./apply-transactions.ls
     \./get-lang.ls
+    \./icons.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -28,8 +29,8 @@ module.exports = (store, web3t)->
         | type is \IN => \ "#{lang.in}"
         | _ => \ "#{lang.out}"
     arrow-lg = (type)->
-        | type is \IN => \↓
-        | _ => \↑
+        | type is \IN => \ "#{icons.get}"
+        | _ => \ "#{icons.send}"
     sign = (type)->
         | type is \IN => \+
         | _ => \-

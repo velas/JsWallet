@@ -13,6 +13,7 @@ require! {
     \../history-funcs.ls
     \./icon.ls
     \./switch-account.ls
+    \../icons.ls
 }
 .resources
     @import scheme
@@ -228,6 +229,11 @@ require! {
                 margin: 10px
                 margin-left: 50px
                 z-index: 2
+                &.icon-svg
+                    position: relative
+                    height: 12px
+                    top: 2px
+                    padding-right: 5px
             >a
                 width: 100%
                 z-index: 1
@@ -455,7 +461,10 @@ resources = ({ store, web3t })->
                         a.pug(placeholder="VLX2AkOoyrbErHzBWUyM3cyA9kRaMVL2x4n" style=address-input) VLX2AkOoyrbErHzBWUyM3cyA9kRaMVL2x4n
                         CopyToClipboard.pug(text="VLX2AkOoyrbErHzBWUyM3cyA9kRaMVL2x4n" on-copy=copied-inform(store) style=filter-icon)
                             copy store
-                        button.pug(style=button-primary2-style) Deposit
+                        button.pug(style=button-primary2-style)
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.deposit}")
+                                | Deposit
         .wrapper-task.pug
             .pug.title
                 .pug.header Invoices

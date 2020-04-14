@@ -145,7 +145,8 @@ require! {
     >.wallet-container
         overflow: hidden
         overflow-y: auto
-        height: 300px
+        height: 100%
+        max-height: 500px
         width: 100%
         border-top: 1px solid #213040
         display: inline-block

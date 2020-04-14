@@ -7,6 +7,7 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \../navigate.ls
+    \../icons.ls
 }
 .settings-menu
     @import scheme
@@ -96,7 +97,7 @@ require! {
                 border-radius: $border
                 color: white
                 height: 36px
-                width: 104px
+                width: 120px
                 margin-top: 5px
                 padding: 0 6px
                 text-decoration: none
@@ -109,6 +110,12 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 white-space: nowrap
+                img
+                &.icon-svg
+                    position: relative
+                    height: 12px
+                    top: 2px
+                    padding-right: 5px
                 &:hover
                     background: transparent
                     color: $primary
@@ -322,7 +329,7 @@ manage-account = (store, web3t)->
     button-style2 = { ...button-primary2-style, width: "20px" }
     .pug
         .pug.section
-            .pug.title(style=color) Language
+            .pug.title(style=color) #{lang.language}
             .pug.langs
                 ul.pug
                     li.pug.lang-item(style=comming-soon)
@@ -395,7 +402,10 @@ manage-account = (store, web3t)->
                 span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
                 span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
             .pug.content
-                button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
+                button.pug(on-click=export-private-key style=button-primary2-style)
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.show}")
+                        | #{lang.show-secret ? 'Show Secret'}
         .pug.section
             .pug.title(style=color)
                 .pug.logo

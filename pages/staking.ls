@@ -25,6 +25,7 @@ require! {
     \../round-human.ls
     \../../web3t/addresses.js : { ethToVlx }
     \./switch-account.ls
+    \../icons.ls
 }
 .staking
     @import scheme
@@ -203,6 +204,10 @@ require! {
                             width: 50%
                         img
                             width: 240px
+                            &.icon-svg
+                                height: 12px
+                                width: auto
+                                padding-right: 5px
                     .right-node
                         width: 60%
                         float: right
@@ -394,7 +399,7 @@ require! {
         border-radius: $border
         color: white
         height: 36px
-        width: 125px
+        width: 130px
         margin-top: 10px
         padding: 0 6px
         text-decoration: none
@@ -472,7 +477,9 @@ calc-reward-epoch = (store, web3t, [epoch, ...epochs], cb)->
     all = [{ epoch, reward, checked: yes }] ++ rest
     cb null, all
 calc-reward = (store, web3t)->
-    cb = alert
+    cb = (err, data)->
+        store.staking.reward-loading = no
+    store.staking.reward-loading = yes
     mining-address =  store.staking.keystore.mining.address
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(staking-address, staking-address)
@@ -486,6 +493,7 @@ calc-reward = (store, web3t)->
     store.staking.reward-claim = store.staking.reward
     store.staking.rewards = rewards
     store.staking.rewards |> map (-> it.checked = yes)
+    cb null
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
@@ -624,7 +632,7 @@ staking-content = (store, web3t)->
         res = staking-epoch `minus` last-epoch
         return alert "Please wait for epoch change" if +res is 0
         data =
-            | +store.staking.withdraw-amount >= 0 => web3t.velas.Staking.claimOrderedWithdraw.get-data(store.staking.chosen-pool.address)
+            | +store.staking.withdraw-amount > 0 => web3t.velas.Staking.claimOrderedWithdraw.get-data(store.staking.chosen-pool.address)
             | _ => web3t.velas.Staking.order-withdraw.get-data(staking-address, store.staking.stake-amount-total)
         to = web3t.velas.Staking.address
         amount = 0
@@ -698,7 +706,10 @@ staking-content = (store, web3t)->
                         if pairs.mining.keystore.length is 0
                             .pug
                                 .pug.btn
-                                    button.pug(style=button-primary2-style on-click=show-script) #{lang.generate-script}
+                                    button.pug(style=button-primary2-style on-click=show-script)
+                                        span.pug
+                                            img.icon-svg.pug(src="#{icons.generate}")
+                                            | #{lang.generate-script}
                                 .pug #{lang.pls-allow}
                     if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
                         .pug
@@ -747,14 +758,14 @@ staking-content = (store, web3t)->
             if store.staking.is-active-staker is no
                 .pug.section
                     .title.pug
-                        h3.pug Check Your Node
+                        h3.pug #{lang.check-node}
                     .description.pug
                         .pug.left
                             ol.pug
-                                li.pug System clock must be synced
-                                li.pug The port 30304 should be visible outside
-                                li.pug The node must be synced. Check the latest height
-                                li.pug Wait for epoch change and check the node status again here
+                                li.pug #{lang.check-node1}
+                                li.pug #{lang.check-node2}
+                                li.pug #{lang.check-node3}
+                                li.pug #{lang.check-node4}
             if +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -767,34 +778,37 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
                                     button.small.pug(style=button-primary3-style on-click=use-max) Max
-                                span.pug Your balance: 
+                                span.pug #{lang.your-balance}: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{image-token}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator) #{lang.btn-apply}
+                        button.pug(style=button-primary2-style on-click=become-validator)
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.apply}")
+                                | #{lang.btn-apply}
             if +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
-                        h3.pug Your Staking
+                        h3.pug #{lang.your-staking}
                     .description.pug
                         .pug.left
                             .pug.balance
-                                span.pug Your staking: 
+                                span.pug #{lang.your-staking}: 
                                 span.pug.color #{your-staking}
                                 span.pug.color.green #{vlx-token}
                             .pug.balance
-                                span.pug Your Status:
+                                span.pug #{lang.your-status}:
                                 span.pug.color.green #{staker-status}
                             if store.staking.is-active-staker is no
                                 .pug.warning
                                     ol.pug
-                                        li.pug You sure that node is up and synced, clocks are synced and port is visible
-                                        li.pug Try to send the small amount to stake again
+                                        li.pug #{lang.your-status1}
+                                        li.pug #{lang.your-status2}
                             .pug.balance
-                                span.pug Current epoch:
+                                span.pug #{lang.current-epoch}:
                                 span.pug.color.green #{store.staking.epoch}
                             hr.pug
-                            label.pug Stake More
+                            label.pug #{lang.stake-more}
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
                             .pug.balance
                                 span.pug.small-btns
@@ -804,14 +818,20 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{image-token}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator) #{lang.btn-apply}            
+                        button.pug(style=button-primary2-style on-click=become-validator)
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.apply}")
+                                | #{lang.btn-apply}      
             if window.location.href.index-of('emit') > -1
                 .pug.section
                     .title.pug
-                        h3.pug Emit Change
+                        h3.pug #{lang.emit-change}
                     .description.pug
-                        .pug.pad-bottom Propose the change of consensus
-                        button.pug(style=button-primary2-style on-click=vote-for-change) Emit
+                        .pug.pad-bottom #{lang.propose}
+                        button.pug(style=button-primary2-style on-click=vote-for-change)
+                            span.pug
+                                img.icon-svg.pug(src="#{icons.emit}")
+                                | #{lang.emit}
             if +store.staking.stake-amount-total > 0
                 .pug.section.reward
                     .title.pug
@@ -820,39 +840,54 @@ staking-content = (store, web3t)->
                         if store.staking.reward?
                             .pug
                                 .pug.balance
-                                    span.pug Available Reward: 
+                                    span.pug #{lang.available-reward}: 
                                     span.color.pug #{store.staking.reward}
                                     img.label-coin.pug(src="#{image-token}")
                                     span.color.pug  VLX
                                 .pug.claim-table
                                     table.pug
                                         tr.pug
-                                            td.pug Use
-                                            td.pug Epoch
-                                            td.pug Award
+                                            td.pug #{lang.use}
+                                            td.pug #{lang.epoch}
+                                            td.pug #{lang.award}
                                         store.staking.rewards |> map build-claim-reward store, web3t
                                 .pug.balance
-                                    span.pug Claim Reward: 
+                                    span.pug #{lang.claim-reward}: 
                                     span.color.pug #{store.staking.reward-claim}
                                     img.label-coin.pug(src="#{image-token}")
                                     span.color.pug  VLX
-                                button.pug(on-click=claim style=button-primary2-style) Claim Reward
+                                button.pug(on-click=claim style=button-primary2-style)
+                                    span.pug
+                                        img.icon-svg.pug(src="#{icons.reward}")
+                                        | #{lang.claim-reward}
+                        else if store.staking.reward-loading is yes
+                            .pug Loading... Please wait
                         else
-                            button.mt-0.pug(style=button-primary2-style on-click=calc-reward-click) #{lang.calculate-reward}
-            if  +store.staking.stake-amount-total > 0 and +store.staking.withdraw-amount is 0
-                .pug.section
-                    .title.pug
-                        h3.pug #{lang.exit-from-valid}
-                    .description.pug
-                        .pug.pad-bottom Warning this will KILL your node along with all DELEGATES at the end of current epoch
-                        button.pug(style=button-primary4-style on-click=exit) Request exit
-            if +store.staking.withdraw-amount > 0
-                .pug.section
-                    .title.pug
-                        h3.pug Exit
-                    .description.pug
-                        .pug.pad-bottom Exit and Withdraw Coins
-                        button.pug(style=button-primary4-style on-click=exit) #{lang.exit-btn-pool}
+                            button.mt-0.pug(style=button-primary2-style on-click=calc-reward-click)
+                                span.pug
+                                    img.icon-svg.pug(src="#{icons.calculate}")
+                                    | #{lang.calculate-reward}
+            if  +store.staking.stake-amount-total > 0
+                if +store.staking.withdraw-amount is 0
+                    .pug.section
+                        .title.pug
+                            h3.pug #{lang.exit-from-valid}
+                        .description.pug
+                            .pug.pad-bottom Warning this will KILL your node along with all DELEGATES at the end of current epoch
+                            button.pug(style=button-primary4-style on-click=exit)
+                                span.pug
+                                    img.icon-svg.pug(src="#{icons.exit}")
+                                    | #{lang.request-exit}
+                if +store.staking.withdraw-amount > 0
+                    .pug.section
+                        .title.pug
+                            h3.pug #{lang.exit}
+                        .description.pug
+                            .pug.pad-bottom #{lang.exit-withdraw}
+                            button.pug(style=button-primary4-style on-click=exit)
+                                span.pug
+                                    img.icon-svg.pug(src="#{icons.exit}")
+                                    | #{lang.exit-btn-pool}
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t

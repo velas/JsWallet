@@ -9,6 +9,7 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
+    \../icons.ls
 }
 .history
     @import scheme
@@ -154,9 +155,19 @@ require! {
                     opacity: 1
                 img
                     height: 33px
+                    &.icon-svg
+                        height: 10px
+                        padding: 0 0 3px 0
+                    &.icon-svg-btn
+                        height: 12px
+                        padding: 0px 5px 0 0px
                 &.OUT
+                    img
+                        filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                     color: #be6ed2
                 &.IN
+                    img
+                        filter: invert(15%) sepia(14%) saturate(950%) hue-rotate(110deg) brightness(87%) contrast(85%)
                     color: #71c5aa
         .separator
             min-width: 2px
@@ -312,11 +323,15 @@ require! {
                 text-transform: uppercase
             &.OUT
                 .direction
+                    img
+                        filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                     color: #be6ed2
                 .txhash a
                     color: #be6ed2
             &.IN
                 .direction
+                    img
+                        filter: invert(15%) sepia(14%) saturate(950%) hue-rotate(110deg) brightness(87%) contrast(85%)
                     color: #71c5aa
                 .txhash a
                     color: #71c5aa
@@ -325,6 +340,11 @@ require! {
     img
         height: 20px
         border-radius: 25px
+        &.icon-svg
+            position: relative
+            border-radius: 0px
+            height: 12px
+            top: 2px
     .hidden
         display: none !important
 render-transaction = (store, web3t, tran)-->
@@ -360,7 +380,8 @@ render-transaction = (store, web3t, tran)-->
                     img.pug(src="#{coin.image}")
                 if no    
                     .pug.direction #{arrow(type)}
-                .pug.direction #{arrow-lg(type)}
+                .pug.direction
+                    img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.txhash
                 a.pug(href="#{url}" target="_blank") #{cut-tx tx}
                 CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
@@ -460,12 +481,12 @@ module.exports = ({ store, web3t })->
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)
                         button.IN.pug(class="#{is-active('IN')}" style=btn-style on-click=switch-type-in)
-                            |↓
+                            img.icon-svg.pug(src="#{icons.get}")
                             br.pug
                             |#{lang.in}
                         .pug(style=btn-style)
                         button.OUT.pug(class="#{is-active('OUT')}" style=btn-style on-click=switch-type-out)
-                            |↑
+                            img.icon-svg.pug(src="#{icons.send}")
                             br.pug
                             |#{lang.out}
                     .pug.middle(style=border-b)
@@ -474,7 +495,9 @@ module.exports = ({ store, web3t })->
                         .pug
                             input.pug(type='text' style=input-style placeholder="#{lang.to}")
                         button.pug(on-click style=button-primary1-style)
-                            span.pug #{lang.apply}
+                            span.pug
+                                img.icon-svg-btn.pug(src="#{icons.apply}")
+                                | #{lang.apply}
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))

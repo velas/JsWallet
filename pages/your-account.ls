@@ -8,6 +8,7 @@ require! {
     \./icon.ls
     \prelude-ls : { map, filter }
     \localStorage
+    \../icons.ls
 }
 .your-account
     @import scheme
@@ -20,7 +21,7 @@ require! {
         position: absolute
         right: 60px
         top: 60px
-        width: 150px
+        width: 170px
         background: #321260
         display: inline-grid
         z-index: 3
@@ -126,6 +127,12 @@ require! {
                     width: 100%
                     margin: 0 auto
                     opacity: 1
+                    img
+                    &.icon-svg
+                        position: relative
+                        height: 12px
+                        top: 2px
+                        padding-right: 5px
     >.username
         color: $color
         font-size: 13px
@@ -267,4 +274,7 @@ module.exports = (store, web3t)->
                 .pug.middle(style=border-top)
                     .pug.table-row-menu
                         .col.buttons.folder-menu.pug(on-click=create-account)
-                            button.pug(style=button-primary2-style) Create Account
+                            button.pug(style=button-primary2-style)
+                                span.pug
+                                    img.icon-svg.pug(src="#{icons.create-acc}")
+                                    | Create Account

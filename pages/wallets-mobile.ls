@@ -54,7 +54,8 @@ require! {
         overflow: hidden
         overflow-y: auto
         border-radius: $border
-        height: 299px
+        max-height: 328px
+        height: 100%
         max-width: 450px
         border-top: 1px solid #213040
         display: inline-block

@@ -140,7 +140,7 @@ require! {
                 width: 80px
                 .icon
                     position: relative
-                    height: 12px
+                    height: 16px
                     top: 2px
                 @media screen and (max-width: 800px)
                     width: 40px
@@ -320,7 +320,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         .wallet-middle.pug
             span.pug(style=address-input)
                 a.browse.pug(target="_blank" href="#{get-address-link wallet}")
-                    img.pug(src="#{icons-browse.browse}")
+                    img.pug(src="#{icons.browse-open}")
                 a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
