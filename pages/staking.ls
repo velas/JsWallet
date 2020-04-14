@@ -26,6 +26,7 @@ require! {
     \../../web3t/addresses.js : { ethToVlx }
     \./switch-account.ls
     \../icons.ls
+    \./exit-stake.ls
 }
 .staking
     @import scheme
@@ -514,7 +515,7 @@ build-claim-reward = (store, web3t)-> (item)->
         td.pug
             input.pug(type='checkbox' checked=checked on-change=check)
         td.pug #{item.epoch}
-        td.pug #{round-human item.reward}
+        td.pug(title="#{item.reward}") #{round-human item.reward}
 staking-content = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
@@ -867,27 +868,7 @@ staking-content = (store, web3t)->
                                 span.pug
                                     img.icon-svg.pug(src="#{icons.calculate}")
                                     | #{lang.calculate-reward}
-            if  +store.staking.stake-amount-total > 0
-                if +store.staking.withdraw-amount is 0
-                    .pug.section
-                        .title.pug
-                            h3.pug #{lang.exit-from-valid}
-                        .description.pug
-                            .pug.pad-bottom Warning this will KILL your node along with all DELEGATES at the end of current epoch
-                            button.pug(style=button-primary4-style on-click=exit)
-                                span.pug
-                                    img.icon-svg.pug(src="#{icons.exit}")
-                                    | #{lang.request-exit}
-                if +store.staking.withdraw-amount > 0
-                    .pug.section
-                        .title.pug
-                            h3.pug #{lang.exit}
-                        .description.pug
-                            .pug.pad-bottom #{lang.exit-withdraw}
-                            button.pug(style=button-primary4-style on-click=exit)
-                                span.pug
-                                    img.icon-svg.pug(src="#{icons.exit}")
-                                    | #{lang.exit-btn-pool}
+            exit-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -925,12 +906,20 @@ staking = ({ store, web3t })->
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
     store.staking.keystore = to-keystore store, no
+    store.staking.chosen-pool =
+        address: store.staking.keystore.staking.address
     store.staking.reward = null
     store.staking.withdraw-amount = 0
     #exit for now
     #return cb null
     err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.keystore.staking.address, store.staking.keystore.staking.address
     return cb err if err?
+    err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
+    return alert "#{err}" if err?
+    err, staking-epoch <- web3t.velas.Staking.stakingEpoch
+    return alert "#{err}" if err?
+    res = staking-epoch `minus` last-epoch
+    store.staking.wait-for-epoch-change = if +res is 0 then yes else no
     store.staking.withdraw-amount = amount.to-fixed!
     store.staking.add.add-validator-stake = 0
     err, epoch <- web3t.velas.Staking.stakingEpoch

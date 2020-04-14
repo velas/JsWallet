@@ -15,6 +15,7 @@ require! {
     \./your-account.ls
     \./icon.ls
     \localStorage
+    \../icons.ls
 }
 .wallets
     @import scheme
@@ -30,6 +31,10 @@ require! {
     $cards-pad: 15px
     right: 0
     z-index: 2
+    .icon-svg1
+        position: relative
+        height: 16px
+        top: 2px
     &.hide-detail
         .big
             height: 60px
@@ -201,7 +206,7 @@ mobile = ({ store, web3t })->
         .pug.switch-account.h1
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                icon "Pencil", 17
+                img.icon-svg1.pug(src="#{icons.create}")
             span.pug.icon(on-click=open-account class="#{rotate-class}")
                 icon "ChevronDown", 22
     edit-account-template = ->

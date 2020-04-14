@@ -536,7 +536,7 @@ send = ({ store, web3t })->
                             button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max ? 'USE MAX'}
                             span.pug #{lang.balance ? 'balance'}
                             span.pug.balance
-                                span.pug #{round-human wallet.balance}
+                                span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug #{token}
                                 if +wallet.pending-sent >0

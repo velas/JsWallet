@@ -74,6 +74,7 @@ store =
         stake-amount-total: 0
         withdraw-amount: 0
         reward-loading: no
+        wait-for-epoch-change: no
     filestore:
         menu-open: no
         extension-icons: 

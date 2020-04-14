@@ -41,7 +41,7 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    .icon
+    .icon-right
         height: 12px
         top: 2px
         position: relative
@@ -536,7 +536,6 @@ calc-reward = (store, web3t)->
     mining-address =  store.staking.keystore.mining.address
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
-    #console.log { epochs }
     return cb err if err?
     err, rewards <- calc-reward-epoch store, web3t ,epochs
     reward =
@@ -567,7 +566,7 @@ build-claim-reward = (store, web3t)-> (item)->
         td.pug
             input.pug(type='checkbox' checked=checked on-change=check)
         td.pug #{item.epoch}
-        td.pug #{round-human item.reward}
+        td.pug(title="#{item.reward}") #{round-human item.reward}
 staking-content = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
@@ -674,28 +673,6 @@ staking-content = (store, web3t)->
     #    to = web3t.velas.Staking.address
     #    amount = 0
     #    err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
-    exit = ->
-        staking-address = store.staking.keystore.staking.address
-        #err, data <- web3t.velas.Staking.maxWithdrawAllowed store.staking.chosen-pool.address, staking-address 
-        #res = data `minus` store.staking.stake-amount-total 
-        #console.log { res }
-        #return alert "Not allowed to claim `#{store.staking.stake-amount-total}`. Only allowed #{data.to-fixed!}" if +res < 0
-        err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
-        return alert "#{err}" if err?
-        err, staking-epoch <- web3t.velas.Staking.stakingEpoch
-        return alert "#{err}" if err?
-        res = staking-epoch `minus` last-epoch
-        return alert "Please wait for epoch change" if +res is 0
-        data =
-            | +store.staking.withdraw-amount > 0 => web3t.velas.Staking.claimOrderedWithdraw.get-data(store.staking.chosen-pool.address)
-            | _ => web3t.velas.Staking.order-withdraw.get-data(store.staking.chosen-pool.address, store.staking.stake-amount-total)
-        #debug =
-        #    | +store.staking.withdraw-amount > 0 => "web3t.velas.Staking.claimOrderedWithdraw.get-data('#{store.staking.chosen-pool.address}')"
-        #    | _ => "web3t.velas.Staking.order-withdraw.get-data('#{store.staking.chosen-pool.address}', '#{store.staking.stake-amount-total}')"
-        #console.log +store.staking.withdraw-amount, debug
-        to = web3t.velas.Staking.address
-        amount = 0
-        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
     get-balance = ->
         wallet =
             store.current.account.wallets 
@@ -757,6 +734,7 @@ staking-content = (store, web3t)->
         my-stake = round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
+            cb = alert
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
@@ -768,6 +746,12 @@ staking-content = (store, web3t)->
             err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.chosen-pool.address, address
             return cb err if err?
             store.staking.withdraw-amount = amount.to-fixed!
+            err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
+            return cb "#{err}" if err?
+            err, staking-epoch <- web3t.velas.Staking.stakingEpoch
+            return cb "#{err}" if err?
+            res = staking-epoch `minus` last-epoch
+            store.staking.wait-for-epoch-change = if +res is 0 then yes else no
         to-eth = ->
             item.eth = not item.eth
         cut-tx = (tx)->
@@ -787,7 +771,7 @@ staking-content = (store, web3t)->
             td.pug
                 button.pug(on-click=choose-pull style=button-primary2-style)
                     span.pug
-                        img.icon.pug(src="#{icons.arrow-right}")
+                        img.icon-right.pug(src="#{icons.arrow-right}")
     cancel-pool = ->
         store.staking.chosen-pool = null
     activate = (step)-> ->
@@ -909,24 +893,8 @@ staking-content = (store, web3t)->
                                             | Claim Reward
                 else
                     .pug Loading... Please wait
-            if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0 and +store.staking.withdraw-amount is 0
-                .pug.section
-                    .title.pug
-                        h3.pug #{lang.exit-from-valid}
-                    .description.pug
-                        .pug.pad-bottom Only do when you want to spend your balance
-                        button.pug(style=button-primary4-style on-click=exit)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.exit}")
-                                | Request exit
-            if store.staking.chosen-pool? and +store.staking.withdraw-amount > 0
-                .pug.section
-                    .title.pug
-                        h3.pug Exit
-                    .description.pug
-                        .pug.pad-bottom Exit and withdraw Coins
-                        button.pug(style=button-primary4-style on-click=exit) #{lang.exit-btn-pool}
-            exit-stake store, web3t
+            if store.staking.chosen-pool?
+                exit-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t

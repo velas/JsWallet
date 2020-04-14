@@ -5,6 +5,7 @@ require! {
     \../web3.ls
     \../get-lang.ls
     \../icons.ls
+    \../math.ls : { div, times, plus, minus }
 }
 .steps
     @media(max-width:800px)
@@ -77,6 +78,7 @@ require! {
         100%
             transform: scale(1)
 module.exports = (store, web3t)->
+    return null if store.staking.stake-amount-total is 0
     style = get-primary-info store
     lang = get-lang store
     button-primary4-style=
@@ -89,30 +91,46 @@ module.exports = (store, web3t)->
     activate-second = activate \second
     activate-third = activate \third
     active-class = (step)->
-        if store.current.step is step then 'active' else ''
+        active-tab =
+            | +store.staking.withdraw-amount is 0 => \first
+            | store.staking.wait-for-epoch-change is yes => \second
+            | +store.staking.withdraw-amount > 0 => \third
+        if active-tab is step then 'active' else ''
     active-first = active-class \first
     active-second = active-class \second
     active-third = active-class \third
+    exit = ->
+        staking-address = store.staking.keystore.staking.address
+        data =
+            | +store.staking.withdraw-amount > 0 => web3t.velas.Staking.claimOrderedWithdraw.get-data(store.staking.chosen-pool.address)
+            | _ => web3t.velas.Staking.order-withdraw.get-data(store.staking.chosen-pool.address, store.staking.stake-amount-total)
+        to = web3t.velas.Staking.address
+        amount = 0
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
     .pug.section
         .title.pug
-            h3.pug Waiting process
+            h3.pug Exit
         .description.pug
             .pug.left
                 .steps.pug
                     .pug.step(on-click=activate-first class="#{active-first}")
                         .pug.step-count 1
-                        if active-first is \active
-                            .pug.step-content 
-                                | Please click the "Request exit" button
-                                button.pug(style=button-primary4-style)
+                        .pug.step-content
+                            .pug Please click the "Request exit" button
+                            if active-first is \active
+                                button.pug(style=button-primary4-style on-click=exit)
                                     span.pug
                                         img.icon-svg.pug(src="#{icons.exit}")
                                         | Request exit
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
-                        if active-second is \active
-                            .pug.step-content Come back in 1.5 hours for a reward
+                        .pug.step-content Come back in 1.5 hours for a your staking amount
                     .pug.step(on-click=activate-third class="#{active-third}")
                         .pug.step-count 3
-                        if active-third is \active
-                            .pug.step-content Take away the reward and Request exit
+                        .pug.step-content
+                            .pug Withdraw the staking amount
+                            if active-third is \active
+                                button.pug(style=button-primary4-style on-click=exit)
+                                    span.pug
+                                        img.icon-svg.pug(src="#{icons.exit}")
+                                        | Withdraw

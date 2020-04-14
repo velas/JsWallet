@@ -280,19 +280,19 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug(class="#{placeholder}") $#{ round-human usd-rate}
-                    .price.pug(class="#{placeholder}") $#{ round-human balance-usd}
+                    .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
+                    .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd}
             .top-middle.pug(style=wallet-style)
                 if +wallet.pending-sent is 0
                     .balance.pug.title(class="#{placeholder}") #{name}
                 .balance.pug(class="#{placeholder}")
-                    span.pug #{ round-human wallet.balance }
+                    span.pug(title="#{wallet.balance}") #{ round-human wallet.balance }
                         img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
                         span.pug #{ wallet.coin.token.to-upper-case! }
                     if +wallet.pending-sent >0
                         .pug.pending 
                             span.pug -#{ pending }
-                .price.pug(class="#{placeholder}") $#{ round-human balance-usd }
+                .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
             .top-right.pug
                 if store.current.device is \desktop
                     button.btn-open.pug(on-click=expand style=button-primary3-style)
@@ -327,5 +327,5 @@ module.exports = (store, web3t, wallets, wallet)-->
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
         .wallet-middle.title-balance.pug
-            .name.pug(class="#{placeholder}") $#{ round-human(usd-rate)}
+            .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}
             .name.per.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }

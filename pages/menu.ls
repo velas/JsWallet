@@ -139,7 +139,7 @@ module.exports = ({ store, web3t })->
             .balance.pug
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
-                    .number.pug #{round-human current.balance-usd}
+                    .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
                 .currency.h1.pug #{lang.total-balance ? 'Total Balance'}
                 .pug
                     if store.preference.refresh-visible is yes
