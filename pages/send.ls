@@ -10,6 +10,7 @@ require! {
     \../icons.ls
     \../round-human.ls
     \../wallets-funcs.ls
+    \../icons.ls
 }
 .content
     position: relative
@@ -26,11 +27,14 @@ require! {
         position: relative
         height: 12px
         top: 2px
-        padding: 0px 5px 0 0px
+    .icon-svg-history
+        width: auto !important
+        height: 20px
     .content-body
         max-width: 450px !important
     >.title
         position: sticky
+        position: -webkit-sticky
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
@@ -454,6 +458,10 @@ send = ({ store, web3t })->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+    button-primary1-style=
+        border: "1px solid #{style.app.primary1}"
+        color: style.app.text
+        background: style.app.primary1
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -479,7 +487,7 @@ send = ({ store, web3t })->
         .pug.title(style=border-header)
             .pug.header Send
             .pug.close(on-click=cancel)
-                icon "ChevronLeft", 20
+                img.icon-svg.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         .pug.content-body(style=more-text)
             .pug.header
@@ -488,7 +496,7 @@ send = ({ store, web3t })->
                 span.pug.head.center(style=more-text) #{wallet-title}
                 if store.current.device is \mobile
                     span.pug.head.right(on-click=history style=icon-style)
-                        icon \Inbox, 25
+                        img.icon-svg-history.pug(src="#{icons.history}")
             if store.current.send-menu-open
                 .pug.more-buttons(style=menu-style)
                     if store.preference.invoice-visible is yes
@@ -579,7 +587,7 @@ send = ({ store, web3t })->
                         .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
             .pug.button-container
                 .pug.buttons
-                    a.pug.btn.btn-primary(on-click=send-anyway style=button-primary2-style)
+                    a.pug.btn.btn-primary(on-click=send-anyway style=button-primary1-style)
                         span.pug
                             img.icon-svg.pug(src="#{icons.send}")
                             | #{send-title}

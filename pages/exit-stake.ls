@@ -77,8 +77,8 @@ require! {
             transform: scale(1.1)
         100%
             transform: scale(1)
-module.exports = (store, web3t)->
-    return null if store.staking.stake-amount-total is 0
+max-withdraw-ordered = (store, web3t)->
+    return null if +store.staking.stake-amount-total is 0 and +store.staking.withdraw-amount is 0
     style = get-primary-info store
     lang = get-lang store
     button-primary4-style=
@@ -99,14 +99,28 @@ module.exports = (store, web3t)->
     active-first = active-class \first
     active-second = active-class \second
     active-third = active-class \third
-    exit = ->
+    order = ->
+        #
         staking-address = store.staking.keystore.staking.address
-        data =
-            | +store.staking.withdraw-amount > 0 => web3t.velas.Staking.claimOrderedWithdraw.get-data(store.staking.chosen-pool.address)
-            | _ => web3t.velas.Staking.order-withdraw.get-data(store.staking.chosen-pool.address, store.staking.stake-amount-total)
+        pool-address = store.staking.chosen-pool.address
+        err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
+        amount = max.to-fixed!
+        console.log "web3t.velas.Staking.maxWithdraw[Order]Allowed('#{pool-address}', '#{staking-address}')"
+        #store.staking.stake-amount-total
+        return alert "Your amount is 0" if +amount is 0
+        data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
-        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }        
+    exit = ->
+        #maxWithdrawOrderAllowed
+        return alert "No Ordered Amount" if +store.staking.withdraw-amount is 0
+        pool-address = store.staking.chosen-pool.address
+        #staking-address = store.staking.keystore.staking.address
+        data = web3t.velas.Staking.claimOrderedWithdraw.get-data(pool-address)
+        to = web3t.velas.Staking.address
+        amount = 0
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }
     .pug.section
         .title.pug
             h3.pug Exit
@@ -118,7 +132,7 @@ module.exports = (store, web3t)->
                         .pug.step-content
                             .pug Please click the "Request exit" button
                             if active-first is \active
-                                button.pug(style=button-primary4-style on-click=exit)
+                                button.pug(style=button-primary4-style on-click=order)
                                     span.pug
                                         img.icon-svg.pug(src="#{icons.exit}")
                                         | Request exit
@@ -134,3 +148,38 @@ module.exports = (store, web3t)->
                                     span.pug
                                         img.icon-svg.pug(src="#{icons.exit}")
                                         | Withdraw
+max-withdraw = (store, web3t)->
+    return null if +store.staking.stake-amount-total is 0
+    style = get-primary-info store
+    lang = get-lang store
+    button-primary4-style=
+        border: "1px solid #{style.app.primary4}"
+        color: style.app.text
+        background: style.app.primary4
+    exit = ->
+        #
+        staking-address = store.staking.keystore.staking.address
+        pool-address = store.staking.chosen-pool.address
+        err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
+        amount = max.to-fixed!
+        console.log "web3t.velas.Staking.maxWithdrawAllowed('#{pool-address}', '#{staking-address}')"
+        #store.staking.stake-amount-total
+        return alert "Your amount is 0" if +amount is 0
+        data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
+        to = web3t.velas.Staking.address
+        amount = 0
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }        
+    .pug.section
+        .title.pug
+            h3.pug Exit
+        .description.pug
+            .pug Withdraw the staking amount
+            button.pug(style=button-primary4-style on-click=exit)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.exit}")
+                    | Withdraw
+module.exports = (store, web3t)->
+    if +store.staking.max-withdraw-ordered > 0
+        max-withdraw-ordered store, web3t
+    else 
+        max-withdraw store, web3t

@@ -160,6 +160,7 @@ require! {
         margin-top: 20px
     >.title
         position: sticky
+        position: -webkit-sticky
         z-index: 1
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
@@ -356,7 +357,7 @@ resources = ({ store, web3t })->
         .pug.title(style=border-style)
             .pug.header Resources Center
             .pug.close(on-click=goto-search)
-                icon "ChevronLeft", 20
+                img.icon-svg.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         .container-price.pug
             .plan.pug

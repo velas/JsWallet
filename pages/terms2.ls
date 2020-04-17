@@ -6,6 +6,7 @@ require! {
     \../web3.ls
     \../get-lang.ls
     \../history-funcs.ls
+    \../icons.ls
 }
 .terms
     @import scheme
@@ -60,6 +61,8 @@ terms = ({ store, web3t })->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+    btn-icon =
+        filter: info.app.btn-icon
     accept = ->
         navigate store, web3t, \:init
         <- web3t.refresh
@@ -68,7 +71,10 @@ terms = ({ store, web3t })->
             .pug.header #{lang.terms-of-use ? 'Terms of Use'}
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
-                button.pug(on-click=go-back style=button-primary1-style) #{lang.back}
+                button.pug(on-click=go-back style=button-primary1-style)
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.arrow-left}")
+                        | #{lang.back}
 terms.init = ({ store }, cb)->
     err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
     return cb err if err?

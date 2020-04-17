@@ -17,6 +17,16 @@ require! {
     display: inline-block
     $size: 50px
     $color: rgba(#FFF, 0.5)
+    .icon-svg1
+        position: relative
+        border-radius: 0px
+        height: 15px
+        top: 0
+    .icon-svg-plus
+        position: relative
+        height: 16px
+        top: 2px
+        padding: 0
     .switch-menu
         position: absolute
         right: 60px
@@ -250,13 +260,13 @@ module.exports = (store, web3t)->
                 .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
             if store.current.device is \mobile
                 button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary4-style)
-                    icon "Plus", 15
+                    img.icon-svg-plus.pug(src="#{icons.plus}")
             if no
                 if store.current.device is \mobile
                     button.pug.button.lock.mt-5(on-click=open-migration style=button-primary1-style) Migration
             if store.current.device is \desktop
                 button.pug.button.lock(on-click=add-coin(store) style=button-primary0-style)
-                    icon "Plus", 20
+                    img.icon-svg1.pug(src="#{icons.plus}")
             if no
                 if store.current.device is \desktop
                     button.pug.button.lock(on-click=open-migration style=button-primary0-style)

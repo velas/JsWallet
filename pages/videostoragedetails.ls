@@ -9,6 +9,7 @@ require! {
     \../history-funcs.ls
     \./icon.ls
     \./switch-account.ls
+    \../icons.ls
 }
 .videodetails
     @import scheme
@@ -26,6 +27,11 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
+    .icon-svg-arrow
+        position: relative
+        height: 12px !important
+        width: auto !important
+        top: 2px
     .search-input
         position: fixed
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
@@ -148,6 +154,7 @@ require! {
         margin-right: 10px
     >.title
         position: sticky
+        position: -webkit-sticky
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
@@ -890,12 +897,12 @@ videodetails = ({ store, web3t })->
         .pug.title(style=border-style)
             .pug.header Video storage
             .pug.close(on-click=go-back)
-                icon "ChevronLeft", 20
+                img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         .pug.search-input
             .pug.section(style=border-style)
                 span.pug.close(on-click=goto-videostorage)
-                    icon "ChevronLeft", 20
+                    img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
                 .title.pug
                     h2.iron.pug
                         span.logo.pug

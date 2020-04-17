@@ -59,6 +59,9 @@ require! {
         max-width: 450px
         border-top: 1px solid #213040
         display: inline-block
+        .wallet
+            &:last-child
+                margin-bottom: 0px
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t

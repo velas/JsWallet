@@ -17,6 +17,15 @@ require! {
     position: relative
     padding-bottom: 0px
     display: inline-block
+    .icon-svg1
+        position: relative
+        border-radius: 0px
+        height: 15px
+        top: 2px
+    .icon-svg-arrow
+        position: relative
+        height: 12px
+        top: 0px
     &.normalheader
         @media(max-width: 800px)
             margin: 60px 0 0
@@ -247,11 +256,16 @@ require! {
             &.record
                 border-radius: 0px
                 .tx-top
-                    cursor: pointer
+                    cursor: default
+                    height: 59px
+                .tx-middle
+                    height: 60px
+                &:last-child
+                    margin-bottom: 12px
                 &:first-child
                     border-top: 1px solid rgb(107, 38, 142)
             .cell
-                padding: 10px 15px
+                padding: 10px 0 10px 10px
                 display: inline-block
                 vertical-align: top
                 box-sizing: border-box
@@ -259,6 +273,8 @@ require! {
                 height: 59px
                 white-space: nowrap
                 overflow: hidden
+                &:last-child
+                    padding-right: 10px
                 @media screen and (max-width: 800px)
                     overflow-x: scroll
                     overflow-y: hidden
@@ -267,9 +283,9 @@ require! {
                     div
                         text-align: center
                 &.txhash
-                    width: 55%
+                    width: 90%
                     a
-                        color: black
+                        font-size: 14px
                     img
                         border-radius: inherit
                         border: none
@@ -278,7 +294,7 @@ require! {
                         left: 3px
                         position: relative
                 &.amount
-                    width: 35%
+                    width: 25%
                     text-align: right
                 &.divider
                     width: 10%
@@ -286,11 +302,18 @@ require! {
                         text-align: center
                         line-height: 40px
                 &.arrow
-                    width: 10%
+                    width: 5%
                     text-align: center
                     line-height: 40px
+                    opacity: .5
+                    padding-left: 0
+                &.more
+                    text-align: center
+                    width: 6%
+                    line-height: 40px
+                    cursor: pointer
                 &.details-from, &.details-to
-                    width: 40%
+                    width: 27%
                     text-align: left
                     height: 60px
                     a
@@ -298,7 +321,10 @@ require! {
                         text-overflow: ellipsis
                         overflow: hidden
                         width: 100%
-                        font-size: 16px
+                        font-size: 14px
+                        text-decoration: none
+                        &:hover
+                            text-decoration: underline
             .gray
                 $gray: #8290ad
                 color: $gray
@@ -373,8 +399,22 @@ render-transaction = (store, web3t, tran)-->
         store.history.tx-details = 
             | store.history.tx-details is tx => null
             | _ => tx
+    cut-tx = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
+        r =
+            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 12) + \.. + t.substr(t.length - 4, 4)
+            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 4) + \.. + t.substr(t.length - 4, 4)
+    cut-hash = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 15) + \.. + t.substr(t.length - 4, 4)
+        #r.to-upper-case!
+    icon-pending=
+        filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else ''
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
-        .pug.tx-top(on-click=tx-details style=line-style)
+        .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
                 .pug
                     img.pug(src="#{coin.image}")
@@ -382,18 +422,20 @@ render-transaction = (store, web3t, tran)-->
                     .pug.direction #{arrow(type)}
                 .pug.direction
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
-            .cell.pug.txhash
-                a.pug(href="#{url}" target="_blank") #{cut-tx tx}
-                CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
-                    copy store
+            .cell.pug.details-from
                 .pug.gray(style=lightText)
-                    span.pug #{lang.created}: 
-                        | #{ago time}
-                    if pending is yes
-                        span.pug
-                            span.pug.bold.syncing
-                                icon \Sync, 10
-                            span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
+                    span.pug #{lang.sender}:
+                    CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
+                a.pug(target="_blank" href="#" style=menu-style) #{cut-tx from}
+            .cell.pug.arrow
+                img.icon-svg1.pug(src="#{icons.arrow-right}")
+            .cell.pug.details-to
+                .pug.gray(style=lightText)
+                    span.pug #{lang.recipient}:
+                    CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
+                a.pug(target="_blank" href="#" style=menu-style) #{cut-tx to}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}")
                     span.sign.direction.pug #{sign(type)}
@@ -401,25 +443,25 @@ render-transaction = (store, web3t, tran)-->
                 .pug.gray(style=lightText)
                     span.pug.fee #{lang.fee}:
                     amount-beautify fee, 10
+            .cell.pug.divider.more(on-click=tx-details)
+                img.icon-svg1.pug(src="#{icons.more}" style=icon-pending)
         if store.history.tx-details is tx
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider
                     if no
                         .pug.direction #{arrow(type)}
-                .cell.pug.details-from
+                .cell.pug.txhash
+                    a.pug(href="#{url}" target="_blank") #{cut-hash tx}
+                    CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
                     .pug.gray(style=lightText)
-                        span.pug #{lang.sender}:
-                        CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
-                            copy store
-                    a.pug(target="_blank" href="#" style=menu-style) #{from}
-                .cell.pug.arrow
-                    icon "ChevronRight", 20
-                .cell.pug.details-to
-                    .pug.gray(style=lightText)
-                        span.pug #{lang.recipient}:
-                        CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
-                            copy store
-                    a.pug(target="_blank" href="#" style=menu-style) #{to}
+                        span.pug #{lang.created}: 
+                            | #{ago time}
+                        if pending is yes
+                            span.pug
+                                span.pug.bold.syncing
+                                    icon \Sync, 10
+                                span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store
@@ -473,10 +515,10 @@ module.exports = ({ store, web3t })->
         .header.pug(style=header-style-light)
             if store.current.device is \mobile
                 button.back.pug(on-click=go-back style=button-style)
-                    icon "ChevronLeft", 25
+                    img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
             span.pug.head.left.h1 #{lang.your-transactions}
             span.pug.head.right(on-click=expand-collapse)
-                icon \Settings, 20
+                img.icon-svg1.pug(src="#{icons.filter}")
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)

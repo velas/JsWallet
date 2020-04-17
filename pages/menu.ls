@@ -7,6 +7,7 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \./icon.ls
+    \../icons.ls
     \./header.ls
     \../round-human.ls
 }
@@ -32,6 +33,9 @@ require! {
         cursor: pointer
         color: #00ffdc
         svg
+            vertical-align: sub !important
+            width: 20px
+        .icon-svg
             vertical-align: sub !important
             width: 20px
     >.menu-body

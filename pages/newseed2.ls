@@ -4,6 +4,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \./icon.ls
+    \../icons.ls
 }
 # ss
 .newseed
@@ -100,7 +101,7 @@ require! {
             padding: 0px 6px
             border: 0
             height: 36px
-            width: 180px
+            width: auto
             cursor: pointer
             background: #248295
             border-radius: $border
@@ -138,6 +139,8 @@ newseed = ({ store, web3t })->
     { generate-seed, change-seed, save, fix-issue, has-issue, next } = newseed-funcs store, web3t
     text-style =
         color: style.app.text
+    btn-icon =
+        filter: style.app.btn-icon
     address-input=
         color: style.app.text
         background: style.app.wallet
@@ -226,8 +229,14 @@ newseed = ({ store, web3t })->
                         .pug
                             img.pug(alt="" src="#{langs.fr}")
                         span.pug(style=text-style) French
-            button.pug.left(style=button-primary2-style on-click=new-wallet) #{lang.new-wallet ? 'Create New Wallet'}
-            button.pug.right(style=button-primary3-style on-click=restore-wallet) #{lang.restore-wallet ? 'Restore Existing Wallet'}
+            button.pug.left(style=button-primary2-style on-click=new-wallet)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.create-wallet}")
+                    | #{lang.new-wallet ? 'Create New Wallet'}
+            button.pug.right(style=button-primary3-style on-click=restore-wallet)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
+                    | #{lang.restore-wallet ? 'Restore Existing Wallet'}
 focus = ({ store }, cb)->
     <- set-timeout _, 1000
     textarea = store.root.query-selector '.newseed textarea'

@@ -15,6 +15,7 @@ require! {
     \./your-account.ls
     \./icon.ls
     \localStorage
+    \../icons.ls
 }
 .choose-account
     @import scheme
@@ -29,6 +30,10 @@ require! {
     bottom: 30px
     $cards-pad: 15px
     z-index: 2
+    .icon-svg-edit
+        height: 15px
+    .icon-svg-create
+        height: 10px
     .switch-menu
         right: -20px
         top: 39px
@@ -65,6 +70,7 @@ require! {
             text-align: right
             cursor: default
             display: inline-block
+            vertical-align: middle
             @media(max-width:500px)
                 width: 40px
         input
@@ -178,9 +184,9 @@ module.exports = (store, web3t)->
         .pug.switch-account.h1
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                icon "Pencil", 17
+                img.icon-svg-edit.pug(src="#{icons.create}")
             span.pug.icon(on-click=open-account class="#{rotate-class}")
-                icon "ChevronDown", 22
+                img.icon-svg-create.pug(src="#{icons.arrow-down}")
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)

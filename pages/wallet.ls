@@ -34,6 +34,8 @@ require! {
     &:first-child
         margin-top: 0
         box-shadow: none
+    &:last-child
+        margin-bottom: 12px
     .pending
         color: orange
     &.over
@@ -138,12 +140,16 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 width: 80px
+                .icon-svg
+                    @media screen and (max-width: 800px)
+                        padding: 0
                 .icon
                     position: relative
                     height: 16px
                     top: 2px
                 @media screen and (max-width: 800px)
                     width: 40px
+                    line-height: 30px
                 &:hover
                     background: #7aa7f3
                     color: white
@@ -233,6 +239,10 @@ module.exports = (store, web3t, wallets, wallet)-->
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
+    button-primary2-style=
+        border: "1px solid #{style.app.primary2}"
+        color: style.app.text
+        background: style.app.primary2
     button-primary1-style-m=
         border: "1px solid rgb(195, 92, 95)"
         color: style.app.text
@@ -297,17 +307,17 @@ module.exports = (store, web3t, wallets, wallet)-->
                 if store.current.device is \desktop
                     button.btn-open.pug(on-click=expand style=button-primary3-style)
                         img.icon.pug(src="#{icons.open}" style=btn-icon)
-                button.pug(on-click=send(wallet) style=button-primary3-style)
+                button.pug(on-click=send(wallet) style=button-primary1-style)
                     if store.current.device is \mobile
-                        icon "ArrowSmallUp", 25
+                        img.icon-svg.pug(src="#{icons.send}")
                     if store.current.device is \desktop
                         span.pug
-                            img.icon-svg.pug(src="#{icons.send}" style=btn-icon)
+                            img.icon-svg.pug(src="#{icons.send}")
                             | #{lang.send}
                 if wallet.coin.token isnt \vlx or store.current.device isnt \desktop
-                    button.pug(on-click=receive(wallet) style=button-primary1-style)
+                    button.pug(on-click=receive(wallet) style=button-primary2-style)
                         if store.current.device is \mobile
-                            icon "ArrowSmallDown", 25
+                            img.icon-svg.pug(src="#{icons.get}")
                         if store.current.device is \desktop
                             span.pug
                                 img.icon-svg.pug(src="#{icons.get}")

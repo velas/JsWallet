@@ -68,10 +68,14 @@ store =
         reward-claim: 0
         rewards: []
         keystore: {}
+        data-generation: 1
         tab: "line"
         pools: []
         chosen-pool: null
         stake-amount-total: 0
+        max-withdraw-ordered: 0
+        max-withdraw: 0
+        delegators: 0
         withdraw-amount: 0
         reward-loading: no
         wait-for-epoch-change: no
@@ -178,5 +182,5 @@ store =
         about: no
     rates: {}
     coins: []
-    version: "v0.2"
+    version: "v0.3"
 module.exports = store

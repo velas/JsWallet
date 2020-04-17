@@ -10,6 +10,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
+    \../icons.ls
 }
 .content
     position: relative
@@ -245,6 +246,11 @@ require! {
                 &:hover
                     background: rgba(#6CA7ED, 0.2)
                     opacity: .9
+                .icon-svg
+                    position: relative
+                    height: 12px
+                    top: 2px
+                    padding: 0px 5px 0 0px
     .ill-qr
         position: relative
         width: 160px
@@ -282,12 +288,27 @@ form-group = (title, icon-style, content)->
         content!
 recaptchaRef = react.createRef!
 cancel-button = (store, web3t)->
+    style = get-primary-info store
+    button-primary3-style=
+        border: "1px solid #{style.app.primary3}"
+        color: style.app.text2
+        background: style.app.primary3
+    btn-icon =
+        filter: style.app.btn-icon
+        position: "relative"
+        height: "12px"
+        width: "auto"
+        padding: "0px"
+        display: "inline-block"
     #return null if store.preference.disableInvoice isnt yes
     lang = get-lang store
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
     .pug.button-container
         .pug.buttons
-            a.pug.btn.btn-default(on-click=cancel style=default-button-style) #{lang.cancel}
+            a.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
+                    | #{lang.cancel}
 send-by-email = (store, web3t)->
     return null if store.preference.disableInvoice is yes
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t

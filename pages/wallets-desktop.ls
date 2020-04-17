@@ -35,6 +35,9 @@ require! {
         position: relative
         height: 16px
         top: 2px
+    .icon-svg2
+        position: relative
+        height: 10px
     &.hide-detail
         .big
             height: 60px
@@ -150,8 +153,7 @@ require! {
     >.wallet-container
         overflow: hidden
         overflow-y: auto
-        height: 100%
-        max-height: 500px
+        height: calc(100vh - 261px)
         width: 100%
         border-top: 1px solid #213040
         display: inline-block
@@ -208,7 +210,7 @@ mobile = ({ store, web3t })->
             span.pug.icon(on-click=edit-account-name)
                 img.icon-svg1.pug(src="#{icons.create}")
             span.pug.icon(on-click=open-account class="#{rotate-class}")
-                icon "ChevronDown", 22
+                img.icon-svg2.pug(src="#{icons.arrow-down}")
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)

@@ -38,9 +38,7 @@ require! {
         position: relative
         height: 12px
         top: 2px
-        padding: 0px 5px 0 0px
-    .amount
-        font-family: 'Roboto', sans-serif
+        margin-right: 3px
     .title
         >.header
             text-align: center

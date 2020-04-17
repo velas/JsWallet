@@ -3,6 +3,7 @@ require! {
     \../newseed-funcs.ls
     \../get-lang.ls
     \../get-primary-info.ls
+    \../icons.ls
 }
 # verification seed
 .newseed
@@ -78,6 +79,8 @@ newseed = ({ store, web3t })->
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
+    btn-icon =
+        filter: style.app.btn-icon
     newseed-style=
         # filter: style.app.nothingIcon
         margin-bottom: "10px"
@@ -97,9 +100,15 @@ newseed = ({ store, web3t })->
         .pug.hint(style=text-style) #{lang.phrase-word ? 'Please enter the 4th word to confirm that you wrote down the seed phrase'}
         input.pug(style=address-input value="#{store.current.verify-seed}" on-change=enter-confirm placeholder="#{lang.placeholder-phrase-word ? 'Enter the 4th word'}")
         .pug
-            button.pug.right(style=button-primary1-style on-click=verify-seed) #{lang.confirm-seed ? 'Confirm' }
+            button.pug.right(style=button-primary1-style on-click=verify-seed)
+                span.pug 
+                    img.icon-svg.pug(src="#{icons.confirm}")
+                    | #{lang.confirm-seed ? 'Confirm' }
         .pug
-            button.pug.right(style=button-primary3-style on-click=back) #{lang.back ? 'Back' }
+            button.pug.right(style=button-primary3-style on-click=back)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
+                    | #{lang.back ? 'Back' }
         if store.current.verify-seed-error is yes
             .pug.warning(style=text-style)
                 .pug #{lang.words-are-not-match ? 'Words are not match' }

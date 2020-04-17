@@ -9,6 +9,7 @@ require! {
     \../history-funcs.ls
     \./icon.ls
     \./switch-account.ls
+    \../icons.ls
 }
 .filestore
     @import scheme
@@ -196,6 +197,7 @@ require! {
         margin-right: 10px
     >.title
         position: sticky
+        position: -webkit-sticky
         z-index: 1
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
@@ -489,7 +491,7 @@ filestorage = ({ store, web3t })->
         .pug.title(style=border-style)
             .pug.header File Storage
             .pug.close(on-click=goto-search)
-                icon "ChevronLeft", 20
+                img.icon-svg.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         .pug.toolbar(style=border-style)
             span.files.pug(on-click=switch-files class="#{file-tree}")

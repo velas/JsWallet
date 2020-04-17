@@ -22,7 +22,7 @@ require! {
         position: relative
         height: 12px
         top: 2px
-        padding: 0px 5px 0 0px
+        margin-right: 3px
     .language
         position: absolute
     .password
@@ -73,7 +73,7 @@ require! {
             border: 1px solid #549D90
             border-radius: $border
             outline: none
-            width: 100px
+            width: 120px
             letter-spacing: 5px
             box-sizing: border-box
             &:focus
@@ -90,7 +90,7 @@ require! {
         font-weight: bold
         cursor: pointer
         margin-top: 15px
-        width: 100px
+        width: 120px
         height: 36px
         font-size: 10px
         text-transform: uppercase
@@ -148,7 +148,7 @@ input = (store, web3t)->
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
-        width: "100px"
+        width: "120px"
         height: "36px"
         margin-top: "10px"
     button-primary0-style=
@@ -208,8 +208,13 @@ setup-button = (store, web3t)->
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
+    btn-icon =
+        filter: style.app.btn-icon
     .pug(key="setup-button")
-        button.setup.pug(on-click=setup style=button-style) #{lang.setup ? 'Setup'}
+        button.setup.pug(on-click=setup style=button-style)
+            span.pug
+                img.icon-svg.pug(src="#{icons.key}" style=btn-icon)
+                | #{lang.setup ? 'Setup'}
         .hint.p.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
         choose-language { store, web3t }
 create-wallet = (store, web3t)->
@@ -224,7 +229,10 @@ create-wallet = (store, web3t)->
         color: style.app.text
         background: style.app.primary2
     .pug(key="create-wallet")
-        button.setup.pug(on-click=create style=button-primary2-style) #{lang.create-wallet ? 'Create Wallet'}
+        button.setup.pug(on-click=create style=button-primary2-style)
+            span.pug
+                img.icon-svg.pug(src="#{icons.create-wallet}")
+                | #{lang.create-wallet ? 'Create Wallet'}
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store

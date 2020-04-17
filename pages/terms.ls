@@ -5,6 +5,7 @@ require! {
     \../get-primary-info.ls
     \../web3.ls
     \../get-lang.ls
+    \../icons.ls
 }
 .terms
     @import scheme
@@ -67,7 +68,10 @@ terms = ({ store, web3t })->
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
                 .pug #{lang.terms ? 'Please accept terms of use'}
-                button.pug(on-click=accept style=button-primary1-style) #{lang.accept ? 'Accept'}
+                button.pug(on-click=accept style=button-primary1-style)
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.accept}")
+                        | #{lang.accept ? 'Accept'}
 terms.init = ({ store }, cb)->
     err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
     return cb err if err?

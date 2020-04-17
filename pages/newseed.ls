@@ -4,6 +4,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \prelude-ls : { map }
+    \../icons.ls
 }
 .newseed
     @import scheme
@@ -129,7 +130,7 @@ require! {
                     width: 11px
                     height: 10px
                     font-size: 10px
-                    line-height: 12px
+                    line-height: 11px
                     @media(max-width: 500px)
                         margin-right: 5px
     .about
@@ -175,6 +176,8 @@ newseed = ({ store, web3t })->
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
+    btn-icon =
+        filter: style.app.btn-icon
     about-bg=
         background: style.app.wallet
     newseed-style=
@@ -211,15 +214,24 @@ newseed = ({ store, web3t })->
             textarea.pug(style=address-input disabled=disabled value="#{store.current.seed-temp}" on-change=change-seed placeholder="#{lang.new-seed-placeholder ? 'Click Generate or Put Your Seed Phrase here'}")
         if store.current.seed-generated    
             .pug.button-container
-                a.pug.right(on-click=save style=button-primary3-style) #{lang.save ? 'Save' }
-                a.pug.right.doc(on-click=hide-btn class="#{hide-class}" style=button-primary2-style href="https://drive.google.com/file/d/117CIN7TkLcJFWRQkPYRbU4BK6JOnRgPf/view" target="_blank") #{lang.print ? 'Print' }
+                a.pug.right(on-click=save style=button-primary3-style)
+                    img.icon-svg.pug(src="#{icons.save}" style=btn-icon)
+                    | #{lang.save ? 'Save' }
+                a.pug.right.doc(on-click=hide-btn class="#{hide-class}" style=button-primary2-style href="https://drive.google.com/file/d/117CIN7TkLcJFWRQkPYRbU4BK6JOnRgPf/view" target="_blank")
+                    img.icon-svg.pug(src="#{icons.print}")
+                    | #{lang.print ? 'Print' }
         else    
             .pug
-                a.pug.right(on-click=save style=button-primary3-style ) #{lang.save ? 'Save' }
+                a.pug.right(on-click=save style=button-primary3-style )
+                    img.icon-svg.pug(src="#{icons.save}" style=btn-icon)
+                    | #{lang.save ? 'Save' }
         if has-issue!
             .pug.warning(style=text-style)
                 .pug #{lang.seed-warning}
-                button.pug.center(on-click=fix-issue style=button-primary3-style) #{lang.fix-issue}
+                button.pug.center(on-click=fix-issue style=button-primary3-style)
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.warning}" style=btn-icon)
+                        | #{lang.fix-issue}
         .pug.hint(style=text-style) #{lang.new-seed-warning ? 'It will be reliable to write down the phrase on paper. Do not transfer it to a third party and store it in a safe place.'}
 focus = ({ store }, cb)->
     <- set-timeout _, 1000

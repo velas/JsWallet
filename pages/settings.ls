@@ -27,6 +27,7 @@ require! {
         margin: 0
     >.title
         position: sticky
+        position: -webkit-sticky
         z-index: 1
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
@@ -110,6 +111,9 @@ require! {
                 text-overflow: ellipsis
                 overflow: hidden
                 white-space: nowrap
+                &.btn-width
+                    width: auto
+                    padding: 0 10px
                 img
                 &.icon-svg
                     position: relative
@@ -402,7 +406,7 @@ manage-account = (store, web3t)->
                 span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
                 span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
             .pug.content
-                button.pug(on-click=export-private-key style=button-primary2-style)
+                button.btn-width.pug(on-click=export-private-key style=button-primary2-style)
                     span.pug
                         img.icon-svg.pug(src="#{icons.show}")
                         | #{lang.show-secret ? 'Show Secret'}
@@ -435,7 +439,7 @@ module.exports = ({ store, web3t } )->
         .pug.title(style=border-style)
             .pug.header #{lang.manage-account}
             .pug.close(on-click=go-back)
-                icon "ChevronLeft", 20
+                img.icon-svg.pug(src="#{icons.arrow-left}")
         .account-body.pug(style=account-body-style)
             .pug.settings
                 manage-account store, web3t

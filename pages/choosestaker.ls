@@ -8,7 +8,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
-    \prelude-ls : { map, split, filter, find, foldl, sort-by }
+    \prelude-ls : { map, split, filter, find, foldl, sort-by, unique }
     \../math.ls : { div, times, plus, minus }
     \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
@@ -41,6 +41,10 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
+    .loader
+        svg
+            width: 12px
+            cursor: pointer
     .icon-right
         height: 12px
         top: 2px
@@ -172,7 +176,7 @@ require! {
                         animation: breathe 3s ease-in infinite
                         -moz-transition: breathe 3s ease-in infinite
                         -web-kit-transition: breathe 3s ease-in infinite
-                        height: 620px
+                        height: calc(100vh - 105px)
                         thead
                             th
                                 @media(min-width:800px) and (max-width: 900px)
@@ -180,6 +184,26 @@ require! {
                         td
                             &:nth-child(2)
                                 cursor: pointer
+                        tr
+                            &.active
+                                color: #b6efe1
+                            &.inactive
+                                color: orange
+                            &.banned
+                                color: red
+                            .circle
+                                border-radius: 0px
+                                width: 20px
+                                height: 20px
+                                display: inline-block
+                                color: white
+                                background: gray
+                                &.active
+                                    background: rgb(38, 219, 85)
+                                &.inactive
+                                    background: orange
+                                &.banned
+                                    background: red
                         button
                             width: 100%
                             height: 30px
@@ -198,8 +222,11 @@ require! {
                             text-align: center
                             width: 5%
                     td
-                        &:nth-child(1), &:nth-child(5), &:nth-child(6)
+                        &:nth-child(1), &:nth-child(6)
                             text-align: center
+                        img.copy
+                            height: 12px
+                            margin-right: 5px
                     td, th
                         padding: 8px
                         border: 1px solid rgba(240, 237, 237, 0.16)
@@ -467,6 +494,7 @@ require! {
             min-width: 190px
     >.title
         position: sticky
+        position: -webkit-sticky
         z-index: 1
         background: linear-gradient(100deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)
         box-sizing: border-box
@@ -731,21 +759,30 @@ staking-content = (store, web3t)->
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
         stake = round-human item.stake
-        my-stake = round-human item.my-stake
+        my-stake = 
+            | +item.my-stake is 0 => round-human item.withdraw-amount
+            | _ => round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
             cb = alert
+            #store.staking.data-generation += 1
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
             calc-reward store, web3t
-            address = store.staking.keystore.staking.address
-            err, amount <- web3t.velas.Staking.stakeAmount item.address, address
+            staking-address = store.staking.keystore.staking.address
+            err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
             return cb err if err?
-            store.staking.stake-amount-total = amount
-            err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.chosen-pool.address, address
+            store.staking.stake-amount-total = amount.to-fixed!
+            err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.chosen-pool.address, staking-address
             return cb err if err?
             store.staking.withdraw-amount = amount.to-fixed!
+            err, max-withdraw-ordered <- web3t.velas.Staking.maxWithdrawOrderAllowed store.staking.chosen-pool.address, staking-address
+            return cb err if err?
+            store.staking.max-withdraw-ordered = max-withdraw-ordered.to-fixed!
+            err, max-withdraw <- web3t.velas.Staking.maxWithdrawAllowed store.staking.chosen-pool.address, staking-address
+            return cb err if err?
+            store.staking.max-withdraw = max-withdraw.to-fixed!
             err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
             return cb "#{err}" if err?
             err, staking-epoch <- web3t.velas.Staking.stakingEpoch
@@ -757,17 +794,28 @@ staking-content = (store, web3t)->
         cut-tx = (tx)->
             return \none if not tx?
             t = tx.to-string!
-            r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 3) + \.. + t.substr(t.length - 4, 4)
-        tr.pug
-            td.pug #{index}
-            if item.eth is yes
-                td.pug(data-column='Staker Address' title="#{item.address}" on-click=to-eth) #{cut-tx item.address}
-            else
-                td.pug(data-column='Staker Address' title="#{item.address}" on-click=to-eth) #{cut-tx ethToVlx item.address}
+            r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
+        reward = 
+            | item.validator-reward-percent is "..." => "..." 
+            | _ => (100 - +item.validator-reward-percent) * 1.4285714286
+        filled = "#{round-human reward}%"
+        filled-color =
+            color: 
+                | reward > 95 => \red
+                | reward > 75 => \orange
+                | reward > 40 => "rgb(165, 174, 81)"
+                | _ => "rgb(38, 219, 85)"
+        tr.pug(class="#{item.status}")
+            td.pug 
+                span.pug.circle(class="#{item.status}") #{index}
+            td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
+                CopyToClipboard.pug(text="#{ethToVlx item.address}" on-copy=copied-inform(store) style=filter-icon)
+                    copy store
+                span.pug #{cut-tx ethToVlx item.address}
             td.pug(data-column='Amount') #{stake}
+            td.pug(data-column="Filled" style=filled-color) #{filled}
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
-            td.pug.noyes(class="#{item.is-validator-banned}") #{item.is-validator-banned}
             td.pug
                 button.pug(on-click=choose-pull style=button-primary2-style)
                     span.pug
@@ -784,23 +832,34 @@ staking-content = (store, web3t)->
     active-first = active-class \first
     active-second = active-class \second
     active-third = active-class \third
+    refresh = ->
+        store.staking.pools.length = 0
+        err <- staking.init { store, web3t }
+        err <- staking.focus { store, web3t }
+    icon-style =
+        color: style.app.loader
+        margin-top: "10px"
+        width: "inherit"
     .pug.staking-content
         .form-group.pug
             .pug.section
                 .title.pug
                     h3.pug Select pool
+                    if not store.staking.chosen-pool?    
+                        .loader.pug(on-click=refresh style=icon-style title="refresh")
+                            icon \Sync, 25
                 if not store.staking.chosen-pool?
                     .description.pug.table-scroll
                         table.pug
                             thead.pug
                                 tr.pug
-                                    th.pug(width="5%") #
+                                    th.pug(width="3%") #
                                     th.pug(width="10%") Staker Pool
                                     th.pug(width="25%") Total Stake
+                                    th.pug(width="5%" title="When more filled then less award for staker") Filled %
                                     th.pug(width="25%") My Stake
                                     th.pug(width="5%") Stakers
-                                    th.pug(width="5%") Banned
-                                    th.pug(width="5%") Select Pool
+                                    th.pug(width="4%") Select Pool
                             tbody.pug
                                 store.staking.pools |> map build-staker store, web3t
                 else
@@ -844,10 +903,6 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-staking}
                                 span.pug.color #{vlx-token}
                             hr.pug
-                            if store.staking.chosen-pool?
-                                .pug.chosen-pool 
-                                    span.pug.color Chosen Pool: 
-                                    span.pug #{ethToVlx store.staking.chosen-pool.address}
                             label.pug Stake More
                             input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
                             .pug.balance
@@ -863,11 +918,11 @@ staking-content = (store, web3t)->
                                 img.icon-svg.pug(src="#{icons.apply}")
                                 | #{lang.btn-apply}
             if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
-                if store.staking.reward-loading is no
-                    .pug.section.reward
-                        .title.pug
-                            h3.pug #{lang.u-rewards} 
-                        .description.pug
+                .pug.section.reward
+                    .title.pug
+                        h3.pug #{lang.u-rewards} 
+                    .description.pug
+                        if store.staking.reward-loading is no
                             if store.staking.reward?
                                 .pug
                                     .pug.balance
@@ -891,8 +946,8 @@ staking-content = (store, web3t)->
                                         span.pug
                                             img.icon-svg.pug(src="#{icons.reward}")
                                             | Claim Reward
-                else
-                    .pug Loading... Please wait
+                        else
+                            .pug Loading... Please wait
             if store.staking.chosen-pool?
                 exit-stake store, web3t
 staking = ({ store, web3t })->
@@ -927,13 +982,17 @@ staking = ({ store, web3t })->
         .pug.title(style=border-style)
             .pug.header Delegate Stake
             .pug.close(on-click=goto-search)
-                icon "ChevronLeft", 20
+                img.icon-svg.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
+    #store.staking.data-generation += 1
+    store.staking.max-withdraw-ordered = 0
+    store.staking.max-withdraw = 0
     random = ->
         Math.random!
     store.staking.withdraw-amount = 0
+    store.staking.stake-amount-total = 0
     #0x7bcec192f4147867c100ff7e5cd16c6079d6febc - pool 
     #0x30A0AA46d734336473b75A84b962EF61255f6440 - delegatore
     #err, reward-long <- web3t.velas.Staking.getRewardAmount([], "0x7bcec192f4147867c100ff7e5cd16c6079d6febc", "0x30A0AA46d734336473b75A84b962EF61255f6440")
@@ -945,12 +1004,20 @@ staking.init = ({ store, web3t }, cb)->
     #exit for now
     #return cb null
     store.staking.add.add-validator-stake = 0
-    err, pools <- web3t.velas.Staking.getPoolsToBeElected
+    return cb null if store.staking.pools.length > 0
+    err, pools-inactive <- web3t.velas.Staking.getPoolsInactive
     return cb err if err?
+    err, pools <- web3t.velas.Staking.getPools
+    return cb err if err?
+    err, active-pools <- web3t.velas.Staking.getPoolsToBeElected
+    return cb err if err?
+    store.staking.pools-inactive = pools-inactive
+    store.staking.pools-active = active-pools
+    all-pools = pools ++ pools-inactive
     store.staking.pools =
-        pools 
-            |> sort-by random 
-            |> map -> { address: it , checked: no, stake: '...', stakers: '...', eth: no, is-validator: '...', is-validator-banned: '...' }
+        all-pools
+            |> unique
+            |> map -> { address: it , checked: no, stake: '...', stakers: '...', eth: no, is-validator: '...', status: '', reward-amount: '...', validator-reward-percent: '...' }
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
     #err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
@@ -960,6 +1027,7 @@ module.exports = staking
 human-bool = ->
     if it then 'Yes' else 'No'
 fill-pools = ({ store, web3t }, [item, ...rest], cb)->
+    staking-address = store.staking.keystore.staking.address
     return cb null if not item?
     err, data <- web3t.velas.Staking.stakeAmountTotal item.address
     return cb err if err?
@@ -970,16 +1038,28 @@ fill-pools = ({ store, web3t }, [item, ...rest], cb)->
     err, mining-address <- web3t.velas.ValidatorSet.miningByStakingAddress(item.address)
     return cb err if err?
     item.mining-address = mining-address
+    err, validator-reward-percent <- web3t.velas.BlockReward.validatorRewardPercent item.address
+    return cb err if err?
+    item.validator-reward-percent = validator-reward-percent `div` 10000
+    #err, reward-amount <- web3t.velas.Staking.getRewardAmount [], item.address, staking-address
+    #return cb err if err?
+    #item.reward-amount = reward-amount `div` (10^18)
     err, is-validator-banned <- web3t.velas.ValidatorSet.isValidatorBanned(mining-address)
     return cb err if err?
-    item.is-validator-banned = human-bool is-validator-banned
-    address = store.staking.keystore.staking.address
-    err, amount <- web3t.velas.Staking.stakeAmount item.address, address
+    err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
     return cb err if err?
+    err, withdraw-amount <- web3t.velas.Staking.orderedWithdrawAmount item.address, staking-address
+    return cb err if err?
+    item.withdraw-amount = withdraw-amount `div` (10^18)
     item.my-stake = amount `div` (10^18)
+    item.status =
+        | is-validator-banned => \banned
+        | store.staking.pools-active.index-of(item.address) > -1 => \active
+        | store.staking.pools-inactive.index-of(item.address) > -1 => \inactive
+        | _ => \pending
     fill-pools { store, web3t }, rest, cb
 staking.focus = ({ store, web3t }, cb)->
-    #calc-reward store, web3t
+    #return cb null if store.staking.pools.0.stake isnt '...'
     err <- fill-pools { store, web3t }, store.staking.pools
     cb null
 #V31V1kD7DpT9eoRcdXf7T1fbFqcNh
