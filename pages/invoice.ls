@@ -305,7 +305,7 @@ cancel-button = (store, web3t)->
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
     .pug.button-container
         .pug.buttons
-            a.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
+            button.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
                 span.pug
                     img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
                     | #{lang.cancel}

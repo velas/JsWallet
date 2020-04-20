@@ -72,7 +72,7 @@ require! {
                 left: 59px
                 top: 17px
                 z-index: 1
-                width: 160px
+                width: 140px
                 font-size: 10px
                 color: #fff
                 padding: 5px
@@ -331,10 +331,10 @@ module.exports = (store, web3)->
                         ul.pug
                             li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
                                 img.pug(src="#{icons.node}" style=icon-node)
-                                | Your Node
+                                | Node
                             li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
                                 img.pug(src="#{icons.delegate}" style=icon-node)
-                                | Delegate Stake
+                                | Delegate
                             li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                 img.pug(src="#{icons.info}" style=icon-node)
                                 | Info

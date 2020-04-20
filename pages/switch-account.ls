@@ -35,8 +35,8 @@ require! {
     .icon-svg-create
         height: 10px
     .switch-menu
-        right: -20px
-        top: 39px
+        right: -20px !important
+        top: 39px !important
     .header 
         &:after
             position: absolute

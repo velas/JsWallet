@@ -587,13 +587,13 @@ send = ({ store, web3t })->
                         .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
             .pug.button-container
                 .pug.buttons
-                    a.pug.btn.btn-primary(on-click=send-anyway style=button-primary1-style)
+                    button.pug.btn.btn-primary(on-click=send-anyway style=button-primary1-style)
                         span.pug
                             img.icon-svg.pug(src="#{icons.send}")
                             | #{send-title}
                         if send.sending
                             span.pug ...
-                    a.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
+                    button.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
                         span.pug
                             img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
                             | #{lang.cancel}

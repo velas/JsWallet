@@ -2,6 +2,7 @@ require! {
     \superagent : { get, post }
 }
 module.exports = (store)->
+    return
     err, res <- get "https://web3.space/user-lang" .end
     return if err?
     return store.lang = \ua if res.text is \ua

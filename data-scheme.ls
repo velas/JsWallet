@@ -53,7 +53,7 @@ store =
     search:
         tab: "dapps"
     video:
-        tab: "trend"
+        tab: "home"
         menu-open: no
         drag: no
     staking: 

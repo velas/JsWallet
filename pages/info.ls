@@ -10,6 +10,12 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \../icons.ls
+    \./choosestaker.ls
+    \./staker-stats.ls
+    \./staker-stats2.ls
+    \prelude-ls : { map, foldl }
+    \../math.ls : { plus }
+    \../round-human.ls
 }
 .info
     @import scheme
@@ -83,14 +89,102 @@ require! {
             &:hover
                 color: #CCC
     >.wrapper
-        height: auto
+        max-height: calc(100vh - 100px)
         display: block
         overflow-y: scroll
         scrollbar-width: none
-        padding: 0 20px
+        padding: 20px
         margin-top: 0
-dashboard = (store, web3t)->
-    p.pug This page is under development
+        display: flex
+        flex-wrap: wrap
+        margin-right: -10px
+        margin-left: -10px
+        .col
+            box-sizing: border-box
+            padding: 0 10px
+            margin-bottom: 20px
+            >div
+                background: #3b1771
+                padding: 30px 20px
+            &.col-4
+                -webkit-box-flex: 0
+                flex: 0 0 25%
+                max-width: 25%
+                @media screen and (max-width: 800px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 50%
+                    max-width: 50%
+            &.col-6
+                -webkit-box-flex: 0
+                flex: 0 0 50%
+                max-width: 50%
+                @media screen and (max-width: 800px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 100%
+                    max-width: 100%
+            canvas
+                height: auto !important
+                width: 80% !important
+                margin: 30px auto 0
+                @media screen and (max-width: 800px)
+                    width: 100% !important
+                    height: auto !important
+            .value
+                font-size: 20px
+                display: inline-flex
+                .symbol
+                    font-size: 14px
+                    vertical-align: super
+            .header
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 2px
+                opacity: .8
+                font-weight: 400
+total-pool = (store, web3t)->
+    .pug.col.col-4
+        .pug
+            .value.pug
+                .symbol.pug
+                .number.pug(title='') #{store.staking.pools.length}
+            .pug.header Total Pools
+total-stakers  = (store, web3t)->
+    stakers =
+        store.staking.pools |> map (.stakers) |> foldl plus, 0
+    .pug.col.col-4
+        .pug
+            .value.pug
+                .symbol.pug
+                .number.pug(title='') #{stakers}
+            .pug.header Total Stakers
+staking-amount = (store, web3t)->
+    amount =
+        store.staking.pools |> map (.stake) |> foldl plus, 0
+    .pug.col.col-4
+        .pug
+            .value.pug
+                .symbol.pug
+                .number.pug(title='') #{round-human(amount)}
+            .pug.header Total Staking
+my-stake = (store, web3t)->
+    amount =
+        store.staking.pools |> map (.my-stake) |> foldl plus, 0
+    .pug.col.col-4
+        .pug
+            .value.pug
+                .symbol.pug
+                .number.pug(title='') #{round-human(amount)}
+            .pug.header Total My Stake
+chart-amount-sizes = (store, web3t)->
+    .col-6.col.pug
+        .pug
+            .pug.header Pool stake sizes
+            staker-stats store, web3t
+chart-stakers-counts = (store, web3t)->
+    .col-6.col.pug
+        .pug
+            .pug.header Pool Population
+            staker-stats2 store, web3t
 info = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -127,13 +221,18 @@ info = ({ store, web3t })->
     icon-style=
         filter: info.app.nothingIcon
     .pug.info
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
             .pug.header Info page
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             switch-account store, web3t
         .pug.wrapper
-            dashboard store, web3t
+            total-pool store, web3t
+            total-stakers store, web3t
+            staking-amount store, web3t
+            my-stake store, web3t
+            chart-amount-sizes store, web3t
+            chart-stakers-counts store, web3t
 module.exports = info
+module.exports.init = choosestaker.init
+module.exports.focus = choosestaker.focus

@@ -44,6 +44,13 @@ require! {
         .big.active
             background: rgb(98, 52, 171) !important
             transition: .5s !important
+            .icon
+                transition: all .5s
+                filter: none !important
+            button
+                transition: all .5s
+                background: #9c41eb !important
+                border-color: #9c41eb !important
         .wallet
             &:hover
                 background: rgb(98, 52, 171) !important

@@ -5,7 +5,8 @@ add-commas = (x)->
         x := x.replace pattern, "$1,$2"
     x
 module.exports = (value)->
-    return \... if not value?
+    return \.. if not value?
+    return \.. if value is \..
     [head, dec] = value.to-string!.split(\.)
     first-head = add-commas head
     return "#{first-head}.00" if (dec ? "").length is 0

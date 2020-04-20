@@ -306,6 +306,11 @@ require! {
                                 margin-right: 0.5em
                     .balance
                         font-size: 14px
+                        margin-bottom: 5px
+                        span
+                            margin-right: 5px
+                            &.green
+                                color: #3cd5af
                         .color
                             color: orange
                             font-weight: 600
@@ -376,8 +381,12 @@ require! {
     .warning
         border: 1px solid orange
         padding: 5px
-        color: 1px solid orange
         background: rgba(orange, 0.1)
+        margin: 10px 0
+        display: inline-block
+    ol
+        padding: 0 25px
+        margin: 5px 0
     ul
         padding: 0
         margin: 0
@@ -480,8 +489,14 @@ calc-reward-epoch = (store, web3t, [epoch, ...epochs], cb)->
     err, rest <- calc-reward-epoch store, web3t, epochs
     return cb err if err?
     reward = reward-long `div` (10^18)
-    all = [{ epoch, reward, checked: yes }] ++ rest
+    checked = +store.staking.epoch isnt +epoch
+    all = [{ epoch, reward, checked }] ++ rest
     cb null, all
+get-checked-amount = (store)->
+    store.staking.rewards
+        |> filter (.checked) 
+        |> map (.reward)
+        |> foldl plus, 0 
 calc-reward = (store, web3t)->
     cb = (err, data)->
         store.staking.reward-loading = no
@@ -496,9 +511,8 @@ calc-reward = (store, web3t)->
         rewards |> map (.reward) |> foldl plus, 0
     return cb err if err?
     store.staking.reward = round5 reward
-    store.staking.reward-claim = store.staking.reward
+    store.staking.reward-claim = round5 get-checked-amount store
     store.staking.rewards = rewards
-    store.staking.rewards |> map (-> it.checked = yes)
     cb null
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
@@ -510,12 +524,7 @@ build-claim-reward = (store, web3t)-> (item)->
     checked = item.checked
     check = ->
         item.checked = not item.checked
-        reward =
-            store.staking.rewards
-                |> filter (.checked) 
-                |> map (.reward)
-                |> foldl plus, 0
-        store.staking.reward-claim = round5 reward
+        store.staking.reward-claim = round5 get-checked-amount store
     tr.pug
         td.pug
             input.pug(type='checkbox' checked=checked on-change=check)
@@ -689,11 +698,14 @@ staking-content = (store, web3t)->
             store.staking.rewards
                 |> filter (.checked) 
                 |> map (.epoch)
+        max = 25
+        rest = epochs.length - max
+        return alert "The maximum length of epoch is #{max}. Please uncheck #{rest} epochs" if rest > 0
         staking-address = store.staking.keystore.staking.address
         data = web3t.velas.Staking.claimReward.get-data(epochs, staking-address)
         to = web3t.velas.Staking.address
         amount = 0
-        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
     staker-status = if store.staking.is-active-staker then 'Active' else 'Inactive'
     check-uncheck = ->
         change = not store.staking.rewards.0.checked
@@ -805,13 +817,13 @@ staking-content = (store, web3t)->
                             .pug.balance
                                 span.pug #{lang.your-staking}: 
                                 span.pug.color #{your-staking}
-                                span.pug.color.green #{vlx-token}
+                                span.pug.color #{vlx-token}
                             .pug.balance
                                 span.pug #{lang.your-status}:
                                 span.pug.color.green #{staker-status}
                             .pug.balance
                                 span.pug Delegators:
-                                span.pug.color.green #{store.staking.delegators}
+                                span.pug.color #{store.staking.delegators}
                             if store.staking.is-active-staker is no
                                 .pug.warning
                                     ol.pug
@@ -819,7 +831,7 @@ staking-content = (store, web3t)->
                                         li.pug #{lang.your-status2}
                             .pug.balance
                                 span.pug #{lang.current-epoch}:
-                                span.pug.color.green #{store.staking.epoch}
+                                span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
@@ -874,7 +886,7 @@ staking-content = (store, web3t)->
                                         img.icon-svg.pug(src="#{icons.reward}")
                                         | #{lang.claim-reward}
                         else if store.staking.reward-loading is yes
-                            .pug Loading... Please wait
+                            .pug.placeholder Loading... Please wait
                         else
                             button.mt-0.pug(style=button-primary2-style on-click=calc-reward-click)
                                 span.pug
@@ -917,8 +929,6 @@ staking = ({ store, web3t })->
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
-    store.staking.max-withdraw-ordered = 0
-    store.staking.max-withdraw = 0
     store.staking.keystore = to-keystore store, no
     store.staking.chosen-pool =
         address: store.staking.keystore.staking.address
@@ -928,13 +938,7 @@ staking.init = ({ store, web3t }, cb)->
     #exit for now
     #return cb null
     staking-address = store.staking.keystore.staking.address
-    err, max-withdraw-ordered <- web3t.velas.Staking.maxWithdrawOrderAllowed store.staking.chosen-pool.address, staking-address
-    return cb err if err?
-    store.staking.max-withdraw-ordered = max-withdraw-ordered.to-fixed!
-    err, max-withdraw <- web3t.velas.Staking.maxWithdrawAllowed store.staking.chosen-pool.address, staking-address
-    return cb err if err?
-    store.staking.max-withdraw = max-withdraw.to-fixed!
-    err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.chosen-pool.address, staking-address
+    err, amount <- web3t.velas.Staking.orderedWithdrawAmount staking-address, staking-address
     return cb err if err?
     err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
     return cb "#{err}" if err?

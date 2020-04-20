@@ -11,7 +11,7 @@ require! {
     width: 100%
     text-align: center
     color: white
-    padding: 40px
+    padding: 25px 40px
     box-sizing: border-box
     position: relative
     overflow: hidden

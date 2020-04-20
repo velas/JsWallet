@@ -14,6 +14,7 @@ require! {
     \./pages/filestorage.ls
     \./pages/settings.ls
     \./pages/newseed2.ls
+    \./pages/newseedrestore.ls
     \./pages/verifyseed.ls
     \./pages/staking.ls
     \./pages/resources.ls
@@ -42,6 +43,7 @@ export terms2
 export filestorage
 export settings
 export newseed2
+export newseedrestore
 export search
 export resources2
 export choosestaker

@@ -220,7 +220,7 @@ require! {
             border-radius: $border
             width: auto
             letter-spacing: 0px
-            padding: 0px 3px 0 0px
+            padding: 0px 3px 1px 0px
     .syncing
         svg
             color: orange
@@ -246,7 +246,8 @@ require! {
         .color
             font-weight: 600
         .rest
-            color: #CCC
+            color: inherit
+            opacity: .75
     .table
         width: 100%
         height: calc(100vh - 80px)
@@ -413,6 +414,8 @@ render-transaction = (store, web3t, tran)-->
         #r.to-upper-case!
     icon-pending=
         filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else ''
+    amount-pending=
+        color: if pending is yes then 'orange' else ''
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
@@ -427,7 +430,7 @@ render-transaction = (store, web3t, tran)-->
                     span.pug #{lang.sender}:
                     CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
-                a.pug(target="_blank" href="#" style=menu-style) #{cut-tx from}
+                a.pug(target="_blank" style=menu-style) #{cut-tx from}
             .cell.pug.arrow
                 img.icon-svg1.pug(src="#{icons.arrow-right}")
             .cell.pug.details-to
@@ -435,9 +438,9 @@ render-transaction = (store, web3t, tran)-->
                     span.pug #{lang.recipient}:
                     CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
-                a.pug(target="_blank" href="#" style=menu-style) #{cut-tx to}
+                a.pug(target="_blank" style=menu-style) #{cut-tx to}
             .cell.pug.amount(style=menu-style)
-                .pug(title="#{amount}")
+                .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}
                     amount-beautify amount, 8
                 .pug.gray(style=lightText)

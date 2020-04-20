@@ -27,6 +27,7 @@ require! {
     \../round-human.ls
     \./exit-stake.ls
     \../icons.ls
+    \./placeholder.ls
 }
 .staking
     @import scheme
@@ -544,7 +545,7 @@ to-keystore = (store, with-keystore)->
     { staking, mining, password }
 show-validator = (store, web3t)-> (validator)->
     li.pug #{validator}
-calc-reward-epoch = (store, web3t, [epoch, ...epochs], cb)->
+calc-reward-epoch = (store, web3t, limit, [epoch, ...epochs], cb)->
     staking-address =  store.staking.keystore.staking.address
     #store.staking.chosen-pool.address
     return cb null, [] if not epoch?
@@ -552,10 +553,12 @@ calc-reward-epoch = (store, web3t, [epoch, ...epochs], cb)->
     #0x30A0AA46d734336473b75A84b962EF61255f6440 - delegatore
     err, reward-long <- web3t.velas.Staking.getRewardAmount([epoch], store.staking.chosen-pool.address, staking-address)
     return cb err if err?
-    err, rest <- calc-reward-epoch store, web3t, epochs
+    next-limit = limit - 1
+    err, rest <- calc-reward-epoch store, web3t, next-limit, epochs
     return cb err if err?
     reward = reward-long `div` (10^18)
-    all = [{ epoch, reward, checked: yes }] ++ rest
+    checked = +store.staking.epoch isnt +epoch and limit > 0
+    all = [{ epoch, reward, checked }] ++ rest
     cb null, all
 calc-reward = (store, web3t)->
     cb = (err, data)->
@@ -565,15 +568,19 @@ calc-reward = (store, web3t)->
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
     return cb err if err?
-    err, rewards <- calc-reward-epoch store, web3t ,epochs
+    err, rewards <- calc-reward-epoch store, web3t, 25, epochs
+    return cb err if err?
     reward =
         rewards |> map (.reward) |> foldl plus, 0
-    return cb err if err?
+    store.staking.reward-claim = round5 get-checked-amount store
     store.staking.reward = round5 reward
-    store.staking.reward-claim = store.staking.reward
     store.staking.rewards = rewards
-    store.staking.rewards |> map (-> it.checked = yes)
     cb null
+get-checked-amount = (store)->
+    store.staking.rewards
+        |> filter (.checked) 
+        |> map (.reward)
+        |> foldl plus, 0   
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
@@ -584,12 +591,7 @@ build-claim-reward = (store, web3t)-> (item)->
     checked = item.checked
     check = ->
         item.checked = not item.checked
-        reward =
-            store.staking.rewards
-                |> filter (.checked) 
-                |> map (.reward)
-                |> foldl plus, 0
-        store.staking.reward-claim = round5 reward
+        store.staking.reward-claim = round5 get-checked-amount store
     tr.pug
         td.pug
             input.pug(type='checkbox' checked=checked on-change=check)
@@ -621,6 +623,9 @@ staking-content = (store, web3t)->
         opacity: ".3"
     pairs = store.staking.keystore
     become-validator = ->
+        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
+        return cb err if err?
+        return alert "Staking is not allowed. Please wait for epoch change" if data isnt yes
         return alert "please choose the pool" if not store.staking.chosen-pool?
         type = typeof! store.staking.add.add-validator-stake
         console.log \correct_amount , type, store.staking.add.add-validator-stake
@@ -750,6 +755,9 @@ staking-content = (store, web3t)->
             store.staking.rewards
                 |> filter (.checked) 
                 |> map (.epoch)
+        max = 25
+        rest = epochs.length - max
+        return alert "The maximum length of epoch is #{max}. Please uncheck #{rest} epochs" if rest > 0
         #staking-address = store.staking.keystore.staking.address
         #console.log { epochs }
         data = web3t.velas.Staking.claimReward.get-data(epochs, store.staking.chosen-pool.address)
@@ -846,8 +854,9 @@ staking-content = (store, web3t)->
                 .title.pug
                     h3.pug Select pool
                     if not store.staking.chosen-pool?    
-                        .loader.pug(on-click=refresh style=icon-style title="refresh")
-                            icon \Sync, 25
+                        .pug
+                            .loader.pug(on-click=refresh style=icon-style title="refresh")
+                                icon \Sync, 25
                 if not store.staking.chosen-pool?
                     .description.pug.table-scroll
                         table.pug
@@ -1017,7 +1026,7 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.pools =
         all-pools
             |> unique
-            |> map -> { address: it , checked: no, stake: '...', stakers: '...', eth: no, is-validator: '...', status: '', reward-amount: '...', validator-reward-percent: '...' }
+            |> map -> { address: it , checked: no, stake: '..', stakers: '..', eth: no, is-validator: '..', status: '', reward-amount: '..', validator-reward-percent: '..', my-stake: '..' }
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
     #err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)

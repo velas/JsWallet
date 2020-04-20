@@ -100,14 +100,14 @@ max-withdraw-ordered = (store, web3t)->
     active-second = active-class \second
     active-third = active-class \third
     order = ->
-        #
+        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
+        return cb err if err?
+        return alert "Order is not allowed. Please wait for epoch change" if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
         amount = max.to-fixed!
-        console.log "web3t.velas.Staking.maxWithdraw[Order]Allowed('#{pool-address}', '#{staking-address}')"
-        #store.staking.stake-amount-total
-        return alert "Your amount is 0" if +amount is 0
+        return alert "Request is not allowed. This may because the Staking epoch is changed" if +amount is 0
         data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
@@ -149,7 +149,7 @@ max-withdraw-ordered = (store, web3t)->
                                         img.icon-svg.pug(src="#{icons.exit}")
                                         | Withdraw
 max-withdraw = (store, web3t)->
-    return null if +store.staking.stake-amount-total is 0
+    return null if +store.staking.stake-amount-total is 0 and +store.staking.withdraw-amount is 0
     style = get-primary-info store
     lang = get-lang store
     button-primary4-style=
@@ -157,14 +157,15 @@ max-withdraw = (store, web3t)->
         color: style.app.text
         background: style.app.primary4
     exit = ->
-        #
+        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
+        return cb err if err?
+        return alert "Exit is not allowed. Please wait for epoch change" if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
         amount = max.to-fixed!
         console.log "web3t.velas.Staking.maxWithdrawAllowed('#{pool-address}', '#{staking-address}')"
-        #store.staking.stake-amount-total
-        return alert "Your amount is 0" if +amount is 0
+        return alert "Exit is not allowed. This may because the Staking epoch is changed" if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
@@ -179,7 +180,7 @@ max-withdraw = (store, web3t)->
                     img.icon-svg.pug(src="#{icons.exit}")
                     | Withdraw
 module.exports = (store, web3t)->
-    if +store.staking.max-withdraw-ordered > 0
+    if +store.staking.max-withdraw-ordered > 0 or +store.staking.withdraw-amount > 0
         max-withdraw-ordered store, web3t
     else 
         max-withdraw store, web3t
