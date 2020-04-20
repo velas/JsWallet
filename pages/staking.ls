@@ -481,22 +481,18 @@ to-keystore = (store, with-keystore)->
     { staking, mining, password }
 show-validator = (store, web3t)-> (validator)->
     li.pug #{validator}
-calc-reward-epoch = (store, web3t, [epoch, ...epochs], cb)->
+calc-reward-epoch = (store, web3t, check, [epoch, ...epochs], cb)->
     mining-address =  store.staking.keystore.mining.address
     return cb null, [] if not epoch?
     err, reward-long <- web3t.velas.BlockReward.getValidatorReward(epoch, mining-address)
     return cb err if err?
-    err, rest <- calc-reward-epoch store, web3t, epochs
+    next-check = check - 1
+    err, rest <- calc-reward-epoch store, web3t, next-check, epochs
     return cb err if err?
     reward = reward-long `div` (10^18)
-    checked = +store.staking.epoch isnt +epoch
+    checked = +store.staking.epoch isnt +epoch and check > 0
     all = [{ epoch, reward, checked }] ++ rest
     cb null, all
-get-checked-amount = (store)->
-    store.staking.rewards
-        |> filter (.checked) 
-        |> map (.reward)
-        |> foldl plus, 0 
 calc-reward = (store, web3t)->
     cb = (err, data)->
         store.staking.reward-loading = no
@@ -504,9 +500,8 @@ calc-reward = (store, web3t)->
     mining-address =  store.staking.keystore.mining.address
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
-    #console.log { epochs }
     return cb err if err?
-    err, rewards <- calc-reward-epoch store, web3t ,epochs
+    err, rewards <- calc-reward-epoch store, web3t , 25, epochs
     reward =
         rewards |> map (.reward) |> foldl plus, 0
     return cb err if err?
@@ -514,6 +509,11 @@ calc-reward = (store, web3t)->
     store.staking.reward-claim = round5 get-checked-amount store
     store.staking.rewards = rewards
     cb null
+get-checked-amount = (store)->
+    store.staking.rewards
+        |> filter (.checked) 
+        |> map (.reward)
+        |> foldl plus, 0 
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
@@ -562,6 +562,9 @@ staking-content = (store, web3t)->
         return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address) if pool.length is 0
         cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
+        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
+        return cb err if err?
+        return alert "Staking is not allowed. Please wait for epoch change" if data isnt yes
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
