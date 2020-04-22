@@ -159,3 +159,5 @@ module.exports =
     exit: "出口"
     exit-withdraw: "退出和提取硬幣"
     language: "語言"
+    tx-from: "從"
+    tx-to: "至"

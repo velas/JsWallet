@@ -40,7 +40,7 @@ require! {
             zoom: 2
     .text
         font-weight: 600
-    a.button
+    button
         display: inline-block
         margin-top: 20px
         line-height: 36px
@@ -180,7 +180,7 @@ module.exports = ({ store, web3t })->
             span.pug #{lang.your} 
             a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction ? 'transaction'}
             span.pug  #{lang.has-been-sent ? 'has been sent'}
-        a.button.pug(on-click=go-home style=button-primary3-style)
+        button.button.pug(on-click=go-home style=button-primary3-style)
             span.pug
                 img.icon-svg.pug(src="#{icons.home}" style=btn-icon)
                 | #{lang.home ? 'Home'}

@@ -314,7 +314,7 @@ require! {
                     line-height: 40px
                     cursor: pointer
                 &.details-from, &.details-to
-                    width: 27%
+                    width: 59%
                     text-align: left
                     height: 60px
                     a
@@ -349,6 +349,10 @@ require! {
                 overflow: hidden
                 text-transform: uppercase
             &.OUT
+                &.record
+                    .tx-top
+                        .details-from
+                            display: none
                 .direction
                     img
                         filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
@@ -356,6 +360,10 @@ require! {
                 .txhash a
                     color: #be6ed2
             &.IN
+                &.record
+                    .tx-top
+                        .details-to
+                            display: none
                 .direction
                     img
                         filter: invert(15%) sepia(14%) saturate(950%) hue-rotate(110deg) brightness(87%) contrast(85%)
@@ -405,8 +413,8 @@ render-transaction = (store, web3t, tran)-->
         t = tx.to-string!
         m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
         r =
-            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 12) + \.. + t.substr(t.length - 4, 4)
-            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 4) + \.. + t.substr(t.length - 4, 4)
+            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 20) + \.. + t.substr(t.length - 4, 4)
+            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 12) + \.. + t.substr(t.length - 4, 4)
     cut-hash = (tx)->
         return \none if not tx?
         t = tx.to-string!
@@ -427,18 +435,19 @@ render-transaction = (store, web3t, tran)-->
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.details-from
                 .pug.gray(style=lightText)
-                    span.pug #{lang.sender}:
+                    span.pug #{lang.tx-from}:
                     CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
-                a.pug(target="_blank" style=menu-style) #{cut-tx from}
-            .cell.pug.arrow
-                img.icon-svg1.pug(src="#{icons.arrow-right}")
+                a.pug(target="_blank" style=menu-style) #{from}
+            if no
+                .cell.pug.arrow
+                    img.icon-svg1.pug(src="#{icons.arrow-right}")
             .cell.pug.details-to
                 .pug.gray(style=lightText)
-                    span.pug #{lang.recipient}:
+                    span.pug #{lang.tx-to}:
                     CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
-                a.pug(target="_blank" style=menu-style) #{cut-tx to}
+                a.pug(target="_blank" style=menu-style) #{to}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}

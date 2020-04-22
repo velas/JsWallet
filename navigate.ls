@@ -2,7 +2,6 @@ require! {
     \./browser/window.ls
     \./pages.ls
     \./seed.ls : { saved }
-    \./oldseed.ls
     \mobx : { transaction }
     \./scroll-top.ls
 }
@@ -13,7 +12,6 @@ get-page = (store, page, prev)->
     return \newseed if prev is \newseed2 
     return \newseed if prev is \newseedrestore
     stage2 = not saved!
-    store.current.seed = oldseed! if stage2
     return \newseed2 if stage2
     \wallets
 init-control = (scope, name, cb)->

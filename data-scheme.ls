@@ -164,7 +164,9 @@ store =
         can-buy: no
         checking-name: no
         seed: ""
+        seed-words: []
         seed-temp: ""
+        verify-seed-indexes: []
         seed-generated: no
         saved-seed: saved-seed
         balance-usd: \...

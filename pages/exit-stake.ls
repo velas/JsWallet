@@ -78,6 +78,7 @@ require! {
         100%
             transform: scale(1)
 max-withdraw-ordered = (store, web3t)->
+    return null if not store.staking.chosen-pool?
     return null if +store.staking.stake-amount-total is 0 and +store.staking.withdraw-amount is 0
     style = get-primary-info store
     lang = get-lang store

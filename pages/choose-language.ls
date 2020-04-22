@@ -20,31 +20,32 @@ require! {
             opacity: 1
             transform: scale3d(1, 1, 1)
     position: fixed
+    padding-top: 30px
     width: 100%
     top: 0
     z-index: 999
     height: 100%
     min-height: 100vh
-    padding-top: 5%
     box-sizing: border-box
-    padding: 10px
     background: rgba(black, 0.5)
+    @media(max-width: 430px)
+        padding-top: 0px
+    .title
+        color: #ebf6f8
+        font-size: 22px
+        margin-bottom: 20px
     >.account-body
         max-width: 600px
         display: inline-block
         overflow: hidden
-        animation-duration: 0.5s
-        animation-name: bounceIn
-        background: white
         width: 100%
-        margin-top: 5vh
+        margin-top: 0vh
         margin-bottom: 25vh
         padding-bottom: 50px
         border-radius: $border
         position: relative
-        max-height: 70vh
+        max-height: 100vh
         box-sizing: border-box
-        box-shadow: 0px 20px 75px 0px rgba(0, 0, 0, 0.4)
         >.title
             position: absolute
             z-index: 999
@@ -67,9 +68,8 @@ require! {
                 &:hover
                     color: #CCC
         >.settings
-            padding-top: 60px
+            padding-top: 0px
             overflow-y: auto
-            height: calc(65vh - 30px)
             .title
                 color: $primary
                 text-transform: uppercase
@@ -106,15 +106,31 @@ require! {
             color: #f0c16b
         .section
             .logo
-                img
-                    margin: 10px auto
-                    width: 100px
+                margin: 3rem 0
+                >.title
+                    font-size: 12px
+                    font-weight: 600
+                    letter-spacing: 4px
+                    text-align: center
+                    color: #ebf6f8
+                >img
+                    height: 80px
+                    margin-bottom: 1rem
+                    @media(max-width: 430px)
+                        height: 50px
                 @media(max-width: 800px)
-                    display: none
+                    margin: 1rem 0
+            .welcome
+                color: #ebf6f8
+                font-size: 26px
+                margin-bottom: 15px
+                @media(max-width: 430px)
+                    font-size: 20px
+                    margin-bottom: 10px
             .langs
                 width: 100%
                 margin: 50px auto
-                @media(max-width: 800px)
+                @media(max-width: 430px)
                     width: 100%
                     margin: 0
                 ul
@@ -124,7 +140,7 @@ require! {
                     margin: 0
                     padding: 0
                     margin-top: 20px
-                    @media(max-width: 800px)
+                    @media(max-width: 430px)
                         display: block
                         margin-top: 0
                     &:first-child
@@ -134,34 +150,29 @@ require! {
                 font-size: 13px
                 color: #b0aeae
                 width: calc(100%/4)
-                text-align: left
+                text-align: center
                 line-height: 20px
                 cursor: pointer
                 img
                     width: 20px
-                    float: left
-                    margin-right: 10px
+                    position: relative
                     &.active
                         opacity: 1
-                    @media (max-width: 800px)
+                    @media (max-width: 430px)
                         display: none
-                @media (max-width: 800px)
+                @media (max-width: 430px)
                     width: 100%
                     padding: 7px 0
                     text-align: center
-            &:first-child
-                background: url("https://res.cloudinary.com/dfbhd7liw/image/upload/v1582209591/velas/logo-velas-opacity.png")
-                background-repeat: no-repeat
-                background-position: left 10px
-            padding: 50px 10%
+            padding: 0px 10%
             .title
                 padding: 2px
             .description
                 padding: 7px
                 font-size: 16px
                 color: #b0aeae
-            @media(max-width: 800px)
-                padding: 20px 10%
+            @media(max-width: 430px)
+                padding: 0px 10%
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
         -webkit-mask-size: 50%
@@ -195,6 +206,8 @@ language = (store, web3t)->
         background: style.app.primary3
     filter-icon=
         filter: style.app.filterIcon
+    text-style =
+        color: style.app.text
     set-lang = (lang)->
         return alert "lang is not available" if not store.langs[store.lang]?
         store.lang = lang
@@ -230,43 +243,45 @@ language = (store, web3t)->
         .pug.section
             .pug.logo
                 img.iron.pug(src="#{style.branding.logo}" style=logo-style)
+                .title.pug #{style.branding.title}
+            .welcome.pug(style=text-style) #{lang.choose-language}
             .pug.langs
                 ul.pug
                     li.pug.lang-item(style=comming-soon)
-                        | Deutsch
                         img.pug(src="#{langs.gr}")
+                        .pug Deutsch
                     li.pug.lang-item(on-click=change-lang-fr style=color)
-                        | Français
                         img.pug(src="#{langs.fr}")
+                        .pug Français
                     li.pug.lang-item(on-click=change-lang-en style=color)
-                        | English
                         img.pug(src="#{langs.en}")
+                        .pug English
                     li.pug.lang-item(on-click=change-lang-kr style=color)
-                        | 한국어
                         img.pug(src="#{langs.cn}")
+                        .pug 한국어
                 ul.pug
                     li.pug.lang-item(on-click=change-lang-cn style=color)
-                        | 中文語言
                         img.pug(src="#{langs.kr}")
+                        .pug 中文語言
                     li.pug.lang-item(style=comming-soon)
-                        | 日本語
                         img.pug(src="#{langs.jp}")
+                        .pug 日本語
                     li.pug.lang-item(style=comming-soon)
-                        | हिंदी
                         img.pug(src="#{langs.hn}")
+                        .pug हिंदी
                     li.pug.lang-item(style=comming-soon)
-                        | Español
                         img.pug(src="#{langs.sp}")
+                        .pug Español
                 ul.pug
                     li.pug.lang-item(on-click=change-lang-ua style=color)
-                        | Українська
                         img.pug(src="#{langs.ua}")
+                        .pug Українська
                     li.pug.lang-item(on-click=change-lang-ru style=color)
-                        | Русский
                         img.pug(src="#{langs.ru}")
+                        .pug Русский
                     li.pug.lang-item(style=comming-soon)
-                        | Қазақ
                         img.pug(src="#{langs.kz}")
+                        .pug Қазақ
         if no
             .pug.content
                 button.pug(on-click=close-language style=button-primary2-style) #{lang.next}
@@ -277,16 +292,20 @@ module.exports = ({ store, web3t } )->
     account-body-style = 
         background: style.app.background
         color: style.app.text
+    body-style = 
+        background: "transparent"
+        color: style.app.text
     border-style =
         background: style.app.header
         color: style.app.text
     lang = get-lang store
-    .pug.choose-language
-        .account-body.pug(style=account-body-style)
-            .pug.title(style=border-style)
-                .pug.header #{lang.choose-language}
-                if no    
-                    .pug.close(on-click=close-language)
-                        icon \X, 20
+    .pug.choose-language(style=account-body-style)
+        .account-body.pug
+            if no
+                .pug.title(style=border-style)
+                    .pug.header #{lang.choose-language}
+                    if no    
+                        .pug.close(on-click=close-language)
+                            icon \X, 20
             .pug.settings
                 language store, web3t

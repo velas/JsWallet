@@ -28,6 +28,7 @@ require! {
     \./exit-stake.ls
     \../icons.ls
     \./placeholder.ls
+    \./claim-stake.ls
 }
 .staking
     @import scheme
@@ -545,58 +546,6 @@ to-keystore = (store, with-keystore)->
     { staking, mining, password }
 show-validator = (store, web3t)-> (validator)->
     li.pug #{validator}
-calc-reward-epoch = (store, web3t, limit, [epoch, ...epochs], cb)->
-    staking-address =  store.staking.keystore.staking.address
-    #store.staking.chosen-pool.address
-    return cb null, [] if not epoch?
-    #0x7bcec192f4147867c100ff7e5cd16c6079d6febc - pool 
-    #0x30A0AA46d734336473b75A84b962EF61255f6440 - delegatore
-    err, reward-long <- web3t.velas.Staking.getRewardAmount([epoch], store.staking.chosen-pool.address, staking-address)
-    return cb err if err?
-    next-limit = limit - 1
-    err, rest <- calc-reward-epoch store, web3t, next-limit, epochs
-    return cb err if err?
-    reward = reward-long `div` (10^18)
-    checked = +store.staking.epoch isnt +epoch and limit > 0
-    all = [{ epoch, reward, checked }] ++ rest
-    cb null, all
-calc-reward = (store, web3t)->
-    cb = (err, data)->
-        store.staking.reward-loading = no
-    store.staking.reward-loading = yes
-    mining-address =  store.staking.keystore.mining.address
-    staking-address = store.staking.keystore.staking.address
-    err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
-    return cb err if err?
-    err, rewards <- calc-reward-epoch store, web3t, 25, epochs
-    return cb err if err?
-    reward =
-        rewards |> map (.reward) |> foldl plus, 0
-    store.staking.reward-claim = round5 get-checked-amount store
-    store.staking.reward = round5 reward
-    store.staking.rewards = rewards
-    cb null
-get-checked-amount = (store)->
-    store.staking.rewards
-        |> filter (.checked) 
-        |> map (.reward)
-        |> foldl plus, 0   
-build-claim-reward = (store, web3t)-> (item)->
-    style = get-primary-info store
-    lang = get-lang store
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
-    checked = item.checked
-    check = ->
-        item.checked = not item.checked
-        store.staking.reward-claim = round5 get-checked-amount store
-    tr.pug
-        td.pug
-            input.pug(type='checkbox' checked=checked on-change=check)
-        td.pug #{item.epoch}
-        td.pug(title="#{item.reward}") #{round-human item.reward}
 staking-content = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
@@ -694,18 +643,6 @@ staking-content = (store, web3t)->
     active-string = active-class \string
     active-ssh = active-class \ssh
     active-do = active-class \do
-    #claim = ->
-    #    staking-address = store.staking.keystore.staking.address
-    #    mining-address =  store.staking.keystore.mining.address
-    #    err, epochs <- web3t.velas.BlockReward.epochsPoolGotRewardFor(mining-address)
-    #    #console.log { epochs }
-    #    err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(staking-address, staking-address)
-    #    #console.log { epochs }
-    #    return alert err if err?
-    #    data = web3t.velas.Staking.claimReward.get-data(epochs, staking-address)
-    #    to = web3t.velas.Staking.address
-    #    amount = 0
-    #    err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
     get-balance = ->
         wallet =
             store.current.account.wallets 
@@ -749,21 +686,6 @@ staking-content = (store, web3t)->
     vlx-token = "VLX"
     #calc-reward-click = ->
     #    calc-reward store, web3t
-    claim = ->
-        #alert "claim"
-        epochs =
-            store.staking.rewards
-                |> filter (.checked) 
-                |> map (.epoch)
-        max = 25
-        rest = epochs.length - max
-        return alert "The maximum length of epoch is #{max}. Please uncheck #{rest} epochs" if rest > 0
-        #staking-address = store.staking.keystore.staking.address
-        #console.log { epochs }
-        data = web3t.velas.Staking.claimReward.get-data(epochs, store.staking.chosen-pool.address)
-        to = web3t.velas.Staking.address
-        amount = 0
-        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 1600000, gas-price: 1000000 }
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
         stake = round-human item.stake
@@ -777,7 +699,7 @@ staking-content = (store, web3t)->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
-            calc-reward store, web3t
+            claim-stake.calc-reward store, web3t
             staking-address = store.staking.keystore.staking.address
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
             return cb err if err?
@@ -804,7 +726,7 @@ staking-content = (store, web3t)->
             t = tx.to-string!
             r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
         reward = 
-            | item.validator-reward-percent is "..." => "..." 
+            | item.validator-reward-percent is ".." => ".." 
             | _ => (100 - +item.validator-reward-percent) * 1.4285714286
         filled = "#{round-human reward}%"
         filled-color =
@@ -926,39 +848,8 @@ staking-content = (store, web3t)->
                             span.pug
                                 img.icon-svg.pug(src="#{icons.apply}")
                                 | #{lang.btn-apply}
-            if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
-                .pug.section.reward
-                    .title.pug
-                        h3.pug #{lang.u-rewards} 
-                    .description.pug
-                        if store.staking.reward-loading is no
-                            if store.staking.reward?
-                                .pug
-                                    .pug.balance
-                                        span.pug Available Reward: 
-                                        span.color.pug #{store.staking.reward}
-                                        img.label-coin.pug(src="#{image-token}")
-                                        span.color.pug  VLX
-                                    .pug.claim-table
-                                        table.pug
-                                            tr.pug
-                                                td.pug Use
-                                                td.pug Epoch
-                                                td.pug Award
-                                            store.staking.rewards |> map build-claim-reward store, web3t
-                                    .pug.balance
-                                        span.pug Claim Reward: 
-                                        span.color.pug #{store.staking.reward-claim}
-                                        img.label-coin.pug(src="#{image-token}")
-                                        span.color.pug  VLX
-                                    button.pug(on-click=claim style=button-primary2-style)
-                                        span.pug
-                                            img.icon-svg.pug(src="#{icons.reward}")
-                                            | Claim Reward
-                        else
-                            .pug Loading... Please wait
-            if store.staking.chosen-pool?
-                exit-stake store, web3t
+            claim-stake store, web3t
+            exit-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t

@@ -159,3 +159,5 @@ module.exports =
     exit: "Exit"
     exit-withdraw: "Exit and Withdraw Coins"
     language: "Language"
+    tx-from: "From"
+    tx-to: "To"

@@ -159,3 +159,5 @@ module.exports =
     exit: "출구"
     exit-withdraw: "출금 및 출금"
     language: "언어"
+    tx-from: "에서"
+    tx-to: "에"

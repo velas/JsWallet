@@ -159,3 +159,5 @@ module.exports =
     exit: "Sortie"
     exit-withdraw: "Sortir et retirer des pièces"
     language: "Langue"
+    tx-from: "De"
+    tx-to: "À"
