@@ -80,7 +80,7 @@ module.exports =
     phrase-safe-place: "请确认您是否将此短语存储在安全的地方？"
     your-wallets: "您的钱包"
     verify-seed-phrase: "验证种子短语"
-    phrase-word: "请输入您的种子短语的第四个单词"
+    phrase-word: "請輸入您的種子詞組的3個單詞"
     placeholder-phrase-word: "输入第四个字"
     confirm-seed: "确认种子"
     welcome-wallet: "欢迎！"

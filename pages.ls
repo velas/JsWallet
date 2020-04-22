@@ -24,6 +24,7 @@ require! {
     \./pages/videostorage.ls
     \./pages/videostoragedetails.ls
     \./pages/info.ls
+    \./pages/faq.ls
 }
 export resources
 export staking
@@ -50,3 +51,4 @@ export choosestaker
 export videostorage
 export videostoragedetails
 export info
+export faq

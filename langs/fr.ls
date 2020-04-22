@@ -80,7 +80,7 @@ module.exports =
     phrase-safe-place: "Veuillez confirmer que vous avez stocké cette phrase en lieu sûr."
     your-wallets: "Portefeuilles"
     verify-seed-phrase: "Vérifier la phrase de Récupération"
-    phrase-word: "Veuillez saisir le 4ème mot de votre phrase de Récupération"
+    phrase-word: "Veuillez saisir les 3 mots de votre phrase de départ"
     placeholder-phrase-word: "Entrez le 4ème mot"
     confirm-seed: "Confirmer la phrase de récupération"
     welcome-wallet: "Bienvenu(e)!"

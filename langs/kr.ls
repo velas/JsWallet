@@ -80,7 +80,7 @@ module.exports =
     phrase-safe-place: "이 문구를 안전한 곳에 보관했는지 확인하십시오."
     your-wallets: "지갑"
     verify-seed-phrase: "시드 문구 확인"
-    phrase-word: "시드 문구의 네 번째 단어를 입력하십시오"
+    phrase-word: "시드 문구의 3 단어를 입력하십시오"
     placeholder-phrase-word: "네 번째 단어를 입력하십시오"
     confirm-seed: "종자 확인"
     welcome-wallet: "어서 오십시오!"

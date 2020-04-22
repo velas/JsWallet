@@ -15,7 +15,7 @@ module.exports = (store, web3t)->
     lang = get-lang store
     generate-seed = ->
         seed = bip39.generate-mnemonic! + ' ' + bip39.generate-mnemonic!
-        store.current.seed-words = seed.split(' ')
+        store.current.seed-words = seed.split(' ').map(-> { part: it })
         store.current.seed-generated = yes
     next = ->
         navigate store, web3t, \:init

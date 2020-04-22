@@ -80,7 +80,7 @@ module.exports =
     phrase-safe-place: "Пожалуйста, подтвердите, что вы сохранили эту фразу в безопасном месте?"
     your-wallets: "Ваши Кошельки"
     verify-seed-phrase: "Проверьте сид-фразу"
-    phrase-word: "Пожалуйста, введите 4-е слово вашей сид-фразы"
+    phrase-word: "Пожалуйста, введите 3 слова вашей сид-фразы"
     placeholder-phrase-word: "Введите 4-е слово"
     confirm-seed: "Подтвердите фразу"
     welcome-wallet: "Добро пожаловать!"
