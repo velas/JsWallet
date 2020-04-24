@@ -130,7 +130,7 @@ get-apis = (cweb3, store, cb)->
     cb null, res
 refresh-apis = (cweb3, store, cb)->
     store.coins |> map (.token) |> each (-> delete cweb3[it])
-    err, coins <- get-coins
+    err, coins <- get-coins store
     return cb err if err?
     store.coins = coins
     err, apis <- get-apis cweb3, store
@@ -206,12 +206,13 @@ module.exports = (store, config)->
         cb null
     set-preference = (preference)->
         set = (key)->
+            return if keys not in <[ disablevlx1 ]>
             store.preference[key] = preference[key] ? store.preference[key]
         store.preference |> keys |> each set
     lock = ->
         navigate store,  , \locked
     unlock = build-unlock store, cweb3
-    #set-preference config if typeof! config is \Object
+    set-preference config if typeof! config is \Object
     refresh-interface ->
     web3 = new Web3!
     velas = velas-api

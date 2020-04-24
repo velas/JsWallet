@@ -242,6 +242,7 @@ module.exports = (store, web3)->
     info-active = if store.current.page is \info then \active else \not-active
     resources = if store.current.page is \resources then \active else \not-active
     faq = if store.current.page is \faq then \active else \not-active
+    claim-active = if store.current.page is \claim then \active else \not-active
     menu-style=
         color: style.app.text
     icon-style =
@@ -249,7 +250,7 @@ module.exports = (store, web3)->
     icon-style2 =
         opacity: "0"
         bottom: "-280px"
-        left: "-40px"
+        left: "-57px"
     lang = get-lang store
     info = get-primary-info store
     syncing = 
@@ -307,6 +308,8 @@ module.exports = (store, web3)->
         navigate store, web3t, \info
     goto-faq = ->
         navigate store, web3t, \faq
+    goto-claim = ->
+        navigate store, web3t, \claim
     comming-soon =
         opacity: ".3"
     open-submenu = ->
@@ -335,9 +338,13 @@ module.exports = (store, web3)->
                             li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
                                 img.pug(src="#{icons.delegate}" style=icon-node)
                                 | Delegate
+                            if no
+                                li.pug(on-click=goto-claim style=icon-style class="#{claim-active}")
+                                    img.pug(src="#{icons.claim}" style=icon-node)
+                                    | Claim
                             li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                 img.pug(src="#{icons.info}" style=icon-node)
-                                | Info
+                                | Stats
                     span.arrow_box.pug staking
                     img.pug(src="#{icons.staking}")
             if store.preference.settings-visible is yes

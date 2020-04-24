@@ -3,7 +3,6 @@ require! {
     \../invoice-funcs.ls
     \prelude-ls : { map }
     \./receive.ls
-    \react-google-recaptcha : { default: ReCAPTCHA }
     \../get-primary-info.ls
     \../get-lang.ls
     \react-copy-to-clipboard : { CopyToClipboard }
@@ -286,7 +285,7 @@ form-group = (title, icon-style, content)->
     .pug.form-group
         label.pug.control-label(style=icon-style) #{title}
         content!
-recaptchaRef = react.createRef!
+#recaptchaRef = react.createRef!
 cancel-button = (store, web3t)->
     style = get-primary-info store
     button-primary3-style=
@@ -309,67 +308,6 @@ cancel-button = (store, web3t)->
                 span.pug
                     img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
                     | #{lang.cancel}
-send-by-email = (store, web3t)->
-    return null if store.preference.disableInvoice is yes
-    { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
-    change = (response)->
-        send-anyway response
-    send = ->
-        recaptchaRef.current.execute!
-    style = get-primary-info store
-    input-style=
-        background: style.app.wallet
-        color: style.app.text
-        border: "1px solid #{style.app.border}"
-        text: style.app.text2
-    icon-style =
-        color: style.app.icon
-    more-text=
-        color: style.app.text
-    address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
-    href-style=
-        border: "1px solid #{style.app.border}"
-    filter-icon=
-        filter: style.app.nothingIcon
-    lang = get-lang store
-    .pug.content-body(style=more-text)
-        .pug.header
-            span.pug.head(style=more-text) #{lang.invoice-header ? 'SEND INVOICE BY EMAIL'}
-            span.head.pug.right
-                img.pug(style=filter-icon src="#{icons.invoice}")
-        form.pug
-            form-group lang.funding-address, icon-style, ->
-                .address.pug(style=href-style)
-                    a.pug(href="#{get-address-link wallet}") #{get-address-title wallet}
-            form-group lang.recipient-email, icon-style, ->
-                .pug
-                    .pug.amount-field
-                        .input-wrapper.pug
-                            .label.crypto.pug @
-                            input.pug.amount(type='text' style=input-style on-change=recipient-change value="#{invoice.to}" placeholder="email@address.com")
-                        .input-wrapper.pug
-                            .label.lusd.pug 
-                            input.pug.amount-usd(type='text' style=input-style on-change=description-change value="#{invoice.data}" placeholder="Description")
-                    ReCAPTCHA.pug(ref=recaptchaRef size="invisible" sitekey="6LeZ66AUAAAAAPqgD720Met5Prsq5B3AXl05G0vJ" on-change=change)
-            form-group lang.amount, icon-style, ->
-                .pug
-                    .pug.amount-field
-                        .input-wrapper.pug
-                            .label.crypto.pug #{token}
-                            input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{invoice.amount-send}" value="#{round5edit invoice.amount-send}")
-                        .input-wrapper.pug
-                            .label.lusd.pug $
-                            input.pug.amount-usd(type='text' style=input-style on-change=amount-usd-change placeholder="0" title="#{invoice.amount-send-usd}" value="#{round5edit invoice.amount-send-usd}")
-        .pug.escrow
-        .pug.button-container
-            .pug.buttons
-                a.pug.btn.btn-primary(on-click=send style=primary-button-style)
-                    span.pug #{lang.send ? 'Send Email'}
-                    if send.sending
-                        span.pug ...
-                a.pug.btn.btn-default(on-click=cancel style=default-button-style) #{lang.cancel}
 address-link = (store, web3t)->
     return null if store.preference.disableInvoice is yes
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
@@ -399,7 +337,6 @@ ill-qr = (store, web3t)->
         img.pug.ill-top(src="#{icons.invoice-ill-top}")
         img.pug.ill-middle.move(src="#{icons.invoice-ill-middle}")
         img.pug(src="#{icons.invoice-ill-down}")
-#send-by-email store, web3t
 send = ({ store, web3t })->
     { wallet } = invoice-funcs store, web3t
     .pug.content

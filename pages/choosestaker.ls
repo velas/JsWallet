@@ -32,6 +32,7 @@ require! {
 }
 .staking
     @import scheme
+    color: white
     position: relative
     display: block
     width: auto

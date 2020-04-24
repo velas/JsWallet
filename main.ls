@@ -27,7 +27,7 @@ window.addEventListener "resize", change-device
 for event in <[ mousemove click touchmove keydown ]>
     window.addEventListener event, reset-idle
 export web3t = web3 store
-export store
+#export store
 Main = observer ({store})->
     app { store, web3t }
 export bootstrap = (root, options)->

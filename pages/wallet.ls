@@ -83,7 +83,7 @@ require! {
                 margin-left: 0px
                 text-overflow: ellipsis
                 overflow: hidden
-                width: 65px
+                width: auto
                 @media screen and (max-width: 390px)
                     display: none
                 >.name

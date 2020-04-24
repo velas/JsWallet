@@ -304,6 +304,9 @@ dapps = (store, web3t)->
         color: info.app.addressText
     icon-style=
         filter: info.app.nothingIcon
+    hide-sound=
+        opacity: "0"
+        float: "right"
     goto-resources = ->
         navigate store, web3t, \resources
     goto-file-storage = ->
@@ -316,6 +319,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \choosestaker
     goto-videostorage = ->
         navigate store, web3t, \videostorage
+    goto-soundstorage = ->
+        navigate store, web3t, \soundstorage
     .pug.panel-content
         p.results.pug Estimated Results: 2,000 (0.30sec)
         .pug.section
@@ -327,6 +332,8 @@ dapps = (store, web3t)->
                 li.pug
                     span.pug(on-click=goto-videostorage) Video Storage
                 li.pug
+                    span.pug About Storage
+                li.pug(on-click=goto-soundstorage style=hide-sound)
                     span.pug About Storage
         .pug.section
             .source.pug(on-click=goto-resources2)

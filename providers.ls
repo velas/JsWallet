@@ -9,7 +9,6 @@ require! {
     #\../web3t/providers/stellar.ls
     #\../web3t/providers/tron.ls
     #\../web3t/providers/qiwi.ls
-    \../web3t/providers/rst.ls
     \../web3t/providers/velas.ls
     \../web3t/providers/velas2.ls
 }

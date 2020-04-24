@@ -4,7 +4,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \../icons.ls
-    \prelude-ls : { map, find }
+    \prelude-ls : { map, find, foldl, unique, take }
 }
 # verification seed
 .newseed
@@ -129,19 +129,19 @@ newseed = ({ store, web3t })->
         margin-bottom: "10px"
         width: "100px"
     wrong-word = (item)->
-        store.current.seed-words[item.index] isnt item.data
+        store.current.seed-words[item.index].part isnt item.part
     verify-seed = ->
         wrong =
             store.current.verify-seed-indexes |> find wrong-word
         return store.current.verify-seed-error = yes if wrong?
         save!
     back = ->
-        store.current.page = 'newseed'
+        store.current.page = \newseed
     build-verify-seed = (store, item)-->
         enter-confirm = ->
-            item.data = it.target.value
+            item.part = it.target.value
         .pug.word(style=seed-style)
-            input.pug(style=address-input key="enter_#{item.index}_word" value="#{item.data}" on-change=enter-confirm placeholder="Enter #{item.index + 1} word")
+            input.pug(style=address-input key="enter_#{item.index}_word" value="#{item.part}" on-change=enter-confirm placeholder="Enter #{item.index + 1} word")
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.verifyseed}")
         .title.pug(style=text-style) #{lang.verify-seed-phrase ? 'Verify Seed Phrase'}
@@ -165,8 +165,11 @@ random = ->
     Math.floor((Math.random! * 10) + 1)
 init = ({ store }, cb)->
     store.current.verify-seed-indexes =
-        [random!, random!, random!]
-            |> map -> index: it, data: ''
+        [0 to 20]
+            |> map random
+            |> unique
+            |> take 3
+            |> map -> index: it, part: ''
     cb null
 focus = ({ store }, cb)->
     cb null

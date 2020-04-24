@@ -3,7 +3,7 @@ require! {
     \../newseed-funcs.ls
     \../get-lang.ls
     \../get-primary-info.ls
-    \prelude-ls : { map }
+    \prelude-ls : { map, sort-by }
     \../icons.ls
 }
 .newseed
@@ -168,6 +168,8 @@ create-word = (store, words, word)-->
     .pug.word(style=seed-style)
         span.pug #{index}
         span.pug #{word.part}
+random = ->
+    Math.random!
 newseed = ({ store, web3t })->
     lang = get-lang store
     { save, fix-issue, has-issue, next } = newseed-funcs store, web3t
@@ -239,7 +241,7 @@ newseed = ({ store, web3t })->
                 store.current.seed-words |> map create-word store, store.current.seed-words
         else
             .pug.words
-                store.current.seed-words |> map restore-words store, web3t
+                store.current.seed-words |> sort-by (.index) |> map restore-words store, web3t
         if store.current.seed-generated    
             .pug.button-container
                 button.pug.right(on-click=back2 style=button-primary3-style )

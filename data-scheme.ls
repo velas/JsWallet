@@ -58,7 +58,9 @@ store =
         drag: no
     faq:
         tab: "item"
+        answer: "item"
     staking: 
+        reward-info: []
         add:
             add-validator: ""
             add-validator-stake: ""

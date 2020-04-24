@@ -13,12 +13,14 @@ require! {
     \./choosestaker.ls
     \./staker-stats.ls
     \./staker-stats2.ls
+    \./staker-stats3.ls
     \prelude-ls : { map, foldl }
-    \../math.ls : { plus }
+    \../math.ls : { plus, div }
     \../round-human.ls
 }
 .info
     @import scheme
+    color: white
     $border-radius: $border
     $smooth: opacity .15s ease-in-out
     position: relative
@@ -233,6 +235,37 @@ info = ({ store, web3t })->
             my-stake store, web3t
             chart-amount-sizes store, web3t
             chart-stakers-counts store, web3t
+            staker-stats3 store, web3t
 module.exports = info
-module.exports.init = choosestaker.init
-module.exports.focus = choosestaker.focus
+feel-reward = ({ store, web3t, epoch }, [pool, ...pools], cb)->
+    return cb null, [] if not pool?
+    err, reward-number <- web3t.velas.BlockReward.epochPoolNativeReward(epoch, pool.mining-address)
+    #console.log \epochPoolNativeReward,  epoch, pool.address, err, reward.to-fixed!
+    return cb err if err?
+    <- set-immediate
+    err, rest <- feel-reward { store, web3t, epoch }, pools
+    return cb err if err?
+    reward = reward-number `div` (10^18)
+    item = { pool.address, epoch, reward }
+    all = [item] ++ rest
+    cb null, all
+feel-rewards = ({ store, web3t }, [epoch, ...epochs], cb)->
+    err, data <- feel-reward { store, web3t, epoch }, store.staking.pools
+    return cb err if err?
+    err, rest <- feel-rewards { store, web3t }, epochs
+    return cb err if err?
+    all = [data] ++ rest
+    cb null, all
+module.exports.init = ({ store, web3t }, cb)->
+    err, data <- choosestaker.init { store, web3t }
+    cb null
+module.exports.focus = ({ store, web3t}, cb)->
+    err <- choosestaker.focus { store, web3t }
+    return cb err if err?
+    #err, epoch <- web3t.velas.Staking.stakingEpoch
+    #return cb err if err?
+    #epoch-reward = 20
+    #err, data <- feel-rewards { store, web3t }, [epoch-reward]
+    #return cb err if err?
+    #store.staking.reward-info = data
+    cb null

@@ -33,6 +33,7 @@ require! {
 }
 .staking
     @import scheme
+    color: white
     position: relative
     display: block
     width: auto
@@ -132,6 +133,12 @@ require! {
                     font-size: 14px
                     width: 70%
                     text-align: left
+                    .table
+                        width: 240px
+                        .balance
+                            text-align: right
+                            .header
+                                float: left
                     hr
                         margin: 15px auto
                         border: 1px solid rgba(240, 237, 237, 0.16)
@@ -721,24 +728,25 @@ staking-content = (store, web3t)->
                         h3.pug #{lang.your-staking}
                     .description.pug
                         .pug.left
-                            .pug.balance
-                                span.pug #{lang.your-staking}: 
-                                span.pug.color #{your-staking}
-                                span.pug.color #{vlx-token}
-                            .pug.balance
-                                span.pug #{lang.your-status}:
-                                span.pug.color.green #{staker-status}
-                            .pug.balance
-                                span.pug Delegators:
-                                span.pug.color #{store.staking.delegators}
-                            if store.staking.is-active-staker is no
-                                .pug.warning
-                                    ol.pug
-                                        li.pug #{lang.your-status1}
-                                        li.pug #{lang.your-status2}
-                            .pug.balance
-                                span.pug #{lang.current-epoch}:
-                                span.pug.color #{store.staking.epoch}
+                            .table.pug
+                                .pug.balance
+                                    span.pug.header #{lang.your-staking}: 
+                                    span.pug.color #{your-staking}
+                                    span.pug.color #{vlx-token}
+                                .pug.balance
+                                    span.pug.header #{lang.your-status}:
+                                    span.pug.color.green #{staker-status}
+                                .pug.balance
+                                    span.pug.header Delegators:
+                                    span.pug.color #{store.staking.delegators}
+                                if store.staking.is-active-staker is no
+                                    .pug.warning
+                                        ol.pug
+                                            li.pug #{lang.your-status1}
+                                            li.pug #{lang.your-status2}
+                                .pug.balance
+                                    span.pug.header #{lang.current-epoch}:
+                                    span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")

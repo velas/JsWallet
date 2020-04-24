@@ -25,6 +25,8 @@ require! {
     \./pages/videostoragedetails.ls
     \./pages/info.ls
     \./pages/faq.ls
+    \./pages/claim.ls
+    \./pages/soundstorage.ls
 }
 export resources
 export staking
@@ -52,3 +54,5 @@ export videostorage
 export videostoragedetails
 export info
 export faq
+export claim
+export soundstorage

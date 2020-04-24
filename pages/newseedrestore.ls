@@ -5,7 +5,7 @@ require! {
     \../get-primary-info.ls
     \./icon.ls
     \../icons.ls
-    \prelude-ls : { map }
+    \prelude-ls : { map, each, sort-by }
 }
 .newseed-restore
     @import scheme
@@ -189,10 +189,16 @@ newseed = ({ store, web3t })->
     new-wallet = ->
         generate-seed!
         next!
+    random = -> Math.random!
     restore-wallet = (count)-> ->
         store.current.seed-words =
-            [1 to count] |> map -> { part: "" }
+            [1 to count] |> map -> { part: "", index: 0 }
         store.current.seed-generated = no
+        sorted = 
+            store.current.seed-words |> sort-by random
+        map-index = ->
+            it.index = sorted.index-of(it)
+        store.current.seed-words |> each map-index
         next!
     restore12 = restore-wallet 12
     restore24 = restore-wallet 24
