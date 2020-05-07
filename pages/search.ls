@@ -9,6 +9,7 @@ require! {
     \../history-funcs.ls
     \./icon.ls
     \./switch-account.ls
+    \./epoch.ls
     \../icons.ls
 }
 .search
@@ -459,13 +460,16 @@ search = ({ store, web3t })->
     active-web = active-class \web
     active-images = active-class \images
     active-files = active-class \files
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.search
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Search page
+            .pug.header(class="#{show-class}") Search page
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .pug.search-input
             .pug.section(style=border-style3)

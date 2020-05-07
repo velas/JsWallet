@@ -225,6 +225,8 @@ language = (store, web3t)->
         return set-lang \kr
     change-lang-fr = ->
         return set-lang \fr
+    change-lang-es = ->
+        return set-lang \es
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -258,7 +260,7 @@ language = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         img.pug(src="#{icons.langs-hn}")
                         .pug हिंदी
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(on-click=change-lang-es style=color)
                         img.pug(src="#{icons.langs-sp}")
                         .pug Español
                 ul.pug

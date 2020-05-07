@@ -27,7 +27,9 @@ require! {
     \./pages/faq.ls
     \./pages/claim.ls
     \./pages/soundstorage.ls
+    \./pages/monitor.ls
 }
+export monitor
 export resources
 export staking
 export verifyseed

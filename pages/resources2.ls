@@ -24,6 +24,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./placeholder.ls
+    \./epoch.ls
 }
 .staking-res
     @import scheme
@@ -632,13 +633,16 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.staking-res
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Resource Staking
+            .pug.header(class="#{show-class}") Resource Staking
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->

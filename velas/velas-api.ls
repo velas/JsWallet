@@ -16,4 +16,5 @@ contracts =
     ValidatorSet : web3.eth.contract(abis.ValidatorSet).at(addresses.ValidatorSet)
     BlockReward  : web3.eth.contract(abis.BlockReward).at(addresses.BlockReward)
     Upgrade      : web3.eth.contract(abis.Upgrade).at(addresses.Upgrade)
+    web3         : web3.eth
 module.exports = contracts

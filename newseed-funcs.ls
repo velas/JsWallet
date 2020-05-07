@@ -10,6 +10,8 @@ clean = ->
     it.match(/[a-z]+/)?0
 fix =  
     words >> (map clean) >> (filter (?)) >> (join " ")
+not-in-dictionary = (item)->
+    item.part not in bip39.wordlists.EN
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
     lang = get-lang store
@@ -19,7 +21,18 @@ module.exports = (store, web3t)->
         store.current.seed-generated = yes
     next = ->
         navigate store, web3t, \:init
+    verify-seed = (cb)->
+        wrong = 
+            store.current.seed-words 
+                |> filter not-in-dictionary 
+                |> map -> it.part
+        return cb null if wrong.length is 0
+        res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
+        return cb "cancelled" if res is no
+        cb null
     save = ->
+        err <- verify-seed
+        return if err?
         store.current.seed = store.current.seed-words.map(-> it.part).join(' ')
         store.current.saved-seed = yes
         set store.current.seed

@@ -14,10 +14,7 @@ zec = require \../web3t/plugins/zec-coin.ls
 common = (store)->
     vlx2 = require \../web3t/plugins/vlx2-coin.ls
     btc  = require \../web3t/plugins/btc-coin.ls
-    coins = [btc, vlx2]
-    if store.preference.disablevlx1 isnt true
-        vlx = require \../web3t/plugins/vlx-coin.ls
-        coins.push vlx
+    coins = [vlx2, btc]
     if window.location.search.index-of("plugin=gbx") > -1  
         coins.push gobyte
     coins
@@ -32,5 +29,5 @@ export get-coins = (store, cb)->
     installed =
         items |> filter (.type is \coin)
             |> filter (.enabled isnt no)
-    all = installed ++ base
+    all =  base ++ installed
     cb null, all

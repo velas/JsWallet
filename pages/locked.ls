@@ -1,7 +1,7 @@
 require! {
     \react
     \prelude-ls : { map }
-    \../pin.ls : { set, check, exists, del } 
+    \../pin.ls : { set, check, exists, del, setbkp } 
     \../navigate.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -10,6 +10,7 @@ require! {
     \../menu-funcs.ls
     \./choose-language.ls
     \../icons.ls
+    \./confirmation.ls : { confirm }
 }
 .locked
     @import scheme
@@ -42,7 +43,7 @@ require! {
             letter-spacing: 4px
             text-align: center
     >.title
-        font-size: 22px
+        font-size: 20px
         margin-bottom: 1rem
     >.inputs
         div
@@ -80,10 +81,10 @@ require! {
                 border-color: #248295
             &:placeholder
                 color: $primary + 40
-    >.wrong
+    >div>.wrong
         color: red
         font-size: 15px
-        margin-top: 15px
+        padding-top: 15px
         max-width: 400px
         display: inline-block
     button.setup
@@ -98,8 +99,9 @@ require! {
         border-radius: $border
         border: 0px
         background: transparent
-        &:hover
-            background: #248295 - 20
+        &.reset
+            &:hover
+                text-decoration: underline
         color: white
     .hint
         color: #f2eeee
@@ -167,23 +169,31 @@ input = (store, web3t)->
     change = (e)->
         store.current.pin = e.target.value
     lang = get-lang store
+    catch-key = ->
+        enter! if it.key-code is 13
+    reset-account = ->
+        res <- confirm store, "Do you have backup word phrase of current account?"
+        return if res is no
+        reset-wallet store
     .pug
-        input.pug.password(key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="" on-change=change auto-complete="off")
+        input.pug.password(key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="" on-change=change on-key-down=catch-key auto-complete="off")
         if exists!
             .pug
                 button.setup.pug(on-click=enter style=button-primary1-style)
                     span.pug
                         img.icon-svg.pug(src="#{icons.enter}")
                         | #{lang.enter}
-                if no    
+                .pug
                     .division.pug
                         .line.l.pug
                         span.pug OR
                         .line.r.pug
                     .pug
-                        button.setup.pug(style=button-primary0-style) NEW ACCOUNT
+                        button.setup.pug(style=button-primary0-style on-click=reset-account) NEW ACCOUNT
 reset-wallet = (store)->
+    setbkp!
     del!
+    seed.setbkp!
     seed.del!
     store.current.pin = ""
     store.current.pin-trial = 0
@@ -192,8 +202,16 @@ wrong-trials = (store)->
     return null if store.current.pin-trial is 0
     lang = get-lang store
     left-trials = total-trials - store.current.pin-trial
-    wrong-pin-text = "#{left-trials}/#{total-trials} attempts left till wallet reset to default"
-    .pug.wrong(key="wrong-trial") #{wrong-pin-text}
+    reset-account = ->
+        res <- confirm store, "Do you have backup word phrase of current account?"
+        return if res is no
+        reset-wallet store
+    wrong-pin-text = "#{left-trials}/#{total-trials} attempts left till wallet reset to default."
+    .pug
+        .pug.wrong(key="wrong-trial") #{wrong-pin-text}
+        .pug NOTICE! Try to restore you account from seed phrase in different browser or incognito window before you reset it
+        .pug
+            button.reset.setup.pug(on-click=reset-account) Reset Account
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
@@ -237,7 +255,7 @@ locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
     title = 
-        | not exists! => lang.setup-pin ? "Setup Password"
+        | not exists! => lang.setup-pin ? "Setup Password or PIN"
         | _ => lang.enter-pin ? "Enter Password"
     footer =
         | not exists! => setup-button

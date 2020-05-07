@@ -65,7 +65,7 @@ get-name = ({ network, store, token })->
     index = store.current.account-index
     "ptx-#{mode}-#{token}-#{index}"
 export create-pending-tx = (config, cb)->
-    { store, network, token, tx, amount-send, amount-send-fee, from, to } = config
+    { store, network, token, tx, amount-send, amount-send-fee, from, to, recipient } = config
     return cb "token is required" if typeof! token isnt \String
     return cb "store is required" if typeof! store isnt \Object
     return cb "network is required" if typeof! network isnt \Object
@@ -74,7 +74,7 @@ export create-pending-tx = (config, cb)->
     err, arr <- get-all config
     return cb err if err?
     now = moment!.unix!
-    to2 = to
+    to2 = to ? recipient
     arr.push [tx, amount-send, amount-send-fee, now, from, to2]
     err <- set config, arr
     return cb err if err?

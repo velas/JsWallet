@@ -9,6 +9,7 @@ require! {
     \../history-funcs.ls
     \./icon.ls
     \./switch-account.ls
+    \./epoch.ls
     \../icons.ls
 }
 .videostorage
@@ -27,8 +28,84 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
+    .play-bar
+        background: #321463
+        border-top: 1px solid #6b258e
+        height: 60px
+        width: 100%
+        position: fixed
+        bottom: 0px
+        padding: 0 20px
+        display: flex
+        z-index: 3
+        box-sizing: border-box
+        text-align: left
+        ul
+            display: inline-flex
+            list-style: none
+            padding: 0
+            margin-top: 15px
+            margin-bottom: 0
+            &.btn-area
+                float: left
+                width: 15%
+                li
+                    margin-right: 25px 
+            &.play-area
+                width: 40%
+                padding: 0 20px
+                li
+                    &.start
+                        color: orange
+                    .progress
+                        border-bottom: 1px solid #5d4588
+                        display: block
+                        width: 300px
+                        padding-top: 15px
+                        position: relative
+                        .progress
+                            padding: 0
+                            margin: 0
+                            width: 110px
+                            border-bottom: 1px solid orange
+                            box-sizing: border-box
+                            margin-top: -1px
+                            position: absolute
+                            bottom: -1px
+            &.album-area
+                float: right
+                text-align: right
+                width: 45%
+                margin-left: 0
+                .album
+                    display: flex
+                    text-align: left
+                    img
+                        width: 30px
+                        height: 30px
+                        margin-right: 10px
+                    span
+                        .user
+                            line-height: 15px
+                            opacity: .5
+                            &:hover
+                                opacity: 1
+                        .singer
+                            line-height: 15px
+                            opacity: .8
+                            &:hover
+                                opacity: 1
+            li
+                margin-right: 15px
+                cursor: pointer
+                font-size: 12px
+                line-height: 30px
+                >img
+                    width: auto
+                    height: 12px
+                    vertical-align: middle
     .active-download
-        bottom: 10px
+        bottom: 70px
         right: 10px
         width: 226px
         background: #321260
@@ -117,7 +194,7 @@ require! {
         width: 160px
         background: #321260
         position: absolute
-        top: 188px
+        top: 172px
         right: 0px
         display: inline-grid
         z-index: 3
@@ -175,10 +252,11 @@ require! {
         z-index: 1
         width: 100%
         .add
-            line-height: 63px
             cursor: pointer
-            position: absolute
-            right: 80px
+            position: relative
+            top: 7px
+            margin: 0 20px
+            padding: 8px 0px
         .close
             line-height: 2.4
             cursor: pointer
@@ -195,7 +273,7 @@ require! {
                     margin: 0
                     list-style: none
                     li
-                        padding: 20px 15px
+                        padding: 15px 25px
                         cursor: pointer
                         &.active
                             background: #43207c
@@ -207,7 +285,7 @@ require! {
             position: relative
         .icon
             position: absolute
-            top: 12px
+            top: 8px
             right: 0
             padding: 8px 10px 9px
     .section
@@ -218,7 +296,7 @@ require! {
         @media(max-width: 800px)
             width: auto
         img
-            width: 100%
+            width: 80%
             transition: .5s
             &.icon-svg-video
                 position: relative
@@ -238,7 +316,7 @@ require! {
             text-align: left
             width: 70px
             font-size: 14px
-            background: linear-gradient(#f70,#f30)
+            background: linear-gradient(#250a50, #430f5d)
             @media(max-width: 800px)
                 display: none
             h2
@@ -287,8 +365,8 @@ require! {
                 border-radius: 4px
                 padding: 0px 10px
                 font-size: 14px
-                margin-top: 12px
-                margin-left: 15px
+                margin-top: 8px
+                margin-left: 8px
                 border: 0px
                 box-shadow: none
     button
@@ -360,14 +438,25 @@ require! {
         overflow-y: scroll
         scrollbar-width: none
         padding: 0
-        margin-top: 69px
+        margin-top: 52px
+        >.stats-content
+            width: 30%
+            padding: 20px
+            box-sizing: border-box
         >.panel-content
             padding: 20px
             box-sizing: border-box
-            width: 100%
+            width: 70%
             .block-content
                 padding-bottom: 20px
                 margin-bottom: 20px
+                overflow: hidden
+                &:last-child
+                    border: 0 !important
+                .horizontal
+                    display: flex
+                    overflow: auto
+                    white-space: nowrap
             &.dragarea
                 overflow: inherit
             &.library
@@ -383,10 +472,10 @@ require! {
                 display: none
                 &.dragarea
                     display: block
-                    width: calc(100% - 180px)
+                    width: calc(100% - 0px)
                     display: block
-                    top: 190px
-                    left: 181px
+                    top: 173px
+                    left: 0px
                     z-index: 2
                     @media(max-width:800px)
                         left: 0
@@ -437,12 +526,9 @@ require! {
                 margin-bottom: 20px
                 float: left
                 @media(max-width:800px)
-                    &:nth-child(odd)
-                        padding: 0
                     width: 50%
                 @media(max-width:640px)
                     width: 100%
-                    padding: 0
                 .play
                     @media(max-width:800px)
                         top: 120px !important
@@ -723,14 +809,15 @@ require! {
     .iron
         .logo
             padding: 6px
-            width: 60px
-            height: 10px
+            height: auto
             display: inline-block
             line-height: 0px
             text-align: center
             vertical-align: text-top
             border-radius: 5px
-            margin-top: 3px
+            margin-top: 5px
+            img
+                transform: scale(-1, 1)
             svg
                 vertical-align: top !important
     .bounce
@@ -756,8 +843,8 @@ require! {
 menu = (store, web3t)->
     info = get-primary-info store
     drag-file = ->
-        store.video.drag = not store.video.drag
-        store.video.menu-open = not store.video.menu-open
+        store.sound.drag = not store.sound.drag
+        store.sound.menu-open = not store.sound.menu-open
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -768,6 +855,41 @@ menu = (store, web3t)->
                     span.pug
                         img.icon-svg.pug(src="#{icons.add-video}")
                         | Upload video
+play-bar = (store, web3t)->
+    lang = get-lang store
+    { go-back } = history-funcs store, web3t
+    info = get-primary-info store
+    .pug.play-bar
+        ul.pug.btn-area
+            li.pug
+                img.pug(src="#{icons.prev}")
+            li.pug
+                img.pug(src="#{icons.play}")
+            li.pug
+                img.pug(src="#{icons.next}")
+            li.pug
+                img.pug(src="#{icons.shuffle}")
+            li.pug
+                img.pug(src="#{icons.repeat}")
+        ul.pug.play-area
+            li.pug.start 1:45
+            li.pug
+                span.pug.progress
+                    span.pug.progress
+            li.pug 4:21
+            li.pug
+                img.pug(src="#{icons.volume}")
+        ul.pug.album-area
+            li.pug.album
+                span.pug
+                    img.pug(src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIqADAAQAAAABAAAAIgAAAAACeqFUAAAM1ElEQVRYCTVYaW9cVxl+5u4zc2cfe8a7HSdO4qSt27S0gtL2A/C7LH4B30BC/ASQEBISIEAtRRG0TdMmduLEjtfZ9+3uC8+5FYlGc+fec895z/s+y3uc+uWvfh17rgdFVSHLEuIYCCNASsXgJX/zmxeplLgHBGEMRU4lz4KQA3jFn3xHjOYYMYgv/H+uQAziLfE7TK5T/Pn/sbwXhlC5tmJbNsbN19jaWYOHZU7l452tAGcdFVkDKOdkLp7CzIkxt2Lc2zTw7akFTUnh47eKXFjF8cUUd7cKkGQZrZ6VRP3qfIB8Tsd7D3bg+sCr8w4e3NnkMwlff/M9HN4sl8roddpwQ52b0wzc2TFRyPTwsqegVDRxpzZBf1ZGWgtxf82HE5i47EVQUiE+up/Gs3MbOgN5uGNwbwYDVnB7I49vTkbYrGeRzRh4ftpDwdTx/n4NXiQjwzEHDzbw3++ucWt7FfXlMsxcDkcvTLw4b0Dif2SzKUwHFxh130BVIrjWFN68gUG/AymcM/UufKbVUEOkQpvfTG4coT+c4+x6wFQ7GE3m+PxJA/O5hcB3WEqWIA7RafdwfdWAmvLQ73fxz8fPMFrY2NvKoV6WsPBcyJIMyXNm6Ny8xng8gazpiP0RJpMR7MEJFpMeFvMB5HAEny/okgXPGSDNgKIo5PWci4p7FkJ+pzUZceTBtSdwuBlIxBd/p2KPuOF3YMHIqDj69jFS7gCG7KI3miR4lAJvhvl0xPr7CBjU6OordPpjqEYa6XwVrXYbw945XNdG4I7R6bahcYKYgUxnA9j2FBY/qWCATx4qDNCF5y5w8vQLXJ89x1I+RL0Q4qbRQtUEPr2n4unjP6PV6WIwnsH2CCCCWfEmDU4SQFYz6Lx+gqXdLLqDMlzWXlYjtIcRuizRTK4A6hgnAvlRmqAuYTQaIFYIUkkiSGM8uSpjrcTMFdJ48KNPMG39B832Hssa4/zkO9xsafjdb3/DDdZgxVnMhwS2KAvLqDTPnmB3I8vJbQy71yi+9wgFon0wtUmgCaaLGesd4ab5GGsrOVgMTs7okI0SWo0uxqMu8pINu1rAxFGQlxfwZjYi38Tt/QPiog/NMKFGQ3Q7Tbx6dQIpU8eo34TruGg8e5ywTc7qi8NHB7ewuVbCjEC7f3cd5xddrNbymE0JRKba0BWoeg66oULN7TL1LOVNF83nL3D89THmnQ7SgQ2LZTOXC1gqpdBtdnD++jlqvB6Px9CkgHNWuDEHkl7Bu/fX0b46wRd//ws0PQt5ZVk9LOYzqJRz8P0Q46mF45Nr0k3DaDDBZOoRYEWYhWXk+THMdcyvT/Dmyy+xvlbFz37xEaqrK3j+7BLjbouKRxZkUmRahJfHZySlg4uLK9I8hOstUCgU8cXn/0rYOZ37yK08xO2DT6HUWM+n35/i6fMzCk+YKKOh63hy1MLd/XdRX1pjRtIwSxVOqrCEIc6eNXDVHuFTBrH39j3WWEZBlfD7P/wTnes+pMo2Xr15jdlkhqNjOynB1VUbHvF1ejVApZjD+dkF1TyLfKWG3sm/oUgEC+MXSi0kBZ6fSmrm+zJevbxEvzvF3t4WldSFls4h4ORX55dwZR05M4v2+RWMNAOlDK/WSgxwQBl9xlKQ0izr6fUCvhtif6eM7fUi3ADUHB9nDGil6sBeDBP5l8ul9GGe4BuMPKiyijXWuN2ZUbBU1jeNxsVrNC4bWKnVsFQuYnJ5iq+fvMB7792HRUD/8Y9fopxP429fPMPxWRMhhU6wzSxILHPIYFK8FyIIUihlTbR7NrEYYmE5MDSN9KeAOiHkckE/FJI85qRSpBAbMnbpG/2RhaVqBY8e7PN+iOb1JfJpA3a/RUY42L+7jYMP38LunW3UlopJRgPPIfXHMJidgJSezgMGEia+FDPfjd6cAbi4u72U2EDONHGwd4fCxmooNCqfbqsrMlNMaDk+dtaK2CZVv3p6hG+OTvHWw30+y+D0zSmm0wmWC/SYGZkQeNjdqeHou9fICy+5s0oFDhEz/QbpvXC8JAjfi1AtZGhuPqWequBaXKNA512gOx0SuHRfGj8G9IzQi1FdSaFezKDVnaNeMfF93MXLs9NEpteWST3aQOxZ6PUXlHkd416fLhpAswNYwRQvz6/hiDaB2UinhXtr/A65OWohTXKlkkVaybEUA3qSg2o5S51poUQiyOt1/TCKWUeqXzpL4LLGoO17vo8KNVn0I9M5fUMOoIYB7LFNowpx2RqjTPTLVGVvMMd4NsVJc4AFgalrEgUPDCJK5hWtChOBDLO6sV4jmwZUWwdmvkCdEoC1IX/2YfmQPRAsizynBqiqTBOLif4ZFDrxUolST01I6zLCiUWwWbBZyx4x9ea8jWxag0SwDu0FLtsTzNlniOAzecKGq59fzZi1ENViFgvbRUqJWR6f3uWjNVpAJ+1lyoISeCod1ks4Xk3rVDmdEXs0QQ9+L6C8hwRWjIim55J2jhcwQBk5Oq1Q3L9/eUzXlrG8nMPM9om3mMIVwCcbugvOs/Ch68w28ScrGgaTKWLbQpbrFGisnAK+Ra/zgvhQZq+n6yoKeR3NnoMZZVi0eBne8wOfwbD9cWU4DFhly8fMQ+c7P/3JPixSb0omMF9JWRS2ipJQJr47obOOJvQs3nE8D6W8Ac+b4/JmxkbMEAAlA/0EBrIiS4cZg7hAxMExgSV6SJml+IF+Lu/JpPUKo1cYUET1BXddLefx/gd3sH9vk2Y5oi8tkM/qqBUNlNhzyAxoaSmLiBkd0QT7Qw/tPt2WPWrEdlSwdMHrue2whNSRpaKWZCQiSH0iXmJPqYotczHPZ5pJxQe1ImrcTcB7Mp/Xqnn8+OMH2NrdIOJN7Gyyb7npIJdVqTUKMyjkQMJn79/Dxwf3MZmz52FjVSlovBZEiNidmchkFAJfaA2ZtntLRaPlYjR0E5FhpjiRS6TFlG0FH+5V8VM2wILiAvqV3QLu3N9FfaOOiJNwDkq0TNDJ6LPRkRWKYkYjQzT8+/EL7O+t44PtdTS6Fr0sYosRQVPpNZ0Fl4iScY22A6WQqUFfjzE0iWguZBKwXhBxZyniIcan79xCkWV4dnQtHAl7jw5QpcYEorOifAuGSLSG5UqOHdec2ZRhsv4Ro7ZcB0/oyvcoegebddyQ4llmwaXADcYRSjmVm6WuuGToyMugSGrdqqss3w8RqqyfgELOmSCwPXz+j6doNYfYoawvb27AZzMkABgzciYEKZ5Ldu/uJFiYc7xIXZ/MGxLcItDlyQIblQJ3Ta9KMVvc0UfrIKYMpCl6ukb6imgEkIJYSpjCpCQPBfpvKzZOJjH6FKzh1MEHDCKOiCUeyGQalihLyOyJ3ZdXl/H2OyH+9Ncn6I7JOj6bks55ZmA8Z3OlWshoAdg6wfKpxNQUkX3BHIFNWclmDyeUaIf1E8AROjHnR6Iv6LMJNuolNPoMlg3SJz//MW1giRvmCc1n8KR2QJWNmEmRHZMt5u7+Lq5uBuj1JnRdqimxI9pcg7vOkYnpTBojstAlGIXQDag1gxm7Np/M0Gg6hqEjb2bYrMg/7JRtY4qeoVFxrnoLpl9JWkWhLyn2JXKhysZZS4LxOanvsrNny7dFg/zJZ48InxQZF2DBMcNAop5YyUlBGg+g0SpUWYFJrUkLDUtx4+VKiQBTE2VVuGg2l05smXLC6wz+e9RISiZ2lDUNHhMZNFOs6+w5CFqTLWY6LaNCNy2tlFirKfbf3cTew22eediHMBB3pY721GWnP4dLsSzJIWqra8zuCkFuJidFqVAsJs1MzE4tSilsjLljXvsUsObYRZsdmjh0Z+kJEXOdK1ZQ5uICYKJDK7B715jyTJYboJCJg5cQsxzPtQ6BEsxJe9Lbyph8P4BpqsyIT8zo3AzBSiPMF/JQNMMgWyjB9BKZyJGpdho7qogmNmG/cWulgAEtu0yx6g8sfP/8Bnu3V0kanyClEKkBMiypzImnHCfsXXRJzdaQzxTOxdITa5+8XcdmhY0VPeziyoFMwIq/OMhGHgWeEBRLKBhFKLQo8dM5DB4TRWvnUzXqy3m+THqNNZaD8CalxsMJHbjItFM9eU/sTCuUOSFZtHApZjoxJuPR/iqCXhsRqb1V5qeaZbZ9vGzOMVKKKFPMYtqz8DGhX8qCOxB/u1BIJSG1Cw6ICFJVo10zQxF3lCGQA6b8gk3zQ9b+5uyIsbOrot5wKGX/Bz3xaGzi1OeT0p1Gj2yJ6Fugyyo8ltg4vhripUucrYg+h/7G9wKOFf/495E5MUG3ZBo9pk00RjL9QmdmRFsnfEGmcoZEucU2sklPERTMkaqLWeIHBFuaE/NIw0za1I45HffsTRvNkU1Poc/z4VcvWviWmlRd47GEAQimiROEELyICfgfnfi7LWBejfIAAAAASUVORK5CYII=')
+                span.pug
+                    .pug.user velas
+                    .pug.singer Lana Del Rey - West Coast - Solomun Remix
+            li.pug
+                img.pug(src="#{icons.like}")
+            li.pug
+                img.pug(src="#{icons.next-up}")
 home = (store, web3t)->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -778,6 +900,9 @@ home = (store, web3t)->
         if store.current.files then \file-tree else \ ""
     style=
         background: info.app.wallet
+        color: info.app.text
+    header-style-light =
+        border-bottom: "1px solid #{info.app.border-light}"
         color: info.app.text
     border-style =
         color: info.app.text
@@ -826,12 +951,12 @@ home = (store, web3t)->
     goto-details = ->
         navigate store, web3t, \videostoragedetails
     drag-file-close = ->
-        store.video.drag = not store.video.drag
-    header-style-light =
-        border-bottom: "1px solid #{info.app.border-light}"
+        store.sound.drag = not store.sound.drag
+    border-right-light =
+        border-right: "1px solid #{info.app.border-light}"
         color: info.app.text
-    .pug.panel-content.dragarea.library(class="#{file-tree}")
-        if store.video.drag
+    .pug.panel-content.dragarea.library(class="#{file-tree}" style=border-right-light)
+        if store.sound.drag
             .header-table.dragfile.dragarea.pug(on-click=drag-file-close)
                 .pug.cell.network(style=dashed-border)
                     img.pug.bounce(src="#{icons.img-drag}" style=icon-style)
@@ -841,79 +966,83 @@ home = (store, web3t)->
                     span.pug Browse files
         .block-content.pug(style=header-style-light)
             h2.header.pug Chill
+            .pug.horizontal
+                .pug.section
+                    .source.pug
+                        iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
+                        .pug.title-video
+                            span.pug
+                                .pug.header Morning Chillout
+                                ul.pug.stat
+                                    li.pug
+                                        span.pug Mighty
+                .pug.section
+                    .source.pug
+                        iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
+                        .pug.title-video
+                            span.pug
+                                .pug.header Morning Chillout
+                                ul.pug.stat
+                                    li.pug
+                                        span.pug Mighty
+                .pug.section
+                    .source.pug
+                        iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
+                        .pug.title-video
+                            span.pug
+                                .pug.header Morning Chillout
+                                ul.pug.stat
+                                    li.pug
+                                        span.pug Mighty
+                .pug.section
+                    .source.pug
+                        iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
+                        .pug.title-video
+                            span.pug
+                                .pug.header Morning Chillout
+                                ul.pug.stat
+                                    li.pug
+                                        span.pug Mighty
+        .block-content.pug(style=header-style-light)
+            h2.header.pug Party
             .pug.section
                 .source.pug
                     iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
                     .pug.title-video
                         span.pug
-                            img.pug.account(src="#{info.branding.logo}")
-                        span.pug
-                            .pug.header Velas Explainer Video
+                            .pug.header Morning Chillout
                             ul.pug.stat
                                 li.pug
-                                    span.pug 2K views
-                                li.pug
-                                    span.pug 5 days ago
+                                    span.pug Mighty
             .pug.section
-                .source.pug(on-click=goto-details)
+                .source.pug
                     iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
                     .pug.title-video
                         span.pug
-                            img.pug.account(src="#{info.branding.logo}")
-                        span.pug
-                            .pug.header Velas Explainer Video
+                            .pug.header Morning Chillout
                             ul.pug.stat
                                 li.pug
-                                    span.pug 50K views
-                                li.pug
-                                    span.pug 1 mounth ago
-            .pug.section
-                .source.pug(on-click=goto-details)
-                    iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
-                    .pug.title-video
-                        span.pug
-                            img.pug.account(src="#{info.branding.logo}")
-                        span.pug
-                            .pug.header Velas Explainer Video
-                            ul.pug.stat
-                                li.pug
-                                    span.pug 2K views
-                                li.pug
-                                    span.pug 5 days ago
-        .block-content.pug(style=header-style-light)
-            h2.header.pug Party
-            .pug.section
-                .source.pug(on-click=goto-details)
-                    iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
-                    .pug.title-video
-                        span.pug
-                            img.pug.account(src="#{info.branding.logo}")
-                        span.pug
-                            .pug.header Velas Explainer Video
-                            ul.pug.stat
-                                li.pug
-                                    span.pug 2K views
-                                li.pug
-                                    span.pug 5 days ago
-            .pug.section
-                .source.pug(on-click=goto-details)
-                    iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
-                    .pug.title-video
-                        span.pug
-                            img.pug.account(src="#{info.branding.logo}")
-                        span.pug
-                            .pug.header Velas Explainer Video
-                            ul.pug.stat
-                                li.pug
-                                    span.pug 50K views
-                                li.pug
-                                    span.pug 1 mounth ago
+                                    span.pug Mighty
 stream = (store, web3t)->
-    .pug.panel-content
+    info = get-primary-info store
+    border-right-light =
+        border-right: "1px solid #{info.app.border-light}"
+        color: info.app.text
+    .pug.panel-content(style=border-right-light)
         p.results.pug This tab is under development
 library = (store, web3t)->
-    .pug.panel-content
+    info = get-primary-info store
+    border-right-light =
+        border-right: "1px solid #{info.app.border-light}"
+        color: info.app.text
+    .pug.panel-content(style=border-right-light)
         p.results.pug This tab is under development
+stats = (store, web3t)->
+    lang = get-lang store
+    { go-back } = history-funcs store, web3t
+    info = get-primary-info store
+    .stats-content.pug
+        p.results.pug This part is under development
 videostorage = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -984,18 +1113,21 @@ videostorage = ({ store, web3t })->
     icon-style=
         filter: info.app.nothingIcon
     activate = (tab)-> ->
-        store.video.tab = tab 
+        store.sound.tab = tab 
     activate-home = activate \home
     activate-stream = activate \stream
     activate-library = activate \library
     active-class = (tab)->
-        if store.video.tab is tab then 'active' else ''
+        if store.sound.tab is tab then 'active' else ''
     active-home = active-class \home
     active-stream = active-class \stream
     active-library = active-class \library
     expand-collapse = ->
-        store.video.menu-open = not store.video.menu-open
+        store.sound.menu-open = not store.sound.menu-open
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.videostorage
+        play-bar store, web3t
         .pug.active-download(style=filter-body)
             .pug.top(style=header-table-style)
                 .pug.table-row-menu
@@ -1023,16 +1155,15 @@ videostorage = ({ store, web3t })->
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Sound storage
+            .pug.header(class="#{show-class}") Sound storage
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
-        if store.video.menu-open
+        if store.sound.menu-open
             menu store, web3t
         .pug.search-input
             .pug.section(style=border-style)
-                span.add.pug(on-click=expand-collapse)
-                    img.icon-svg-video.pug(src="#{icons.video}")
                 .title.pug
                     h2.pug.iron
                         span.logo.pug
@@ -1055,6 +1186,7 @@ videostorage = ({ store, web3t })->
                         input.pug(type='text' style=input-style value="velas" placeholder="velas")
                         .pug.icon
                             icon \Search, 15
+                .add.pug(on-click=expand-collapse) Upload
         .pug.wrapper
             if active-home is \active
                 home store, web3t
@@ -1062,4 +1194,5 @@ videostorage = ({ store, web3t })->
                 stream store, web3t
             if active-library is \active
                 library store, web3t
+            stats store, web3t
 module.exports = videostorage

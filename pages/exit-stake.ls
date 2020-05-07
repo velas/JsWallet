@@ -6,6 +6,7 @@ require! {
     \../get-lang.ls
     \../icons.ls
     \../math.ls : { div, times, plus, minus }
+    \../staking/can-make-staking.ls
 }
 .steps
     @media(max-width:800px)
@@ -158,15 +159,17 @@ max-withdraw = (store, web3t)->
         color: style.app.text
         background: style.app.primary4
     exit = ->
-        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
-        return cb err if err?
-        return alert "Exit is not allowed. Please wait for epoch change" if data isnt yes
+        err <- can-make-staking store, web3t
+        return alert err if err?
+        #err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
+        #return cb err if err?
+        #return alert "Exit is not allowed. Please wait for epoch change" if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
         amount = max.to-fixed!
-        console.log "web3t.velas.Staking.maxWithdrawAllowed('#{pool-address}', '#{staking-address}')"
-        return alert "Exit is not allowed. This may because the Staking epoch is changed" if +amount is 0
+        #console.log "web3t.velas.Staking.maxWithdrawAllowed('#{pool-address}', '#{staking-address}')"
+        return alert "Max Withdraw Allowed is 0" if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0

@@ -5,7 +5,7 @@ require! {
     \./pages.ls
     \./pages/header.ls
     \./pages/side-menu.ls
-    \./pages/banner.ls
+    #\./pages/banner.ls
     \./description.ls
     \./browser/window.ls
     \./copy-message.ls
@@ -40,6 +40,27 @@ require! {
         top: 2px
         margin-right: 3px
     .title
+        .header
+            @media(max-width: 620px)
+                &.hide
+                    visibility: hidden
+            @media(max-width: 820px)
+                text-align: left !important
+                margin-left: 70px !important
+                font-size: 12px !important
+        .close
+            @media(max-width: 820px)
+                position: absolute !important
+                font-size: 20px !important
+                left: 0 !important
+                top: 0 !important
+                height: 60px !important
+                width: 60px !important
+                cursor: pointer !important
+                border-right: 1px solid #6b258e !important
+            img
+                @media(max-width: 820px)
+                    top: 16px !important
         >.header
             text-align: center
             font-size: 17px
@@ -109,7 +130,7 @@ require! {
         100%
             background-position: 468px 0
     @media (max-width: 800px)
-        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res
+        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res, .info, .monitor
             margin: 120px 0 0
             >.title
                 margin: 60px 0 0
@@ -258,13 +279,15 @@ module.exports = ({ store, web3t })->
     syncing = 
         | store.current.refreshing => "syncing"
         | _ => ""
+    open-menu = ->
+        store.current.open-menu = not store.current.open-menu
     .pug
         description store
         .app.pug(key="content" style=style class="#{syncing}")
             modal-control store, web3t
             confirmation-control store, web3t
             copy-message store, web3t
-            banner store, web3t
+            #banner store, web3t
             if store.current.device is \mobile
                 header store, web3t
             if store.current.device is \desktop

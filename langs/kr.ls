@@ -20,7 +20,7 @@ module.exports =
     wrong-pin-should: "PIN은 4 자리 여야합니다"
     setup: "설정"
     pin-info : "이 PIN을 기억하여 제 3 자에게 제공하지 마십시오"
-    setup-pin : "설정 PIN"
+    setup-pin : "비밀번호 또는 PIN 설정"
     enter-pin: "PIN을 입력하십시오"
     secret-phrase: "비밀 문구"
     secret-phrase-warning: "이 문구를 안전하게 보관할 책임은 귀하에게 있습니다. 이 문구를 잃어버린 경우 복원 할 수 없습니다."
@@ -161,3 +161,4 @@ module.exports =
     language: "언어"
     tx-from: "에서"
     tx-to: "에"
+    restore-from: "에서 지갑 복원"

@@ -11,6 +11,7 @@ require! {
     \../round-human.ls
     \../wallets-funcs.ls
     \../icons.ls
+    \./epoch.ls
 }
 .content
     position: relative
@@ -482,11 +483,21 @@ send = ({ store, web3t })->
         if store.current.convert is convert then 'active' else ''
     active-usd = active-class \usd
     active-eur = active-class \eur
+    cut-send = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
+        r =
+            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 20) + \.. + t.substr(t.length - 4, 4)
+            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 15) + \.. + t.substr(t.length - 4, 4)
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.content
         .pug.title(style=border-header)
-            .pug.header Send
+            .pug.header(class="#{show-class}") Send
             .pug.close(on-click=cancel)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .pug.content-body(style=more-text)
             .pug.header
@@ -520,7 +531,7 @@ send = ({ store, web3t })->
             form.pug
                 form-group lang.send-from, icon-style, ->
                     .address.pug(style=border-style)
-                        a.pug(href="#{get-address-link wallet}") #{get-address-title wallet}
+                        a.pug(href="#{get-address-link wallet}") #{cut-send get-address-title wallet}
                 form-group lang.recipient, icon-style, ->
                     input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
                 form-group lang.amount, icon-style, ->

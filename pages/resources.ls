@@ -14,6 +14,7 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \../icons.ls
+    \./epoch.ls
 }
 .resources
     @import scheme
@@ -348,13 +349,16 @@ resources = ({ store, web3t })->
         background: "url('#{icons.bg-gpu}')"
     bg-spacing=
         background: "url('#{icons.bg-spacing}')"
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.resources
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Resources Center
+            .pug.header(class="#{show-class}") Resources Center
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .container-price.pug
             .plan.pug

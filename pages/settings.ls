@@ -177,7 +177,7 @@ require! {
             &.last
                 border-bottom: 0
             &:first-child
-                background: url("https://res.cloudinary.com/dfbhd7liw/image/upload/v1582209591/velas/logo-velas-opacity.png")
+                background: $logo-opacity
                 background-repeat: no-repeat
                 background-position: left 10px
             padding: 30px 20px
@@ -313,6 +313,8 @@ manage-account = (store, web3t)->
         return set-lang \kr
     change-lang-fr = ->
         return set-lang \fr
+    change-lang-es = ->
+        return set-lang \es
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -345,7 +347,7 @@ manage-account = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | हिंदी
                         img.pug(src="#{icons.langs-hn}")
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(on-click=change-lang-es style=color)
                         | Español
                         img.pug(src="#{icons.langs-sp}")
                     li.pug.lang-item(on-click=change-lang-ua style=color)

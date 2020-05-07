@@ -47,6 +47,7 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         | amount? => amount `times` (10 ^ network.decimals)
         | _ => null
     return cb "Either Value or Amount is required" if typeof! value not in <[ String Number ]>
+    #console.log \send , 1
     id = guid!
     { current } = store
     { send } = current
@@ -56,6 +57,7 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     amount-send-fee = if network.tx-fee? then network.tx-fee else \0
     amount-send-fee-usd = \0
     propose-escrow = no
+    #console.log \send , 2
     amount-send = value `div` (10 ^ network.decimals)
     wallet = store.current.account.wallets |> find (.coin.token is coin.token)
     send <<<< {
@@ -63,8 +65,10 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         amount-obtain, amount-obtain-usd, amount-send-usd,
         amount-send-fee, amount-send-fee-usd, propose-escrow
     }
+    #console.log \send , 3
     { send-anyway, change-amount } = send-funcs store, web3t
     <- change-amount store, amount-send, yes
+    #console.log \send , 4
     #console.log \before, 1
     #err <- calc-amount-and-fee amount-send, 3
     #console.log \after, err
@@ -72,7 +76,9 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     #current.page = \send
     #window.scroll-to 0, 0
     navigate store, cweb3, \send
-    send-anyway!
+    #console.log \send , 5
+    send-anyway! if tx.to isnt ""
+    #console.log \send , 6
     helps = titles ++ [network.mask]
     #show-cases store, helps, ->
     err, data <- wait-form-result id

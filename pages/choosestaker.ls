@@ -29,6 +29,8 @@ require! {
     \../icons.ls
     \./placeholder.ls
     \./claim-stake.ls
+    \../staking/can-make-staking.ls
+    \./epoch.ls
 }
 .staking
     @import scheme
@@ -67,7 +69,6 @@ require! {
         position: relative
         box-sizing: border-box
         .claim-table
-            margin: 15px 0
             max-height: 100px
             width: 300px
             overflow-y: auto
@@ -573,9 +574,8 @@ staking-content = (store, web3t)->
         opacity: ".3"
     pairs = store.staking.keystore
     become-validator = ->
-        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
-        return cb err if err?
-        return alert "Staking is not allowed. Please wait for epoch change" if data isnt yes
+        err <- can-make-staking store, web3t
+        return alert err if err?
         return alert "please choose the pool" if not store.staking.chosen-pool?
         type = typeof! store.staking.add.add-validator-stake
         console.log \correct_amount , type, store.staking.add.add-validator-stake
@@ -587,11 +587,11 @@ staking-content = (store, web3t)->
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
         #console.log "Staking.getData('#{store.staking.chosen-pool}', '#{stake}')"
         data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
-        console.log \after-stake
+        #console.log \after-stake
         to = web3t.velas.Staking.address
         #console.log \to, { to, data, amount }
         amount = store.staking.add.add-validator-stake
-        console.log \after-stake, to, amount
+        #console.log \after-stake, to, amount
         err <- web3t.vlx2.send-transaction { to, data, amount }
         #return cb err if err?
         return store.staking.add.result = "#{err}" if err?
@@ -875,11 +875,14 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
-            .pug.header Delegate Stake
+            .pug.header(class="#{show-class}") Delegate Stake
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
@@ -938,9 +941,6 @@ fill-pools = ({ store, web3t }, [item, ...rest], cb)->
     err, validator-reward-percent <- web3t.velas.BlockReward.validatorRewardPercent item.address
     return cb err if err?
     item.validator-reward-percent = validator-reward-percent `div` 10000
-    #err, reward-amount <- web3t.velas.Staking.getRewardAmount [], item.address, staking-address
-    #return cb err if err?
-    #item.reward-amount = reward-amount `div` (10^18)
     err, is-validator-banned <- web3t.velas.ValidatorSet.isValidatorBanned(mining-address)
     return cb err if err?
     err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address

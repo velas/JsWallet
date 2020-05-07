@@ -208,7 +208,7 @@ newseed = ({ store, web3t })->
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)
             .title.pug #{style.branding.title}
-        .welcome.pug(style=text-style) Restore wallet from
+        .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v
             button.pug.left(style=button-primary1-style on-click=restore12)
                 span.pug

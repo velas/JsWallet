@@ -251,6 +251,10 @@ module.exports = (store, web3)->
         opacity: "0"
         bottom: "-280px"
         left: "-57px"
+    icon-style3 =
+        opacity: "0"
+        bottom: "-200px"
+        left: "-57px"
     lang = get-lang store
     info = get-primary-info store
     syncing = 
@@ -316,8 +320,10 @@ module.exports = (store, web3)->
         store.current.submenu = not store.current.submenu
     menu-staking =
         if store.current.submenu then \submenu else \ ''
+    menu-out = ->
+        store.current.submenu = no
     staking = if store.current.submenu then \active else \not-active
-    .menu.side-menu.pug(style=border-style)
+    .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
             img.pug(src="#{info.branding.logo}" style=logo-style)
         if store.preference.lock-visible is yes

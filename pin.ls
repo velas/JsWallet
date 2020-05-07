@@ -1,8 +1,7 @@
 require! {
     \localStorage
-    \crypto-js/aes : aes
     \crypto-js/md5 : md5
-    \./words-to-utf8.ls
+    \./seed-encrypt.ls
 }
 mem = 
     encrypt: null
@@ -10,9 +9,11 @@ get-key = (value)->
     value + 'cb562eb3-c442-4866-a1a9-70a9'
 export del = ->
     local-storage.set-item \spin, ""
+export setbkp =->
+    local-storage.set-item \spinbkp, local-storage.get-item(\spin)
 export set = (value)->
     key = get-key value
-    res = aes.encrypt(value, key)
+    res = seed-encrypt.encrypt(value, key)
     local-storage.set-item \spin, res
 export exists = ->
     (local-storage.get-item(\spin) ? "") isnt ""
@@ -27,5 +28,5 @@ export check = (value)->
     res = local-storage.get-item(\spin) ? ""
     return no if res.length is 0
     key = get-key value
-    decrypted = aes.decrypt(res, key).toString(words-to-utf8)
+    decrypted = seed-encrypt.decrypt(res, key)
     decrypted is value

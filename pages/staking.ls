@@ -10,7 +10,6 @@ require! {
     \./icon.ls
     \prelude-ls : { map, split, filter, find, foldl }
     \../math.ls : { div, times, plus, minus }
-    \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
     \../../web3t/providers/deps.js : { hdkey, bip39 }
     \md5
@@ -29,7 +28,9 @@ require! {
     \./exit-stake.ls
     \./placeholder.ls
     \./claim-stake.ls
+    \../staking/can-make-staking.ls
     \mobx : { transaction }
+    \./epoch.ls
 }
 .staking
     @import scheme
@@ -108,7 +109,7 @@ require! {
                 &.reward
                     background-image: $reward
                     background-repeat: no-repeat
-                    background-position: 16%
+                    background-position: 16% 20%
                     background-size: auto
                     background-color: rgba(111, 50, 162, 0.15)
                     @media(max-width: 800px)
@@ -409,9 +410,6 @@ require! {
             font-size: 14px
             margin-bottom: 5px
             list-style-position: inside
-            white-space: nowrap
-            overflow: hidden
-            text-overflow: ellipsis
             @media (max-width: 800px)
                 text-align: center
     button
@@ -467,6 +465,387 @@ require! {
             cursor: pointer
             &:hover
                 color: #CCC
+    .staking-info
+        display: block
+        overflow-y: scroll
+        scrollbar-width: none
+        margin-top: 0
+        display: flex
+        flex-wrap: wrap
+        margin-right: -5px
+        margin-left: -5px
+        .value
+            color: orange
+            text-align: center
+            &.green
+                color: rgb(60, 213, 175)
+                text-align: center
+        .header
+            font-size: 12px
+            text-transform: uppercase
+            letter-spacing: 2px
+            opacity: .8
+            font-weight: 400
+            margin-top: 10px
+            text-align: center
+        .col
+            box-sizing: border-box
+            padding: 0 5px
+            margin-bottom: 10px
+            &.col-4
+                -webkit-box-flex: 0
+                flex: 0 0 25%
+                max-width: 25%
+                @media(max-width: 992px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 50%
+                    max-width: 50%
+                @media(max-width: 400px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 100%
+                    max-width: 100%
+            > div
+                background: #3b1771
+                padding: 30px 20px
+    .staking-reward
+        display: block
+        overflow-y: scroll
+        scrollbar-width: none
+        margin-top: 0
+        display: flex
+        flex-wrap: wrap
+        margin-right: -5px
+        margin-left: -5px
+        .value
+            font-size: 12px
+            text-transform: uppercase
+            font-weight: 400
+            color: white
+            text-align: center
+            input[type="checkbox"]
+                margin-bottom: 10px
+            &.green
+                color: rgb(60, 213, 175)
+                text-align: center
+            .label
+                color: slategrey
+                font-size: 10px
+                margin-top: 0
+        .header
+            font-size: 12px
+            text-transform: uppercase
+            font-weight: 400
+            margin-top: 10px
+            text-align: center
+            overflow: hidden
+            text-overflow: ellipsis
+            &.label
+                color: slategrey
+                font-size: 10px
+                margin-top: 0
+        .col
+            box-sizing: border-box
+            padding: 0 5px
+            margin-bottom: 10px
+            &.col-4
+                -webkit-box-flex: 0
+                flex: 0 0 20%
+                max-width: 20%
+                @media(max-width: 992px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 33%
+                    max-width: 33%
+                @media(max-width: 400px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 50%
+                    max-width: 50%
+            > div
+                background: #3b1771
+                padding: 15px
+    .section-reward
+        @import scheme
+        border-bottom: 1px solid rgba(240, 237, 237, 0.16)
+        padding: 30px 20px
+        display: flex
+        button
+            float: left
+            background-color: #6595F5
+            border: 1px solid #6595F5
+            border-radius: 0px
+            color: white
+            height: 36px
+            width: auto
+            margin-top: 10px
+            padding: 0 6px
+            text-decoration: none
+            text-transform: uppercase
+            font-size: 10px
+            font-weight: bold
+            cursor: pointer
+            outline: none
+            display: inline-block
+            text-overflow: ellipsis
+            overflow: hidden
+            white-space: nowrap
+            @media (max-width: 800px)
+                margin: 10px auto
+                float: none
+        @media (max-width: 800px)
+            display: flow-root
+            padding: 20px
+        &:last-child
+            border: 0
+        &.reward
+            background-image: $reward
+            background-repeat: no-repeat
+            background-position: 16% 20%
+            background-size: auto
+            background-color: rgba(111, 50, 162, 0.15)
+            @media(max-width: 800px)
+                background-image: none
+            @media(max-width: 540px)
+                background-image: none
+        .title
+            padding: 0px
+            width: 30%
+            text-align: left
+            text-transform: uppercase
+            font-size: 14px
+            h3
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 2px
+                opacity: .8
+                font-weight: 400
+                margin: 0
+            @media (max-width: 800px)
+                width: 100%
+                margin-bottom: 20px
+                text-align: center
+            .less
+                font-size: 10px
+                opacity: 0.9
+        .description
+            padding: 0px
+            font-size: 14px
+            width: 70%
+            text-align: left
+            .table
+                width: 240px
+                .balance
+                    text-align: right
+                    .header
+                        float: left
+            hr
+                margin: 15px auto
+                border: 1px solid rgba(240, 237, 237, 0.16)
+                border-top: 0
+            .chosen-pool
+                margin-bottom: 10px
+                .color
+                    color: orange
+                    font-weight: 600
+                    &.green
+                        color: green
+            &.table-scroll
+                overflow-x: scroll
+                max-height: 200px
+                background: linear-gradient(#321260 30%, rgba(50, 18, 96, 0)), linear-gradient(rgba(50, 18, 96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0, 0, 0, 0)) 0 100%
+                background-repeat: no-repeat
+                background-attachment: local, local, scroll, scroll
+                background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+                animation: breathe 3s ease-in infinite
+                -moz-transition: breathe 3s ease-in infinite
+                -web-kit-transition: breathe 3s ease-in infinite
+            table
+                width: 100%
+                border-collapse: collapse
+                margin: 0px auto
+            tr:nth-of-type(odd)
+                background: rgba(107, 38, 142, 0.2)
+            th
+                background: rgb(67, 32, 124)
+                color: white
+                font-weight: 400
+                &:first-child
+                    text-align: center
+                    width: 5%
+                &:nth-child(2)
+                    width: 25%
+                &:nth-child(3)
+                    width: 45%
+                &:nth-child(4)
+                    width: 15%
+            td, th
+                padding: 10px
+                border: 1px solid rgba(240, 237, 237, 0.16)
+            .left
+                position: relative
+                .small-btns
+                    line-height: 36px
+                    button.small
+                        outline: none
+                        border-radius: 0px
+                        line-height: 10px
+                        text-align: center
+                        height: 16px
+                        font-size: 10px
+                        font-weight: 600
+                        margin-top: 0
+                        width: auto
+                        margin-right: 10px
+                        padding: 2px 5px
+                        cursor: pointer
+            @media (max-width: 800px)
+                width: 100%
+                text-align: center
+            .important
+                color: orange
+            .left-node
+                width: 40%
+                float: left
+                @media (max-width: 800px)
+                    width: 100%
+                    text-align: center
+                    margin-bottom: 20px
+                @media (min-width: 801px) and (max-width: 992px)
+                    width: 50%
+                img
+                    width: 240px
+                    &.icon-svg
+                        height: 12px
+                        width: auto
+                        padding-right: 5px
+            .right-node
+                width: 60%
+                float: right
+                @media (max-width: 800px)
+                    width: 100%
+                    text-align: center
+                @media (min-width: 801px) and (max-width: 992px)
+                    width: 50%
+                    text-align: left
+            &.node
+                width: 80%
+            .tabs
+                display: inline-block
+                margin: 20px 0 20px
+                width: 100%
+                .tab
+                    width: 25%
+                    display: inline-block
+                    opacity: 0.5;
+                    text-align: center
+                    border-bottom: 1px solid
+                    line-height: 37px
+                    text-transform: uppercase
+                    font-size: 10px
+                    font-weight: bold
+                    cursor: pointer
+                    height: 36px
+                    background: #2c0d5f
+                    border-color: #6b258e
+                    @media (max-width: 800px)
+                        width: 50%
+                    &.active
+                        opacity: 1
+                        border-bottom: 1px solid #6e1d96
+                        background: #37156d
+            .btn
+                margin: 10px 0
+            .code
+                overflow: scroll
+                background: #1b1b1b
+                text-align: left
+                .copy
+                    float: right
+                    margin-top: 11px
+                    margin-right: 10px
+                    width: 15px
+                .cursor
+                    -webkit-animation: blink 0.9s infinite
+                    animation: blink 0.9s infinite
+                    font: initial
+                    display: inline-block
+                    opacity: 1
+                    margin-left: 5px
+                @-webkit-keyframes blink
+                    0%
+                        opacity: 1
+                    50%
+                        opacity: 0
+                    100%
+                        opacity: 1
+                @keyframes blink
+                    0%
+                        opacity: 1
+                    50%
+                        opacity: 0
+                    100%
+                        opacity: 1
+                &.comming
+                    background: transparent
+                    text-align: center
+            .window
+                position: sticky
+                top: 0
+                left: 0
+                height: 39px
+                background: #040404
+                .icons
+                    padding: 0.75em
+                    position: absolute
+                    span
+                        background: #040404
+                    &:before
+                        content: ""
+                        background: #040404
+                    &:after
+                        content: ""
+                        background: #040404
+                    span, &:before, &:after
+                        display: inline-block
+                        float: left
+                        width: 1em
+                        height: 1em
+                        border-radius: 50%
+                        margin-right: 0.5em
+            .balance
+                font-size: 14px
+                margin-bottom: 5px
+                span
+                    margin-right: 5px
+                    &.green
+                        color: #3cd5af
+                .color
+                    color: orange
+                    font-weight: 600
+                .label-coin
+                    left: 3px
+                    top: 2px
+                    padding-right: 2px
+                    height: 15px
+                    position: relative
+                    color: orange
+                    font-weight: 600
+            textarea
+                border: 0
+                padding: 10px
+                font-size: 13px
+                width: 100%
+                box-sizing: border-box
+                min-height: 120px
+                font-family: monospace
+        .content
+            width: 30%
+            position: relative
+            button, .switch-index
+                margin: 0
+                position: absolute
+                top: 50%
+                left: 40%
+                -ms-transform: translateY(-50%)
+                transform: translateY(-50%)
 get-pair = (wallet, path, index, password, with-keystore)->
     w = wallet.derive-path(path).derive-child(index).get-wallet!
     address  = "0x" + w.get-address!.to-string(\hex)
@@ -522,9 +901,8 @@ staking-content = (store, web3t)->
         return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address) if pool.length is 0
         cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
-        err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
-        return cb err if err?
-        return alert "Staking is not allowed. Please wait for epoch change" if data isnt yes
+        err <- can-make-staking store, web3t
+        return alert err if err?
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
@@ -728,25 +1106,62 @@ staking-content = (store, web3t)->
                         h3.pug #{lang.your-staking}
                     .description.pug
                         .pug.left
+                            .staking-info.pug
+                                .col.col-4.pug
+                                    div.pug
+                                        .value.pug
+                                            .number.pug
+                                                span.pug #{your-staking}
+                                                span.pug #{vlx-token}
+                                        .header.pug
+                                            | #{lang.your-staking}
+                                .col.col-4.pug
+                                    div.pug
+                                        .value.pug.green
+                                            .number.pug
+                                                | #{staker-status}
+                                        .header.pug
+                                            | #{lang.your-status}
+                                .col.col-4.pug
+                                    div.pug
+                                        .value.pug
+                                            .number.pug
+                                                | #{store.staking.delegators}
+                                        .header.pug
+                                            | Delegators
+                                .col.col-4.pug
+                                    div.pug
+                                        .value.pug
+                                            .number.pug
+                                                | #{store.staking.epoch}
+                                        .header.pug
+                                            | #{lang.current-epoch}
                             .table.pug
-                                .pug.balance
-                                    span.pug.header #{lang.your-staking}: 
-                                    span.pug.color #{your-staking}
-                                    span.pug.color #{vlx-token}
-                                .pug.balance
-                                    span.pug.header #{lang.your-status}:
-                                    span.pug.color.green #{staker-status}
-                                .pug.balance
-                                    span.pug.header Delegators:
-                                    span.pug.color #{store.staking.delegators}
                                 if store.staking.is-active-staker is no
                                     .pug.warning
                                         ol.pug
                                             li.pug #{lang.your-status1}
                                             li.pug #{lang.your-status2}
-                                .pug.balance
-                                    span.pug.header #{lang.current-epoch}:
-                                    span.pug.color #{store.staking.epoch}
+                            if no
+                                .table.pug
+                                    .pug.balance
+                                        span.pug.header #{lang.your-staking}: 
+                                        span.pug.color #{your-staking}
+                                        span.pug.color #{vlx-token}
+                                    .pug.balance
+                                        span.pug.header #{lang.your-status}:
+                                        span.pug.color.green #{staker-status}
+                                    .pug.balance
+                                        span.pug.header Delegators:
+                                        span.pug.color #{store.staking.delegators}
+                                    if store.staking.is-active-staker is no
+                                        .pug.warning
+                                            ol.pug
+                                                li.pug #{lang.your-status1}
+                                                li.pug #{lang.your-status2}
+                                    .pug.balance
+                                        span.pug.header #{lang.current-epoch}:
+                                        span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
                             input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
@@ -802,11 +1217,14 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
-            .pug.header #{lang.title-staking}
+            .pug.header(class="#{show-class}") #{lang.title-staking}
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
@@ -829,8 +1247,7 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.wait-for-epoch-change = if +res is 0 then yes else no
     store.staking.withdraw-amount = amount.to-fixed!
     store.staking.add.add-validator-stake = 0
-    err, epoch <- web3t.velas.Staking.stakingEpoch
-    store.staking.epoch = epoch.to-fixed!
+    store.staking.epoch = staking-epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)
     store.staking.stake-amount-total = amount.to-fixed!
     err, is-active <- web3t.velas.Staking.isPoolActive(staking-address)

@@ -10,6 +10,7 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \../icons.ls
+    \./epoch.ls
 }
 .filestore
     @import scheme
@@ -487,13 +488,16 @@ filestorage = ({ store, web3t })->
         store.filestore.file-tree = not store.filestore.file-tree
     active-folder =
         if store.filestore.file-tree then \arrow-down else \ ""
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.filestore
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header File Storage
+            .pug.header(class="#{show-class}") File Storage
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .pug.toolbar(style=border-style)
             span.files.pug(on-click=switch-files class="#{file-tree}")

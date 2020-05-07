@@ -10,6 +10,7 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \../icons.ls
+    \./epoch.ls
 }
 .videodetails
     @import scheme
@@ -188,7 +189,7 @@ require! {
             line-height: 1.8
             &.path
     >.wrapper
-        height: 540px
+        height: calc(100vh - 190px)
         display: flex
         flex-wrap: wrap
         overflow-y: scroll
@@ -1036,13 +1037,16 @@ videodetails = ({ store, web3t })->
         color: info.app.text
     goto-videostorage = ->
         navigate store, web3t, \videostorage
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.videodetails
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Video storage
+            .pug.header(class="#{show-class}") Video storage
             .pug.close(on-click=go-back)
                 img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .pug.search-input
             .pug.section(style=border-style)

@@ -33,7 +33,7 @@ require! {
     .icon-svg-edit
         height: 15px
     .icon-svg-create
-        height: 10px
+        height: 9px
     .switch-menu
         right: -20px !important
         top: 39px !important
@@ -52,12 +52,20 @@ require! {
         float: right
         line-height: 10px
         width: auto
-        top: 0px
+        top: 2px
         right: 5px
         position: absolute
         text-align: right
         display: block
         z-index: 2
+        @media(max-width: 620px)
+            .name, .icon
+                visibility: hidden
+            .icon.menus, .icon.ckeck, .icon.cancel
+                visibility: visible
+            &.show
+                .name, .icon
+                    visibility: visible
         .ckeck
             color: #3cd5af
         .cancel
@@ -66,7 +74,7 @@ require! {
             text-overflow: ellipsis
             white-space: nowrap
             overflow: hidden
-            width: 110px
+            width: 90px
             text-align: right
             cursor: default
             display: inline-block
@@ -90,6 +98,12 @@ require! {
             margin-left: 20px
             transition: transform .5s
             display: inline-block
+            &.menus
+                display: none
+                @media(max-width: 620px)
+                    display: inline-block
+                &.show
+                    opacity: .5
             &.rotate
                 transform: rotate(180deg)
                 transition: transform .5s
@@ -164,6 +178,8 @@ module.exports = (store, web3t)->
         border-right: "1px solid #{style.app.border}"
     open-account = ->
         store.current.switch-account = not store.current.switch-account
+    open-menu = ->
+        store.current.open-menu = not store.current.open-menu
     edit-account-name = ->
         store.current.edit-account-name = current-account-name!
     default-account-name = -> "Account #{store.current.account-index}"
@@ -180,13 +196,17 @@ module.exports = (store, web3t)->
     account-name = current-account-name!
     rotate-class =
         if store.current.switch-account then \rotate else \ ""
+    show-class =
+        if store.current.open-menu then \show else \ ""
     view-account-template = ->
-        .pug.switch-account.h1
+        .pug.switch-account.h1(class="#{show-class}")
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
                 img.icon-svg-edit.pug(src="#{icons.create}")
             span.pug.icon(on-click=open-account class="#{rotate-class}")
                 img.icon-svg-create.pug(src="#{icons.arrow-down}")
+            span.pug.icon.menus(on-click=open-menu class="#{show-class}")
+                img.icon-svg-create.pug(src="#{icons.menu}")
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)
@@ -195,7 +215,7 @@ module.exports = (store, web3t)->
             span.cancel.pug.icon(on-click=cancel-edit-account-name)
                 icon "X", 20
     chosen-account-template =
-        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
+        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!
     .choose-account.pug
         chosen-account-template
         your-account store, web3t

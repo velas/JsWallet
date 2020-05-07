@@ -150,7 +150,7 @@ require! {
             &.last
                 border-bottom: 0
             &:first-child
-                background: url("https://res.cloudinary.com/dfbhd7liw/image/upload/v1582209591/velas/logo-velas-opacity.png")
+                background: $logo-opacity
                 background-repeat: no-repeat
                 background-position: left 10px
             padding: 20px

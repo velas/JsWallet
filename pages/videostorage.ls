@@ -10,6 +10,7 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \../icons.ls
+    \./epoch.ls
 }
 .videostorage
     @import scheme
@@ -179,6 +180,8 @@ require! {
             cursor: pointer
             position: absolute
             right: 80px
+            @media(max-width:800px)
+                right: 20px
         .close
             line-height: 2.4
             cursor: pointer
@@ -249,7 +252,7 @@ require! {
                     scrollbar-width: none
                     white-space: nowrap
             @media(max-width: 800px)
-                width: 100%
+                width: 80%
             ul
                 list-style: none
                 padding: 0
@@ -343,7 +346,7 @@ require! {
             line-height: 1.8
             &.path
     >.wrapper
-        height: 540px
+        height: calc(100vh - 190px)
         display: flex
         flex-wrap: wrap
         overflow-y: scroll
@@ -552,6 +555,11 @@ require! {
                 height: 140px
                 opacity: .8
                 transition: .5s
+                &.icon-svg-play
+                    height: 50px
+                    width: 70px
+                    margin-top: 45px
+                    margin-left: 13px
             @media(max-width: 800px)
                 width: 100%
                 margin-left: 0
@@ -1106,8 +1114,126 @@ subscr = (store, web3t)->
                                 li.pug
                                     span.pug 1 mounth ago
 history = (store, web3t)->
-    .pug.panel-content
-        p.results.pug This tab is under development
+    lang = get-lang store
+    { go-back } = history-funcs store, web3t
+    info = get-primary-info store
+    style=
+        background: info.app.wallet
+        color: info.app.text
+    border-style =
+        color: info.app.text
+        border-bottom: "1px solid #{info.app.border}"
+    border-right =
+        color: info.app.text
+        border-right: "1px solid #{info.app.border}"
+    border-style2 =
+        color: info.app.text
+        border-bottom: "1px solid #{info.app.border}"
+        background: "#4b2888"
+    border-style3 =
+        color: info.app.text
+        border-bottom: "0"
+    border-right =
+        color: info.app.text
+        border-right: "1px solid #{info.app.border}"
+    button-primary2-style=
+        border: "1px solid #{info.app.primary2}"
+        color: info.app.text
+        background: info.app.primary2
+    header-table-style=
+        border-bottom: "1px solid #{info.app.border}"
+        background: info.app.wallet-light
+        position: "sticky"
+    dashed-border=
+        border-color: "#{info.app.border}"
+        color: info.app.addressText
+    filter-body =
+        border: "1px solid #{info.app.border}"
+        background: info.app.header
+    border-b =
+        border-bottom: "1px solid #{info.app.border}"
+    button-primary1-style=
+        border: "1px solid #{info.app.primary1}"
+        color: info.app.text
+        background: info.app.primary1
+    input-style=
+        background: info.app.wallet
+        border: "0"
+        color: info.app.text
+    lightText=
+        color: info.app.addressText
+    icon-style=
+        filter: info.app.nothingIcon
+    goto-details = ->
+        navigate store, web3t, \videostoragedetails
+    switch-files = ->
+        store.current.files = not store.current.files
+    file-tree =
+        if store.current.files then \file-tree else \ ""
+    .pug.similarvideo(class="#{file-tree}")
+        h2.header.pug Watch history
+        h2.header.pug Today
+        .pug.section
+            .source.pug(on-click=goto-details)
+                span.pug.play
+                    icon \TriangleRight, 15
+                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/2jdA5EwQV9M' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                span.pug.content-right
+                    .pug.header How to setup New Velas Web Wallet Tutorial
+                    ul.pug.stat
+                        li.pug
+                            span.pug 122 views
+                        li.pug
+                            span.pug 5 days ago
+                    ul.pug.stat-text
+                        li.pug
+                            span.pug Velas blockchain uses AI-enhanced DPOS (AIDPOS) consensus for high volume transactions processing without sacrificing decentralization and security.
+        .pug.section
+            .source.pug(on-click=goto-details)
+                span.pug.play
+                    icon \TriangleRight, 15
+                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/USGLlp-zfhI' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                span.pug.content-right
+                    .pug.header Velas Explainer Video
+                    ul.pug.stat
+                        li.pug
+                            span.pug 1.4K views
+                        li.pug
+                            span.pug 8 mounths ago
+                    ul.pug.stat-text
+                        li.pug
+                            span.pug Velas blockchain uses AI-enhanced DPOS (AIDPOS) consensus for high volume transactions processing without sacrificing decentralization and security.
+        h2.header.pug Yesterday
+        .pug.section
+            .source.pug(on-click=goto-details)
+                span.pug.play
+                    icon \TriangleRight, 15
+                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/2jdA5EwQV9M' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                span.pug.content-right
+                    .pug.header How to setup New Velas Web Wallet Tutorial
+                    ul.pug.stat
+                        li.pug
+                            span.pug 122 views
+                        li.pug
+                            span.pug 5 days ago
+                    ul.pug.stat-text
+                        li.pug
+                            span.pug Velas blockchain uses AI-enhanced DPOS (AIDPOS) consensus for high volume transactions processing without sacrificing decentralization and security.
+        .pug.section
+            .source.pug(on-click=goto-details)
+                span.pug.play
+                    icon \TriangleRight, 15
+                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/USGLlp-zfhI' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                span.pug.content-right
+                    .pug.header Velas Explainer Video
+                    ul.pug.stat
+                        li.pug
+                            span.pug 1.4K views
+                        li.pug
+                            span.pug 8 mounths ago
+                    ul.pug.stat-text
+                        li.pug
+                            span.pug Velas blockchain uses AI-enhanced DPOS (AIDPOS) consensus for high volume transactions processing without sacrificing decentralization and security.
 video = (store, web3t)->
     .pug.panel-content
         p.results.pug This tab is under development
@@ -1193,6 +1319,8 @@ videostorage = ({ store, web3t })->
     active-video = active-class \video
     expand-collapse = ->
         store.video.menu-open = not store.video.menu-open
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.videostorage
         .pug.active-download(style=filter-body)
             .pug.top(style=header-table-style)
@@ -1221,9 +1349,10 @@ videostorage = ({ store, web3t })->
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header Video storage
+            .pug.header(class="#{show-class}") Video storage
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         if store.video.menu-open
             menu store, web3t

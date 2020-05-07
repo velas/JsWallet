@@ -17,6 +17,7 @@ require! {
     \prelude-ls : { map, foldl }
     \../math.ls : { plus, div }
     \../round-human.ls
+    \./epoch.ls
 }
 .info
     @import scheme
@@ -222,11 +223,14 @@ info = ({ store, web3t })->
         color: info.app.addressText
     icon-style=
         filter: info.app.nothingIcon
+    show-class =
+        if store.current.open-menu then \hide else \ ""
     .pug.info
         .pug.title(style=border-style)
-            .pug.header Info page
+            .pug.header(class="#{show-class}") Info page
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            epoch store, web3t
             switch-account store, web3t
         .pug.wrapper
             total-pool store, web3t

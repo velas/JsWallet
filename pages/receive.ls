@@ -50,7 +50,7 @@ qrcode = (store, wallet)->
     info = get-primary-info store
     return null if not wallet?address?
     bgColor = info.background
-    fgColor = info.color
+    fgColor = "rgb(158, 79, 235)"
     QRCode.pug(value="#{wallet.address}" size="256" bgColor=bgColor fgColor=fgColor)
 module.exports = (store, wallet)->
     .pug.receive

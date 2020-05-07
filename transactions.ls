@@ -50,12 +50,12 @@ export rebuild-history = (store, wallet, cb)->
         |> each extend { address, coin, network, pending: yes }
         |> each txs~push
     cb!
-window.load-test =->
-    err, data <- get "https://gist.githubusercontent.com/askucher/63685e1aa495113fc848bbd112902c61/raw/08ff221d6c0a40681d6b02c53f72764bdfad5f02/test.json" .end
-    items = JSON.parse data.text
-    #console.log items
-    items |> each store.transactions.all~push
-    apply-transactions store
+#window.load-test =->
+#    err, data <- get "https://gist.githubusercontent.com/askucher/63685e1aa495113fc848bbd112902c61/raw/08ff221d6c0a40681d6b02c53f72764bdfad5f02/test.json" .end
+#    items = JSON.parse data.text
+#    #console.log items
+#    items |> each store.transactions.all~push
+#    apply-transactions store
 build-loader = (store)-> (wallet)-> task (cb)->
     err <- rebuild-history store, wallet
     return cb! if err? 
