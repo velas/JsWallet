@@ -932,6 +932,8 @@ staking-content = (store, web3t)->
     return null if not pairs.mining?
     show-script = ->
         store.staking.keystore = to-keystore store, yes
+    hide-script = ->
+        pairs.mining.keystore = ""
     {  account-left, account-right, change-account-index } = menu-funcs store, web3t
     update-current = (func)-> (data)->
         func data
@@ -1025,6 +1027,10 @@ staking-content = (store, web3t)->
                                             img.icon-svg.pug(src="#{icons.generate}")
                                             | #{lang.generate-script}
                                 .pug #{lang.pls-allow}
+                        else 
+                            .pug
+                                .pug.btn
+                                    button.btn-width.pug(style=button-primary2-style on-click=hide-script) x
                     if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
                         .pug
                             .pug.tabs

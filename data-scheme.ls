@@ -84,7 +84,11 @@ store =
         reward: null
         reward-claim: 0
         rewards: []
-        keystore: {}
+        keystore: 
+            staking:
+                keystore: ""
+            mining: 
+                keystore: ""
         data-generation: 1
         tab: "line"
         pools: []
