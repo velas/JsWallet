@@ -6,6 +6,7 @@ require! {
     \./icon.ls
     \../icons.ls
     \../navigate.ls
+    \./choose-language.ls
 }
 # ss
 .newseed
@@ -102,7 +103,7 @@ require! {
             padding: 0px 6px
             border: 0
             height: 36px
-            width: auto
+            min-width: 120px
             cursor: pointer
             background: #248295
             border-radius: $border
@@ -165,18 +166,6 @@ newseed = ({ store, web3t })->
     set-lang = (lang)->
         return alert "lang is not available" if not store.langs[store.lang]?
         store.lang = lang
-    change-lang-en = ->
-        return set-lang \en
-    change-lang-ru = ->
-        return set-lang \ru
-    change-lang-ua = ->
-        return set-lang \ua
-    change-lang-cn = ->
-        return set-lang \cn
-    change-lang-kr = ->
-        return set-lang \kr
-    change-lang-fr = ->
-        return set-lang \fr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -203,6 +192,7 @@ newseed = ({ store, web3t })->
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
                     | #{lang.restore-wallet ? 'Restore Existing Wallet'}
+            choose-language { store, web3t }
 focus = ({ store }, cb)->
     <- set-timeout _, 1000
     #textarea = store.root.query-selector '.newseed textarea'

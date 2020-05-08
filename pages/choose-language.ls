@@ -24,6 +24,7 @@ require! {
     padding-top: 30px
     width: 100%
     top: 0
+    left: 0
     z-index: 999
     height: 100%
     min-height: 100vh

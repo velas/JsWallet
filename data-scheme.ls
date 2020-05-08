@@ -61,6 +61,8 @@ store =
         tab: "home"
         menu-open: no
         drag: no
+    notice:
+        search: no
     faq:
         tab: "item"
         answer: ""

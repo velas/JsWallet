@@ -234,7 +234,6 @@ setup-button = (store, web3t)->
                 img.icon-svg.pug(src="#{icons.key}" style=btn-icon)
                 | #{lang.setup ? 'Setup'}
         .hint.p.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
-        choose-language { store, web3t }
 create-wallet = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
