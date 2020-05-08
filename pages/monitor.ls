@@ -144,10 +144,9 @@ build-cell = (store, web3t, peer)-> (cell)->
     template store, web3t, peer, cell
 build-header-cell = (store, web3t, peer)-> (cell)->
     td.pug #{cell}
-build-row = (store, web3t)-> (peer)->
+build-row = (store, web3t, headers)-> (peer)->
     tr.pug
-        peer 
-            |> keys 
+        headers
             |> filter -> it not in hidden-fields
             |> map build-cell store, web3t, peer
 build-header = (store, web3t)-> (peer)->
@@ -172,12 +171,16 @@ header = (store, web3t)->
         epoch store, web3t
         switch-account store, web3t
 module.exports = ({ store, web3t })->
+    headers = 
+        store.peerinfo.peers 
+            |> head
+            |> keys
     .pug.monitor
         header store, web3t
         .table-scroll.pug
             table.pug 
                 store.peerinfo.peers |> head |> build-header store, web3t
-                store.peerinfo.peers |> sort-by (.highest_block) |> reverse |> map build-row store, web3t
+                store.peerinfo.peers |> sort-by (.highest_block) |> reverse |> map build-row store, web3t, headers
 module.exports.init = ({ store, web3t}, cb)->
     err, data <- get "https://monitor.velas.com/peer/all/stats" .end
     return cb err if err?

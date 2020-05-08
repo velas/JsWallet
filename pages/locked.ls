@@ -197,6 +197,7 @@ reset-wallet = (store)->
     seed.del!
     store.current.pin = ""
     store.current.pin-trial = 0
+    store.current.page = 'chooseinit'
 total-trials = 8
 wrong-trials = (store)->
     return null if store.current.pin-trial is 0

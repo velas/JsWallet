@@ -3,6 +3,7 @@ require! {
     \mobx : { observable, toJS }
     \react-dom : { render }
     \react
+    \./patch-crypto.js
     \./app.ls
     \./data-scheme.ls
     \./browser/window.ls
