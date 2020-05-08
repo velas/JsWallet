@@ -179,7 +179,7 @@ store =
         pin-trial: 0
         refreshing: no
         copied: ""
-        page: \locked
+        page: if saved-seed then \locked else \chooseinit
         send-to-mask: ""
         status: \main
         nickname: ""

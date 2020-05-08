@@ -162,3 +162,4 @@ module.exports =
     tx-from: "에서"
     tx-to: "에"
     restore-from: "에서 지갑 복원"
+    next-save: "다음"

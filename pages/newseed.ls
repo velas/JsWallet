@@ -4,6 +4,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \prelude-ls : { map, sort-by }
+    \../navigate.ls
     \../icons.ls
 }
 .newseed
@@ -248,9 +249,10 @@ newseed = ({ store, web3t })->
     hide-class =
         if store.current.hide-btn then \none else \ ""
     back = ->
+        #navigate store, web3t, \:init
         store.current.page = 'newseedrestore'
     back2 = ->
-        store.current.page = 'newseed2'
+        store.current.page = 'chooseinit'
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.newseed}")
         if store.current.seed-generated
@@ -287,7 +289,7 @@ newseed = ({ store, web3t })->
                     | #{lang.back ? 'Back' }
                 button.pug.right(on-click=save style=button-primary1-style )
                     img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.save ? 'Save' }
+                    | #{lang.next-save ? 'Next' }
         if has-issue!
             .pug.warning(style=text-style)
                 .pug #{lang.seed-warning}

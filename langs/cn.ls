@@ -162,3 +162,4 @@ module.exports =
     tx-from: "從"
     tx-to: "至"
     restore-from: "從還原錢包"
+    next-save: "下"

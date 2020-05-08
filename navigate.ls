@@ -5,15 +5,19 @@ require! {
     \mobx : { transaction }
     \./scroll-top.ls
 }
+#https://web3.space/wallet?internal=yes
+init-flow = (prev)->
+    return \newseedrestore if prev is \chooseinit and store.current.seed-generated is no
+    return \locked if prev is \chooseinit and store.current.seed-generated is yes
+    return \locked if prev is \newseedrestore
+    return \newseed if prev in <[ locked newseedrestore ]> and not saved!
+    return \verifyseed if prev is \newseed and store.current.seed-generated is yes
+    return \terms if prev is \verifyseed
+    #return \chooseinit if not saved!
+    \wallets
 get-page = (store, page, prev)->
     return page if page isnt \:init
-    return \terms if prev is \verifyseed
-    return \verifyseed if prev is \newseed and store.current.seed-generated is yes
-    return \newseed if prev is \newseed2 
-    return \newseed if prev is \newseedrestore
-    stage2 = not saved!
-    return \newseed2 if stage2
-    \wallets
+    init-flow prev
 init-control = (scope, name, cb)->
     #<- set-timeout _, 1
     control = pages[name] 

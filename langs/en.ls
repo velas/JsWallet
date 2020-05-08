@@ -21,7 +21,7 @@ module.exports =
     setup: "Setup"
     pin-info : "Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase."
     setup-pin : "Setup Password or PIN"
-    enter-pin: "Enter PIN"
+    enter-pin: "Enter Password or PIN"
     secret-phrase: "Secret Phrase"
     secret-phrase-warning: "Your 12-word backup phrase. Make sure you view this in private. Anyone with this backup phrase can gain full access to your funds. DO NOT store publicly or share it with anyone."
     secret-phrase-change: "If you edit this, you lose your old wallet and the associated coins."
@@ -162,3 +162,4 @@ module.exports =
     tx-from: "From"
     tx-to: "To"
     restore-from: "Restore wallet from"
+    next-save: "Next"

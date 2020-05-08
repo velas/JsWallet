@@ -162,3 +162,4 @@ module.exports =
     tx-from: "Від кого"
     tx-to: "Кому"
     restore-from: "Відновити гаманець із"
+    next-save: "Далі"

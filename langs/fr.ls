@@ -162,3 +162,4 @@ module.exports =
     tx-from: "De"
     tx-to: "À"
     restore-from: "Restaurer le portefeuille à partir de"
+    next-save: "Prochain"

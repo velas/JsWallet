@@ -227,7 +227,7 @@ require! {
             -webkit-mask-position: right
         100%
             -webkit-mask-position: left
-#setup-pages = <[ locked newseed newseed2 loading loading2 verifyseed terms terms2 ]>
+#setup-pages = <[ locked newseed chooseinit loading loading2 verifyseed terms terms2 ]>
 module.exports = (store, web3)->
     return null if not store? or store.current.page in setup-pages
     { current, open-account, lock, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, refresh, lock } = menu-funcs store, web3t
@@ -242,6 +242,7 @@ module.exports = (store, web3)->
     info-active = if store.current.page is \info then \active else \not-active
     resources = if store.current.page is \resources then \active else \not-active
     faq = if store.current.page is \faq then \active else \not-active
+    notice = if store.current.page is \notification then \active else \not-active
     claim-active = if store.current.page is \claim then \active else \not-active
     menu-style=
         color: style.app.text
@@ -253,7 +254,7 @@ module.exports = (store, web3)->
         left: "-57px"
     icon-style3 =
         opacity: "0"
-        bottom: "-200px"
+        bottom: "-130px"
         left: "-57px"
     lang = get-lang store
     info = get-primary-info store
@@ -312,6 +313,8 @@ module.exports = (store, web3)->
         navigate store, web3t, \info
     goto-faq = ->
         navigate store, web3t, \faq
+    goto-notice = ->
+        navigate store, web3t, \notification
     goto-claim = ->
         navigate store, web3t, \claim
     comming-soon =
@@ -364,4 +367,8 @@ module.exports = (store, web3)->
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")
                     span.arrow_box.pug faq
+                    img.pug(src="#{icons.setting}")
+            if store.preference.settings-visible is yes
+                .menu-item.pug(on-click=goto-notice style=icon-style3 class="#{notice}")
+                    span.arrow_box.pug notice
                     img.pug(src="#{icons.setting}")

@@ -162,3 +162,4 @@ module.exports =
     tx-from: "Desde"
     tx-to: "Para"
     restore-from: "Restaurar wallet desde"
+    next-save: "Próximo"

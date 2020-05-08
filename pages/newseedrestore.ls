@@ -203,7 +203,7 @@ newseed = ({ store, web3t })->
     restore12 = restore-wallet 12
     restore24 = restore-wallet 24
     back = ->
-        store.current.page = 'newseed2'
+        store.current.page = 'chooseinit'
     .newseed-restore.pug
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)

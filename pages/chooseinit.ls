@@ -5,6 +5,7 @@ require! {
     \../get-primary-info.ls
     \./icon.ls
     \../icons.ls
+    \../navigate.ls
 }
 # ss
 .newseed
@@ -181,12 +182,13 @@ newseed = ({ store, web3t })->
         cursor: "no-drop"
     new-wallet = ->
         generate-seed!
-        next!
-    restore-wallet = ->
-        store.current.seed-generated = no
+        store.current.seed-generated = yes
         next!
     restore-option = ->
-        store.current.page = 'newseedrestore'
+        store.current.seed-generated = no
+        store.current.seed-words.length = 0
+        navigate store, web3t, \:init
+        #store.current.page = 'newseedrestore'
     .newseed.pug
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)
@@ -201,11 +203,6 @@ newseed = ({ store, web3t })->
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
                     | #{lang.restore-wallet ? 'Restore Existing Wallet'}
-            if no
-                button.pug.right(style=button-primary3-style on-click=restore-wallet)
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
-                        | #{lang.restore-wallet ? 'Restore Existing Wallet'}
 focus = ({ store }, cb)->
     <- set-timeout _, 1000
     #textarea = store.root.query-selector '.newseed textarea'
