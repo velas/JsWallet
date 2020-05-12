@@ -81,9 +81,6 @@ require! {
             opacity: .05
             top: 20px
             left: -5px
-        .hidden
-            @media(max-width: 940px)
-                visibility: hidden
     .switch-account
         float: right
         line-height: 2
@@ -98,7 +95,7 @@ require! {
             text-overflow: ellipsis
             white-space: nowrap
             overflow: hidden
-            width: 110px
+            width: 90px
             text-align: right
             cursor: default
         input

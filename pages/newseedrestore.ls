@@ -175,9 +175,9 @@ newseed = ({ store, web3t })->
     change-lang-ua = ->
         return set-lang \ua
     change-lang-cn = ->
-        return set-lang \cn
+        return set-lang \zh
     change-lang-kr = ->
-        return set-lang \kr
+        return set-lang \ko
     change-lang-fr = ->
         return set-lang \fr
     comming-soon =

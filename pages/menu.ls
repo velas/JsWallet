@@ -12,12 +12,14 @@ require! {
     \../round-human.ls
 }
 .menu
-    padding: 0 5px
     height: 199px
     line-height: 200px
     &.wallet-main
         @media(max-width: 800px)
-            margin: 60px 0 0
+            margin: 60px 15px 0
+            position: relative
+            left: 0
+            right: 0
     .syncing
         @keyframes spin
             from

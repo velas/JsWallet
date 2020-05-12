@@ -207,7 +207,7 @@ module.exports = (store, config)->
         set-page-theme store, it
         cb null
     set-lang = (it, cb)->
-        return cb "support only en, ru" if it not in <[ en ru ua ]>
+        return cb "support only en, ru" if it not in <[ en ru uk ]>
         store.lang = it
         cb null
     set-preference = (preference)->

@@ -50,7 +50,7 @@ require! {
             color: gray
             font-size: 22px
             padding: 10px
-            .close
+            .closed
                 position: absolute
                 padding: 10px 20px
                 font-size: 20px
@@ -211,7 +211,7 @@ module.exports = ({ store, web3t } )->
             .pug.title(style=account-body-style)
                 .pug
                     .pug #{lang.edit-coins}
-                    .pug.close(on-click=close)
+                    .pug.closed(on-click=close)
                         icon \X, 20
                 .pug.search-content
                     input.search.pug(placeholder="#{lang.search}" on-change=filter-registery style=input-style)

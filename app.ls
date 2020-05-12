@@ -135,7 +135,7 @@ require! {
             >.title
                 margin: 60px 0 0
                 position: fixed
-                z-index: 1111111
+                z-index: 11
     .show-detail
         overflow: hidden
         .wallet

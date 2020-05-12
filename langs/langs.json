@@ -2,11 +2,11 @@
     "languages": [
         "en",
         "ru",
-        "ua",
+        "uk",
         "fr",
         "es",
-        "cn",
-        "kr"
+        "zh",
+        "ko"
     ],
     "mapping": {
         "addCoin": [
@@ -1325,7 +1325,7 @@
         ],
         "yourStatus2": [
             "Try to send the small amount to stake again",
-            "Попробуйте отправить небольшую сумму, чтобы поставить снова",
+            "Поп��обуйте отправить небольшую сумму, чтобы поставить снова",
             "Спробуйте надіслати невелику суму на ставку ще раз",
             "Essayez d'envoyer à nouveau le petit montant à miser",
             "Intenta enviar una cantidad pequeña para hacer Stake de nuevo",

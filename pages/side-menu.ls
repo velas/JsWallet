@@ -280,19 +280,6 @@ module.exports = (store, web3)->
         vertical-align: "sub"
         width: "12px"
         padding-right: "10px"
-    set-lang = (lang)->
-        #return alert "lang is not available" if not store.langs[store.lang]?
-        store.lang = lang
-    change-lang-en = ->
-        return set-lang \en
-    change-lang-ru = ->
-        return set-lang \ru
-    change-lang-ua = ->
-        return set-lang \ua
-    change-lang-cn = ->
-        return set-lang \cn
-    change-lang-kr = ->
-        return set-lang \kr
     text-style=
         color: style.app.text
     wallet = ->
