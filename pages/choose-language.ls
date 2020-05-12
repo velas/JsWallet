@@ -211,7 +211,7 @@ language = (store, web3t)->
     text-style =
         color: style.app.text
     set-lang = (lang)->
-        return alert "lang is not available" if not store.langs[store.lang]?
+        #return alert "lang is not available" if not store.langs[store.lang]?
         store.lang = lang
         store.current.choose-language = no
     change-lang-en = ->

@@ -135,7 +135,7 @@ module.exports = (store, web3)->
     wallet-icon = 
         width: "18px"
     set-lang = (lang)->
-        return alert "lang is not available" if not store.langs[store.lang]?
+        #return alert "lang is not available" if not store.langs[store.lang]?
         store.lang = lang
     change-lang-en = ->
         return set-lang \en
