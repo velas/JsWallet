@@ -278,7 +278,7 @@ newseed = ({ store, web3t })->
                     | #{lang.back ? 'Back' }
                 button.pug.right.save(on-click=next style=button-primary1-style class="#{hide-class}")
                     img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.save ? 'Save' }
+                    | #{lang.next-save ? 'Next' }
                 button.pug.right.doc(on-click=print class="#{hide-class}" style=button-primary2-style)
                     img.icon-svg.pug(src="#{icons.print}")
                     | #{lang.print ? 'Print' }

@@ -322,6 +322,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \videostorage
     goto-soundstorage = ->
         navigate store, web3t, \soundstorage
+    goto-notice = ->
+        navigate store, web3t, \notification
     .pug.panel-content
         p.results.pug Estimated Results: 2,000 (0.30sec)
         .pug.section
@@ -364,6 +366,11 @@ dapps = (store, web3t)->
             ul.pug.links
                 li.pug
                     span.pug(on-click=goto-choose-staker) Delegate Stake
+        .pug.section
+            .source.pug(on-click=goto-notice)
+                .pug.address velas sphere
+                .pug.header Velas Messenger
+            .pug.description 
         .pug.section.developing
             .source.pug
                 .pug.address wallet.velas.com

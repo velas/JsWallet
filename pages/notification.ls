@@ -629,7 +629,7 @@ require! {
         scrollbar-width: none
         margin-top: 0px
         @media(max-width: 800px)
-            padding: 20px
+            padding: 0px
         >.panel-content
             margin-left: 300px
             padding: 20px
@@ -788,7 +788,7 @@ require! {
                     .in
                         text-align: left
                         >span
-                            background: rgb(51, 20, 99)
+                            background: #391e61
                             &:after
                                 border-left: 15px solid transparent
                                 left: -10px
@@ -797,7 +797,7 @@ require! {
                                 content: ''
                                 width: 0
                                 height: 0
-                                border-bottom: 15px solid rgb(51, 20, 99)
+                                border-bottom: 15px solid #391e61
                     .out
                         text-align: right
                         >span
@@ -884,6 +884,8 @@ require! {
                 span
                     display: inline-block
                     width: calc(100vw - 460px)
+                    @media(max-width: 800px)
+                        width: calc(100vw - 100px)
                     .name
                         font-size: 14px
                         line-height: 20px
@@ -1019,6 +1021,7 @@ require! {
                 display: inline-table
                 position: relative
                 margin-bottom: 40px
+                display: none
             &.file-tree
                 display: none
                 @media(max-width: 800px)
@@ -1359,6 +1362,9 @@ item2 = (store, web3t)->
     border-b =
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.header
+    border-t =
+        border-top: "1px solid #{info.app.border}"
+        background: info.app.header
     button-primary1-style=
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
@@ -1373,6 +1379,10 @@ item2 = (store, web3t)->
         filter: info.app.nothingIcon
     switch-files = ->
         store.current.files = not store.current.files
+    search = ->
+        store.notice.search = not store.notice.search
+    search-show =
+        if store.notice.search then \active else \ ""
     file-tree =
         if store.current.files then \file-tree else \ ""
     imgs=
@@ -1380,10 +1390,47 @@ item2 = (store, web3t)->
     .pug.msg-content(class="#{file-tree}")
         .header.pug(style=border-b)
             img.pug(src="#{imgs.ava}")
-            |Nicolas Gate
+            span.pug
+                .pug.name Nicolas Gate
+                .pug.activity last seen 2 minutes ago
+            ul.action.pug
+                li.pug
+                    img.icon-svg-video.pug(on-click=search src="#{icons.search}")
+        .search.pug(style=border-b class="#{search-show}")
+            input.pug(type='text' style=input-style value="" placeholder="Search")
+        .textarea.pug(style=border-t)
+            input.pug(type='text' style=input-style value="" placeholder="Write a message...")
+        .pug.content-msg
+            ul.pug
+                li.pug.in
+                    span.pug 
+                        | Hi, bro
+                        span.pug 22:53
+                li.pug.out
+                    span.pug 
+                        | Hello
+                        span.pug 22:53
+                li.pug.in
+                    span.pug 
+                        | How are you feeling?
+                        span.pug 22:53
+                li.pug.out
+                    span.pug 
+                        | Good
+                        span.pug 22:53
+                li.pug.out
+                    span.pug 
+                        | And you?
+                        span.pug 22:53
+                li.pug.in
+                    span.pug 
+                        | Also good!
+                        span.pug 22:53
 notice = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
+    goto-search = ->
+        navigate store, web3t, \search
     info = get-primary-info store
     filter-body =
         border: "1px solid #{info.app.border}"
@@ -1469,7 +1516,7 @@ notice = ({ store, web3t })->
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Messenger
-            .pug.close(on-click=go-back)
+            .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t

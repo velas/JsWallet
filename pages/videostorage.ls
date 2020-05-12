@@ -1240,6 +1240,8 @@ video = (store, web3t)->
 videostorage = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
+    goto-search = ->
+        navigate store, web3t, \search
     info = get-primary-info store
     filter-body =
         border: "1px solid #{info.app.border}"
@@ -1350,7 +1352,7 @@ videostorage = ({ store, web3t })->
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Video storage
-            .pug.close(on-click=go-back)
+            .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t

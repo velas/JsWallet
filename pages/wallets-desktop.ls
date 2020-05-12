@@ -39,6 +39,8 @@ require! {
         position: relative
         height: 10px
     &.hide-detail
+        .wallet-middle
+            display: none !important
         .big
             height: 60px
         .big.active

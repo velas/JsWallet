@@ -10,6 +10,7 @@ require! {
     \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
     \../icons.ls
+    \react-middle-ellipsis : { default: MiddleEllipsis }
 }
 .content
     position: relative
@@ -338,7 +339,8 @@ address-link = (store, web3t)->
         form.pug
             form-group lang.funding-address, icon-style, ->
                 .address.pug(style=href-style)
-                    a.pug(href="#{get-address-link wallet}" target="_blank" style=color-address) #{cut-receive get-address-title wallet}
+                    MiddleEllipsis.pug
+                        a.pug(href="#{get-address-link wallet}" target="_blank" style=color-address) #{get-address-title wallet}
                     CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
 ill-qr = (store, web3t)->

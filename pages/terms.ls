@@ -73,7 +73,7 @@ terms = ({ store, web3t })->
                         img.icon-svg.pug(src="#{icons.accept}")
                         | #{lang.accept ? 'Accept'}
 terms.init = ({ store }, cb)->
-    err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
+    err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
     return cb err if err?
     store.terms = res.text
     cb null

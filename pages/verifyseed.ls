@@ -4,7 +4,7 @@ require! {
     \../get-lang.ls
     \../get-primary-info.ls
     \../icons.ls
-    \prelude-ls : { map, find, foldl, unique, take }
+    \prelude-ls : { map, find, foldl, unique, take, sort-by }
 }
 # verification seed
 .newseed
@@ -41,6 +41,12 @@ require! {
                 font-size: 14px
                 text-align: center
                 cursor: auto
+            input:focus ~ span.effect
+                background: rgb(60, 213, 175) !important
+                color: #190841 !important
+                transition: all .5s
+                animation: pulse_effect 1.5s linear
+                transform-origin: 50% 50%
             span
                 &:first-child
                     background: #7651ae
@@ -55,6 +61,20 @@ require! {
                     line-height: 11px
                     @media(max-width: 500px)
                         margin-right: 5px
+                &.effect    
+                    &:last-child
+                        background: #7651ae
+                        color: #fff
+                        display: inline-block
+                        padding: 4px
+                        float: left
+                        border-radius: 50px
+                        width: 11px
+                        height: 10px
+                        font-size: 10px
+                        line-height: 11px
+                        @media(max-width: 500px)
+                            margin-right: 5px
     .title
         color: #ebf6f8
         font-size: 22px
@@ -127,15 +147,19 @@ newseed = ({ store, web3t })->
     newseed-style=
         # filter: style.app.nothingIcon
         margin-bottom: "10px"
-        width: "100px"
+        width: "120px"
     wrong-word = (item)->
-        store.current.seed-words[item.index].part isnt item.part
+        console.log item.original.part, item.part
+        item.original.part isnt item.part
     verify-seed = ->
-        wrong =
-            store.current.verify-seed-indexes |> find wrong-word
-        return store.current.verify-seed-error = yes if wrong?
+        ixs = store.current.verify-seed-indexes
+        item = ixs[store.current.verify-seed-index]
+        wrong = item.original.part isnt item.part
+        return store.current.verify-seed-error = yes if wrong
+        return store.current.verify-seed-index += 1 if store.current.verify-seed-index + 1 < ixs.length
         save!
     back = ->
+        return store.current.verify-seed-indexes += 1 if store.current.verify-seed-indexes > 0
         store.current.page = \newseed
     build-verify-seed = (store, item)-->
         enter-confirm = ->
@@ -145,9 +169,8 @@ newseed = ({ store, web3t })->
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.verifyseed}")
         .title.pug(style=text-style) #{lang.verify-seed-phrase ? 'Verify Seed Phrase'}
-        .pug.hint(style=text-style) #{lang.phrase-word ? 'Please enter the 4th word to confirm that you wrote down the seed phrase'}
         .pug.words
-            store.current.verify-seed-indexes |> map build-verify-seed store
+            build-verify-seed store, store.current.verify-seed-indexes[store.current.verify-seed-index]
         .pug
             button.pug.right(style=button-primary1-style on-click=verify-seed)
                 span.pug
@@ -160,16 +183,18 @@ newseed = ({ store, web3t })->
                     | #{lang.back ? 'Back' }
         if store.current.verify-seed-error is yes
             .pug.warning(style=text-style)
-                .pug #{lang.words-are-not-match ? 'Words are not match' }
+                .pug #{lang.words-are-not-match ? 'The word is entered incorrectly' }
 random = ->
     Math.floor((Math.random! * 10) + 1)
+get-verifier = (store)-> (original)->
+    index = store.current.seed-words.index-of(original)
+    { index, part: '', original }
 init = ({ store }, cb)->
+    store.current.verify-seed-index = 0
     store.current.verify-seed-indexes =
-        [0 to 20]
-            |> map random
-            |> unique
-            |> take 3
-            |> map -> index: it, part: ''
+        store.current.seed-words
+            |> map get-verifier(store)
+            |> sort-by random
     cb null
 focus = ({ store }, cb)->
     cb null

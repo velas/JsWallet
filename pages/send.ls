@@ -12,6 +12,7 @@ require! {
     \../wallets-funcs.ls
     \../icons.ls
     \./epoch.ls
+    \react-middle-ellipsis : { default: MiddleEllipsis }
 }
 .content
     position: relative
@@ -531,7 +532,8 @@ send = ({ store, web3t })->
             form.pug
                 form-group lang.send-from, icon-style, ->
                     .address.pug(style=border-style)
-                        a.pug(href="#{get-address-link wallet}") #{cut-send get-address-title wallet}
+                        MiddleEllipsis.pug
+                            a.pug(href="#{get-address-link wallet}") #{get-address-title wallet}
                 form-group lang.recipient, icon-style, ->
                     input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
                 form-group lang.amount, icon-style, ->

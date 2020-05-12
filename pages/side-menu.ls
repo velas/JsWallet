@@ -368,7 +368,3 @@ module.exports = (store, web3)->
                 .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")
                     span.arrow_box.pug faq
                     img.pug(src="#{icons.setting}")
-            if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-notice style=icon-style3 class="#{notice}")
-                    span.arrow_box.pug notice
-                    img.pug(src="#{icons.setting}")

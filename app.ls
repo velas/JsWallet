@@ -224,7 +224,6 @@ require! {
             span
                 padding-left: 10px
             a
-                width: 85%
                 float: left
                 text-align: left
             img

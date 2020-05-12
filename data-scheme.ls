@@ -2,15 +2,10 @@ require! {
     \prelude-ls : { map, pairs-to-obj }
     \./seed.ls : { saved }
     \./browser/location.ls
-    \./langs/en.ls
-    \./langs/ru.ls
-    \./langs/ua.ls
-    \./langs/kr.ls
-    \./langs/cn.ls
-    \./langs/fr.ls
-    \./langs/es.ls
+    \./langs/langs.json
     \./icons.ls
     \./get-device.ls
+    \../package.json : { version }
 }
 saved-seed = saved!
 create-send =->
@@ -37,7 +32,7 @@ store =
     root: null
     theme: \velas
     lang: \en
-    langs: { en, ru, ua, kr, cn, fr, es }
+    langs: langs
     icons: \icons
     registry: []
     terms: "Loading..."
@@ -138,6 +133,7 @@ store =
         all: []
         applied: []
     current:
+        verify-seed-index: 0
         verify-seed: ""
         verify-seed-error: no
         device: get-device!
@@ -210,5 +206,5 @@ store =
         about: no
     rates: {}
     coins: []
-    version: "v0.3"
+    version: version
 module.exports = store

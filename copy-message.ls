@@ -26,20 +26,23 @@ require! {
         animation: top 0.5s forwards
     .mb-5
         margin-bottom: 5px
-    .content
+    .contents
         height: 35px
-        overflow: hidden
-        text-overflow: ellipsis
 module.exports = (store)->
     { copied } = store.current
     return null if copied is ''
     copied-class = if copied is '' then '' else 'opened'
     style = get-primary-info store
     lang = get-lang store
+    cut = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 10) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 10, 10)
+        #r.to-upper-case!
     copy-style=
         background: style.app.background
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
     .copied.pug(class="#{copied-class}" key="copy-message" style=copy-style)
         .pug.mb-5 #{lang.copied}
-        .pug.content #{copied}
+        .pug.contents #{cut copied}

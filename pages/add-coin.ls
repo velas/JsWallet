@@ -142,8 +142,9 @@ require! {
                             background: transparent
                             outline: none
                             &:hover
-                                background: #7083e8
                                 color: white
+                                opacity: .6
+                                transition: .5s
                             >*
                                 vertical-align: middle
 create-item = ({ store, web3t }, item)-->

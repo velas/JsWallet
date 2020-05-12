@@ -13,6 +13,7 @@ require! {
     \../../web3t/providers/superagent.ls : { get }
     \../icons.ls
     \../round-human.ls
+    \react-middle-ellipsis : { default: MiddleEllipsis }
 }
 #
 .wallet
@@ -188,7 +189,7 @@ require! {
             vertical-align: top
             text-align: center
             padding-left: 20px
-            padding-right: 25px
+            padding-right: 55px
             height: $card-top-height - 14px
             color: #677897
             font-size: 14px
@@ -215,12 +216,8 @@ require! {
                 font-size: 14px
                 line-height: $card-top-height - 14px
                 display: inline-block
-                text-overflow: ellipsis
-                overflow: hidden
                 cursor: pointer
                 user-select: text !important
-                @media screen and (max-width: 390px)
-                    width: 90%
 module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
@@ -282,6 +279,13 @@ module.exports = (store, web3t, wallets, wallet)-->
         return alert "cannot create address" if not data.body?address?
         store.current.token-migration = data.body.address
         #store.current.token-migration = "V123"
+    cut-tx = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
+        r =
+            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
+            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
     .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
@@ -329,7 +333,8 @@ module.exports = (store, web3t, wallets, wallet)-->
             span.pug(style=address-input)
                 a.browse.pug(target="_blank" href="#{get-address-link wallet}")
                     img.pug(src="#{icons.browse-open}")
-                a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
+                MiddleEllipsis.pug
+                    a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
             CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
                 copy store
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
