@@ -11,6 +11,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
+    \./videoupload.ls
 }
 .videostorage
     @import scheme
@@ -768,8 +769,15 @@ menu = (store, web3t)->
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
+    open-upload-link = ->
+        store.video.upload-link = yes
     .pug.menu(style=filter-body)
         .pug.middle
+            .pug.table-row-menu(on-click=open-upload-link)
+                .col.folder-menu.pug
+                    span.pug
+                        img.icon-svg.pug(src="#{icons.add-video}")
+                        | Upload link
             .pug.table-row-menu(on-click=drag-file)
                 .col.folder-menu.pug
                     span.pug
@@ -1323,7 +1331,10 @@ videostorage = ({ store, web3t })->
         store.video.menu-open = not store.video.menu-open
     show-class =
         if store.current.open-menu then \hide else \ ""
+    open-upload-link = ->
+        store.video.upload-link = yes
     .pug.videostorage
+        videoupload { store, web3t }
         .pug.active-download(style=filter-body)
             .pug.top(style=header-table-style)
                 .pug.table-row-menu

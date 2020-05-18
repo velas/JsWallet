@@ -16,13 +16,15 @@ require! {
     \./icon.ls
 }
 .wallet-mobile
+    $mobile: 425px
+    $tablet: 800px
     .your-account
         position: relative
         display: block
         max-width: 450px
         .switch-menu
             right: -1px
-            top: 139px
+            top: 144px
             @media(max-width: 480px)
                 right: -2px
     .wallets
@@ -35,11 +37,13 @@ require! {
         box-sizing: border-box
         position: relative
         left: 0
-        bottom: 5px
         $cards-pad: 15px
         right: 0
         margin: 0 $cards-pad
         z-index: 2
+        @media(max-width: $mobile)
+            margin: 0
+            height: calc(100vh - 100px)
         >*
             width: 100%
         >.arrow
@@ -71,9 +75,15 @@ require! {
             max-width: 450px
             border-top: 1px solid #213040
             display: inline-block
+            @media(max-width: $mobile)
+                max-height: 100vh
+                height: auto
+                margin-bottom: 0px
             .wallet
                 &:last-child
                     margin-bottom: 0px
+            @media(max-width: $mobile)
+                border-width: 1px 0 0 0 !important
         .switch-account
             float: right
             line-height: 2
@@ -127,6 +137,8 @@ require! {
             margin: 0 auto
             border-left: 1px solid rgb(107, 38, 142)
             border-right: 1px solid rgb(107, 38, 142)
+            @media(max-width: $mobile)
+                border: 0
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t

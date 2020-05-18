@@ -47,7 +47,6 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         | amount? => amount `times` (10 ^ network.decimals)
         | _ => null
     return cb "Either Value or Amount is required" if typeof! value not in <[ String Number ]>
-    #console.log \send , 1
     id = guid!
     { current } = store
     { send } = current
@@ -57,7 +56,6 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     amount-send-fee = if network.tx-fee? then network.tx-fee else \0
     amount-send-fee-usd = \0
     propose-escrow = no
-    #console.log \send , 2
     amount-send = value `div` (10 ^ network.decimals)
     wallet = store.current.account.wallets |> find (.coin.token is coin.token)
     send <<<< {
@@ -65,22 +63,11 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         amount-obtain, amount-obtain-usd, amount-send-usd,
         amount-send-fee, amount-send-fee-usd, propose-escrow
     }
-    #console.log \send , 3
     { send-anyway, change-amount } = send-funcs store, web3t
     <- change-amount store, amount-send, yes
-    #console.log \send , 4
-    #console.log \before, 1
-    #err <- calc-amount-and-fee amount-send, 3
-    #console.log \after, err
-    #return cb err if err?
-    #current.page = \send
-    #window.scroll-to 0, 0
     navigate store, cweb3, \send
-    #console.log \send , 5
     send-anyway! if tx.to isnt ""
-    #console.log \send , 6
     helps = titles ++ [network.mask]
-    #show-cases store, helps, ->
     err, data <- wait-form-result id
     return cb err if err?
     cb null, data
@@ -100,10 +87,10 @@ build-network-ethereum = (store, methods, coin)->
     contract = build-contract store, methods, coin
     { send-transaction, get-balance, get-address, contract } 
 build-other-networks = (store, methods, coin)->
-    { send-transaction, get-balance, get-address } = methods
+    { send-transaction, get-balance, get-address, get-transaction-receipt } = methods
     contract = ->
         throw "Not Implemented For this network"
-    { send-transaction, get-balance, get-address, contract } 
+    { send-transaction, get-balance, get-address, contract, get-transaction-receipt } 
 build-network-specific = (store, methods, coin)->
     builder =
         | coin.token in <[ eth ]> => build-network-ethereum
@@ -117,7 +104,10 @@ build-get-usd-amount = (store, coin)-> (amount, cb)->
     return cb "usd rate not found #{token}" if not wallet.usd-rate?
     usd = amount `times` wallet.usd-rate
     cb null, usd
-build-get-transaction-receipt = (store, cweb3, coin)->
+build-get-transaction-receipt = (store, cweb3, coin)-> (tx, cb)->
+    network = coin[store.current.network]
+    { wallet } = coin
+    get-transaction-info { coin.token, network, tx }, cb
 build-api = (store, cweb3, coin)->
     get-transaction-receipt = build-get-transaction-receipt store, cweb3, coin
     send-transaction = build-send-transaction store, cweb3, coin

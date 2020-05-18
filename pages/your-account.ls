@@ -260,13 +260,13 @@ module.exports = (store, web3t)->
                 .pug.button.edit(on-click=topup(store) style=button-primary1-style) #{lang.topup}
             if store.current.device is \mobile
                 button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary4-style)
-                    img.icon-svg-plus.pug(src="#{icons.plus}")
+                    img.icon-svg-plus.pug(src="#{icons.create}")
             if no
                 if store.current.device is \mobile
                     button.pug.button.lock.mt-5(on-click=open-migration style=button-primary1-style) Migration
             if store.current.device is \desktop
                 button.pug.button.lock(on-click=add-coin(store) style=button-primary0-style)
-                    img.icon-svg1.pug(src="#{icons.plus}")
+                    img.icon-svg1.pug(src="#{icons.create}")
             if no
                 if store.current.device is \desktop
                     button.pug.button.lock(on-click=open-migration style=button-primary0-style)

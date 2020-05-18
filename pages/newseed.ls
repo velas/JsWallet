@@ -278,7 +278,7 @@ newseed = ({ store, web3t })->
                     | #{lang.back ? 'Back' }
                 button.pug.right.save(on-click=next style=button-primary1-style class="#{hide-class}")
                     img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.next-save ? 'Next' }
+                    | #{lang.next ? 'Next' }
                 button.pug.right.doc(on-click=print class="#{hide-class}" style=button-primary2-style)
                     img.icon-svg.pug(src="#{icons.print}")
                     | #{lang.print ? 'Print' }
@@ -289,7 +289,7 @@ newseed = ({ store, web3t })->
                     | #{lang.back ? 'Back' }
                 button.pug.right(on-click=save style=button-primary1-style )
                     img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.next-save ? 'Next' }
+                    | #{lang.next ? 'Next' }
         if has-issue!
             .pug.warning(style=text-style)
                 .pug #{lang.seed-warning}

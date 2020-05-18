@@ -87,22 +87,27 @@ require! {
         padding-top: 15px
         max-width: 400px
         display: inline-block
-    button.setup
-        font-weight: bold
-        cursor: pointer
-        margin-top: 15px
-        width: 120px
-        height: 36px
-        font-size: 10px
-        text-transform: uppercase
-        padding: 0px 6px
-        border-radius: $border
-        border: 0px
-        background: transparent
-        &.reset
+    button
+        &.text-primary
+            color: rgb(156, 65, 235) !important
             &:hover
                 text-decoration: underline
-        color: white
+        &.setup
+            font-weight: bold
+            cursor: pointer
+            margin-top: 15px
+            width: 120px
+            height: 36px
+            font-size: 10px
+            text-transform: uppercase
+            padding: 0px 6px
+            border-radius: $border
+            border: 0px
+            background: transparent
+            &.reset
+                &:hover
+                    text-decoration: underline
+            color: white
     .hint
         color: #f2eeee
         padding: 20px 0
@@ -126,8 +131,32 @@ require! {
         border-radius: 8px
         height: 5px
         line-height: 5px
-        width: 20px
         margin: 5px auto
+    ::placeholder
+        color: #ffffff91
+        font-size: 12px
+        letter-spacing: 0
+        line-height: 22px
+    .drag
+        animation: horizontal_5859 2s ease
+        transform-origin: 50% 50%
+    @keyframes horizontal_5859
+        0%
+            transform: translate(0, 0)
+        4.41177%
+            transform: translate(5px, 0)
+        8.82353%
+            transform: translate(0, 0)
+        13.23529%
+            transform: translate(5px, 0)
+        17.64706%
+            transform: translate(0, 0)
+        22.05882%
+            transform: translate(5px, 0)
+        26.47059%
+            transform: translate(0, 0)
+        100%
+            transform: translate(0, 0)
 wrong-pin = (store)->
     store.current.pin = ""
     store.current.pin-trial += 1
@@ -175,8 +204,10 @@ input = (store, web3t)->
         res <- confirm store, "Do you have backup word phrase of current account?"
         return if res is no
         reset-wallet store
+    drag =
+        if store.current.pin-trial is 0 then \ "" else \drag
     .pug
-        input.pug.password(key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="" on-change=change on-key-down=catch-key auto-complete="off")
+        input.pug.password(class="#{drag}" key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="Password or PIN" on-change=change on-key-down=catch-key auto-complete="off")
         if exists!
             .pug
                 button.setup.pug(on-click=enter style=button-primary1-style)
@@ -189,7 +220,7 @@ input = (store, web3t)->
                         span.pug OR
                         .line.r.pug
                     .pug
-                        button.setup.pug(style=button-primary0-style on-click=reset-account) NEW ACCOUNT
+                        button.setup.text-primary.pug(style=button-primary0-style on-click=reset-account) NEW ACCOUNT
 reset-wallet = (store)->
     setbkp!
     del!
@@ -212,7 +243,7 @@ wrong-trials = (store)->
         .pug.wrong(key="wrong-trial") #{wrong-pin-text}
         .pug NOTICE! Try to restore you account from seed phrase in different browser or incognito window before you reset it
         .pug
-            button.reset.setup.pug(on-click=reset-account) Reset Account
+            button.reset.setup.text-primary.pug(on-click=reset-account) Reset Account
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
@@ -255,8 +286,8 @@ locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
     title = 
-        | not exists! => lang.setup-pin ? "Setup Password or PIN"
-        | _ => lang.enter-pin ? "Enter Password"
+        | not exists! => lang.enter-pin ? "Password"
+        | _ => lang.enter-pin ? "Password"
     footer =
         | not exists! => setup-button
         | _ => wrong-trials

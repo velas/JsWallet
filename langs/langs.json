@@ -9,26 +9,8 @@
         "ko"
     ],
     "mapping": {
-        "addCoin": [
-            "Add Coin",
-            "Добавить монету",
-            "Додати монету",
-            "Ajouter",
-            "Añadir Moneda",
-            "加币",
-            "동전 추가"
-        ],
-        "editWallet": [
-            "Wallets",
-            "Редактировать",
-            "Редагувати",
-            "Portefeuilles",
-            "Monederos",
-            "编辑",
-            "편집하다"
-        ],
         "editCoins": [
-            "Add Coins",
+            "Add",
             "Добавить монету",
             "Додати монету",
             "Ajouter une pièce",
@@ -44,15 +26,6 @@
             "Confirmación",
             "确认书",
             "확인"
-        ],
-        "pluginRegistry": [
-            "Plugin Registry",
-            "Реестр плагинов",
-            "Реєстр плагінів",
-            "Registre de Plugin",
-            "Registro de Plugin",
-            "插件注册表",
-            "플러그인 레지스트리"
         ],
         "search": [
             "Search",
@@ -90,24 +63,6 @@
             "发送",
             "보내다"
         ],
-        "sendFrom": [
-            "From",
-            "Отправить с",
-            "Надіслати з",
-            "Envoyer de",
-            "Desde",
-            "从发送",
-            "발신"
-        ],
-        "recipient": [
-            "To",
-            "Получатель",
-            "Одержувач",
-            "Receveur",
-            "Para",
-            "接受者",
-            "받는 사람"
-        ],
         "amount": [
             "Amount",
             "Сумма",
@@ -135,15 +90,6 @@
             "待定",
             "대기 중"
         ],
-        "invoiceHeader": [
-            "Send Invoice By Email",
-            "Отправить Инвойс по почте",
-            "Надіслати Інвойс поштою",
-            "Envoyer une Facture par Email",
-            "Enviar Factura Por Email",
-            "通过电子邮件发送发票",
-            "이메일로 송장 보내기"
-        ],
         "fundingAddress": [
             "Funding Address",
             "Адрес пополнения",
@@ -152,24 +98,6 @@
             "Dirección de Envío",
             "资助地址",
             "자금 주소"
-        ],
-        "recipientEmail": [
-            "Recipient Email",
-            "Почта получателя",
-            "Пошта одержувача",
-            "Destinataire",
-            "Email del Destinatario",
-            "收件人电子邮件",
-            "이메일 수령인"
-        ],
-        "wrongPinTrials": [
-            "Wrong PIN. Trials",
-            "Неверный PIN. Попытки",
-            "Хибний PIN-код. Спроби",
-            "PIN incorrect. Essais",
-            "PIN Erróneo. Reintentar",
-            "PIN码错误。 试用版",
-            "잘못된 PIN입니다. 시험판"
         ],
         "wrongPinShould": [
             "PIN should be 4 digits",
@@ -190,7 +118,7 @@
             "설정"
         ],
         "pinInfo": [
-            "Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.",
+            "Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your word seed phrase",
             "Запомните этот ПИН-код и не передавайте его третьим лицам",
             "Запам'ятайте цей ПІН-код і не передавайте його третім особам",
             "Veuillez vous assurer d'utiliser un PIN dont vous vous souvenez. Vous avez 7 essais. Après cela, vous devez restaurer le portefeuille à partir de votre phrase de récupération de 12 mots.",
@@ -198,17 +126,8 @@
             "请记住此PIN，不要将其提供给第三方",
             "이 PIN을 기억하여 제 3 자에게 제공하지 마십시오"
         ],
-        "setupPin": [
-            "Setup Password or PIN",
-            "Установить пароль или PIN-код",
-            "Установка пароля або PIN-коду",
-            "Mot de passe ou PIN de configuration",
-            "Configurar contraseña o PIN",
-            "設置密碼或PIN碼",
-            "비밀번호 또는 PIN 설정"
-        ],
         "enterPin": [
-            "Enter Password or PIN",
+            "Password",
             "Ввести пароль или PIN",
             "Ввести PIN",
             "Entrez le PIN",
@@ -325,22 +244,13 @@
             "이 조치의 정확한 이유를 이해하지 못하고 위험을 감수하지 않는 경우에는 절대로 수행하지 마십시오."
         ],
         "showSecret": [
-            "Show Secret",
+            "Show",
             "Показать",
             "Показати",
             "Révéler la Phrase de Récupération",
             "Mostrar frase de recuperación",
             "显示秘密",
             "비밀 표시"
-        ],
-        "totalBalance": [
-            "Total Balance",
-            "Общий баланс",
-            "Загальний баланс",
-            "Solde Total",
-            "Balance Total",
-            "总余额",
-            "전체 균형"
         ],
         "verifyNickname": [
             "Nickname Verification",
@@ -378,24 +288,6 @@
             "新种子词组",
             "새로운 씨구"
         ],
-        "newSeedPlaceholder": [
-            "Enter your secret phrase",
-            "Введите вашу секретную фразу",
-            "Введіть вашу секретну фразу",
-            "Entrez votre phrase secrète",
-            "Introduce tu frase secreta",
-            "輸入您的秘密短語",
-            "비밀 문구를 입력하십시오"
-        ],
-        "generate": [
-            "Generate",
-            "Генерировать",
-            "Генерувати",
-            "Générer",
-            "Generar",
-            "生成",
-            "일으키다"
-        ],
         "newSeedWarning": [
             "It will be reliable to write down the phrase on paper. Do not transfer it to a third party and store it in a safe place.",
             "Будет надежно записать фразу на бумаге. Не передавайте его третьему лицу и храните его в надежном месте.",
@@ -404,15 +296,6 @@
             "Es recomendable que escribas tu frase de recuperación en un papel. No lo transfieras a nadie y almacénalo en un lugar seguro.",
             "在紙上寫下該短語將是可靠的。 請勿將其轉讓給第三方並存放在安全的地方。",
             "종이에 문구를 적어 두는 것이 좋습니다. 타사에 양도하지 말고 안전한 곳에 보관하십시오."
-        ],
-        "invoice": [
-            "Invoice",
-            "Инвойс",
-            "Iнвойс",
-            "Facture",
-            "Factura",
-            "发票",
-            "송장"
         ],
         "receive": [
             "Receive",
@@ -468,24 +351,6 @@
             "總",
             "합계"
         ],
-        "recipientObtains": [
-            "Recipient Obtains",
-            "Получатель получает",
-            "Одержувач отримує",
-            "Le bénéficiaire Obtient",
-            "El destinatario obtiene",
-            "收件人获取",
-            "받는 사람"
-        ],
-        "transactionFee": [
-            "Transaction Fee",
-            "Комиссия",
-            "Комісія",
-            "Frais de Transaction",
-            "Comisión transacción",
-            "手续费",
-            "거래 수수료"
-        ],
         "auto": [
             "auto",
             "авто",
@@ -504,19 +369,10 @@
             "便宜的",
             "싼"
         ],
-        "your": [
-            "Your",
-            "Ваша",
-            "Ваша",
-            "Votre",
-            "personalizado",
-            "您的",
-            "너의"
-        ],
         "transaction": [
-            "transaction",
-            "транзакция",
-            "транзакція",
+            "Transaction",
+            "Транзакция",
+            "Транзакція",
             "Transaction",
             "transacción",
             "交易",
@@ -558,15 +414,6 @@
             "接受",
             "동의하기"
         ],
-        "price": [
-            "Price",
-            "Цена",
-            "Ціна",
-            "Prix",
-            "Precio",
-            "价钱",
-            "가격"
-        ],
         "balance": [
             "Balance",
             "Баланс",
@@ -576,15 +423,6 @@
             "平衡",
             "균형"
         ],
-        "open": [
-            "Open",
-            "Открыть",
-            "Biдкрити",
-            "Ouvrir",
-            "Abrir",
-            "打开",
-            "열다"
-        ],
         "accountIndex": [
             "Account Index",
             "Индекс Кошелька",
@@ -593,24 +431,6 @@
             "Indice de Cuenta",
             "帐户索引",
             "계정 인덱스"
-        ],
-        "settings": [
-            "settings",
-            "настройки",
-            "настройки",
-            "Paramètres",
-            "parámetros",
-            "设定",
-            "설정"
-        ],
-        "lock": [
-            "lock",
-            "блокировать",
-            "блокувати",
-            "Verrouiller",
-            "bloquear",
-            "锁",
-            "자물쇠"
         ],
         "editSecret": [
             "Edit Secret",
@@ -711,19 +531,10 @@
             "输入硬币。 示例：BTC，ETH，GBX",
             "동전을 입력하십시오. 예 : BTC, ETH, GBX"
         ],
-        "phraseSafePlace": [
-            "Please confirm that you stored this phrase in safe place?",
-            "Пожалуйста, подтвердите, что вы сохранили эту фразу в безопасном месте?",
-            "Підтвердьте, що ви зберегли цю фразу в безпечному місці?",
-            "Veuillez confirmer que vous avez stocké cette phrase en lieu sûr.",
-            "Por favor confirma, ¿Has guardado tu frase en un lugar seguro?",
-            "请确认您是否将此短语存储在安全的地方？",
-            "이 문구를 안전한 곳에 보관했는지 확인하십시오."
-        ],
         "yourWallets": [
             "Wallets",
-            "Ваши Кошельки",
-            "Ваші Гаманьці",
+            "Кошельки",
+            "Гаманьці",
             "Portefeuilles",
             "Monederos",
             "您的钱包",
@@ -738,33 +549,6 @@
             "验证种子短语",
             "시드 문구 확인"
         ],
-        "phraseWord": [
-            "Please enter the 3 words of your seed phrase",
-            "Пожалуйста, введите 3 слова вашей сид-фразы",
-            "Будь-ласка, введіть три слова вашої сід-фрази",
-            "Veuillez saisir les 3 mots de votre phrase de départ",
-            "Por favor, Introduce la 3º palabra de tu frase de recuperación",
-            "請輸入您的種子詞組的3個單詞",
-            "시드 문구의 3 단어를 입력하십시오"
-        ],
-        "placeholderPhraseWord": [
-            "Enter the 4th word",
-            "Введите 4-е слово",
-            "Введіть четверте слово",
-            "Entrez le 4ème mot",
-            "Introduce la 4º palabra",
-            "输入第四个字",
-            "네 번째 단어를 입력하십시오"
-        ],
-        "confirmSeed": [
-            "Confirm Seed",
-            "Подтвердите фразу",
-            "Підтвердити фразу",
-            "Confirmer la phrase de récupération",
-            "Confirmar frase de recuperación",
-            "确认种子",
-            "종자 확인"
-        ],
         "welcomeWallet": [
             "Welcome!",
             "Добро пожаловать!",
@@ -773,15 +557,6 @@
             "¡Bienvenido!",
             "欢迎！",
             "어서 오십시오!"
-        ],
-        "cta": [
-            "Please select an action below",
-            "Пожалуйста, выберите действие ниже",
-            "Виберіть дію нижче",
-            "Veuillez sélectionner une action ci-dessous",
-            "Por favor, selecciona una acción a continuación",
-            "请在下面选择一个动作",
-            "아래에서 작업을 선택하십시오"
         ],
         "newWallet": [
             "Create",
@@ -819,24 +594,6 @@
             "背部",
             "뒤"
         ],
-        "yourLanguage": [
-            "Your language",
-            "Ваш язык",
-            "Ваша мова",
-            "Votre langue",
-            "Tu Idioma",
-            "你的语言",
-            "당신의 언어"
-        ],
-        "linksDoc": [
-            "Links",
-            "Ссылки",
-            "Посилання",
-            "Liens",
-            "Enlaces",
-            "链接",
-            "연결"
-        ],
         "privacyPolicy": [
             "Privacy Policy",
             "Политика конфиденциальности",
@@ -854,24 +611,6 @@
             "Términos de uso",
             "使用条款",
             "이용 약관"
-        ],
-        "read": [
-            "Read More",
-            "Читать",
-            "Читати",
-            "Lire la suite",
-            "Leer más",
-            "阅读更多",
-            "더 읽어보기"
-        ],
-        "version": [
-            "Version",
-            "Версия",
-            "Версія",
-            "Version",
-            "Versión",
-            "版",
-            "버전"
         ],
         "aboutWallet": [
             "Multi-currency Wallet Managed by one mnemonic phrase",
@@ -936,7 +675,7 @@
             "輸入",
             "시작하다"
         ],
-        "titleStaking": [
+        "staking": [
             "Staking",
             "Стейкинг",
             "Стейкінг",
@@ -946,40 +685,13 @@
             "스테이 킹"
         ],
         "installNode": [
-            "Install Node",
-            "Установить Node",
-            "Встановити Node",
+            "Node",
+            "Node",
+            "Node",
             "Installer un Nœud",
             "Instalar Nodo",
             "安裝節點",
             "설치 노드"
-        ],
-        "network": [
-            "Network",
-            "Сеть",
-            "Мережа",
-            "Réseau",
-            "Red",
-            "網絡",
-            "회로망"
-        ],
-        "trxId": [
-            "Transaction ID",
-            "Идентификатор Транзакции",
-            "Ідентифікатор транзакції",
-            "ID de Transaction",
-            "ID de Transacción",
-            "交易編號",
-            "거래 ID"
-        ],
-        "trxAmount": [
-            "Amount",
-            "Количество",
-            "Кількість",
-            "Montant",
-            "Cantidad",
-            "量",
-            "양"
         ],
         "in": [
             "In",
@@ -999,15 +711,6 @@
             "出",
             "밖"
         ],
-        "apply": [
-            "Apply",
-            "Применить",
-            "Застосувати",
-            "Appliquer",
-            "Aplicar",
-            "應用",
-            "대다"
-        ],
         "from": [
             "From",
             "От",
@@ -1025,15 +728,6 @@
             "Para",
             "至",
             "에"
-        ],
-        "sender": [
-            "Sender",
-            "Отправитель",
-            "Відправник",
-            "Sender",
-            "Emisor",
-            "發件人",
-            "송신기"
         ],
         "txtInstallNode": [
             "This script automatically deploys your node through the terminal. Also, it uses addresses associated with your current account to manage the node in the wallet.",
@@ -1126,22 +820,13 @@
             "검증 인되기"
         ],
         "stake": [
-            "Your Stake",
+            "Stake",
             "Ваш Стейк",
             "Ваш Стейк",
             "Votre enjeu",
             "Tu Stake",
             "您的賭注",
             "스테이크"
-        ],
-        "miningAddress": [
-            "Your Mining Address",
-            "Ваш майнинг адрес",
-            "Ваша майнінг адреса",
-            "Votre adresse minière",
-            "Tu dirección de minado",
-            "您的採礦地址",
-            "마이닝 주소"
         ],
         "stakePlaceholder": [
             "stake",
@@ -1161,17 +846,8 @@
             "應用",
             "대다"
         ],
-        "activeValid": [
-            "Active Validators. Current epoch",
-            "Активные Валидаторы. Текущая эпоха",
-            "Активні валідатори. Поточна епоха",
-            "Validateurs actifs. Époque actuelle",
-            "Validadores Activos. Epoca actual",
-            "主動驗證者。 當前時代",
-            "활성 검증기. 현재 시대"
-        ],
         "uRewards": [
-            "Your Rewards",
+            "Awards",
             "Ваши награды",
             "Ваші нагороди",
             "Vos récompenses",
@@ -1180,7 +856,7 @@
             "당신의 보상"
         ],
         "claimReward": [
-            "Claim Reward",
+            "Claim",
             "Претензия о вознаграждении",
             "Вимога про винагороду",
             "Réclamation récompense",
@@ -1189,7 +865,7 @@
             "보상 청구"
         ],
         "calculateReward": [
-            "Calculate Reward",
+            "Calculate",
             "Рассчитать вознаграждение",
             "Розрахуйте винагороду",
             "Calculer la récompense",
@@ -1197,44 +873,17 @@
             "計算獎勵",
             "보상 계산"
         ],
-        "exitFromValid": [
-            "Exit from Validator Pool",
-            "Выход из пула валидатора",
-            "Вихід з пула валідатора",
-            "Quitter le pool de validateurs",
-            "Salir de Pool de Validadores",
-            "退出驗證者池",
-            "검사기 풀에서 종료"
-        ],
-        "exitBtnPool": [
-            "Exit",
-            "Выход",
-            "Вихід",
-            "Sortie",
-            "Salir",
-            "出口",
-            "출구"
-        ],
-        "chooseLanguage": [
-            "Choose Language",
-            "Выберите язык",
-            "Виберіть мову",
-            "Choisissez la langue",
-            "Seleccionar Idioma",
-            "選擇語言",
-            "언어를 선택하십시오"
-        ],
         "next": [
-            "Continue",
-            "Продолжить",
-            "Продовжити",
-            "Continuer",
-            "Continuar",
-            "繼續",
-            "계속하다"
+            "Next",
+            "Далее",
+            "Далі",
+            "Prochain",
+            "Próximo",
+            "下",
+            "다음"
         ],
         "yourSeedPhrase": [
-            "Your Seed Phrase",
+            "Seed Phrase",
             "Твоя сид-фраза",
             "Твоя сiд-фраза",
             "Votre Phrase de Graine",
@@ -1287,28 +936,10 @@
             "等待紀元更改，然後在此處再次檢查節點狀態",
             "에포크 변경을 기다렸다가 여기서 노드 상태를 다시 확인하십시오."
         ],
-        "yourBalance": [
-            "Balance",
-            "Ваш баланс",
-            "Ваш баланс",
-            "Votre solde",
-            "Tu saldo",
-            "您的餘額",
-            "당신의 균형"
-        ],
-        "yourStaking": [
-            "Staking",
-            "Ваша ставка",
-            "Ваш стейкінг",
-            "Votre jalonnement",
-            "Tu Staking",
-            "您的賭注",
-            "당신의 스테이 킹"
-        ],
         "yourStatus": [
             "Status",
-            "Ваш статус",
-            "Ваш статус",
+            "статус",
+            "статус",
             "Votre statut",
             "Tu Estado",
             "你的狀態",
@@ -1325,21 +956,12 @@
         ],
         "yourStatus2": [
             "Try to send the small amount to stake again",
-            "Поп��обуйте отправить небольшую сумму, чтобы поставить снова",
+            "Попробуйте отправить небольшую сумму, чтобы поставить снова",
             "Спробуйте надіслати невелику суму на ставку ще раз",
             "Essayez d'envoyer à nouveau le petit montant à miser",
             "Intenta enviar una cantidad pequeña para hacer Stake de nuevo",
             "嘗試再次發送少量股份",
             "소액을 다시 스테이크로 보내십시오."
-        ],
-        "currentEpoch": [
-            "Epoch",
-            "Текущая эпоха",
-            "Сучасна епоха",
-            "Époque actuelle",
-            "Epoca actual",
-            "當前時代",
-            "현재 시대"
         ],
         "stakeMore": [
             "Stake More",
@@ -1350,50 +972,14 @@
             "下注更多",
             "더 스테이크"
         ],
-        "emitChange": [
-            "Emit Change",
-            "Emit Change",
-            "Emit Change",
-            "Émettre le changement",
-            "Emitir Cambio",
-            "發出變化",
-            "변경 방출"
-        ],
-        "propose": [
-            "Propose the change of consensus",
-            "Предложить изменение консенсуса",
-            "Запропонуйте змінити консенсус",
-            "Proposer le changement de consensus",
-            "Proponer cambio de consenso",
-            "提出改變共識",
-            "컨센서스 변경 제안"
-        ],
-        "emit": [
-            "Emit",
-            "Emit",
-            "Emit",
-            "Émettre",
-            "Emitir",
-            "發射",
-            "방출"
-        ],
         "availableReward": [
-            "Available Reward",
+            "Available",
             "Доступно вознаграждение",
             "Доступна винагорода",
             "Récompense disponible",
             "Recompensa disponible",
             "可用獎勵",
             "사용 가능한 보상"
-        ],
-        "use": [
-            "Use",
-            "Использование",
-            "Використовуйте",
-            "Utilisation",
-            "Uso",
-            "利用",
-            "사용하다"
         ],
         "epoch": [
             "Epoch",
@@ -1404,42 +990,6 @@
             "時代",
             "시대"
         ],
-        "award": [
-            "Award",
-            "Награда",
-            "Нагорода",
-            "Prix",
-            "Premio",
-            "獎",
-            "장학금"
-        ],
-        "requestExit": [
-            "Request exit",
-            "Запрос на выход",
-            "Попросити вихід",
-            "Demande de sortie",
-            "Solicitar salida",
-            "要求退出",
-            "요청 종료"
-        ],
-        "exit": [
-            "Exit",
-            "Выход",
-            "Вихід",
-            "Sortie",
-            "Salir",
-            "出口",
-            "출구"
-        ],
-        "exitWithdraw": [
-            "Exit and Withdraw Coins",
-            "Выход и снятие монет",
-            "Вийти і зняти монети",
-            "Sortir et retirer des pièces",
-            "Salir y Retirar Monedas",
-            "退出和提取硬幣",
-            "출금 및 출금"
-        ],
         "language": [
             "Language",
             "Язык",
@@ -1449,26 +999,8 @@
             "語言",
             "언어"
         ],
-        "txFrom": [
-            "From",
-            "От кого",
-            "Від кого",
-            "De",
-            "Desde",
-            "從",
-            "에서"
-        ],
-        "txTo": [
-            "To",
-            "Кому",
-            "Кому",
-            "À",
-            "Para",
-            "至",
-            "에"
-        ],
         "restoreFrom": [
-            "Restore wallet from",
+            "From",
             "Восстановить кошелек из",
             "Відновити гаманець із",
             "Restaurer le portefeuille à partir de",
@@ -1476,14 +1008,14 @@
             "從還原錢包",
             "에서 지갑 복원"
         ],
-        "nextSave": [
-            "Next",
-            "Далее",
-            "Далі",
-            "Prochain",
-            "Próximo",
-            "下",
-            "다음"
+        "statistics": [
+            "Statistics",
+            "Статистика",
+            "Статистика",
+            "Statistiques",
+            "Estadísticas",
+            "统计数据",
+            "통계"
         ]
     }
 }

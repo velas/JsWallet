@@ -359,7 +359,7 @@ manage-account = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Қазақ
                         img.pug(src="#{icons.langs-kz}")
-        if window.location.href.index-of('internal') > -1
+        if store.url-params.internal?
             .pug.section
                 .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
                 .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}

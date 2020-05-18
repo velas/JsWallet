@@ -31,6 +31,7 @@ require! {
     \./claim-stake.ls
     \../staking/can-make-staking.ls
     \./epoch.ls
+    \./confirmation.ls : { alert }
 }
 .staking
     @import scheme
@@ -525,6 +526,7 @@ require! {
             background-color: #3cd5af
             border-color: #3cd5af
             color: #fff
+cb = console.log
 get-pair = (wallet, path, index, password, with-keystore)->
     w = wallet.derive-path(path).derive-child(index).get-wallet!
     address  = "0x" + w.get-address!.to-string(\hex)
@@ -543,7 +545,9 @@ to-keystore = (store, with-keystore)->
     wallet = hdkey.from-master-seed(seed)
     index = store.current.account-index
     password = md5 wallet.derive-path("m1").derive-child(index).get-wallet!.get-address!.to-string(\hex)
-    staking = get-pair wallet, \m0 , index, password, no
+    staking = 
+        | store.url-params.anotheracc? => { address: window.toEthAddress(store.url-params.anotheracc) } 
+        | _ => get-pair wallet, \m0 , index, password, no
     mining  = get-pair wallet, \m0/2 , index, password, with-keystore
     { staking, mining, password }
 show-validator = (store, web3t)-> (validator)->
@@ -575,12 +579,11 @@ staking-content = (store, web3t)->
     pairs = store.staking.keystore
     become-validator = ->
         err <- can-make-staking store, web3t
-        return alert err if err?
-        return alert "please choose the pool" if not store.staking.chosen-pool?
+        return alert store, err, cb if err?
+        return alert store, "please choose the pool", cb if not store.staking.chosen-pool?
         type = typeof! store.staking.add.add-validator-stake
-        console.log \correct_amount , type, store.staking.add.add-validator-stake
-        return alert "please enter correct amount, got #{type}" if type not in <[ String Number ]>
-        #return alert "please enter correct amount" if not (store.staking.add.add-validator-stake ? "").match(/^[0-9\.]$/)?
+        #console.log \correct_amount , type, store.staking.add.add-validator-stake
+        return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log { stake }
         #console.log stake, pairs.mining.address
@@ -661,18 +664,18 @@ staking-content = (store, web3t)->
         cb null, { min, max }
     use-min = ->
         err, options <- get-options
-        return alert err if err?
+        return alert store, err, cb if err?
         store.staking.add.add-validator-stake = options.min
     use-max = ->
         err, options <- get-options
-        return alert err if err?
+        return alert store, err, cb if err?
         store.staking.add.add-validator-stake = options.max
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
-        return alert err if err?
-        return alert "Please wait for epoch change" if can isnt yes
+        return alert store, err, cb if err?
+        return alert store, "Please wait for epoch change", cb if can isnt yes
         data = web3t.velas.ValidatorSet.emitInitiateChange.get-data!
-        console.log { data }
+        #console.log { data }
         to = web3t.velas.ValidatorSet.address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount }
@@ -691,7 +694,8 @@ staking-content = (store, web3t)->
             | _ => round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
-            cb = alert
+            cb = (err, data)->
+                alert store, err, console~log if err?
             #store.staking.data-generation += 1
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
@@ -799,7 +803,7 @@ staking-content = (store, web3t)->
                             button.pug(on-click=cancel-pool style=button-primary2-style)
                                 span.pug
                                     img.icon-svg.pug(src="#{icons.choose}")
-                                    | Select pool
+                                    | Select
             if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -812,7 +816,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
                                     button.small.pug(style=button-primary3-style on-click=use-max) Max
-                                span.pug Your balance: 
+                                span.pug Balance: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -823,7 +827,7 @@ staking-content = (store, web3t)->
             if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
-                        h3.pug Your Staking
+                        h3.pug Staking
                     .description.pug
                         .pug.left
                             .pug.balance

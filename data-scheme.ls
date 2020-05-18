@@ -6,6 +6,7 @@ require! {
     \./icons.ls
     \./get-device.ls
     \../package.json : { version }
+    \qs
 }
 saved-seed = saved!
 create-send =->
@@ -28,7 +29,11 @@ create-send =->
     decoded-data: ""
     show-data-mode: \encoded
     error: ''
+url-params =
+    | window? => qs.parse window.location.search.replace('?', '')
+    | _ => {}
 store =
+    url-params: url-params
     root: null
     theme: \velas
     lang: \en
@@ -52,6 +57,8 @@ store =
         tab: "home"
         menu-open: no
         drag: no
+        upload-link: no
+        action: "upload"
     sound:
         tab: "home"
         menu-open: no
@@ -122,6 +129,7 @@ store =
         wallet: null
     menu:
         active: 's2'
+        mobile: no
     ask: 
         text: ''
         enabled: no

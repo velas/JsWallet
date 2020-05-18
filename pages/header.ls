@@ -19,6 +19,12 @@ require! {
     position: fixed
     z-index: 111
     $smooth: color .15s ease-in-out
+    &.show
+        .menu-item
+            display: inline-block
+            &.menu-btn
+                opacity: .5
+                transition: all .5s
     .logo
         position: absolute
         width: auto
@@ -154,7 +160,7 @@ require! {
                     border: 1px solid #6b268e
         &:hover
             svg, img
-                transform: scale(1.2)
+                transform: scale(1)
                 transition: transform .5s
             span
                 position: absolute
@@ -214,7 +220,7 @@ require! {
             opacity: 1
         vertical-align: bottom
         line-height: normal
-        display: inline-block
+        display: none
         margin-left: 20px
         position: relative
         height: 20px
@@ -222,10 +228,8 @@ require! {
         width: 20px
         text-align: center
         z-index: 11
-        @media screen and (max-width: 390px)
-            &:nth-child(4)
-                float: left
-                margin-left: 0
+        &.menu-btn, &.locked
+            display: inline-block
         &.class
             position: absolute
             top: 530px
@@ -268,19 +272,6 @@ module.exports = (store, web3)->
         width: "14px"
     wallet-icon = 
         width: "18px"
-    set-lang = (lang)->
-        #return alert "lang is not available" if not store.langs[store.lang]?
-        store.lang = lang
-    change-lang-en = ->
-        return set-lang \en
-    change-lang-ru = ->
-        return set-lang \ru
-    change-lang-ua = ->
-        return set-lang \uk
-    change-lang-cn = ->
-        return set-lang \cn
-    change-lang-kr = ->
-        return set-lang \kr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
@@ -311,13 +302,13 @@ module.exports = (store, web3)->
     menu-out = ->
         store.current.submenu = no
     staking = if store.current.submenu then \active else \not-active
-    .menu.pug(style=border-style)
+    hide-menu = ->
+        store.menu.mobile = not store.menu.mobile
+    show-menu =
+        if store.menu.mobile then \show else \ ""
+    .menu.pug(style=border-style class="#{show-menu}")
         .pug.logo
-            img.pug(src="#{info.branding.logo}" style=logo-style)
-        if store.preference.refresh-visible is yes
-            if no
-                .menu-item.pug(on-click=refresh style=icon-style class="#{syncing}")
-                    icon \Sync , 20
+            img.pug(src="#{info.branding.logo-sm}" style=logo-style)
         if store.preference.settings-visible is yes
             if store.current.device is \mobile
                 .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
@@ -347,5 +338,9 @@ module.exports = (store, web3)->
                     img.pug(src="#{icons.setting}")
         if store.preference.lock-visible is yes
             if store.current.device is \mobile    
-                .menu-item.pug(on-click=lock style=icon-style)
+                .menu-item.menu-btn.pug(on-click=hide-menu style=icon-style)
+                    img.pug(src="#{icons.menu}" style=lock-icon)
+        if store.preference.lock-visible is yes
+            if store.current.device is \mobile    
+                .menu-item.locked.pug(on-click=lock style=icon-style)
                     img.pug(src="#{icons.lock}" style=lock-icon)

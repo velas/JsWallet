@@ -21,12 +21,13 @@ module.exports = (store, web3t)->
         background: color
     default-button-style = { color }
     send-anyway = (response)->
-        { address } = invoice.wallet
-        { to, data, amount-send } = invoice
-        err, data <- put "https://web3.space/invoice/send", { response, token, address, to, data, amount: amount-send } .end
-        return alert "#{err.message ? err}: #{data.text}" if err?
-        alert "Your invoice has been sent"
-        cancel!
+        #{ address } = invoice.wallet
+        #{ to, data, amount-send } = invoice
+        #err, data <- put "https://web3.space/invoice/send", { response, token, address, to, data, amount: amount-send } .end
+        ##alert store, "0 is smallest account index", cb
+        #return alert "#{err.message ? err}: #{data.text}" if err?
+        #<- alert store, "Your invoice has been sent"
+        #cancel!
     cancel = (event)->
         navigate store, web3t, \wallets
     recipient-change = (event)->

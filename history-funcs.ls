@@ -71,7 +71,6 @@ module.exports = (store, web3t)->
         agree <- confirm store, "Would you like to remove pending transaction? Your balance will be increased till confirmed transaction"
         return if not agree
         err <- remove-tx { store, ...tx }
-        #return alert "Cannot Remove Tx. Looks like it is already in blockchain" if err?
         <- web3t.refresh
     transaction-info = (config)-> (event)->
         err, info <- get-transaction-info config

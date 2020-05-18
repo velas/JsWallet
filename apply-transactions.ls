@@ -6,6 +6,7 @@ module.exports = (store)->
     filter-txs = (tx)->
         { type, token } = tx
         type in filt and token in filt
+    #<- transaction
     store.transactions.applied = 
         store.transactions.all 
             |> filter filter-txs 

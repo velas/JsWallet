@@ -990,7 +990,7 @@ staking-content = (store, web3t)->
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert err if err?
-        return alert "Please wait for epoch change" if can isnt yes
+        return alert "Consensus change is initiated. Operation is not permitted" if can isnt yes
         data = web3t.velas.ValidatorSet.emitInitiateChange.get-data!
         to = web3t.velas.ValidatorSet.address
         amount = 0
@@ -1000,7 +1000,7 @@ staking-content = (store, web3t)->
     your-staking-amount = store.staking.stake-amount-total `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
-    staker-status = if store.staking.is-active-staker then 'Active' else 'Inactive'
+    staker-status = if store.staking.is-active-staker then \Active else \Inactive
     check-uncheck = ->
         change = not store.staking.rewards.0.checked
         store.staking.rewards |> map (-> it.checked = change)
@@ -1098,7 +1098,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
                                     button.small.pug(style=button-primary3-style on-click=use-max) Max
-                                span.pug #{lang.your-balance}: 
+                                span.pug #{lang.balance}: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -1109,7 +1109,7 @@ staking-content = (store, web3t)->
             if +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
-                        h3.pug #{lang.your-staking}
+                        h3.pug #{lang.staking}
                     .description.pug
                         .pug.left
                             .staking-info.pug
@@ -1120,7 +1120,7 @@ staking-content = (store, web3t)->
                                                 span.pug #{your-staking}
                                                 span.pug #{vlx-token}
                                         .header.pug
-                                            | #{lang.your-staking}
+                                            | #{lang.staking}
                                 .col.col-4.pug
                                     div.pug
                                         .value.pug.green
@@ -1141,7 +1141,7 @@ staking-content = (store, web3t)->
                                             .number.pug
                                                 | #{store.staking.epoch}
                                         .header.pug
-                                            | #{lang.current-epoch}
+                                            | #{lang.epoch}
                             .table.pug
                                 if store.staking.is-active-staker is no
                                     .pug.warning
@@ -1151,7 +1151,7 @@ staking-content = (store, web3t)->
                             if no
                                 .table.pug
                                     .pug.balance
-                                        span.pug.header #{lang.your-staking}: 
+                                        span.pug.header #{lang.staking}: 
                                         span.pug.color #{your-staking}
                                         span.pug.color #{vlx-token}
                                     .pug.balance
@@ -1166,7 +1166,7 @@ staking-content = (store, web3t)->
                                                 li.pug #{lang.your-status1}
                                                 li.pug #{lang.your-status2}
                                     .pug.balance
-                                        span.pug.header #{lang.current-epoch}:
+                                        span.pug.header #{lang.epoch}:
                                         span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
@@ -1183,7 +1183,7 @@ staking-content = (store, web3t)->
                             span.pug
                                 img.icon-svg.pug(src="#{icons.apply}")
                                 | #{lang.btn-apply}      
-            if window.location.href.index-of('emit') > -1
+            if store.url-params.emit?
                 .pug.section
                     .title.pug
                         h3.pug #{lang.emit-change}
@@ -1227,7 +1227,7 @@ staking = ({ store, web3t })->
         if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") #{lang.title-staking}
+            .pug.header(class="#{show-class}") #{lang.staking}
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t

@@ -863,6 +863,8 @@ require! {
                     &:active, &:focus
                         transition: all .5s
                         text-align: left
+                    @media(max-width: 800px)
+                        width: 100%
             .header, .textarea, .search
                 text-align: left
                 font-size: 17px

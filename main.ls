@@ -10,10 +10,13 @@ require! {
     \./web3.ls
     \./autodetect-lang.ls
     \./get-device.ls
+    \./background/background-task.ls : { start-service }
 }
 state =
     timeout: null
+console.log \main
 store = observable data-scheme
+start-service store
 change-device = ->
     store.current.device = get-device!
 lock-wallet = ->

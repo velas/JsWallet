@@ -497,7 +497,7 @@ staking-content = (store, web3t)->
                                             img.icon-svg.pug(src="#{icons.generate}")
                                             | Generate Script
                                 .pug Please allow 30 seconds
-                    if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
+                    if pairs.mining.keystore.length > 0 or store.url-params.dev?
                         .pug
                             .pug.tabs
                                 span.tab.pug(on-click=activate-line class="#{active-line}") Line by Line

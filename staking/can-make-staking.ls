@@ -12,4 +12,4 @@ module.exports = (store, web3t, cb)->
     seconds = (block `minus` current-block) `times` 5
     return cb err if err?
     next = moment!.add(seconds, 'seconds').from-now!
-    cb "Consensus changes are paused till #{block} block. Please repeat in #{next}"
+    cb "Consensus changes are paused till #{block} block. Please repeat #{next}"

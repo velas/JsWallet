@@ -78,6 +78,7 @@ require! {
             transform: scale(1.1)
         100%
             transform: scale(1)
+cb = console~log
 max-withdraw-ordered = (store, web3t)->
     return null if not store.staking.chosen-pool?
     return null if +store.staking.stake-amount-total is 0 and +store.staking.withdraw-amount is 0
@@ -104,19 +105,19 @@ max-withdraw-ordered = (store, web3t)->
     order = ->
         err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
         return cb err if err?
-        return alert "Order is not allowed. Please wait for epoch change" if data isnt yes
+        return alert store, "Stake and Withdraw is not allowed right now", cb if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
         amount = max.to-fixed!
-        return alert "Request is not allowed. This may because the Staking epoch is changed" if +amount is 0
+        return alert store, "Max Withdraw Orer Allowed is 0 now", cb if +amount is 0
         data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }        
     exit = ->
         #maxWithdrawOrderAllowed
-        return alert "No Ordered Amount" if +store.staking.withdraw-amount is 0
+        return alert store, "No Ordered Amount", cb if +store.staking.withdraw-amount is 0
         pool-address = store.staking.chosen-pool.address
         #staking-address = store.staking.keystore.staking.address
         data = web3t.velas.Staking.claimOrderedWithdraw.get-data(pool-address)
@@ -140,7 +141,7 @@ max-withdraw-ordered = (store, web3t)->
                                         | Request exit
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
-                        .pug.step-content Come back in 1.5 hours for a your staking amount
+                        .pug.step-content Come back in later for a your staking amount
                     .pug.step(on-click=activate-third class="#{active-third}")
                         .pug.step-count 3
                         .pug.step-content
@@ -160,7 +161,7 @@ max-withdraw = (store, web3t)->
         background: style.app.primary4
     exit = ->
         err <- can-make-staking store, web3t
-        return alert err if err?
+        return alert store, err, cb if err?
         #err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
         #return cb err if err?
         #return alert "Exit is not allowed. Please wait for epoch change" if data isnt yes
@@ -169,7 +170,7 @@ max-withdraw = (store, web3t)->
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
         amount = max.to-fixed!
         #console.log "web3t.velas.Staking.maxWithdrawAllowed('#{pool-address}', '#{staking-address}')"
-        return alert "Max Withdraw Allowed is 0" if +amount is 0
+        return alert store, "Max Withdraw Allowed is 0", cb if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0

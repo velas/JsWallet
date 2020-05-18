@@ -165,21 +165,6 @@ newseed = ({ store, web3t })->
         background: style.app.header
     text-style=
         color: style.app.text
-    set-lang = (lang)->
-        #return alert "lang is not available" if not store.langs[store.lang]?
-        store.lang = lang
-    change-lang-en = ->
-        return set-lang \en
-    change-lang-ru = ->
-        return set-lang \ru
-    change-lang-ua = ->
-        return set-lang \ua
-    change-lang-cn = ->
-        return set-lang \zh
-    change-lang-kr = ->
-        return set-lang \ko
-    change-lang-fr = ->
-        return set-lang \fr
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"

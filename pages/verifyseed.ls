@@ -175,7 +175,7 @@ newseed = ({ store, web3t })->
             button.pug.right(style=button-primary1-style on-click=verify-seed)
                 span.pug
                     img.icon-svg.pug(src="#{icons.confirm}")
-                    | #{lang.confirm-seed ? 'Confirm' }
+                    | #{lang.confirm ? 'Confirm' }
         .pug
             button.pug.right(style=button-primary3-style on-click=back)
                 span.pug

@@ -530,11 +530,11 @@ send = ({ store, web3t })->
                                     icon \DiffAdded, 20
                                 span.pug.more-text(style=more-text) #{lang.topup ? 'Topup'}
             form.pug
-                form-group lang.send-from, icon-style, ->
+                form-group lang.from, icon-style, ->
                     .address.pug(style=border-style)
                         MiddleEllipsis.pug
                             a.pug(href="#{get-address-link wallet}") #{get-address-title wallet}
-                form-group lang.recipient, icon-style, ->
+                form-group lang.to, icon-style, ->
                     input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
                 form-group lang.amount, icon-style, ->
                     .pug
@@ -576,16 +576,8 @@ send = ({ store, web3t })->
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-charged}") #{token}
                                 .pug.usd $ #{round5 send.amount-charged-usd}
-                        if no    
-                            tr.pug.green
-                                td.pug #{lang.recipient-obtains ? 'Recipient Obtains'}
-                                td.pug
-                                    span.pug.bold #{round5(send.amount-obtain)}
-                                        img.label-coin.pug(src="#{send.coin.image}")
-                                        span.pug.bold #{token}
-                                    .pug.usd $ #{round5 send.amount-obtain-usd}
                         tr.pug.orange
-                            td.pug #{lang.transaction-fee ? 'Transaction Fee'}
+                            td.pug #{lang.fee ? 'Transaction Fee'}
                             td.pug
                                 span.pug(title="#{send.amount-send-fee}") #{round5(send.amount-send-fee)}
                                     img.label-coin.pug(src="#{send.coin.image}")

@@ -426,7 +426,7 @@ token-migration = (store, web3t)->
                 |> find (-> it.coin.token is \vlx) 
                 |> (.balance)
         amount2 = 
-            | window.location.href.index-of('internal') > -1 => 1 
+            | store.url-params.internal? => 1 
             | _ => amount `minus` 0.01
         #amount2 = 1
         to = store.current.token-migration

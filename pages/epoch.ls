@@ -305,7 +305,7 @@ module.exports = (store, web3t)->
         store.current.current-epoch = no
     .choose-account.pug
         .pug.current-epoch.h1(class="#{show-class}")
-            span.name.pug(on-click=open-epoch) Epoch
+            span.name.pug(on-click=open-epoch) #{lang.epoch}
             span.pug.icon(on-click=open-epoch class="#{rotate-class}")
                 img.icon-svg-create.pug(src="#{icons.arrow-down}")
         if store.current.current-epoch

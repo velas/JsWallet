@@ -473,7 +473,7 @@ search = ({ store, web3t })->
         .pug.title.alert(style=border-style2)
             .pug.header This page is under development. You see this only as demo
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") Search page
+            .pug.header(class="#{show-class}") Search
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t

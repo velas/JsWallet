@@ -14,12 +14,16 @@ require! {
 .menu
     height: 199px
     line-height: 200px
+    $mobile: 425px
+    $tablet: 800px
     &.wallet-main
         @media(max-width: 800px)
             margin: 60px 15px 0
             position: relative
             left: 0
             right: 0
+        @media(max-width: $mobile)
+            margin: 60px 0 0
     .syncing
         @keyframes spin
             from
@@ -146,7 +150,7 @@ module.exports = ({ store, web3t })->
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
                     .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
-                .currency.h1.pug #{lang.total-balance ? 'Total Balance'}
+                .currency.h1.pug #{lang.balance ? 'Balance'}
                 .pug
                     if store.preference.refresh-visible is yes
                         .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")

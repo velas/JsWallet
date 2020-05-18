@@ -5,6 +5,8 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \../icons.ls
+    \prelude-ls : { filter }
+    \./confirmation.ls : { confirm }
 }
 .sent
     .animation
@@ -167,17 +169,28 @@ module.exports = ({ store, web3t })->
         filter: style.app.nothingIcon
     btn-icon =
         filter: style.app.btn-icon
+    has-pending =
+        store.transactions.applied 
+            |> filter (.pending) 
+            |> (.length > 0)
+    inacurate = (cb)->
+        return cb null if has-pending is no
+        agree <- confirm store, "Your still have a pending transaction. Some of the counts may be inaccurate."
+        #console.log 'after confirm', agree
+        return cb "disagree" if not agree
+        cb null
     go-home = ->
+        err <- inacurate
+        return cb err if err?
         navigate store, web3t, \wallets
     lang = get-lang store
     .pug.sent
         .pug.animation
-            .pug.show
-                img.icon-sent.pug(src="#{icons.sent-check}")
-            .pug.hide
+            if has-pending
                 img.icon-sent.pug(style=sent-icon src="#{icons.sent-plane}")
+            else
+                img.icon-sent.pug(src="#{icons.sent-check}")
         .pug.text(style=text-style)
-            span.pug #{lang.your} 
             a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction ? 'transaction'}
             span.pug  #{lang.has-been-sent ? 'has been sent'}
         button.button.pug(on-click=go-home style=button-primary3-style)

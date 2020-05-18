@@ -62,6 +62,8 @@ require! {
             .search-content
                 position: relative
                 padding: 0 10px
+                @media (max-width: 580px)
+                    padding: 0
                 .search
                     margin-top: 10px
                     border: 1px solid #CCC
@@ -76,6 +78,8 @@ require! {
                     top: 6px
                     left: 20px
                     position: absolute
+                    @media (max-width: 580px)
+                        left: 10px
         >.settings
             padding-top: 90px
             padding-bottom: 90px
@@ -88,8 +92,8 @@ require! {
                     height: 80%
                     padding: 10px
                     margin: auto 10px
-                    @media (max-width: 550px)
-                        margin: auto
+                    @media (max-width: 580px)
+                        padding: 10px 0
                     .item
                         width: 49%
                         margin-bottom: 10px
@@ -100,12 +104,12 @@ require! {
                         text-align: left
                         float: left
                         box-sizing: border-box
-                        @media (max-width: 550px)
-                            width: 97%
+                        @media (max-width: 580px)
+                            width: 100%
                             float: none
                         &:nth-child(odd)
                             margin-right: 10px
-                            @media (max-width: 550px)
+                            @media (max-width: 580px)
                                 margin-right: 0
                         >*
                             display: inline-block

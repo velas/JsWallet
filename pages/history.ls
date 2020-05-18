@@ -18,14 +18,17 @@ require! {
     position: relative
     padding-bottom: 0px
     display: inline-block
+    .from-to
+        width: 40px
+        display: inline-block
     .tooltip
         position: absolute
         text-transform: uppercase
-        left: 35px
+        left: 25px
         top: -8px
         z-index: 1
         line-height: 14px
-        font-size: 10px
+        font-size: 9px
         font-weight: 600
         color: #fff
         padding: 5px
@@ -61,7 +64,6 @@ require! {
         height: 12px
         top: 0px
     .smart-contract
-        padding-left: 10px
         color: orange
         position: relative
         .help
@@ -351,7 +353,7 @@ require! {
                     img
                         border-radius: inherit
                         border: none
-                        margin-left: 3px
+                        margin-right: 13px
                         height: 12px
                         left: 3px
                         position: relative
@@ -389,7 +391,7 @@ require! {
                             position: relative
                             width: 15px
                             height: 13px !important
-                    a
+                    .time-ago
                         display: block
                         text-overflow: ellipsis
                         overflow: hidden
@@ -411,7 +413,7 @@ require! {
                         top: 17px
                         z-index: 1
                         line-height: 14px
-                        font-size: 10px
+                        font-size: 9px
                         font-weight: 600
                         color: #fff
                         padding: 5px
@@ -460,7 +462,7 @@ require! {
                 img
                     border-radius: inherit
                     border: none
-                    margin-left: 3px
+                    margin-right: 13px
                     height: 12px
                     left: 3px
                     position: relative
@@ -595,7 +597,7 @@ loader = ({ store, web3t })->
             path.pug(d='M10.3866667,9.16777778 C10.54,8.90111111 10.8794444,8.80888889 11.145,8.96388889 L13.7922222,10.4905556 C14.0583333,10.6455556 14.1477778,10.9844444 13.9944444,11.2505556 C13.8416667,11.5166667 13.5011111,11.6061111 13.2333333,11.4538889 L10.5894444,9.92666667 C10.3238889,9.77222222 10.2338889,9.43277778 10.3866667,9.16777778 Z')
             path.pug(d='M14.4433333,6.94388889 L11.3872222,6.94388889 C11.0805556,6.94388889 10.8311111,7.19277778 10.8311111,7.5 C10.8311111,7.80666667 11.0794444,8.05555556 11.3872222,8.05555556 L14.4433333,8.05555556 C14.7511111,8.05555556 15,7.80666667 15,7.5 C15,7.19222222 14.7511111,6.94388889 14.4433333,6.94388889 Z')
 render-transaction = (store, web3t, tran)-->
-    { transaction-info, coins, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
+    { transaction-info, coins, checked, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
     filter-icon=
         filter: style.app.filterIcon
@@ -637,8 +639,8 @@ render-transaction = (store, web3t, tran)-->
     amount-pending=
         color: if pending is yes then 'orange' else ''
     about = 
-        | recipient-type is \contract => 'Smart contract'
-        | description is \internal => 'Smart contract'
+        | recipient-type is \contract => 'Smart'
+        | description is \internal => 'Smart'
         | description is \external => 'User'
         | _ => 'Unknown'
     about-icon = 
@@ -657,12 +659,13 @@ render-transaction = (store, web3t, tran)-->
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.details-from
                 .pug.gray(style=lightText)
-                    span.pug #{lang.tx-from}:
-                    CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
-                        copy store
-                    span.pug.smart-contract
-                        .pug.tooltip #{about}
-                        img.help.pug(src="#{about-icon}")
+                    span.from-to.pug #{lang.from}:
+                    span.action.pug
+                        CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
+                            copy store
+                        span.pug.smart-contract
+                            .pug.tooltip #{about}
+                            img.help.pug(src="#{about-icon}")
                 MiddleEllipsis.pug
                     a.pug(target="_blank" style=menu-style) #{from}
             if no
@@ -670,30 +673,27 @@ render-transaction = (store, web3t, tran)-->
                     img.icon-svg1.pug(src="#{icons.arrow-right}")
             .cell.pug.details-to
                 .pug.gray(style=lightText)
-                    span.pug #{lang.tx-to}:
-                    CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
-                        copy store
-                    span.pug.smart-contract
-                        .pug.tooltip #{about}
-                        img.help.pug(src="#{about-icon}")
+                    span.from-to.pug #{lang.to}:
+                    span.action.pug
+                        CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
+                            copy store
+                        span.pug.smart-contract
+                            .pug.tooltip #{about}
+                            img.help.pug(src="#{about-icon}")
                 MiddleEllipsis.pug
                     a.pug(target="_blank" style=menu-style) #{to}
             .cell.pug.created
                 .pug.gray(style=lightText)
                     span.pug #{lang.created}: 
-                a.pug
+                .time-ago.pug
                     if pending is yes
                         span.pug
                             span.pug.bold
                                 loader store, web3t
-                                if no
-                                    icon \Sync, 10
                     else
                         span.pug
                             span.pug.bold
                                 img.icon-check.pug(src='data:image/svg+xml;base64,\PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTA0LjUwMiw3NS40OTZjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5OC0zNi4yMDQsMEwxNjEuNTk0LDM4Mi4yMDNMNDMuNzAyLDI2NC4zMTFjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5Ny0zNi4yMDQsMCAgICBjLTkuOTk4LDkuOTk3LTkuOTk4LDI2LjIwNSwwLDM2LjIwM2wxMzUuOTk0LDEzNS45OTJjOS45OTQsOS45OTcsMjYuMjE0LDkuOTksMzYuMjA0LDBMNTA0LjUwMiwxMTEuNyAgICBDNTE0LjUsMTAxLjcwMyw1MTQuNDk5LDg1LjQ5NCw1MDQuNTAyLDc1LjQ5NnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzNDRDVBRiIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD4KCTwvZz4KPC9nPjwvZz4gPC9zdmc+')
-                                if no
-                                    img.icon-check.pug(src="#{icons.sent-check}") 
                     |#{ago time}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}" style=amount-pending)
@@ -804,17 +804,11 @@ module.exports = ({ store, web3t })->
                         button.pug(on-click style=button-primary1-style)
                             span.pug
                                 img.icon-svg-btn.pug(src="#{icons.apply}")
-                                | #{lang.apply}
+                                | #{lang.btn-apply}
                     .pug.bottom
                         for coin in coins
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
-        if no    
-            if store.transactions.applied.length > 0
-                .header-table.pug(style=header-table-style)
-                    span.pug.cell.network(style=lightText) #{lang.network}
-                    span.pug.cell.txhash(style=lightText) #{lang.trx-id}
-                    span.pug.cell.amount(style=lightText) #{lang.trx-amount}
         .pug
             .pug.table
                 if store.transactions.applied.length > 0

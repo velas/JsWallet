@@ -117,6 +117,10 @@ require! {
                     -webkit-box-flex: 0
                     flex: 0 0 50%
                     max-width: 50%
+                @media screen and (max-width: 400px)
+                    -webkit-box-flex: 0
+                    flex: 0 0 100%
+                    max-width: 100%
             &.col-6
                 -webkit-box-flex: 0
                 flex: 0 0 50%
@@ -227,7 +231,7 @@ info = ({ store, web3t })->
         if store.current.open-menu then \hide else \ ""
     .pug.info
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") Info page
+            .pug.header(class="#{show-class}") #{lang.statistics}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t

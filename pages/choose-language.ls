@@ -219,11 +219,11 @@ language = (store, web3t)->
     change-lang-ru = ->
         return set-lang \ru
     change-lang-ua = ->
-        return set-lang \ua
+        return set-lang \uk
     change-lang-cn = ->
-        return set-lang \cn
+        return set-lang \zh
     change-lang-kr = ->
-        return set-lang \kr
+        return set-lang \ko
     change-lang-fr = ->
         return set-lang \fr
     change-lang-es = ->
@@ -236,7 +236,7 @@ language = (store, web3t)->
             .pug.logo
                 img.iron.pug(src="#{style.branding.logo}" style=logo-style)
                 .title.pug #{style.branding.title}
-            .welcome.pug(style=text-style) #{lang.choose-language}
+            .welcome.pug(style=text-style) #{lang.language}
             .pug.langs
                 ul.pug
                     li.pug.lang-item(style=comming-soon)
@@ -274,9 +274,6 @@ language = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         img.pug(src="#{icons.langs-kz}")
                         .pug Қазақ
-        if no
-            .pug.content
-                button.pug(on-click=close-language style=button-primary2-style) #{lang.next}
 module.exports = ({ store, web3t } )->
     return null if store.current.choose-language isnt yes
     { close-language } = menu-funcs store, web3t

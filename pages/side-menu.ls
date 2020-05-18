@@ -315,7 +315,7 @@ module.exports = (store, web3)->
     staking = if store.current.submenu then \active else \not-active
     .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
-            img.pug(src="#{info.branding.logo}" style=logo-style)
+            img.pug(src="#{info.branding.logo-sm}" style=logo-style)
         if store.preference.lock-visible is yes
             .menu-item.bottom.pug(on-click=lock style=icon-style)
                 img.pug(src="#{icons.lock}" style=lock-icon)

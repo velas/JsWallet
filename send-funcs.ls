@@ -37,7 +37,7 @@ module.exports = (store, web3t)->
     default-button-style = { color }
     send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price }, cb)->
         { token } = send.coin
-        tx =
+        tx-obj =
             account: { wallet.address, wallet.private-key } 
             recipient: to
             network: network
@@ -48,16 +48,14 @@ module.exports = (store, web3t)->
             data: data
             gas: gas
             gas-price: gas-price
-        #console.log 'before create tx'
-        err, data <- create-transaction tx
-        #console.log 'after create tx', err
+        err, data <- create-transaction tx-obj
         return cb err if err?
-        agree <- confirm store, "Send #{round5 tx.amount} #{send.coin.token} to #{send.to}"
+        agree <- confirm store, "Send #{round5 tx-obj.amount} #{send.coin.token} to #{send.to}"
         #console.log 'after confirm', agree
         return cb "Cancelled" if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
         return cb err if err?
-        err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee }
+        err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee, send.to, from: wallet.address }
         cb err, tx
     perform-send-safe = (cb)->
         err, to <- resolve-address web3t, send.to, send.coin, send.network
@@ -143,17 +141,7 @@ module.exports = (store, web3t)->
         if send.show-data-mode is \decoded then \encoded else \decoded
     when-empty = (str, def)->
         if (str ? "").length is 0 then def else str
-    debug = (cb)->
-        { token } = send.coin
-        { address } = wallet
-        tx = "fake tx"
-        amount-send = 1
-        amount-send-fee = 0.01
-        err <- create-pending-tx { store, token, send.network, tx, amount-send, amount-send-fee }
-        <- web3t.refresh
-        cb null
     history = ->
-        #<- debug
         store.current.send-menu-open = no
         store.current.filter = [\IN, \OUT, send.coin.token]
         apply-transactions store

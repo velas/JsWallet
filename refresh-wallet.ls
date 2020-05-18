@@ -9,7 +9,7 @@ refresh-wallet = (web3, store, cb)->
     task1 = task (cb)->
         load-rates store, cb
     task2 = task (cb)->
-        load-all-transactions store, cb
+        load-all-transactions store, web3, cb
     task3 = task (cb)->
         calc-wallet store, cb 
     <- run [{ task1, task2 }, task3] .then
