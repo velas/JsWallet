@@ -314,14 +314,16 @@ module.exports = (store, web3t)->
                     .pug.table-row-menu
                         .col.folder-menu.pug
                             .pug #{current-block}
-                            span.pug Current block
+                            span.pug #{lang.current-block}
                         .col.folder-menu.pug
                             .pug #{store.dashboard.epoch}
-                            span.pug Current epoch
+                            span.pug #{lang.current-epoch}
                         .col.folder-menu.pug
                             .pug
                                 progress.pug(value="#{store.dashboard.epoch-percent}" max="100")
-                            span.pug Change #{epoch-next}
+                            span.pug 
+                                | #{lang.change} 
+                                | #{epoch-next}
                         if window.location.href.index-of('internal') > -1
                             .col.folder-menu.pug
                                 .pug

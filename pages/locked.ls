@@ -11,6 +11,7 @@ require! {
     \./choose-language.ls
     \../icons.ls
     \./confirmation.ls : { confirm }
+    \../components/button.ls
 }
 .locked
     @import scheme
@@ -210,10 +211,7 @@ input = (store, web3t)->
         input.pug.password(class="#{drag}" key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="Password or PIN" on-change=change on-key-down=catch-key auto-complete="off")
         if exists!
             .pug
-                button.setup.pug(on-click=enter style=button-primary1-style)
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.enter}")
-                        | #{lang.enter}
+                button { store, on-click: enter, type: \primary , text: \enter }
                 .pug
                     .division.pug
                         .line.l.pug

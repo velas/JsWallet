@@ -13,6 +13,7 @@ require! {
     \../icons.ls
     \./epoch.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
+    \../components/button.ls
 }
 .content
     position: relative
@@ -455,18 +456,6 @@ send = ({ store, web3t })->
     filter-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
-    button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
-        color: style.app.text
-        background: style.app.primary1
-    button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
-        color: style.app.text2
-        background: style.app.primary3
     border-header =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
@@ -501,13 +490,14 @@ send = ({ store, web3t })->
             epoch store, web3t
             switch-account store, web3t
         .pug.content-body(style=more-text)
-            .pug.header
-                span.head.pug.left
-                    img.pug(src="#{send.coin.image}")
-                span.pug.head.center(style=more-text) #{wallet-title}
-                if store.current.device is \mobile
-                    span.pug.head.right(on-click=history style=icon-style)
-                        img.icon-svg-history.pug(src="#{icons.history}")
+            if store.current.device isnt \mobile
+                .pug.header
+                    span.head.pug.left
+                        img.pug(src="#{send.coin.image}")
+                    span.pug.head.center(style=more-text) #{wallet-title}
+                    if store.current.device is \mobile
+                        span.pug.head.right(on-click=history style=icon-style)
+                            img.icon-svg-history.pug(src="#{icons.history}")
             if store.current.send-menu-open
                 .pug.more-buttons(style=menu-style)
                     if store.preference.invoice-visible is yes
@@ -591,25 +581,17 @@ send = ({ store, web3t })->
                         .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
             .pug.button-container
                 .pug.buttons
-                    button.pug.btn.btn-primary(on-click=send-anyway style=button-primary1-style)
-                        span.pug
-                            img.icon-svg.pug(src="#{icons.send}")
-                            | #{send-title}
-                        if send.sending
-                            span.pug ...
-                    button.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
-                        span.pug
-                            img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
-                            | #{lang.cancel}
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary }
+                    button { store, text: \cancel , on-click: cancel, icon: \close2 }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
     { wallets } = wallets-funcs store, web3t
     current-wallet = 
         wallets |> find (-> it.coin.token is wallet.coin.token)
-    console.log \match, current-wallet.address, wallet.address
     return cb null if current-wallet.address is wallet.address 
     { wallet } = send-funcs store, web3t
+    return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]
     to = ""
     value = 0

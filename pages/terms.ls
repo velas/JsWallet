@@ -6,6 +6,7 @@ require! {
     \../web3.ls
     \../get-lang.ls
     \../icons.ls
+    \../components/button.ls
 }
 .terms
     @import scheme
@@ -55,10 +56,6 @@ terms = ({ store, web3t })->
         color: info.app.text
     button-style=
         color: info.app.text
-    button-primary1-style=
-        border: "1px solid #{info.app.primary1}"
-        color: info.app.text
-        background: info.app.primary1
     accept = ->
         navigate store, web3t, \:init
         <- web3t.refresh
@@ -68,10 +65,7 @@ terms = ({ store, web3t })->
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
                 .pug #{lang.terms ? 'Please accept terms of use'}
-                button.pug(on-click=accept style=button-primary1-style)
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.accept}")
-                        | #{lang.accept ? 'Accept'}
+                button { store, text: \accept , on-click: accept, type: \primary }
 terms.init = ({ store }, cb)->
     err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
     return cb err if err?

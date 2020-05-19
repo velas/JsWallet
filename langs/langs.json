@@ -9,15 +9,6 @@
         "ko"
     ],
     "mapping": {
-        "editCoins": [
-            "Add",
-            "Добавить монету",
-            "Додати монету",
-            "Ajouter une pièce",
-            "Editar Monedas",
-            "添加硬幣",
-            "동전 추가"
-        ],
         "confirmation": [
             "Confirmation",
             "Подтверждение",
@@ -200,7 +191,7 @@
         ],
         "switchAccountIndex": [
             "Switch Account Index",
-            "Сменить Account Index",
+            "Сменить Идекс Кошелька",
             "Змінити Account Index",
             "Changer d'Index de Compte",
             "Cambiar Indice de Cuenta",
@@ -443,8 +434,8 @@
         ],
         "yourTransactions": [
             "Transactions",
-            "Ваши транзакции",
-            "Ваші транзакції",
+            "Транзакции",
+            "Транзакції",
             "Vos Transactions",
             "Transacciones",
             "您的交易",
@@ -828,15 +819,6 @@
             "您的賭注",
             "스테이크"
         ],
-        "stakePlaceholder": [
-            "stake",
-            "Стейк",
-            "Стейк",
-            "stake",
-            "stake",
-            "賭注",
-            "말뚝"
-        ],
         "btnApply": [
             "Apply",
             "Применять",
@@ -1016,6 +998,213 @@
             "Estadísticas",
             "统计数据",
             "통계"
+        ],
+        "change": [
+            "Change",
+            "Изменение",
+            "Зміна",
+            "Changement",
+            "Cambio",
+            "改变",
+            "변경"
+        ],
+        "currentEpoch": [
+            "Current Epoch",
+            "Текущая Эпоха",
+            "Нинішня Епоха",
+            "Époque Actuelle",
+            "Época Actual",
+            "目前的时代",
+            "Epoch 현재"
+        ],
+        "currentBlock": [
+            "Current Block",
+            "Текущий Блок",
+            "Поточний Блок",
+            "Bloc Courant",
+            "Bloque Actual",
+            "当前块",
+            "현재 블록"
+        ],
+        "all": [
+            "All",
+            "Все",
+            "Всі",
+            "Tous",
+            "Todos",
+            "所有",
+            "모든"
+        ],
+        "dapps": [
+            "Dapps",
+            "Dapps",
+            "Dapps",
+            "Dapps",
+            "Dapps",
+            "Dapps",
+            "Dapps"
+        ],
+        "images": [
+            "Images",
+            "Изображения",
+            "Зображення",
+            "Images",
+            "Imágenes",
+            "图像",
+            "이미지"
+        ],
+        "publicFiles": [
+            "Public files",
+            "Общедоступные файлы",
+            "Спільні файли",
+            "Fichiers publics",
+            "Los archivos públicos",
+            "公共文件",
+            "공 파일"
+        ],
+        "web": [
+            "Web",
+            "Веб",
+            "Веб",
+            "Web",
+            "Web",
+            "网",
+            "웹사"
+        ],
+        "underDevelopment": [
+            "This tab is under development",
+            "Эта вкладка находится в стадии разработки",
+            "Ця вкладка знаходиться в стадії розробки",
+            "Cet onglet est en cours de développement",
+            "Esta ficha está en desarrollo",
+            "这个标签是在发展",
+            "이 탭은 개발"
+        ],
+        "estimatedResults": [
+            "Estimated Results",
+            "Ожидаемые Результаты",
+            "Очікувані Результати",
+            "Les Résultats Estimés",
+            "Resultados Estimados",
+            "估计结果",
+            "예상 결과"
+        ],
+        "sec": [
+            "sec",
+            "сек",
+            "с",
+            "sec",
+            "sec",
+            "sec",
+            "sec"
+        ],
+        "velasSphere": [
+            "velas sphere",
+            "сфера Velas",
+            "сфера Velas",
+            "velas sphère",
+            "velas esfera",
+            "酒店（领域",
+            "벨라 구체"
+        ],
+        "velasBlockchain": [
+            "velas blockchain",
+            "Velas блокчейн",
+            "Velas блокчейн",
+            "velas blockchain",
+            "velas blockchain",
+            "酒店（区块链",
+            "벨라 blockchain"
+        ],
+        "storageDescription": [
+            "Keep your data on encrypted distributed servers with censorship resistance. Get access to them in a convenient and familiar way.",
+            "Храните ваши данные в зашифрованном распределенных серверах с сопротивление цензуры. Получите доступ к ним в удобном и привычным способом.",
+            "Зберігайте ваші дані в зашифрованому розподілених серверах опір цензури. Отримайте доступ до них в зручному і звичним способом.",
+            "Gardez vos données sur les serveurs distribués avec la censure de la résistance. Avoir accès à eux dans un moyen pratique et familièrement.",
+            "Mantener sus datos cifrados servidores distribuidos con la censura de la resistencia. De acceder a ellos en un cómodo y familiar y a la forma.",
+            "保持你的数据加密的分布服务器的与审查的阻力。 获得他们在一个方便的和熟悉的方式。",
+            "유지 귀하의 데이터를 암호화된 분산 서버와 검열 저항입니다. 스에서 그들에게 편리하고 익숙한 방법입니다."
+        ],
+        "cpuDescription": [
+            "Use distributed resources to perform complex tasks for science, AI, video rendering.",
+            "Использование распределенных ресурсов для выполнения сложных задач для науки, АИ, рендеринг видео.",
+            "Використання розподілених ресурсів для виконання складних завдань для науки, АІ, рендеринг відео.",
+            "L'utilisation de ressources distribuées à effectuer des tâches complexes de la science, de l'IA, le rendu vidéo.",
+            "El uso de los recursos distribuidos para realizar tareas complejas, para la ciencia, AI, procesamiento de vídeo.",
+            "采用分布式资源，以执行复杂的任务，科学、大赦国际、视频渲染。",
+            "사용 배포를 수행하는 리소스가 복잡한 작업을 위해 과학,AI,동영상 렌더링이 가능합니다."
+        ],
+        "stakingDescription": [
+            "Help the blockchain be more decentralized by launching an additional validator.",
+            "Помогите блокчейн будет более децентрализованным путем запуска дополнительной проверки.",
+            "Допоможіть блокчейн буде більш децентралізованим шляхом запуску додаткової перевірки.",
+            "Aider à la blockchain être plus décentralisée, par le lancement d'un supplément de programme de validation.",
+            "Ayudar a la blockchain ser más descentralizado, con el lanzamiento de un adicional de validación.",
+            "帮助区块链可以更加分散的通过启动一个额外的验证程序。",
+            "도록 더 분산 시작하여 추가적인 검증이다."
+        ],
+        "storageDapp": [
+            "Velas Storage Dapp",
+            "Velas ДАПП Хранения ",
+            "Velas ДАПП Зберігання ",
+            "Velas De Stockage Dapp",
+            "Velas De Almacenamiento Dapp",
+            "酒店（储存Dapp",
+            "벨라 저장 Dapp"
+        ],
+        "videoStorage": [
+            "Video Storage",
+            "Хранения Видео ",
+            "Зберігання Відео ",
+            "Vidéo De Stockage",
+            "De Almacenamiento De Vídeo",
+            "视频存储",
+            "비디오 스토리지"
+        ],
+        "velasCpuStaking": [
+            "Velas CPU/GPU/STORAGE Staking Dapp",
+            "Velas ЦП/ГПУ/хранение кернеры ДАПП",
+            "Velas ЦП/ГПУ/зберігання кернери ДАПП",
+            "Velas CPU/GPU/STOCKAGE de Jalonnement Dapp",
+            "Velas de la CPU/GPU/ALMACENAMIENTO de Estacando de Dapp",
+            "酒店（CPU/GPU/存储赌Dapp",
+            "벨라 CPU/GPU/저장소 감시 Dapp"
+        ],
+        "velasCpu": [
+            "Velas CPU/GPU/STORAGE Dapp",
+            "Velas ЦП/ГПУ/ДАПП хранения ",
+            "Velas ЦП/ГПУ/ДАПП зберігання ",
+            "Velas CPU/GPU/STOCKAGE Dapp",
+            "Velas de la CPU/GPU/ALMACENAMIENTO Dapp",
+            "酒店（CPU/GPU/存储Dapp",
+            "벨라 CPU/GPU/관 Dapp"
+        ],
+        "stakingDapp": [
+            "Velas Staking Dapp",
+            "Velas Кернеры ДАПП",
+            "Velas Кернери ДАПП",
+            "Velas Jalonnement Dapp",
+            "Velas De Estacando De Dapp",
+            "酒店（赌Dapp",
+            "벨라 걸고 Dapp"
+        ],
+        "delegateStake": [
+            "Delegate Stake",
+            "Делегат Кола",
+            "Делегат Кола",
+            "Délégué Pieu",
+            "El Delegado De La Estaca",
+            "委托股份",
+            "위임 스테이크"
+        ],
+        "velasMessenger": [
+            "Velas Messenger",
+            "Мессенджер Velas ",
+            "Мессенджер Velas ",
+            "Velas Messenger",
+            "Velas Messenger",
+            "酒店（使者",
+            "벨라 메신저"
         ]
     }
 }

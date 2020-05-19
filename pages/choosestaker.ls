@@ -32,6 +32,7 @@ require! {
     \../staking/can-make-staking.ls
     \./epoch.ls
     \./confirmation.ls : { alert }
+    \../components/button.ls
 }
 .staking
     @import scheme
@@ -560,18 +561,10 @@ staking-content = (store, web3t)->
         color: style.app.text
         overflow-x: \auto
         margin-top: \10px
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
-    button-primary4-style=
-        border: "1px solid #{style.app.primary4}"
-        color: style.app.text
-        background: style.app.primary4
     filter-icon=
         filter: style.app.filterIcon
     comming-soon =
@@ -748,9 +741,7 @@ staking-content = (store, web3t)->
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
             td.pug
-                button.pug(on-click=choose-pull style=button-primary2-style)
-                    span.pug
-                        img.icon-right.pug(src="#{icons.arrow-right}")
+                button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
         store.staking.chosen-pool = null
     activate = (step)-> ->
@@ -800,10 +791,7 @@ staking-content = (store, web3t)->
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
                         .buttons.pug
-                            button.pug(on-click=cancel-pool style=button-primary2-style)
-                                span.pug
-                                    img.icon-svg.pug(src="#{icons.choose}")
-                                    | Select
+                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: \select }
             if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -811,7 +799,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
+                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -820,10 +808,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.apply}")
-                                | #{lang.btn-apply}
+                        button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
             if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
@@ -836,7 +821,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{vlx-token}
                             hr.pug
                             label.pug Stake More
-                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
+                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -845,10 +830,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.apply}")
-                                | #{lang.btn-apply}
+                        button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
             claim-stake store, web3t
             exit-stake store, web3t
 staking = ({ store, web3t })->
@@ -870,10 +852,6 @@ staking = ({ store, web3t })->
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
-    button-primary2-style=
-        border: "1px solid #{info.app.primary2}"
-        color: info.app.text
-        background: info.app.primary2
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light

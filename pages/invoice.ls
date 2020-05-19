@@ -11,6 +11,7 @@ require! {
     \../address-link.ls : { get-address-link, get-address-title }
     \../icons.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
+    \../components/button.ls
 }
 .content
     position: relative
@@ -216,41 +217,6 @@ require! {
             font-weight: bold
     .button-container
         text-align: center
-        .buttons
-            margin-top: 10px
-            text-align: center
-            border-radius: $border
-            width: 100%
-            display: inline-block
-            overflow: hidden
-            .btn
-                width: auto
-                min-width: 80px
-                padding: 0 6px
-                line-height: 36px
-                height: 36px
-                text-transform: uppercase
-                text-align: center
-                font-weight: bold
-                border: 0
-                margin: 5px
-                font-size: 10px
-                border-radius: $border
-                display: inline-block
-                cursor: pointer
-                box-sizing: border-box
-                transaction: all .5s
-                &.btn-primary
-                    background: #6CA7ED
-                    color: white
-                &:hover
-                    background: rgba(#6CA7ED, 0.2)
-                    opacity: .9
-                .icon-svg
-                    position: relative
-                    height: 12px
-                    top: 2px
-                    padding: 0px 5px 0 0px
     .ill-qr
         position: relative
         width: 160px
@@ -279,36 +245,13 @@ require! {
             transform: translatex(10px) translatey(10px)
         100%
             transform: translatex(-30px) translatey(-15px)
-    img
+    img.ill
         width: 160px
         display: block
 form-group = (title, icon-style, content)->
     .pug.form-group
         label.pug.control-label(style=icon-style) #{title}
         content!
-#recaptchaRef = react.createRef!
-cancel-button = (store, web3t)->
-    style = get-primary-info store
-    button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
-        color: style.app.text2
-        background: style.app.primary3
-    btn-icon =
-        filter: style.app.btn-icon
-        position: "relative"
-        height: "12px"
-        width: "auto"
-        padding: "0px"
-        display: "inline-block"
-    #return null if store.preference.disableInvoice isnt yes
-    lang = get-lang store
-    { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
-    .pug.button-container
-        .pug.buttons
-            button.pug.btn.btn-default(on-click=cancel style=button-primary3-style)
-                span.pug
-                    img.icon-svg.pug(src="#{icons.close}" style=btn-icon)
-                    | #{lang.cancel}
 address-link = (store, web3t)->
     return null if store.preference.disableInvoice is yes
     { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
@@ -345,14 +288,14 @@ address-link = (store, web3t)->
                         copy store
 ill-qr = (store, web3t)->
     .pug.ill-qr
-        img.pug.ill-top(src="#{icons.invoice-ill-top}")
-        img.pug.ill-middle.move(src="#{icons.invoice-ill-middle}")
-        img.pug(src="#{icons.invoice-ill-down}")
+        img.ill.pug.ill-top(src="#{icons.invoice-ill-top}")
+        img.ill.pug.ill-middle.move(src="#{icons.invoice-ill-middle}")
+        img.ill.pug(src="#{icons.invoice-ill-down}")
 send = ({ store, web3t })->
-    { wallet } = invoice-funcs store, web3t
+    { wallet, cancel } = invoice-funcs store, web3t
     .pug.content
         ill-qr store, web3t
         address-link store, web3t
         receive store, wallet
-        cancel-button store, web3t
+        button { store, text: \cancel , on-click: cancel, icon: \close2 }
 module.exports = send

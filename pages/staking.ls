@@ -31,6 +31,7 @@ require! {
     \../staking/can-make-staking.ls
     \mobx : { transaction }
     \./epoch.ls
+    \../components/button.ls
 }
 .staking
     @import scheme
@@ -877,10 +878,6 @@ staking-content = (store, web3t)->
         color: style.app.text
         overflow-x: \auto
         margin-top: \10px
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -1022,15 +1019,12 @@ staking-content = (store, web3t)->
                         if pairs.mining.keystore.length is 0
                             .pug
                                 .pug.btn
-                                    button.btn-width.pug(style=button-primary2-style on-click=show-script)
-                                        span.pug
-                                            img.icon-svg.pug(src="#{icons.generate}")
-                                            | #{lang.generate-script}
+                                    button { store, type : \secondary , on-click: show-script , icon : \generate , text: "generateScript" }
                                 .pug #{lang.pls-allow}
                         else 
                             .pug
                                 .pug.btn
-                                    button.btn-width.pug(style=button-primary2-style on-click=hide-script) x
+                                    button { store, on-click: hide-script , icon: \close2 }
                     if pairs.mining.keystore.length > 0 or window.location.href.index-of('dev') > -1
                         .pug
                             .pug.tabs
@@ -1093,7 +1087,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
+                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1102,10 +1096,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.apply}")
-                                | #{lang.btn-apply}
+                        button { store, on-click: become-validator , icon: \apply , text : \btnApply , type : \secondary }
             if +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
@@ -1170,7 +1161,7 @@ staking-content = (store, web3t)->
                                         span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
-                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake-placeholder}")
+                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1179,20 +1170,14 @@ staking-content = (store, web3t)->
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                        button.pug(style=button-primary2-style on-click=become-validator)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.apply}")
-                                | #{lang.btn-apply}      
-            if store.url-params.emit?
+                        button { store, on-click: become-validator , type : \secondary , text: \btnApply , icon : \apply }
+            if window.location.href.index-of('emit') > -1
                 .pug.section
                     .title.pug
                         h3.pug #{lang.emit-change}
                     .description.pug
                         .pug.pad-bottom #{lang.propose}
-                        button.pug(style=button-primary2-style on-click=vote-for-change)
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.emit}")
-                                | #{lang.emit}
+                        button { store, on-click: vote-for-change, text : \emit }
             claim-stake store, web3t
             exit-stake store, web3t
 staking = ({ store, web3t })->
@@ -1214,10 +1199,6 @@ staking = ({ store, web3t })->
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
-    button-primary2-style=
-        border: "1px solid #{info.app.primary2}"
-        color: info.app.text
-        background: info.app.primary2
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light

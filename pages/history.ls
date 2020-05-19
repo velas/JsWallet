@@ -353,7 +353,8 @@ require! {
                     img
                         border-radius: inherit
                         border: none
-                        margin-right: 13px
+                        margin-right: 0px
+                        margin-left: 5px
                         height: 12px
                         left: 3px
                         position: relative

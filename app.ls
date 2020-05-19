@@ -48,6 +48,12 @@ require! {
                 text-align: left !important
                 margin-left: 70px !important
                 font-size: 12px !important
+        &.alert
+            .header
+                @media(max-width: 820px)
+                    text-align: center !important
+                    margin-left: 0px !important
+                    font-size: 12px !important
         .close
             @media(max-width: 820px)
                 position: absolute !important
@@ -76,6 +82,14 @@ require! {
                 line-height: 44px
             @media(max-width: 800px)
                 visibility: hidden
+                display: none
+            &.txn
+                margin-left: 60px
+                @media(max-width: 800px)
+                    visibility: visible
+                    margin-top: 60px
+                    margin-left: 0
+                    display: block
     .manage-account
         margin-left: -60px
         @media (max-width: 800px)

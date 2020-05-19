@@ -15,6 +15,7 @@ require! {
     \../round-human.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
     \./confirmation.ls : { alert }
+    \../components/button.ls
 }
 #
 .wallet
@@ -232,18 +233,6 @@ module.exports = (store, web3t, wallets, wallet)-->
     border-style =
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.wallet
-    button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
-        color: style.app.text
-        background: style.app.primary1
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
-    button-primary1-style-m=
-        border: "1px solid rgb(195, 92, 95)"
-        color: style.app.text
-        background: "rgb(195, 92, 95)"
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -287,7 +276,9 @@ module.exports = (store, web3t, wallets, wallet)-->
         r =
             | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
             | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
-    .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
+    receive-click = receive(wallet)
+    send-click = send(wallet)
+    .wallet.pug(class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
                 .img.pug(class="#{placeholder-coin}")
@@ -310,26 +301,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                 if store.current.device is \desktop
                     button.btn-open.pug(on-click=expand style=button-primary3-style)
                         img.icon.pug(src="#{icons.open}" style=btn-icon)
-                button.pug(on-click=send(wallet) style=button-primary1-style)
-                    if store.current.device is \mobile
-                        img.icon-svg.pug(src="#{icons.send}")
-                    if store.current.device is \desktop
-                        span.pug
-                            img.icon-svg.pug(src="#{icons.send}")
-                            | #{lang.send}
-                if wallet.coin.token isnt \vlx or store.current.device isnt \desktop
-                    button.pug(on-click=receive(wallet) style=button-primary2-style)
-                        if store.current.device is \mobile
-                            img.icon-svg.pug(src="#{icons.get}")
-                        if store.current.device is \desktop
-                            span.pug
-                                img.icon-svg.pug(src="#{icons.get}")
-                                | #{lang.receive}
-                else
-                    button.pug(on-click=migrate(wallet) style=button-primary1-style-m)
-                        span.pug 
-                            img.icon-svg.pug(src="#{icons.migrate}")
-                            | #{lang.btn-migrate}
+                button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
         .wallet-middle.pug
             span.pug(style=address-input)
                 a.browse.pug(target="_blank" href="#{get-address-link wallet}")

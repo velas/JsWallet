@@ -11,6 +11,7 @@ require! {
     \./switch-account.ls
     \./epoch.ls
     \../icons.ls
+    \./alert-demo.ls
 }
 .search
     @import scheme
@@ -255,8 +256,9 @@ require! {
         100%
             -webkit-mask-position: left
 all = (store, web3t)->
+    lang = get-lang store
     .pug.panel-content
-        p.results.pug This tab is under development
+        p.results.pug #{lang.under-development}
 dapps = (store, web3t)->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -325,23 +327,26 @@ dapps = (store, web3t)->
     goto-notice = ->
         navigate store, web3t, \notification
     .pug.panel-content
-        p.results.pug Estimated Results: 2,000 (0.30sec)
+        p.results.pug 
+            | #{lang.estimated-results}: 
+            | 2,000 
+            | (0.30
+            | #{lang.sec}
+            | )
         .pug.section
             .source.pug(on-click=goto-file-storage)
-                .pug.address velas sphere
-                .pug.header Velas Storage Dapp
-            .pug.description Keep your data on encrypted distributed servers with censorship resistance. Get access to them in a convenient and familiar way.
+                .pug.address #{lang.velas-sphere}
+                .pug.header #{lang.storage-dapp}
+            .pug.description #{lang.storage-description}
             ul.pug.links
                 li.pug
-                    span.pug(on-click=goto-videostorage) Video Storage
-                li.pug
-                    span.pug About Storage
+                    span.pug(on-click=goto-videostorage) #{lang.video-storage}
                 li.pug(on-click=goto-soundstorage style=hide-sound)
-                    span.pug About Storage
+                    span.pug Sound Storage
         .pug.section
             .source.pug(on-click=goto-resources2)
-                .pug.address velas sphere
-                .pug.header Velas CPU/GPU/STORAGE Staking Dapp
+                .pug.address #{lang.velas-sphere}
+                .pug.header #{lang.velas-cpu-staking}
             .pug.description 
             ul.pug.links
                 li.pug
@@ -350,9 +355,9 @@ dapps = (store, web3t)->
                     span.pug FAQs
         .pug.section
             .source.pug(on-click=goto-resources)
-                .pug.address velas sphere
-                .pug.header Velas CPU/GPU/STORAGE Dapp
-            .pug.description Use distributed resources to perform complex tasks for science, AI, video rendering.
+                .pug.address #{lang.velas-sphere}
+                .pug.header #{lang.velas-cpu}
+            .pug.description #{lang.cpu-description}
             ul.pug.links
                 li.pug
                     span.pug About
@@ -360,16 +365,16 @@ dapps = (store, web3t)->
                     span.pug FAQs
         .pug.section
             .source.pug(on-click=goto-staking)
-                .pug.address velas blockchain
-                .pug.header Velas Staking Dapp
-            .pug.description Help the blockchain be more decentralized by launching an additional validator.
+                .pug.address #{lang.velas-blockchain}
+                .pug.header #{lang.staking-dapp}
+            .pug.description #{lang.staking-description}
             ul.pug.links
                 li.pug
-                    span.pug(on-click=goto-choose-staker) Delegate Stake
+                    span.pug(on-click=goto-choose-staker) #{lang.delegate-stake}
         .pug.section
             .source.pug(on-click=goto-notice)
-                .pug.address velas sphere
-                .pug.header Velas Messenger
+                .pug.address #{lang.velas-sphere}
+                .pug.header #{lang.velas-messenger}
             .pug.description 
         .pug.section.developing
             .source.pug
@@ -397,14 +402,17 @@ dapps = (store, web3t)->
                 li.pug
                     span.pug FAQs
 web = (store, web3t)->
+    lang = get-lang store
     .pug.panel-content
-        p.results.pug This tab is under development
+        p.results.pug #{lang.under-development}
 images = (store, web3t)->
+    lang = get-lang store
     .pug.panel-content
-        p.results.pug This tab is under development
+        p.results.pug #{lang.under-development}
 files = (store, web3t)->
+    lang = get-lang store
     .pug.panel-content
-        p.results.pug This tab is under development
+        p.results.pug #{lang.under-development}
 search = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -470,10 +478,9 @@ search = ({ store, web3t })->
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.search
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") Search
+            .pug.header(class="#{show-class}") #{lang.search}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
@@ -494,23 +501,23 @@ search = ({ store, web3t })->
                         li.pug(on-click=activate-all class="#{active-all}")
                             span.icon.pug
                                 icon \Search, 15
-                            span.pug All
+                            span.pug #{lang.all}
                         li.pug(on-click=activate-dapps class="#{active-dapps}")
                             span.icon.pug
                                 icon \Rocket, 15
-                            span.pug Dapps
+                            span.pug #{lang.dapps}
                         li.pug(on-click=activate-web class="#{active-web}")
                             span.icon.pug
                                 icon \Globe, 15
-                            span.pug Web
+                            span.pug #{lang.web}
                         li.pug(on-click=activate-images class="#{active-images}")
                             span.icon.pug
                                 icon \FileMedia, 15
-                            span.pug Images
+                            span.pug #{lang.images}
                         li.pug(on-click=activate-files class="#{active-files}")
                             span.icon.pug
                                 icon \FileDirectory, 15
-                            span.pug Public Files
+                            span.pug #{lang.public-files}
         .pug.wrapper
             if active-all is \active
                 all store, web3t

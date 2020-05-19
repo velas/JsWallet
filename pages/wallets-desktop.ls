@@ -226,22 +226,23 @@ mobile = ({ store, web3t })->
                 icon "X", 20
     chosen-account-template =
         if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
-    .pug(key="wallets" style=row)
-        .pug(style=left-side)
-            menu { store, web3t }
-            manage-account { store, web3t }
-            token-migration { store, web3t }
-            add-coin-page { store, web3t }
-            .wallets.hide-detail.pug(key="wallets-body")
-                .header.pug(style=header-style)
-                    span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
-                    chosen-account-template
-                    your-account store, web3t
-                .wallet-container.pug(key="wallets-viewport" style=border-style)
-                    wallets
-                        |> map wallet store, web3t, wallets
-        .pug.show-detail(style=right-side)
-            wallets
-                |> map wallet store, web3t, wallets
-            history { store, web3t }
+    .pug(key="wallets")
+        .pug(style=row)
+            .pug(style=left-side)
+                menu { store, web3t }
+                manage-account { store, web3t }
+                token-migration { store, web3t }
+                add-coin-page { store, web3t }
+                .wallets.hide-detail.pug(key="wallets-body")
+                    .header.pug(style=header-style)
+                        span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
+                        chosen-account-template
+                        your-account store, web3t
+                    .wallet-container.pug(key="wallets-viewport" style=border-style)
+                        wallets
+                            |> map wallet store, web3t, wallets
+            .pug.show-detail(style=right-side)
+                wallets
+                    |> map wallet store, web3t, wallets
+                history { store, web3t }
 module.exports = mobile

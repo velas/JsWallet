@@ -18,12 +18,12 @@ require! {
     $tablet: 800px
     &.wallet-main
         @media(max-width: 800px)
-            margin: 60px 15px 0
+            margin: 0px 15px 0
             position: relative
             left: 0
             right: 0
         @media(max-width: $mobile)
-            margin: 60px 0 0
+            margin: 0
     .syncing
         @keyframes spin
             from
@@ -39,8 +39,7 @@ require! {
         cursor: pointer
         color: #00ffdc
         svg
-            vertical-align: sub !important
-            width: 20px
+            width: 25px
         .icon-svg
             vertical-align: sub !important
             width: 20px
@@ -151,10 +150,11 @@ module.exports = ({ store, web3t })->
                     .symbol.pug $
                     .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
                 .currency.h1.pug #{lang.balance ? 'Balance'}
-                .pug
-                    if store.preference.refresh-visible is yes
-                        .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")
-                            icon \Sync, 25
+                if store.current.device is \desktop
+                    .pug
+                        if store.preference.refresh-visible is yes
+                            .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")
+                                icon \Sync, 25
             if store.current.device is \mobile    
                 your-account store, web3t
             project-links { store, web3t }

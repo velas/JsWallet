@@ -42,12 +42,14 @@ export background-refresh-account = (web3, store, cb)->
     store.current.refreshing = no
     return cb err if err?
     transaction ->
+        wallet = bg-store.current.account.wallets[store.current.wallet-index]
+        return if not wallet?
         store.rates = bg-store.rates
         store.current.account = bg-store.current.account
         store.current.filter.length = 0
         store.current.filter.push \IN
         store.current.filter.push \OUT
-        store.current.filter.push bg-store.current.account.wallets[store.current.wallet-index].coin.token
+        store.current.filter.push wallet.coin.token
         store.current.balance-usd = bg-store.current.balance-usd
         store.transactions = bg-store.transactions
         apply-transactions store

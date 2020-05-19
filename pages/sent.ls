@@ -7,6 +7,7 @@ require! {
     \../icons.ls
     \prelude-ls : { filter }
     \./confirmation.ls : { confirm }
+    \../components/button.ls
 }
 .sent
     .animation
@@ -173,6 +174,11 @@ module.exports = ({ store, web3t })->
         store.transactions.applied 
             |> filter (.pending) 
             |> (.length > 0)
+    now = moment!.unix!
+    no-recent =
+        store.transactions.applied
+            |> filter (.time - now < 10000)
+            |> (.length is 0)
     inacurate = (cb)->
         return cb null if has-pending is no
         agree <- confirm store, "Your still have a pending transaction. Some of the counts may be inaccurate."
@@ -186,16 +192,15 @@ module.exports = ({ store, web3t })->
     lang = get-lang store
     .pug.sent
         .pug.animation
-            if has-pending
+            if no-recent
+                img.icon-sent.pug(style=sent-icon src="#{icons.sent}")
+            else if has-pending
                 img.icon-sent.pug(style=sent-icon src="#{icons.sent-plane}")
             else
                 img.icon-sent.pug(src="#{icons.sent-check}")
         .pug.text(style=text-style)
             a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction ? 'transaction'}
             span.pug  #{lang.has-been-sent ? 'has been sent'}
-        button.button.pug(on-click=go-home style=button-primary3-style)
-            span.pug
-                img.icon-svg.pug(src="#{icons.home}" style=btn-icon)
-                | #{lang.home ? 'Home'}
+        button { store, on-click : go-home , type : \secondary , text: \home }
         .limited-history.pug
             history { store, web3t }

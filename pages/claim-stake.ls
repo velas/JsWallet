@@ -7,6 +7,7 @@ require! {
     \../math.ls : { div, times, plus, minus }
     \prelude-ls : { map, split, filter, find, foldl, drop, take }
     \../round-human.ls
+    \../components/button.ls
 }
 .section-reward
     @import scheme
@@ -404,10 +405,6 @@ calc-reward = (store, web3t)->
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
     checked = item.checked
     load-or-skip = (item, cb)->
         return cb null if item.reward isnt '..'
@@ -438,10 +435,6 @@ module.exports = (store, web3t)->
     lang = get-lang store
     calc-reward-click = ->
         calc-reward store, web3t
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
     claim = ->
         epochs =
             store.staking.rewards
@@ -474,15 +467,9 @@ module.exports = (store, web3t)->
                         span.color.pug #{store.staking.reward-claim}
                         img.label-coin.pug(src="#{icons.vlx-icon}")
                         span.color.pug  VLX
-                    button.pug(on-click=claim style=button-primary2-style)
-                        span.pug
-                            img.icon-svg.pug(src="#{icons.reward}")
-                            | #{lang.claim-reward}
+                    button { store, on-click: claim , icon : \reward , text : \claimReward , type : \secondary }
             else if store.staking.reward-loading is yes
                 .pug.placeholder Loading... Please wait
             else
-                button.mt-0.pug(style=button-primary2-style on-click=calc-reward-click)
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.calculate}")
-                        | #{lang.calculate-reward}
+                button { store, on-click: calc-reward-click , icon : \calculate , text : \calculateReward , type : \secondary }
 module.exports.calc-reward = calc-reward
