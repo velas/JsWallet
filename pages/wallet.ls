@@ -2,9 +2,6 @@ require! {
     \react
     \../tools.ls : { money }
     \prelude-ls : { each, find }
-    \react-copy-to-clipboard : { CopyToClipboard }
-    \../copied-inform.ls
-    \../copy.ls
     \../address-link.ls : { get-address-link, get-address-title }
     \../wallet-funcs.ls
     \../get-lang.ls
@@ -16,6 +13,7 @@ require! {
     \react-middle-ellipsis : { default: MiddleEllipsis }
     \./confirmation.ls : { alert }
     \../components/button.ls
+    \../components/address-holder.ls
 }
 #
 .wallet
@@ -46,8 +44,42 @@ require! {
     &.big
         height: 120px
     &.active
-        >.wallet-middle
-            display: inline-block
+    .wallet-middle
+        box-sizing: border-box
+        width: 70%
+        height: 85px
+        float: left
+        padding: 20px
+        border-top: 1px solid rgb(107, 38, 142)
+        border-right: 1px solid rgb(107, 38, 142)
+        &:last-child
+            display: block
+        &:last-child
+            width: 30%
+            border-right: 0
+        .name
+            color: #fff
+            font-size: 16px
+            font-weight: 700
+            &.per
+                font-size: 10px
+                color: orange
+                font-weight: 100
+            &:last-child
+                font-size: 10px
+                text-transform: uppercase
+                letter-spacing: 2px
+                margin-top: 5px
+                opacity: .8
+        .title-balance
+            color: #fff
+            font-size: 14px
+            text-align: left
+        span
+            padding-left: 10px
+        a
+            float: left
+            text-align: left
     >.wallet-top
         padding: 0 12px
         box-sizing: border-box
@@ -157,69 +189,10 @@ require! {
                     background: #7aa7f3
                     color: white
     >.wallet-middle
-        $card-top-height: 50px
-        width: 100%
-        padding: 0 12px
-        box-sizing: border-box
-        color: #A8BACB
-        font-size: 14px
-        margin-top: 10px
-        text-align: center
-        position: relative
-        .browse
-            display: none
-        &:last-child
-            display: none
         >.uninstall
             text-align: left
             font-size: 10px
             padding-top: 5px
-        >img
-            position: absolute
-            right: 3%
-            margin: 10px
-            margin-left: 50px
-            z-index: 2
-        >span
-            width: 100%
-            z-index: 1
-            position: relative
-            border-radius: $border
-            border: 0
-            background: #E6F0FF
-            box-sizing: border-box
-            vertical-align: top
-            text-align: center
-            padding-left: 20px
-            padding-right: 55px
-            height: $card-top-height - 14px
-            color: #677897
-            font-size: 14px
-            line-height: $card-top-height - 14px
-            display: inline-block
-            text-overflow: ellipsis
-            overflow: hidden
-            user-select: text !important
-            cursor: auto
-            @media screen and (max-width: 390px)
-                padding-right: 25px
-            a
-                width: auto
-                z-index: 1
-                position: relative
-                border-radius: $border
-                border: 0
-                background: transparent
-                box-sizing: border-box
-                vertical-align: top
-                text-align: center
-                height: $card-top-height - 14px
-                color: rgb(204, 204, 204)
-                font-size: 14px
-                line-height: $card-top-height - 14px
-                display: inline-block
-                cursor: pointer
-                user-select: text !important
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
@@ -240,8 +213,6 @@ module.exports = (store, web3t, wallets, wallet)-->
     address-input=
         color: style.app.addressText
         background: style.app.addressBg
-    filter-icon=
-        filter: style.app.filterIcon
     btn-icon =
         filter: style.app.btn-icon
     placeholder = 
@@ -304,13 +275,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                 button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
         .wallet-middle.pug
-            span.pug(style=address-input)
-                a.browse.pug(target="_blank" href="#{get-address-link wallet}")
-                    img.pug(src="#{icons.browse-open}")
-                MiddleEllipsis.pug
-                    a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
-            CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
-                copy store
+            address-holder { store, wallet }
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
         .wallet-middle.title-balance.pug

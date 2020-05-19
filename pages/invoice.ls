@@ -5,13 +5,11 @@ require! {
     \./receive.ls
     \../get-primary-info.ls
     \../get-lang.ls
-    \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
     \../icons.ls
-    \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/button.ls
+    \../components/address-holder.ls
 }
 .content
     position: relative
@@ -35,186 +33,6 @@ require! {
         color: gray
         a
             color: gray
-        >form
-            >table
-                background: #e6f0ff
-                border-radius: 10px
-                width: 100%
-                border-spacing: 0
-                tr
-                    &.gray
-                        color: #CCC
-                    &.orange
-                        color: #cf952c
-                    &.green
-                        color: #23b723
-                    td
-                        padding: 3px 10px
-                        font-size: 14px
-                        &:last-child
-                            text-align: right
-            max-width: 400px
-            text-align: left
-            >.form-group
-                .grecaptcha-badge
-                    z-index: 1
-                >.control-label
-                    padding-top: 5px
-                    padding-left: $label-padding
-                    font-size: $label-font
-                margin-top: 4px
-                text-align: center
-                .address
-                    padding: 0px 10px
-                    overflow: hidden
-                    text-overflow: ellipsis
-                    border-radius: $border-radius
-                    font-size: 14px
-                    height: 36px
-                    line-height: 36px
-                    overflow: hidden
-                    text-overflow: ellipsis
-                    color: #677897
-                    position: relative
-                    >img
-                        position: absolute
-                        right: 0
-                        top: 0
-                        margin: 10px
-                        margin-left: 50px
-                        z-index: 2
-                        width: auto
-                    >a
-                        width: 100%
-                        z-index: 1
-                        position: relative
-                        border-radius: $border
-                        border: 0
-                        box-sizing: border-box
-                        vertical-align: top
-                        text-align: center
-                        padding-left: 20px
-                        padding-right: 25px
-                        color: #677897
-                        font-size: 14px
-                        display: inline-block
-                        text-overflow: ellipsis
-                        overflow: hidden
-                input
-                    outline: none
-                    width: 100%
-                    box-sizing: border-box
-                    height: 36px
-                    line-height: 36px
-                    border-radius: $border-radius
-                    padding: 0px 10px
-                    font-size: 14px
-                    margin: 1px
-                    border: 1px solid #5E72E4
-                    box-shadow: none
-                .amount-field
-                    >.input-wrapper
-                        position: relative
-                        width: 50%
-                        display: inline-block
-                        box-sizing: border-box
-                        margin: 0
-                        >.label
-                            position: absolute
-                            top: 8px
-                            display: inline
-                            &.lusd
-                                left: 5px
-                            &.crypto
-                                right: 5px
-                        input
-                            width: 100%
-                            &.amount
-                                border-radius: $border-radius 0 0 $border-radius
-                                border-right: 0
-                            &.amount-usd
-                                background: #f1eeee
-                                padding-left: 20px
-                                border-radius: 0 $border-radius $border-radius 0
-        >.header
-            margin: 0
-            padding: 10px
-            text-align: left
-            padding: 0
-            >.head
-                width: 70%
-                line-height: 70px
-                font-size: 20px
-                font-weight: 700
-                vertical-align: middle
-                line-height: 29px
-                display: inline-block
-                color: #677897
-                &.right
-                    text-align: right
-                    width: 30%
-            img
-                width: 34px
-        .usd
-            font-size: 11px
-            padding-left: 4px
-            color: gray
-        .topup
-            display: inline-block
-            margin-left: 5px
-            color: orange
-            vertical-align: top
-            padding: 0 5px
-            border-radius: $border
-            line-height: 12px
-            font-size: 12px
-        .balance
-            color: #5E72E4
-        .send-all
-            background: #3a63e4
-            outline: none
-            border: 0
-            color: white
-            border-radius: $border
-            font-size: 10px
-            text-align: center
-            padding: 0 5px
-            cursor: pointer
-        .not-enough
-            color: red
-            min-height: 33px
-            padding: 0 4px
-            font-size: 12px
-            max-height: 20px
-            overflow: hidden
-        .fast-cheap
-            text-align: right
-            height: 14px
-            line-height: 14px
-            padding: 3px
-            flex-direction: row
-            display: flex
-            >*
-                padding: 0 5px
-                font-size: 10px
-                border-radius: $border
-                cursor: pointer
-                text-align: center
-                &.chosen
-                    cursor: default
-                    background: #3a63e4
-                    color: white
-                &.space
-                    flex: 1
-        .escrow
-            padding: 5px 11px
-            min-height: 20px
-            @media screen and (max-width: 290px)
-                min-height: 0
-            color: #cc625a
-            font-size: 14px
-        .bold
-            font-weight: bold
     .button-container
         text-align: center
     .ill-qr
@@ -254,38 +72,8 @@ form-group = (title, icon-style, content)->
         content!
 address-link = (store, web3t)->
     return null if store.preference.disableInvoice is yes
-    { invoice, token, wallet, primary-button-style, recipient-change, description-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit } = invoice-funcs store, web3t
-    style = get-primary-info store
-    icon-style =
-        color: style.app.icon
-    more-text=
-        color: style.app.text
-    address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
-    href-style=
-        max-width: "340px"
-        margin: "10px auto 0"
-    filter-icon=
-        filter: style.app.filterIcon
-    lang = get-lang store
-    cut-receive = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
-        r =
-            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 20) + \.. + t.substr(t.length - 4, 4)
-            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 15) + \.. + t.substr(t.length - 4, 4)
-    color-address=
-        color: "rgb(158, 79, 235)"
-    .pug.content-body(style=more-text)
-        form.pug
-            form-group lang.funding-address, icon-style, ->
-                .address.pug(style=href-style)
-                    MiddleEllipsis.pug
-                        a.pug(href="#{get-address-link wallet}" target="_blank" style=color-address) #{get-address-title wallet}
-                    CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
-                        copy store
+    { wallet } = invoice-funcs store, web3t
+    address-holder { store, wallet }
 ill-qr = (store, web3t)->
     .pug.ill-qr
         img.ill.pug.ill-top(src="#{icons.invoice-ill-top}")

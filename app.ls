@@ -205,55 +205,6 @@ require! {
                         float: left
                 @media (max-width: 920px)
                     top: 0px
-        .wallet-middle
-            width: 70%
-            height: 85px
-            float: left
-            padding: 20px
-            border-top: 1px solid rgb(107, 38, 142)
-            border-right: 1px solid rgb(107, 38, 142)
-            &:last-child
-                display: block
-            &:last-child
-                width: 30%
-                border-right: 0
-            .name
-                color: #fff
-                font-size: 16px
-                font-weight: 700
-                &.per
-                    font-size: 10px
-                    color: orange
-                    font-weight: 100
-                &:last-child
-                    font-size: 10px
-                    text-transform: uppercase
-                    letter-spacing: 2px
-                    margin-top: 5px
-                    opacity: .8
-            .title-balance
-                color: #fff
-                font-size: 14px
-                text-align: left
-            span
-                padding-left: 10px
-            a
-                float: left
-                text-align: left
-            img
-                margin-right: 20px
-            .browse
-                display: inline-block
-                position: absolute
-                top: 3px
-                right: 40px
-                width: auto
-                img
-                    width: 16px
-                    top: 1px
-                    position: relative
-                    margin: 0
-                    display: inline-block
         .info
             text-align: left
             margin-left: 0px

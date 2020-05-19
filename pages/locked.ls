@@ -75,7 +75,8 @@ require! {
             border: 1px solid #549D90
             border-radius: $border
             outline: none
-            width: 120px
+            width: 180px
+            margin-bottom: 5px
             letter-spacing: 5px
             box-sizing: border-box
             &:focus

@@ -8,6 +8,7 @@ require! {
     \prelude-ls : { filter }
     \./confirmation.ls : { confirm }
     \../components/button.ls
+    \moment
 }
 .sent
     .animation
@@ -179,6 +180,7 @@ module.exports = ({ store, web3t })->
         store.transactions.applied
             |> filter (.time - now < 10000)
             |> (.length is 0)
+    console.log \time-difference , store.transactions.applied.0?time , moment!.unix!
     inacurate = (cb)->
         return cb null if has-pending is no
         agree <- confirm store, "Your still have a pending transaction. Some of the counts may be inaccurate."

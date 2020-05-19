@@ -18,6 +18,9 @@ require! {
 .wallet-mobile
     $mobile: 425px
     $tablet: 800px
+    button.btn
+        min-width: auto
+        margin: 0
     .your-account
         position: relative
         display: block
