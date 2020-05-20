@@ -623,18 +623,6 @@ render-transaction = (store, web3t, tran)-->
         store.history.tx-details = 
             | store.history.tx-details is tx => null
             | _ => tx
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
-        r =
-            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
-            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
-    cut-hash = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 15) + \.. + t.substr(t.length - 4, 4)
-        #r.to-upper-case!
     icon-pending=
         filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else ''
     amount-pending=

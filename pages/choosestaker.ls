@@ -17,7 +17,6 @@ require! {
     \../menu-funcs.ls
     \btoa
     \safe-buffer : { Buffer }
-    \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
     \../round5.ls
@@ -33,6 +32,7 @@ require! {
     \./confirmation.ls : { alert }
     \../components/button.ls
     \../components/address-holder.ls
+    \./alert-txn.ls
 }
 .staking
     @import scheme
@@ -771,6 +771,7 @@ staking-content = (store, web3t)->
         max-width: 200px
     .pug.staking-content
         .form-group.pug
+            alert-txn { store }
             .pug.section
                 .title.pug
                     h3.pug Select pool

@@ -18,6 +18,7 @@ require! {
     \../math.ls : { plus, div }
     \../round-human.ls
     \./epoch.ls
+    \./alert-txn.ls
 }
 .info
     @import scheme
@@ -230,6 +231,7 @@ info = ({ store, web3t })->
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.info
+        alert-txn { store }
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.statistics}
             .pug.close(on-click=go-back)

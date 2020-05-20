@@ -32,6 +32,7 @@ require! {
     \mobx : { transaction }
     \./epoch.ls
     \../components/button.ls
+    \./alert-txn.ls
 }
 .staking
     @import scheme
@@ -1003,6 +1004,7 @@ staking-content = (store, web3t)->
         store.staking.rewards |> map (-> it.checked = change)
     .pug.staking-content
         #placeholder store, web3t
+        alert-txn { store }
         .form-group.pug
             .pug.section
                 .title.pug

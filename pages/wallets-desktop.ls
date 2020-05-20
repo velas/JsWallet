@@ -17,152 +17,236 @@ require! {
     \localStorage
     \../icons.ls
 }
-.wallets
-    @import scheme
-    $real-height: 300px
-    $cards-height: 296px
-    $pad: 20px
-    $radius: 15px    
-    height: auto
-    box-sizing: border-box
-    position: relative
-    left: 0
-    bottom: 0
-    $cards-pad: 15px
-    right: 0
-    z-index: 2
-    .icon-svg1
+.wallets-container
+    .wallets
+        @import scheme
+        $real-height: 300px
+        $cards-height: 296px
+        $pad: 20px
+        $radius: 15px    
+        height: auto
+        box-sizing: border-box
         position: relative
-        height: 16px
-        top: 2px
-    .icon-svg2
-        position: relative
-        height: 10px
-    &.hide-detail
-        .wallet-middle
-            display: none !important
-        .big
-            height: 60px
-        .big.active
-            background: rgb(98, 52, 171) !important
-            transition: .5s !important
-            .icon
-                transition: all .5s
-                filter: none !important
-            button
-                transition: all .5s
-                background: #9c41eb !important
-                border-color: #9c41eb !important
-        .wallet
-            &:hover
+        left: 0
+        bottom: 0
+        $cards-pad: 15px
+        right: 0
+        z-index: 2
+        .icon-svg1
+            position: relative
+            height: 16px
+            top: 2px
+        .icon-svg2
+            position: relative
+            height: 10px
+        &.hide-detail
+            .wallet-middle
+                display: none !important
+            .big
+                height: 60px
+            .big.active
                 background: rgb(98, 52, 171) !important
                 transition: .5s !important
-        .top-right
-            width: 33% !important
-            button
-                &.btn-open
-                    display: block
-                    float: right !important
+                .icon
+                    transition: all .5s
+                    filter: none !important
+                button
+                    transition: all .5s
+                    background: #9c41eb !important
+                    border-color: #9c41eb !important
+            .wallet
+                &:hover
+                    background: rgb(98, 52, 171) !important
+                    transition: .5s !important
+            .top-right
+                width: 33% !important
+                button
+                    &.btn-open
+                        display: block
+                        float: right !important
+                    display: none
+            .top-left
+                width: 35% !important
+            .top-middle
+                width: 32% !important
+                text-align: center !important
+                .price
+                    display: none
+            .title-balance
                 display: none
-        .top-left
-            width: 35% !important
-        .top-middle
-            width: 32% !important
-            text-align: center !important
-            .price
-                display: none
-        .title-balance
-            display: none
-    .header 
-        &:after
-            position: absolute
-            font-weight: bold
-            font-size: 40px
-            opacity: .05
-            top: 20px
-            left: -5px
-    .switch-account
-        float: right
-        line-height: 2
-        right: 80px
-        position: relative
-        display: inline-flex
-        .ckeck
-            color: #3cd5af
-        .cancel
-            color: #c25b5f
-        .name
-            text-overflow: ellipsis
-            white-space: nowrap
-            overflow: hidden
-            width: 90px
-            text-align: right
-            cursor: default
-        input
-            outline: none
-            width: 100px
-            margin-top: -6px
-            height: 36px
-            line-height: 36px
-            border-radius: 0px
-            padding: 0px 10px
-            font-size: 12px
-            opacity: 1
-        span
-            cursor: pointer
-        .icon
-            vertical-align: middle
-            margin-left: 20px
-            transition: transform .5s
-            &.rotate
-                transform: rotate(180deg)
-                transition: transform .5s
-    .h1
-        font-size: 12px
-        text-transform: uppercase
-        letter-spacing: 2px
-        opacity: .8
-    .your-account
-        position: absolute
-        width: auto
-        display: inline-block
-        right: 0
-        top: 0
-        padding: 12px 20px
-        border-left: 1px solid #6b258e
-        .buttons
-            >.button
-                width: 20px
-                padding: 0
-                outline: none
-    >*
-        width: 100%
-    >.arrow
-        position: absolute
-        text-align: center
-        cursor: pointer
-        &.arrow-t
-            top: 0
-            margin-top: 10px
-        &.arrow-d
-            bottom: 0
-            margin-bottom: 10px
-            transform: rotate(180deg)
-        &:not(.true)
-            >.arrow-d
-                visibility: hidden
-        >.arrow-container
-            display: inline-block
-            width: 100%
-            max-width: 450px
+        .header 
+            &:after
+                position: absolute
+                font-weight: bold
+                font-size: 40px
+                opacity: .05
+                top: 20px
+                left: -5px
+        .switch-account
+            float: right
+            line-height: 2
+            right: 80px
             position: relative
-    >.wallet-container
+            display: inline-flex
+            .ckeck
+                color: #3cd5af
+            .cancel
+                color: #c25b5f
+            .name
+                text-overflow: ellipsis
+                white-space: nowrap
+                overflow: hidden
+                width: 90px
+                text-align: right
+                cursor: default
+            input
+                outline: none
+                width: 100px
+                margin-top: -6px
+                height: 36px
+                line-height: 36px
+                border-radius: 0px
+                padding: 0px 10px
+                font-size: 12px
+                opacity: 1
+            span
+                cursor: pointer
+            .icon
+                vertical-align: middle
+                margin-left: 20px
+                transition: transform .5s
+                &.rotate
+                    transform: rotate(180deg)
+                    transition: transform .5s
+        .h1
+            font-size: 12px
+            text-transform: uppercase
+            letter-spacing: 2px
+            opacity: .8
+        .your-account
+            position: absolute
+            width: auto
+            display: inline-block
+            right: 0
+            top: 0
+            padding: 12px 20px
+            border-left: 1px solid #6b258e
+            .buttons
+                >.button
+                    width: 20px
+                    padding: 0
+                    outline: none
+        >*
+            width: 100%
+        >.arrow
+            position: absolute
+            text-align: center
+            cursor: pointer
+            &.arrow-t
+                top: 0
+                margin-top: 10px
+            &.arrow-d
+                bottom: 0
+                margin-bottom: 10px
+                transform: rotate(180deg)
+            &:not(.true)
+                >.arrow-d
+                    visibility: hidden
+            >.arrow-container
+                display: inline-block
+                width: 100%
+                max-width: 450px
+                position: relative
+        >.wallet-container
+            overflow: hidden
+            overflow-y: auto
+            height: calc(100vh - 261px)
+            width: 100%
+            border-top: 1px solid #213040
+            display: inline-block
+    .show-detail
         overflow: hidden
-        overflow-y: auto
-        height: calc(100vh - 261px)
-        width: 100%
-        border-top: 1px solid #213040
-        display: inline-block
+        .wallet
+            background: rgb(67, 32, 124) !important
+        .wallet-top
+            padding: 0 20px
+            height: 50%
+            @media (max-width: 920px)
+                display: flex
+            .top-left
+                width: auto
+                float: left
+                height: auto
+                color: #fff
+                overflow: auto
+                text-overflow: unset
+                img
+                    height: 60px !important
+                    width: 60px !important
+                    max-width: 60px !important
+                .info
+                    display: none
+            .top-middle
+                width: 35%
+                float: left
+                color: #fff
+                text-align: left
+                .title-balance
+                    display: inline-block !important
+                .title
+                    font-size: 17px
+                    font-weight: 700
+                .balance
+                    font-weight: 600
+                    font-size: 16px
+                .price
+                    opacity: .8
+                    overflow: hidden
+                    text-overflow: ellipsis
+            .top-right
+                width: auto
+                float: right
+                color: #fff
+                position: relative
+                top: 25px
+                button
+                    width: 100px
+                    &.btn-open
+                        display: none
+                    span
+                        line-height: 26px
+                    svg
+                        float: left
+                @media (max-width: 920px)
+                    top: 0px
+        .info
+            text-align: left
+            margin-left: 0px
+            text-overflow: ellipsis
+            overflow: hidden
+            width: 65px
+            @media screen and (max-width: 390px)
+                display: none
+            .name
+                padding-left: 3px
+                font-size: 16px
+            .price
+                padding-left: 3px
+                font-size: 12px
+                font-weight: bold
+                overflow: hidden
+                text-overflow: ellipsis
+        .table
+            width: 100%
+            height: calc(100vh - 260px)
+            margin-top: -1px
+        .wallet
+            display: none
+            &.big
+                height: 200px
+                padding-top: 10px
+            &.active
+                display: block
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t
@@ -226,7 +310,7 @@ mobile = ({ store, web3t })->
                 icon "X", 20
     chosen-account-template =
         if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
-    .pug(key="wallets")
+    .wallets-container.pug(key="wallets")
         .pug(style=row)
             .pug(style=left-side)
                 menu { store, web3t }
@@ -243,6 +327,7 @@ mobile = ({ store, web3t })->
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)
                 wallets
+                    |> filter (-> wallets.index-of(it) is store.current.wallet-index)
                     |> map wallet store, web3t, wallets
                 history { store, web3t }
 module.exports = mobile

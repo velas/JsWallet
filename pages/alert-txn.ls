@@ -2,16 +2,17 @@ require! {
     \react
     \../get-primary-info.ls
     \../get-lang.ls
+    \prelude-ls : { filter }
 }
 .title
     &.alert
         color: rgb(255, 255, 255)
         border-bottom: 1px solid rgb(107, 38, 142)
-        background: rgb(75, 40, 136)
+        background: #757c34
         height: auto
         &.txn
             visibility: visible
-            margin-left: 60px !important
+            margin-left: 0px !important
             @media(max-width: 800px)
                 margin-left: 0px
         .header
@@ -19,7 +20,11 @@ require! {
             font-size: 12px
             .lavel
 module.exports = ({ store, web3t } )->
+    has-pending =
+        store.transactions.applied
+            |> filter (.token is \vlx2)
+            |> filter (.pending)
+            |> (.length > 0)
+    return null if not has-pending
     .pug.title.alert.txn
-        .pug.header 
-            | You have a Velas pending transaction
-            span.pug.label (2)
+        .pug.header You have a Velas pending transaction. Some of the counts may be inaccurate.
