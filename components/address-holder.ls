@@ -16,7 +16,6 @@ require! {
     box-sizing: border-box
     color: #A8BACB
     font-size: 14px
-    margin-top: 10px
     text-align: center
     position: relative
     .browse
@@ -45,7 +44,6 @@ require! {
         position: relative
         border-radius: $border
         border: 0
-        background: #E6F0FF
         box-sizing: border-box
         vertical-align: top
         text-align: center
@@ -83,7 +81,6 @@ module.exports = ({ store, wallet })->
     style = get-primary-info store
     address-input=
         color: style.app.addressText
-        background: style.app.addressBg 
     filter-icon=
         filter: style.app.filterIcon
     .address-holder.pug

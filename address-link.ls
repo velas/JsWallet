@@ -2,6 +2,7 @@ get-address-label = (wallet)->
     | wallet.coin.token in <[ xem eos ]> => \account
     | _ => \address
 export get-address-link = (wallet)->
+    | not wallet.network? => \about:blank
     | typeof! wallet?address is \String => "#{wallet.network.api.url}/#{get-address-label(wallet)}/#{wallet.address}"
     | typeof! wallet?address is \Null and wallet.public-key? =>  wallet.network.register-account-link.replace(':public-key', wallet.public-key)
     | _ => "#"

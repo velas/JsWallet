@@ -2,7 +2,6 @@ require! {
     \react
     \../tools.ls : { money }
     \prelude-ls : { each, find }
-    \../address-link.ls : { get-address-link, get-address-title }
     \../wallet-funcs.ls
     \../get-lang.ls
     \./icon.ls
@@ -10,7 +9,6 @@ require! {
     \../../web3t/providers/superagent.ls : { get }
     \../icons.ls
     \../round-human.ls
-    \react-middle-ellipsis : { default: MiddleEllipsis }
     \./confirmation.ls : { alert }
     \../components/button.ls
     \../components/address-holder.ls
@@ -45,6 +43,10 @@ require! {
         height: 120px
     &.active
     .wallet-middle
+        >.uninstall
+            text-align: left
+            font-size: 10px
+            padding-top: 5px
         box-sizing: border-box
         width: 70%
         height: 85px
@@ -188,11 +190,6 @@ require! {
                 &:hover
                     background: #7aa7f3
                     color: white
-    >.wallet-middle
-        >.uninstall
-            text-align: left
-            font-size: 10px
-            padding-top: 5px
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
@@ -222,31 +219,24 @@ module.exports = (store, web3t, wallets, wallet)-->
         | store.current.refreshing => "placeholder-coin"
         | _ => ""
     name = wallet.coin.name ? wallet.coin.token
-    load-terms = (cb)->
-        #return cb null if store.current.content-migrate?
-        err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
-        return cb err if err?
-        store.terms2 = res.text
-        cb null
-    migrate = (wallet)-> ->
-        err <- load-terms
-        address = 
-            store.current.account.wallets 
-                |> find (-> it.coin.token is \vlx2) 
-                |> (.address)
-        return alert store, "addres #{address} is wrong", cb if typeof! address isnt \String
-        err, data <- get "https://mainnet-v2.velas.com/migration/topup-velas-address/#{address}" .end
-        return alert store, "#{err}", cb if err?
-        return alert store, "cannot create address", cb if not data.body?address?
-        store.current.token-migration = data.body.address
-        #store.current.token-migration = "V123"
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
-        r =
-            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
-            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
+    #load-terms = (cb)->
+    #    #return cb null if store.current.content-migrate?
+    #    err, res <- get \https://raw.githubusercontent.com/okhrimenkoalexey/Velas/master/terms.md .end
+    #    return cb err if err?
+    #    store.terms2 = res.text
+    #    cb null
+    #migrate = (wallet)-> ->
+    #    err <- load-terms
+    #    address = 
+    #        store.current.account.wallets 
+    #            |> find (-> it.coin.token is \vlx2) 
+    #            |> (.address)
+    #    return alert store, "addres #{address} is wrong", cb if typeof! address isnt \String
+    #    err, data <- get "https://mainnet-v2.velas.com/migration/topup-velas-address/#{address}" .end
+    #    return alert store, "#{err}", cb if err?
+    #    return alert store, "cannot create address", cb if not data.body?address?
+    #    store.current.token-migration = data.body.address
+    #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
     .wallet.pug(class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)

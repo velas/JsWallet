@@ -8,7 +8,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
-    \prelude-ls : { map, split, filter, find, foldl, sort-by, unique }
+    \prelude-ls : { map, split, filter, find, foldl, sort-by, unique, head }
     \../math.ls : { div, times, plus, minus }
     \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
@@ -20,7 +20,6 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
     \../round5.ls
     \../../web3t/addresses.js : { ethToVlx }
     \./switch-account.ls
@@ -33,6 +32,7 @@ require! {
     \./epoch.ls
     \./confirmation.ls : { alert }
     \../components/button.ls
+    \../components/address-holder.ls
 }
 .staking
     @import scheme
@@ -235,6 +235,7 @@ require! {
                             margin-right: 5px
                     td, th
                         padding: 8px
+                        max-width: 200px
                         border: 1px solid rgba(240, 237, 237, 0.16)
                         white-space: nowrap
                         font-size: 13px
@@ -729,13 +730,17 @@ staking-content = (store, web3t)->
                 | reward > 75 => \orange
                 | reward > 40 => "rgb(165, 174, 81)"
                 | _ => "rgb(38, 219, 85)"
+        vlx2 =
+            store.current.account.wallets |> find (.coin.token is \vlx2)
+        wallet =
+            address: ethToVlx item.address
+            network: vlx2.network
+            coin: vlx2.coin
         tr.pug(class="#{item.status}")
             td.pug 
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
-                CopyToClipboard.pug(text="#{ethToVlx item.address}" on-copy=copied-inform(store) style=filter-icon)
-                    copy store
-                span.pug #{cut-tx ethToVlx item.address}
+                address-holder { store, wallet }
             td.pug(data-column='Amount') #{stake}
             td.pug(data-column="Filled" style=filled-color) #{filled}
             td.pug(data-column='Amount') #{my-stake}
@@ -762,6 +767,8 @@ staking-content = (store, web3t)->
         color: style.app.loader
         margin-top: "10px"
         width: "inherit"
+    staker-pool-style =
+        max-width: 200px
     .pug.staking-content
         .form-group.pug
             .pug.section
@@ -777,7 +784,7 @@ staking-content = (store, web3t)->
                             thead.pug
                                 tr.pug
                                     th.pug(width="3%") #
-                                    th.pug(width="10%") Staker Pool
+                                    th.pug(width="10%" style=staker-pool-style) Staker Pool
                                     th.pug(width="25%") Total Stake
                                     th.pug(width="5%" title="When more filled then less award for staker") Filled %
                                     th.pug(width="25%") My Stake
