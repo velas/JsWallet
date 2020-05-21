@@ -20,7 +20,7 @@ require! {
     \./epoch.ls
     \./alert-txn.ls
 }
-.info
+.stats
     @import scheme
     color: white
     $border-radius: $border
@@ -230,7 +230,7 @@ info = ({ store, web3t })->
         filter: info.app.nothingIcon
     show-class =
         if store.current.open-menu then \hide else \ ""
-    .pug.info
+    .pug.stats
         alert-txn { store }
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.statistics}

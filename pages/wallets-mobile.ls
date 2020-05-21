@@ -25,6 +25,7 @@ require! {
         position: relative
         display: block
         max-width: 450px
+        border: 0 !important
         .switch-menu
             right: -1px
             top: 165px
@@ -144,6 +145,21 @@ require! {
             border-right: 1px solid rgb(107, 38, 142)
             @media(max-width: $mobile)
                 border: 0
+    .wallet
+        .wallet-middle
+            width: 100%
+            padding: 10px 12px
+            box-sizing: border-box
+            color: #A8BACB
+            font-size: 14px
+            margin-top: 5px
+            text-align: center
+            position: relative
+            display: inline-block
+            height: auto
+            border: 0 !important
+            &.title-balance
+                display: none
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t

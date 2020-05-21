@@ -242,6 +242,8 @@ module.exports = (store, web3t)->
         width: "40px"
         height: "40px"
         margin: "20px 5px 0"
+    border-style =
+        border-left: "1px solid #{style.app.border}"
     lang = get-lang store
     account-index = "#{lang.account-index ? 'Account index'}: #{current.account-index}"
     length = +(localStorage.get-item('Accounts') ? 3)
@@ -265,7 +267,7 @@ module.exports = (store, web3t)->
         .pug.table-row-menu(on-click=change-account key="account#{index}" style=position-style)
             .col.folder-menu.pug
                 .pug #{account-name}
-    .pug.your-account
+    .pug.your-account(style=border-style)
         if store.preference.username-visible is yes
             .pug.username 
                 .pug.nick #{current.account.account-name}

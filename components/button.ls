@@ -22,6 +22,9 @@ require! {
     cursor: pointer
     box-sizing: border-box
     transaction: all 0.5s
+    @media(min-width: 920px)
+        &:last-child
+            margin-right: 0
     &:hover
         background: rgba(#6CA7ED, 0.2)
         opacity: 0.9

@@ -166,10 +166,9 @@ require! {
             display: inline-block
     .show-detail
         overflow: hidden
-        .wallet
-            background: rgb(67, 32, 124) !important
         .wallet-top
             padding: 0 20px
+            margin-bottom: 10px
             height: 50%
             @media (max-width: 920px)
                 display: flex
@@ -241,12 +240,9 @@ require! {
             height: calc(100vh - 260px)
             margin-top: -1px
         .wallet
-            display: none
             &.big
                 height: 200px
                 padding-top: 10px
-            &.active
-                display: block
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t

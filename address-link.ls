@@ -9,4 +9,4 @@ export get-address-link = (wallet)->
 export get-address-title = (wallet)->
     | typeof! wallet?address is \String => wallet.address
     | typeof! wallet?address is \Null => "Register Your Account"
-    | _ => "Unknown Address"
+    | _ => "n/a"

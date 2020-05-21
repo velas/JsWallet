@@ -203,6 +203,9 @@ module.exports = (store, web3t, wallets, wallet)-->
     border-style =
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.wallet
+    border =
+        border-top: "1px solid #{style.app.border}"
+        border-right: "1px solid #{style.app.border}"
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -239,7 +242,7 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
-    .wallet.pug(class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
+    .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug
             .top-left.pug(style=wallet-style)
                 .img.pug(class="#{placeholder-coin}")
@@ -264,10 +267,10 @@ module.exports = (store, web3t, wallets, wallet)-->
                         img.icon.pug(src="#{icons.open}" style=btn-icon)
                 button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
-        .wallet-middle.pug
-            address-holder { store, wallet }
+        .wallet-middle.pug(style=border)
+            address-holder { store, wallet, type: \bg }
             if wallet.coin.token not in <[ btc vlx vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
-        .wallet-middle.title-balance.pug
+        .wallet-middle.title-balance.pug(style=border)
             .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}
             .name.per.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }

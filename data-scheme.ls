@@ -5,6 +5,7 @@ require! {
     \./langs/langs.json
     \./icons.ls
     \./get-device.ls
+    \./get-size.ls
     \../package.json : { version }
     \qs
 }
@@ -141,10 +142,14 @@ store =
         all: []
         applied: []
     current:
+        hovered-address:
+            address: null
+            element: null
         verify-seed-index: 0
         verify-seed: ""
         verify-seed-error: no
         device: get-device!
+        size: get-size!
         list: 0
         prompt-answer: ""
         prompt: no

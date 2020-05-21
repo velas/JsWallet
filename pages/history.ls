@@ -11,6 +11,8 @@ require! {
     \../copy.ls
     \../icons.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
+    \../components/address-holder.ls
+    \react-virtualized : { List }
 }
 .history
     @import scheme
@@ -447,12 +449,31 @@ require! {
                     height: 60px
                     div:last-child
                         width: 330px
-                    a
-                        display: block
-                        font-size: 14px
-                        text-decoration: none
-                        &:hover
-                            text-decoration: underline
+                    .action
+                        .address-holder
+                            text-align: left
+                            .copy
+                                margin-left: -7px
+                                width: 13px
+                                height: 15px
+                            >img:first-child
+                                top: -11px
+                            .browse
+                                right: 0px
+                            span
+                                padding: 0
+                                width: 120px
+                                text-align: left
+                                a
+                                    img
+                                        height: 16px
+                                div
+                                    width: auto
+                                    margin-right: 0px
+                                    a
+                                        padding: 0
+                                        width: 250px
+                                        text-align: left
             .gray
                 $gray: #8290ad
                 color: $gray
@@ -637,6 +658,10 @@ render-transaction = (store, web3t, tran)-->
         | description is \internal => \ "#{icons.smart}"
         | description is \external => \ "#{icons.user}"
         | _ => \ "#{icons.unknown}"
+    wallet-from =
+        address: from
+    wallet-to =
+        address: to
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
@@ -648,29 +673,25 @@ render-transaction = (store, web3t, tran)-->
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.details-from
                 .pug.gray(style=lightText)
-                    span.from-to.pug #{lang.from}:
-                    span.action.pug
-                        CopyToClipboard.pug(text="#{from}" on-copy=copied-inform(store) style=filter-icon)
-                            copy store
+                    span.from-to.pug 
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
-                MiddleEllipsis.pug
-                    a.pug(target="_blank" style=menu-style) #{from}
+                        span.pug #{lang.from}:
+                    span.action.pug
+                        address-holder { store, wallet: wallet-from }
             if no
                 .cell.pug.arrow
                     img.icon-svg1.pug(src="#{icons.arrow-right}")
             .cell.pug.details-to
                 .pug.gray(style=lightText)
-                    span.from-to.pug #{lang.to}:
-                    span.action.pug
-                        CopyToClipboard.pug(text="#{to}" on-copy=copied-inform(store) style=filter-icon)
-                            copy store
+                    span.from-to.pug
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
-                MiddleEllipsis.pug
-                    a.pug(target="_blank" style=menu-style) #{to}
+                        span.pug #{lang.to}:
+                    span.action.pug
+                        address-holder { store, wallet: wallet-to }
             .cell.pug.created
                 .pug.gray(style=lightText)
                     span.pug #{lang.created}: 
@@ -765,6 +786,13 @@ module.exports = ({ store, web3t })->
         background: style.app.wallet-light
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
+    length = store.transactions.applied.length
+    console.log { length }
+    rowRenderer = ({ key, index, isScrolling, isVisible, style })->
+        return render-transaction store, web3t, store.transactions.applied[index] if isVisible
+        null
+    history-width = store.current.size.width / 1.9
+    history-height = store.current.size.height - 200 - 60
     .pug.normalheader.history
         .header.pug(style=header-style-light)
             if store.current.device is \mobile
@@ -800,9 +828,8 @@ module.exports = ({ store, web3t })->
                                 img.pug(src="#{coin.image}")
         .pug
             .pug.table
-                if store.transactions.applied.length > 0
-                    store.transactions.applied |> map render-transaction store, web3t
-            if store.transactions.applied.length is 0
+                List.pug(width=history-width height=history-height rowCount=length rowHeight=20 rowRenderer=rowRenderer)
+            if length is 0
                 .pug.nothin-to-show(style=menu-style)
                     img.pug(style=nothing-icon src="#{icons.search-history}"
                     .pug.head #{lang.nothing-to-show}

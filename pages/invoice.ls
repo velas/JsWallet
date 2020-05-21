@@ -22,10 +22,9 @@ require! {
     >*
         display: inline-block
         text-align: center
-        width: 94%
+        width: 100%
         box-sizing: border-box
         border-radius: $border-radius
-        left: 11px
     >.content-body
         top: 15px
         padding: 12px 12px 0px 12px

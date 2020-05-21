@@ -7,17 +7,18 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
+    \./identicon.ls
 }
 .address-holder
     @import scheme
     $card-top-height: 50px
     width: 100%
-    padding: 0 12px
     box-sizing: border-box
     color: #A8BACB
     font-size: 14px
     text-align: center
     position: relative
+    overflow: visible
     .browse
         display: inline-block
         position: absolute
@@ -34,9 +35,15 @@ require! {
         margin-right: 10px
     >img
         position: absolute
-        right: 3%
+        right: 1%
         margin: 10px
         margin-left: 50px
+        z-index: 2
+    >img.identicon
+        position: absolute
+        right: auto
+        left: 0
+        margin: 0
         z-index: 2
     >span
         width: 100%
@@ -66,6 +73,7 @@ require! {
             position: relative
             border-radius: $border
             border: 0
+            padding-left: 33px
             background: transparent
             box-sizing: border-box
             vertical-align: top
@@ -77,17 +85,37 @@ require! {
             display: inline-block
             cursor: pointer
             user-select: text !important
-module.exports = ({ store, wallet })->
+            &.active
+                color: orange
+module.exports = ({ store, wallet, type })->
     style = get-primary-info store
     address-input=
         color: style.app.addressText
+    address-input-bg=
+        color: style.app.addressText
+        background: style.app.addressBg
+    input=
+        | type is \bg => address-input-bg
+        | _ => address-input
     filter-icon=
         filter: style.app.filterIcon
-    .address-holder.pug
-        span.pug(style=address-input)
-            a.browse.pug(target="_blank" href="#{get-address-link wallet}")
+    address-link = get-address-link wallet
+    address-title = get-address-title wallet
+    show-details = ->
+        store.current.hovered-address.address = wallet.address
+    hide-details = ->
+        store.current.hovered-address.address = null
+    create-ref = ->
+        #module.exports.element = it
+        #store.current.hovered-address.element = it
+        #create-ref.element = it
+    active = if wallet.address is store.current.hovered-address.address then 'active' else ''
+    .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details ref=create-ref)
+        identicon { store, address: address-title }
+        span.pug(style=input)
+            a.browse.pug(target="_blank" href="#{address-link}")
                 img.pug(src="#{icons.browse-open}")
             MiddleEllipsis.pug
-                a.pug(target="_blank" href="#{get-address-link wallet}") #{get-address-title wallet}
-        CopyToClipboard.pug(text="#{get-address-title wallet}" on-copy=copied-inform(store) style=filter-icon)
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
+        CopyToClipboard.pug(text="#{address-title}" on-copy=copied-inform(store) style=filter-icon)
             copy store

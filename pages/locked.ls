@@ -75,7 +75,7 @@ require! {
             border: 1px solid #549D90
             border-radius: $border
             outline: none
-            width: 180px
+            width: 120px
             margin-bottom: 5px
             letter-spacing: 5px
             box-sizing: border-box
@@ -90,6 +90,7 @@ require! {
         max-width: 400px
         display: inline-block
     button
+        width: 120px
         &.text-primary
             color: rgb(156, 65, 235) !important
             &:hover

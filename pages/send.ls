@@ -14,6 +14,8 @@ require! {
     \./epoch.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/button.ls
+    \../components/address-holder.ls
+    \../components/identicon.ls
 }
 .content
     position: relative
@@ -113,10 +115,9 @@ require! {
     >*
         display: inline-block
         text-align: center
-        width: 94%
+        width: 100%
         box-sizing: border-box
         border-radius: $border-radius
-        left: 11px
     .more-buttons
         top: 30px
         right: 0
@@ -173,13 +174,20 @@ require! {
                             text-align: right
             text-align: left
             >.form-group
+                &:nth-child(2)
+                    div
+                        position: relative
+                        img
+                            position: absolute
+                        input
+                            text-align: center
                 >.control-label
                     padding-top: 5px
                     padding-left: $label-padding
                     font-size: $label-font
                 margin-top: 4px
                 .address
-                    padding: 0px 10px
+                    padding: 0px
                     height: 36px
                     line-height: 36px
                     overflow: hidden
@@ -522,10 +530,11 @@ send = ({ store, web3t })->
             form.pug
                 form-group lang.from, icon-style, ->
                     .address.pug(style=border-style)
-                        MiddleEllipsis.pug
-                            a.pug(href="#{get-address-link wallet}") #{get-address-title wallet}
+                        address-holder { store, wallet }
                 form-group lang.to, icon-style, ->
-                    input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
+                    .pug
+                        identicon { store, address: send.to }
+                        input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
                 form-group lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field

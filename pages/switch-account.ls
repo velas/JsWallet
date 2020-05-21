@@ -120,7 +120,7 @@ require! {
         right: 0
         top: 0
         padding: 12px 20px
-        border-left: 0
+        border-left: 0 !important
         >.buttons
             display: none !important
         .buttons

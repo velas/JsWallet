@@ -144,7 +144,7 @@ require! {
         100%
             background-position: 468px 0
     @media (max-width: 800px)
-        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res, .info, .monitor
+        .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res, .stats, .monitor
             margin: 120px 0 0
             >.title
                 margin: 60px 0 0
