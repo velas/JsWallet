@@ -1,6 +1,7 @@
 module.exports =
     velas: 
         background: "linear-gradient(100deg, #331462 4%, #15063C 100%)"
+        menu: "linear-gradient(90deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)"
         background-image: "none"
         input: \#FFF
         primary1: \#9d41eb
@@ -27,6 +28,7 @@ module.exports =
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) hue-rotate(45deg)"
     light:
         background: \#F0EFF5
+        menu: \#F0EFF5
         background-image: "none"
         input: \#FFF
         primary1: \#FFF
@@ -52,6 +54,7 @@ module.exports =
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1)) hue-rotate(0deg)"
     dark:
         background: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
+        menu: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
         background-image: "none"
         input: \#213040
         primary1: \#2d4967
@@ -77,6 +80,7 @@ module.exports =
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) grayscale(.4)"
     dark_mojave:
         background: \#292A2F
+        menu: \#292A2F
         background-image: "none"
         input: \#213040
         primary1: \#213040
@@ -102,6 +106,7 @@ module.exports =
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) hue-rotate(45deg)"
     monochrome:
         background: \#000000
+        menu: \#000000
         background-image: "none"
         input: \#213040
         primary1: \#213040

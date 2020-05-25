@@ -34,5 +34,10 @@
 
 ### Install on your server
 
+1. npm run setup
+2. npm run wallet
+3. Serve main-index.html main-bundle.js main-bundle.css by your http server
+
+
 
 

@@ -29,7 +29,7 @@ require! {
         padding: 0
     .switch-menu
         position: absolute
-        right: 60px
+        right: -1px
         top: 60px
         width: 170px
         background: #321260
@@ -242,8 +242,6 @@ module.exports = (store, web3t)->
         width: "40px"
         height: "40px"
         margin: "20px 5px 0"
-    border-style =
-        border-left: "1px solid #{style.app.border}"
     lang = get-lang store
     account-index = "#{lang.account-index ? 'Account index'}: #{current.account-index}"
     length = +(localStorage.get-item('Accounts') ? 3)
@@ -267,7 +265,7 @@ module.exports = (store, web3t)->
         .pug.table-row-menu(on-click=change-account key="account#{index}" style=position-style)
             .col.folder-menu.pug
                 .pug #{account-name}
-    .pug.your-account(style=border-style)
+    .pug.your-account
         if store.preference.username-visible is yes
             .pug.username 
                 .pug.nick #{current.account.account-name}
@@ -285,9 +283,6 @@ module.exports = (store, web3t)->
             if no
                 if store.current.device is \mobile
                     button.pug.button.lock.mt-5(on-click=open-migration style=button-primary1-style) Migration
-            if store.current.device is \desktop
-                button.pug.button.lock(on-click=add-coin(store) style=button-primary0-style)
-                    img.icon-svg1.pug(src="#{icons.create}")
             if no
                 if store.current.device is \desktop
                     button.pug.button.lock(on-click=open-migration style=button-primary0-style)

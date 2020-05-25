@@ -1,6 +1,6 @@
 require! {
     \react
-    \prelude-ls : { sort-by, reverse, filter, map, find }
+    \prelude-ls : { sort-by, reverse, filter, map, find, take }
     \../history-funcs.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -12,7 +12,6 @@ require! {
     \../icons.ls
     \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/address-holder.ls
-    \react-virtualized : { List }
 }
 .history
     @import scheme
@@ -789,7 +788,7 @@ module.exports = ({ store, web3t })->
     length = store.transactions.applied.length
     console.log { length }
     rowRenderer = ({ key, index, isScrolling, isVisible, style })->
-        return render-transaction store, web3t, store.transactions.applied[index] if isVisible
+        return render-transaction store, web3t, store.transactions.applied[index] # if isVisible
         null
     history-width = store.current.size.width / 1.9
     history-height = store.current.size.height - 200 - 60
@@ -828,7 +827,7 @@ module.exports = ({ store, web3t })->
                                 img.pug(src="#{coin.image}")
         .pug
             .pug.table
-                List.pug(width=history-width height=history-height rowCount=length rowHeight=20 rowRenderer=rowRenderer)
+                store.transactions.applied |> take 20 |> map render-transaction store, web3t
             if length is 0
                 .pug.nothin-to-show(style=menu-style)
                     img.pug(style=nothing-icon src="#{icons.search-history}"

@@ -138,7 +138,7 @@ require! {
                     width: 100% !important
                     height: auto !important
             .value
-                font-size: 20px
+                font-size: 17px
                 display: inline-flex
                 .symbol
                     font-size: 14px

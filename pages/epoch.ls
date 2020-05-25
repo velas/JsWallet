@@ -303,31 +303,32 @@ module.exports = (store, web3t)->
         store.current.open-menu = not store.current.open-menu
     on-exit = ->
         store.current.current-epoch = no
-    .choose-account.pug
-        .pug.current-epoch.h1(class="#{show-class}")
-            span.name.pug(on-click=open-epoch) #{lang.epoch}
-            span.pug.icon(on-click=open-epoch class="#{rotate-class}")
-                img.icon-svg-create.pug(src="#{icons.arrow-down}")
-        if store.current.current-epoch
-            .pug.epoch(style=filter-body on-mouse-leave=on-exit)
-                .pug.middle.account
-                    .pug.table-row-menu
-                        .col.folder-menu.pug
-                            .pug #{current-block}
-                            span.pug #{lang.current-block}
-                        .col.folder-menu.pug
-                            .pug #{store.dashboard.epoch}
-                            span.pug #{lang.current-epoch}
-                        .col.folder-menu.pug
-                            .pug
-                                progress.pug(value="#{store.dashboard.epoch-percent}" max="100")
-                            span.pug 
-                                | #{lang.change} 
-                                | #{epoch-next}
-                        if window.location.href.index-of('internal') > -1
+    if store.current.device is \desktop
+        .choose-account.pug
+            .pug.current-epoch.h1(class="#{show-class}")
+                span.name.pug(on-click=open-epoch) #{lang.epoch}
+                span.pug.icon(on-click=open-epoch class="#{rotate-class}")
+                    img.icon-svg-create.pug(src="#{icons.arrow-down}")
+            if store.current.current-epoch
+                .pug.epoch(style=filter-body on-mouse-leave=on-exit)
+                    .pug.middle.account
+                        .pug.table-row-menu
+                            .col.folder-menu.pug
+                                .pug #{current-block}
+                                span.pug #{lang.current-block}
+                            .col.folder-menu.pug
+                                .pug #{store.dashboard.epoch}
+                                span.pug #{lang.current-epoch}
                             .col.folder-menu.pug
                                 .pug
-                                    button.pug(on-click=monitor style=button-primary2-style)
-                                        span.pug
-                                            img.icon-svg.pug(src="#{icons.monitor}")
-                                            | Monitor
+                                    progress.pug(value="#{store.dashboard.epoch-percent}" max="100")
+                                span.pug 
+                                    | #{lang.change} 
+                                    | #{epoch-next}
+                            if window.location.href.index-of('internal') > -1
+                                .col.folder-menu.pug
+                                    .pug
+                                        button.pug(on-click=monitor style=button-primary2-style)
+                                            span.pug
+                                                img.icon-svg.pug(src="#{icons.monitor}")
+                                                | Monitor

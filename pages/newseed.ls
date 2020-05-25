@@ -79,13 +79,6 @@ require! {
         color: white
         position: relative
         z-index: 2
-        &.save
-            display: none
-            &.none
-                display: inline-block
-        &.doc
-            &.none
-                display: none
         &:hover
             background: #248295 - 20
     .warning
@@ -185,7 +178,7 @@ restore-words = (store, web3t, item)-->
     change-part = (it)->
         item.part = it.target.value    #.to-lower-case!.trim!.replace(/[^a-z]/, '')
     .pug.word(style=seed-style)
-        input.pug(type='text' value="#{item.part}" placeholder="Enter #{index} word" on-change=change-part)
+        input.pug(type='text' value="#{item.part}" placeholder="word ##{index}" on-change=change-part)
         span.effect.pug #{index}
 create-word = (store, words, word)-->
     index = words.index-of(word) + 1
@@ -246,8 +239,6 @@ newseed = ({ store, web3t })->
     print = ->
         store.current.hide-btn = not store.current.hide-btn
         window.open('https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view')
-    hide-class =
-        if store.current.hide-btn then \none else \ ""
     back = ->
         #navigate store, web3t, \:init
         store.current.page = 'newseedrestore'
@@ -276,12 +267,12 @@ newseed = ({ store, web3t })->
                 button.pug.right(on-click=back2 style=button-primary3-style )
                     img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
                     | #{lang.back ? 'Back' }
-                button.pug.right.save(on-click=next style=button-primary1-style class="#{hide-class}")
-                    img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.next ? 'Next' }
-                button.pug.right.doc(on-click=print class="#{hide-class}" style=button-primary2-style)
+                button.pug.right.doc(on-click=print style=button-primary2-style)
                     img.icon-svg.pug(src="#{icons.print}")
                     | #{lang.print ? 'Print' }
+                button.pug.right.save(on-click=next style=button-primary1-style)
+                    img.icon-svg.pug(src="#{icons.save}")
+                    | #{lang.next ? 'Next' }
         else    
             .pug
                 button.pug.right(on-click=back style=button-primary3-style )
@@ -297,7 +288,10 @@ newseed = ({ store, web3t })->
                     span.pug
                         img.icon-svg.pug(src="#{icons.warning}" style=btn-icon)
                         | #{lang.fix-issue}
-        .pug.hint(style=text-style) #{lang.new-seed-warning ? 'It will be reliable to write down the phrase on paper. Do not transfer it to a third party and store it in a safe place.'}
+        if store.current.seed-generated
+            .pug.hint(style=text-style) #{lang.new-seed-warning ? 'Click 'Print' and print out paper instructions and write down your 24 words seed carefuly. Anyone with access to your recovery phrase could take your assets, store it securely. We do not keep a backup of your 24 words, if you lose it all coins in your wallet will be gone forever!'}
+        else
+            .pug.hint(style=text-style) #{lang.new-seed-warning-restore ? 'Please pay close attention to spelling and the order of words you are being asked, incorrect order will create different wallet from original.'}
 focus = ({ store }, cb)->
     console.log \focus
     <- set-timeout _, 1000

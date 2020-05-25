@@ -158,6 +158,10 @@ require! {
             display: inline-block
             height: auto
             border: 0 !important
+            .address-holder
+                div
+                    a
+                        padding-right: 20px
             &.title-balance
                 display: none
 mobile = ({ store, web3t })->

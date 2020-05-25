@@ -4,6 +4,7 @@ require! {
     \react
     \./pages.ls
     \./pages/header.ls
+    \./pages/mobilemenu.ls
     \./pages/side-menu.ls
     #\./pages/banner.ls
     \./description.ls
@@ -40,6 +41,7 @@ require! {
         top: 2px
         margin-right: 3px
     .title
+        z-index: 3 !important
         .header
             @media(max-width: 620px)
                 &.hide
@@ -171,6 +173,8 @@ module.exports = ({ store, web3t })->
             #banner store, web3t
             if store.current.device is \mobile
                 header store, web3t
+            if store.current.device is \mobile
+                mobilemenu store, web3t
             if store.current.device is \desktop
                 side-menu store, web3t
             current-page { store, web3t }

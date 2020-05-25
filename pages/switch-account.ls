@@ -79,8 +79,6 @@ require! {
             cursor: default
             display: inline-block
             vertical-align: middle
-            @media(max-width:500px)
-                width: 40px
         input
             outline: none
             width: 100px

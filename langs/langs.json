@@ -280,13 +280,22 @@
             "새로운 씨구"
         ],
         "newSeedWarning": [
-            "It will be reliable to write down the phrase on paper. Do not transfer it to a third party and store it in a safe place.",
-            "Будет надежно записать фразу на бумаге. Не передавайте его третьему лицу и храните его в надежном месте.",
-            "Буде надійно записати фразу на папері. Не передавайте його третій стороні та зберігайте в безпечному місці.",
-            "Il serait fiable de noter la phrase sur papier. Ne la donnez pas à un tiers et stockez la en lieu sûr.",
-            "Es recomendable que escribas tu frase de recuperación en un papel. No lo transfieras a nadie y almacénalo en un lugar seguro.",
-            "在紙上寫下該短語將是可靠的。 請勿將其轉讓給第三方並存放在安全的地方。",
-            "종이에 문구를 적어 두는 것이 좋습니다. 타사에 양도하지 말고 안전한 곳에 보관하십시오."
+            "Click 'Print' and print out paper instructions and write down your 24 words seed carefuly. Anyone with access to your recovery phrase could take your assets, store it securely. We do not keep a backup of your 24 words, if you lose it all coins in your wallet will be gone forever!",
+            "Нажмите кнопку 'Печать' и распечатать инструкции бумаги и запишите свои 24 слова семян изучили. Кто имеет доступ к вашему восстановления фраза может завладеть вашими активами, надежно хранить его. Мы не храним резервных копий 24 слова, Если вы его потеряете все монеты в вашем кошельке будет навсегда!",
+            "Натисніть кнопку 'Друк' і роздрукувати інструкції паперу і запишіть свої 24 слова насіння вивчили. Хто має доступ до вашого відновлення фраза може заволодіти вашими активами, надійно зберігати його. Ми не зберігаємо резервних копій 24 слова, Якщо ви втратите всі монети у вашому гаманці буде назавжди!",
+            "Cliquez sur 'Imprimer' et imprimer des instructions de papier et écrivez votre 24 mots de graines soigneusement. Toute personne ayant accès à votre rétablissement phrase pourrait prendre de vos biens, de les stocker de manière sécurisée. Nous n'avons pas de garder une copie de sauvegarde de votre 24 mots, si vous les perdez toutes les pièces de monnaie dans votre porte-monnaie sera à jamais disparu!",
+            "Haga clic en 'Imprimir' y imprimir las instrucciones de papel y anote sus 24 palabras de semilla abundante. Cualquier persona con acceso a tu frase de recuperación podría tomar sus activos, almacenar de forma segura. No guardamos una copia de seguridad de su 24 palabras, si usted pierde todas las monedas en su monedero, se ha ido para siempre!",
+            "击打印和印刷出来文的指示写下你的24话的种子门洞. 有权访问你的回收的短语可能需要您的资产，存放它的安全。 我们不保持一个备份的24个字，如果你失去它所有的硬币，你的钱包就会永远消失!",
+            "클릭하'인쇄 및 인쇄 종이 지침에 적 24 말 씨 carefuly. 대한 액세스 권한이 있는 모든 사람을 당신의 복구를 구할 수 없습을 귀하의 자산이,저장 이를 안전하게 보관합니다. 우리가 지키지 않는 백업하고 24 말,당신이 그것을 잃으면 모든 동전 지갑에 영원히 사라질 것입니다!"
+        ],
+        "newSeedWarningRestore": [
+            "Please pay close attention to spelling and the order of words you are being asked, incorrect order will create different wallet from original.",
+            "Пожалуйста, обратите пристальное внимание на орфографию и порядок слов, что вас просят, неправильный порядок будет создать другой кошелек от оригинала.",
+            "Будь ласка, зверніть пильну увагу на орфографію і порядок слів, що вас просять, неправильний порядок буде створити інший гаманець від оригіналу.",
+            "S'il vous plaît prêter une attention particulière à l'orthographe et l'ordre des mots qui vous sont posées, ordre incorrect permettra de créer différents porte-monnaie à partir de l'original.",
+            "Por favor, preste atención a la ortografía y el orden de las palabras que se te pide, orden incorrecto creará cartera diferente de la original.",
+            "请密切注意的拼写和秩序的话，你是在问，不正确的顺序将建立不同的钱包里从原来的。",
+            "주의하시기 바랍니다 맞춤법 및 순서의 단어는 요청을 받고,잘못되었기를 만들 다른 지갑에서 원래 있습니다."
         ],
         "receive": [
             "Receive",

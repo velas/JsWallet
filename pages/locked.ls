@@ -68,7 +68,7 @@ require! {
                         right: 0
         input
             text-align: center
-            font-size: 17px
+            font-size: 12px
             display: inline-block
             height: 36px
             background: transparent
@@ -78,6 +78,7 @@ require! {
             width: 120px
             margin-bottom: 5px
             letter-spacing: 5px
+            padding: 7px 0
             box-sizing: border-box
             &:focus
                 border-color: #248295
@@ -138,6 +139,11 @@ require! {
     ::placeholder
         color: #ffffff91
         font-size: 12px
+        letter-spacing: 0
+        line-height: 18px
+    ::-ms-input-placeholder
+        color: #ffffff91
+        font-size: 12px !important
         letter-spacing: 0
         line-height: 22px
     .drag

@@ -27,9 +27,9 @@ require! {
                 transition: all .5s
     .logo
         position: absolute
-        width: auto
-        text-align: left
-        left: 15px
+        width: 100%
+        text-align: center
+        left: 0
         img
             width: 25px
             vertical-align: bottom
@@ -228,6 +228,13 @@ require! {
         width: 20px
         text-align: center
         z-index: 11
+        &.locked
+            float: left
+            margin: 0
+        &.menu-btn
+            &.show
+                opacity: .5
+                transition: all .5s
         &.menu-btn, &.locked
             display: inline-block
         &.class
@@ -253,6 +260,11 @@ module.exports = (store, web3)->
         color: style.app.text
     icon-style =
         color: style.app.icon
+    icon-style2 =
+        color: style.app.icon
+        float: "left"
+        opacity: "0"
+        margin-left: "60px"
     lang = get-lang store
     info = get-primary-info store
     syncing = 
@@ -306,39 +318,16 @@ module.exports = (store, web3)->
         store.menu.mobile = not store.menu.mobile
     show-menu =
         if store.menu.mobile then \show else \ ""
+    show-class =
+        if store.menu.show then \show else \ ""
+    show = ->
+        store.menu.show = not store.menu.show
     .menu.pug(style=border-style class="#{show-menu}")
         .pug.logo
             img.pug(src="#{info.branding.logo-sm}" style=logo-style)
-        if store.preference.settings-visible is yes
-            if store.current.device is \mobile
-                .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
-                    img.pug(src="#{icons.wallet}" style=wallet-icon)
-        if store.preference.settings-visible is yes
-            if store.current.device is \mobile
-                .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking}")
-                    .menu.pug.arrow_box
-                        ul.pug
-                            li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
-                                img.pug(src="#{icons.node}" style=icon-node)
-                                | Node
-                            li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
-                                img.pug(src="#{icons.delegate}" style=icon-node)
-                                | Delegate
-                            li.pug(on-click=goto-info style=icon-style class="#{info-active}")
-                                img.pug(src="#{icons.info}" style=icon-node)
-                                | Stats
-                    img.pug(src="#{icons.staking}")
-        if store.preference.settings-visible is yes
-            if store.current.device is \mobile
-                .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
-                    img.pug(src="#{icons.search}")
-        if store.preference.settings-visible is yes
-            if store.current.device is \mobile
-                .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
-                    img.pug(src="#{icons.setting}")
         if store.preference.lock-visible is yes
             if store.current.device is \mobile    
-                .menu-item.menu-btn.pug(on-click=hide-menu style=icon-style)
+                .menu-item.menu-btn.pug(on-click=show style=icon-style class="#{show-class}")
                     img.pug(src="#{icons.menu}" style=lock-icon)
         if store.preference.lock-visible is yes
             if store.current.device is \mobile    

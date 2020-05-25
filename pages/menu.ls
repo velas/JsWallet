@@ -10,12 +10,19 @@ require! {
     \../icons.ls
     \./header.ls
     \../round-human.ls
+    \../add-coin.ls
 }
 .menu
     height: 199px
     line-height: 200px
     $mobile: 425px
     $tablet: 800px
+    .icon-svg-plus
+        position: relative
+        height: 16px
+        top: 2px
+        padding: 0
+        cursor: pointer
     &.wallet-main
         @media(max-width: 800px)
             margin: 0px 15px 0
@@ -52,6 +59,9 @@ require! {
         max-width: 450px
         >.balance
             position: relative
+            button
+                svg
+                    width: 20px
             >.menu
                 position: absolute
                 right: 0
@@ -136,6 +146,26 @@ module.exports = ({ store, web3t })->
     icon-style =
         color: style.app.loader
         margin-top: "10px"
+    button-add=
+        color: style.app.text
+        border-radius: "50px"
+        border: "0"
+        background: "rgba(157, 127, 206, 0.3)"
+        line-height: "25px"
+        padding: "10px"
+        width: "40px"
+        height: "40px"
+        margin: "10px 5px 0"
+    button-syncing=
+        color: style.app.loader
+        border-radius: "50px"
+        border: "0"
+        background: "rgba(157, 127, 206, 0.3)"
+        line-height: "25px"
+        padding: "10px"
+        width: "40px"
+        height: "40px"
+        margin: "10px 5px 0"
     lang = get-lang store
     syncing = 
         | store.current.refreshing => \syncing
@@ -150,11 +180,14 @@ module.exports = ({ store, web3t })->
                     .symbol.pug $
                     .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
                 .currency.h1.pug #{lang.balance ? 'Balance'}
-                if store.current.device is \desktop
-                    .pug
+                .pug
+                    if store.current.device is \desktop
                         if store.preference.refresh-visible is yes
-                            .menu-item.loader.pug(on-click=refresh style=icon-style class="#{syncing}")
-                                icon \Sync, 25
+                            button.pug.button.lock.mt-5(on-click=refresh style=button-syncing class="#{syncing}")
+                                icon \Sync, 20
+                    if store.current.device is \desktop
+                        button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-add)
+                            img.icon-svg-plus.pug(src="#{icons.create}")
             if store.current.device is \mobile    
                 your-account store, web3t
             project-links { store, web3t }

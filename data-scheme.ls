@@ -6,7 +6,7 @@ require! {
     \./icons.ls
     \./get-device.ls
     \./get-size.ls
-    \../package.json : { version }
+    \./package.json : { version }
     \qs
 }
 saved-seed = saved!
@@ -131,6 +131,7 @@ store =
     menu:
         active: 's2'
         mobile: no
+        show: no
     ask: 
         text: ''
         enabled: no

@@ -115,8 +115,8 @@ require! {
     .price-month
         width: 100%
         .per-price
-            color: #6f6fe2;
-            font-size: 14px;
+            color: #6f6fe2
+            font-size: 16px
     .entry-content
         padding: 20px 12px
         color: #323232

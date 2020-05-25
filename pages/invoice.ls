@@ -17,6 +17,14 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
+    .address-holder
+        >.identicon
+            width: 20px
+            height: 20px
+            margin: 7px 0px 0 30px
+        div
+            >a
+                padding-right: 30px
     .pending
         color: orange
     >*

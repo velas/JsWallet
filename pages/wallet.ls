@@ -242,8 +242,8 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
-    .wallet.pug(on-click=expand class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
-        .wallet-top.pug
+    .wallet.pug(class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
+        .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
                 .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")

@@ -208,8 +208,9 @@ newseed = ({ store, web3t })->
                 | #{lang.back ? 'Back' }
 focus = ({ store }, cb)->
     <- set-timeout _, 1000
-    textarea = store.root.query-selector '.newseed textarea'
-    textarea.focus!
+    # textarea null here
+    # textarea = store.root.query-selector '.newseed textarea'
+    # textarea.focus!
     cb null
 newseed.focus = focus
 module.exports = newseed

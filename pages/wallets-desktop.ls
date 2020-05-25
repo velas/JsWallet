@@ -85,7 +85,7 @@ require! {
         .switch-account
             float: right
             line-height: 2
-            right: 80px
+            right: 20px
             position: relative
             display: inline-flex
             .ckeck
@@ -130,7 +130,7 @@ require! {
             right: 0
             top: 0
             padding: 12px 20px
-            border-left: 1px solid #6b258e
+            border-left: 0
             .buttons
                 >.button
                     width: 20px
