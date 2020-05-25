@@ -58,7 +58,7 @@ require! {
             display: block
         &:last-child
             width: 30%
-            border-right: 0
+            border-right: 0 !important
         .name
             color: #fff
             font-size: 16px

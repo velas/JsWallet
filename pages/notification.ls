@@ -10,6 +10,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
+    \./alert-demo.ls
 }
 .notice
     @import scheme
@@ -1294,9 +1295,9 @@ item = (store, web3t)->
                 li.pug
                     img.icon-svg-video.pug(on-click=search src="#{icons.search}")
         .search.pug(style=border-b class="#{search-show}")
-            input.pug(type='text' style=input-style value="" placeholder="Search")
+            input.pug(type='text' style=input-style value="" placeholder="#{lang.search}")
         .textarea.pug(style=border-t)
-            input.pug(type='text' style=input-style value="" placeholder="Write a message...")
+            input.pug(type='text' style=input-style value="" placeholder="#{lang.writemsg}")
         .pug.content-msg
             ul.pug
                 li.pug.in
@@ -1398,9 +1399,9 @@ item2 = (store, web3t)->
                 li.pug
                     img.icon-svg-video.pug(on-click=search src="#{icons.search}")
         .search.pug(style=border-b class="#{search-show}")
-            input.pug(type='text' style=input-style value="" placeholder="Search")
+            input.pug(type='text' style=input-style value="" placeholder="#{lang.search}")
         .textarea.pug(style=border-t)
-            input.pug(type='text' style=input-style value="" placeholder="Write a message...")
+            input.pug(type='text' style=input-style value="" placeholder="#{lang.writemsg}")
         .pug.content-msg
             ul.pug
                 li.pug.in
@@ -1513,10 +1514,9 @@ notice = ({ store, web3t })->
     imgs=
         ava: "https://res.cloudinary.com/dfbhd7liw/image/upload/v1588866150/velas/interface_1.png"
     .pug.notice
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") Messenger
+            .pug.header(class="#{show-class}") #{lang.velas-messenger}
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
@@ -1539,7 +1539,7 @@ notice = ({ store, web3t })->
                         .pug.left-menu
                         ul.pug(style=border-style3)
                             li.pug(style=border-b)
-                                input.pug(type='text' style=input-style value="" placeholder="Search")
+                                input.pug(type='text' style=input-style value="" placeholder="#{lang.search}")
                                 img.edit.pug(src="#{icons.create}")
                             li.pug(on-click=activate-item class="#{active-item}" style=border-b)
                                 img.pug.ava(src="#{imgs.ava}")

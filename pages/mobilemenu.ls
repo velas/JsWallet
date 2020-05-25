@@ -26,12 +26,11 @@ require! {
         text-align: right
         padding: 50px 40px
         box-sizing: border-box
-        height: 60px
+        height: calc(100vh - 0px)
         position: fixed
         z-index: 111
         $smooth: color .15s ease-in-out
-        top: 60px
-        height: 100vh
+        top: 0px
         right: -500px
         transition: all .5s
         box-shadow: -10px 0px 40px 10px rgba(0, 0, 0, 0.25)
@@ -319,13 +318,16 @@ module.exports = (store, web3)->
         color: style.app.text
     icon-style =
         color: style.app.icon
+    lock-style =
+        color: style.app.icon
+        bottom: "20px"
+        position: "absolute"
     lang = get-lang store
     info = get-primary-info store
     syncing = 
         | store.current.refreshing => "syncing"
         | _ => ""
     border-style =
-        border-bottom: "1px solid #{style.app.border}"
         background: style.app.menu
     logo-style =
         filter: style.app.filterLogo
@@ -345,6 +347,8 @@ module.exports = (store, web3)->
         width: "12px"
         height: "12px"
         padding-right: "10px"
+    lock-icon = 
+        width: "14px"
     text-style=
         color: style.app.text
     goto-settings = ->
@@ -355,6 +359,7 @@ module.exports = (store, web3)->
         store.menu.show = no
     wallet = ->
         navigate store, web3t, \wallets
+        store.menu.show = no
     goto-staking = ->
         navigate store, web3t, \staking
         store.menu.show = no
@@ -363,6 +368,9 @@ module.exports = (store, web3)->
         store.menu.show = no
     goto-info = ->
         navigate store, web3t, \info
+        store.menu.show = no
+    lock = ->
+        navigate store, web3t, \locked
         store.menu.show = no
     open-submenu = ->
         store.current.submenu = not store.current.submenu
@@ -414,3 +422,8 @@ module.exports = (store, web3)->
                     .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                         img.pug(src="#{icons.setting}")
                         label.pug Settings
+            if store.preference.lock-visible is yes
+                if store.current.device is \mobile    
+                    .menu-item.pug(on-click=lock style=lock-style)
+                        img.pug(src="#{icons.lock}" style=lock-icon)
+                        label.pug Locked

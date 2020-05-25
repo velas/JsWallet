@@ -147,9 +147,9 @@ require! {
             background-position: 468px 0
     @media (max-width: 800px)
         .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res, .stats, .monitor
-            margin: 120px 0 0
+            margin: 60px 0 0
             >.title
-                margin: 60px 0 0
+                margin: 0
                 position: fixed
                 z-index: 11
 module.exports = ({ store, web3t })->
@@ -171,8 +171,9 @@ module.exports = ({ store, web3t })->
             confirmation-control store, web3t
             copy-message store, web3t
             #banner store, web3t
-            if store.current.device is \mobile
-                header store, web3t
+            if no
+                if store.current.device is \mobile
+                    header store, web3t
             if store.current.device is \mobile
                 mobilemenu store, web3t
             if store.current.device is \desktop

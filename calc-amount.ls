@@ -25,12 +25,10 @@ export calc-usd = calc-fiat \usdRate
 export calc-eur = calc-fiat \eurRate
 calc-fee-proxy = (input, cb)->
     fun = ->
-        #console.log \fee-calc
         calc-fee input, cb
     calc-fee-proxy.timer = clear-timeout calc-fee-proxy.timer
     calc-fee-proxy.timer = set-timeout fun, 500
 change-amount-generic = (field)-> (store, amount-send, fast, cb)->
-    #console.log \change-amount , 1
     send = store.current[field]
     { wallet } = send
     { token } = send.coin

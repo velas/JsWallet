@@ -180,123 +180,44 @@ restore-words = (store, web3t, item)-->
     .pug.word(style=seed-style)
         input.pug(type='text' value="#{item.part}" placeholder="word ##{index}" on-change=change-part)
         span.effect.pug #{index}
-create-word = (store, words, word)-->
-    index = words.index-of(word) + 1
-    style = get-primary-info store
-    seed-style=
-        border: "1px solid #{style.app.primaryOpct}"
-        color: style.app.text
-    .pug.word(style=seed-style)
-        span.pug #{index}
-        span.pug #{word.part}
-random = ->
-    Math.random!
-newseed = ({ store, web3t })->
+restore-words-panel = (store, web3t)->
     lang = get-lang store
-    { save, fix-issue, has-issue, next } = newseed-funcs store, web3t
+    { save } = newseed-funcs store, web3t
     style = get-primary-info store
-    text-style =
-        color: style.app.text
-    disable-copy-style =
-        | store.current.seed-generated => \none
-        | _ => ""
-    address-input=
-        color: style.app.text
-        background: style.app.wallet
-        user-select: disable-copy-style
-    about-field=
-        color: style.app.text
-        background: style.app.wallet
     button-primary1-style=
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
-    button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
-        color: style.app.text
-        background: style.app.primary2
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
-        background: style.app.primary3
+    btn-icon =
+        filter: style.app.btn-icon
+    back = ->
+        store.current.page = 'newseedrestore'
+    .pug
+        .pug.words
+            store.current.seed-words |> sort-by (.index) |> map restore-words store, web3t
+        .pug
+            button.pug.right(on-click=back style=button-primary3-style )
+                img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
+                | #{lang.back }
+            button.pug.right(on-click=save style=button-primary1-style )
+                img.icon-svg.pug(src="#{icons.save}")
+                | #{lang.next }
+newseed = ({ store, web3t })->
+    lang = get-lang store
+    style = get-primary-info store
+    text-style =
+        color: style.app.text
     seed-style=
         border: "1px solid #{style.app.primaryOpct}"
         color: style.app.text
-    btn-icon =
-        filter: style.app.btn-icon
-    about-bg=
-        background: style.app.wallet
     newseed-style=
-        # filter: style.app.nothingIcon
         margin-bottom: "10px"
         width: "120px"
-    disabled = store.current.seed-generated
-    disable-copy = 
-        | store.current.seed-generated => "return false"
-        | _ => ""
-    about = ->
-        store.seed.about = not store.seed.about
-    print = ->
-        store.current.hide-btn = not store.current.hide-btn
-        window.open('https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view')
-    back = ->
-        #navigate store, web3t, \:init
-        store.current.page = 'newseedrestore'
-    back2 = ->
-        store.current.page = 'chooseinit'
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.newseed}")
-        if store.current.seed-generated
-            .title.pug(style=text-style)
-                | #{lang.new-seed-phrase}
-                span.pug.about-btn(style=about-bg on-click=about) ?
-        else
-            .title.pug(style=text-style)
-                | #{lang.your-seed-phrase}
-                span.pug.about-btn(style=about-bg on-click=about) ?
-        if store.seed.about
-            .pug.about.hint(style=about-field) #{lang.about-seed ? 'Seed phrase is a list of 12 words that store all the information needed to restore a crypto wallet. A wallet usually generates a mnemonic backup phrase itself so that the user writes it on paper.'} 
-        if store.current.seed-generated
-            .pug.words
-                store.current.seed-words |> map create-word store, store.current.seed-words
-        else
-            .pug.words
-                store.current.seed-words |> sort-by (.index) |> map restore-words store, web3t
-        if store.current.seed-generated    
-            .pug.button-container
-                button.pug.right(on-click=back2 style=button-primary3-style )
-                    img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
-                    | #{lang.back ? 'Back' }
-                button.pug.right.doc(on-click=print style=button-primary2-style)
-                    img.icon-svg.pug(src="#{icons.print}")
-                    | #{lang.print ? 'Print' }
-                button.pug.right.save(on-click=next style=button-primary1-style)
-                    img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.next ? 'Next' }
-        else    
-            .pug
-                button.pug.right(on-click=back style=button-primary3-style )
-                    img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
-                    | #{lang.back ? 'Back' }
-                button.pug.right(on-click=save style=button-primary1-style )
-                    img.icon-svg.pug(src="#{icons.save}")
-                    | #{lang.next ? 'Next' }
-        if has-issue!
-            .pug.warning(style=text-style)
-                .pug #{lang.seed-warning}
-                button.pug.center(on-click=fix-issue style=button-primary3-style)
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.warning}" style=btn-icon)
-                        | #{lang.fix-issue}
-        if store.current.seed-generated
-            .pug.hint(style=text-style) #{lang.new-seed-warning ? 'Click 'Print' and print out paper instructions and write down your 24 words seed carefuly. Anyone with access to your recovery phrase could take your assets, store it securely. We do not keep a backup of your 24 words, if you lose it all coins in your wallet will be gone forever!'}
-        else
-            .pug.hint(style=text-style) #{lang.new-seed-warning-restore ? 'Please pay close attention to spelling and the order of words you are being asked, incorrect order will create different wallet from original.'}
-focus = ({ store }, cb)->
-    console.log \focus
-    <- set-timeout _, 1000
-    #textarea = store.root.query-selector '.newseed textarea'
-    #textarea.focus!
-    cb null
-newseed.focus = focus
+        .title.pug(style=text-style) #{lang.new-seed-phrase}
+        restore-words-panel store, web3t
 module.exports = newseed

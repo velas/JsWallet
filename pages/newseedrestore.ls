@@ -198,11 +198,11 @@ newseed = ({ store, web3t })->
             button.pug.left(style=button-primary1-style on-click=restore12)
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
-                    | 12 words
+                    | 12 #{lang.restore-words}
             button.pug.right(style=button-primary1-style on-click=restore24)
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
-                    | 24 words
+                    | 24 #{lang.restore-words}
             button.pug.right(on-click=back style=button-primary3-style )
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
                 | #{lang.back ? 'Back' }

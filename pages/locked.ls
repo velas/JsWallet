@@ -210,23 +210,23 @@ input = (store, web3t)->
     catch-key = ->
         enter! if it.key-code is 13
     reset-account = ->
-        res <- confirm store, "Do you have backup word phrase of current account?"
+        res <- confirm store, "#{lang.backup-info}"
         return if res is no
         reset-wallet store
     drag =
         if store.current.pin-trial is 0 then \ "" else \drag
     .pug
-        input.pug.password(class="#{drag}" key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="Password or PIN" on-change=change on-key-down=catch-key auto-complete="off")
+        input.pug.password(class="#{drag}" key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="#{lang.pin-placeholder}" on-change=change on-key-down=catch-key auto-complete="off")
         if exists!
             .pug
                 button { store, on-click: enter, type: \primary , text: \enter }
                 .pug
                     .division.pug
                         .line.l.pug
-                        span.pug OR
+                        span.pug #{lang.or}
                         .line.r.pug
                     .pug
-                        button.setup.text-primary.pug(style=button-primary0-style on-click=reset-account) NEW ACCOUNT
+                        button.setup.text-primary.pug(style=button-primary0-style on-click=reset-account) #{lang.new-account}
 reset-wallet = (store)->
     setbkp!
     del!
@@ -241,7 +241,7 @@ wrong-trials = (store)->
     lang = get-lang store
     left-trials = total-trials - store.current.pin-trial
     reset-account = ->
-        res <- confirm store, "Do you have backup word phrase of current account?"
+        res <- confirm store, "#{lang.backup-info}"
         return if res is no
         reset-wallet store
     wrong-pin-text = "#{left-trials}/#{total-trials} attempts left till wallet reset to default."

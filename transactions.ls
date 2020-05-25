@@ -3,7 +3,6 @@ require! {
     \./api.ls : { get-transactions }
     \./workflow.ls : { run, task }
     \./pending-tx.ls : { get-pending-txs, remove-tx }
-    \../web3t/providers/superagent.ls : { get }
     \./apply-transactions.ls
     \./background/background-task.ls : { add-task }
 }
@@ -83,12 +82,6 @@ export rebuild-history = (store, web3, wallet, cb)->
         |> each extend { address, coin, network, pending: yes, checked: 0 }
         |> each txs~push
     cb!
-#window.load-test =->
-#    err, data <- get "https://gist.githubusercontent.com/askucher/63685e1aa495113fc848bbd112902c61/raw/08ff221d6c0a40681d6b02c53f72764bdfad5f02/test.json" .end
-#    items = JSON.parse data.text
-#    #console.log items
-#    items |> each store.transactions.all~push
-#    apply-transactions store
 build-loader = (store, web3)-> (wallet)-> task (cb)->
     err <- rebuild-history store, web3, wallet
     return cb! if err? 

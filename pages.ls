@@ -1,10 +1,11 @@
 require! {
     \./pages/wallets.ls
+    \./pages/reviewwords.ls
+    \./pages/restorewords.ls
     \./pages/history.ls
     \./pages/send.ls
     \./pages/receive.ls
     \./pages/locked.ls
-    \./pages/newseed.ls
     \./pages/sent.ls
     \./pages/loading.ls
     \./pages/loading2.ls
@@ -41,7 +42,6 @@ export history
 export send
 export receive
 export locked
-export newseed
 export sent
 export invoice
 export terms
@@ -60,3 +60,5 @@ export faq
 export claim
 export soundstorage
 export notification
+export restorewords
+export reviewwords

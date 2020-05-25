@@ -25,6 +25,7 @@ require! {
     .icon-svg-plus
         position: relative
         height: 16px
+        width: 16px
         top: 2px
         padding: 0
     .switch-menu
@@ -250,6 +251,10 @@ module.exports = (store, web3t)->
     syncing = 
         | store.current.refreshing => \syncing
         | _ => ""
+    show-class =
+        if store.menu.show then \show else \ ""
+    show = ->
+        store.menu.show = not store.menu.show
     create-account-position = (index)->
         #ref = react.create-ref!
         change-account = ->
@@ -280,6 +285,9 @@ module.exports = (store, web3t)->
             if store.current.device is \mobile
                 button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary4-style)
                     img.icon-svg-plus.pug(src="#{icons.create}")
+            if store.current.device is \mobile
+                button.pug.button.lock.mt-5(on-click=show style=button-primary4-style class="#{show-class}")
+                    img.icon-svg-plus.pug(src="#{icons.menu}")
             if no
                 if store.current.device is \mobile
                     button.pug.button.lock.mt-5(on-click=open-migration style=button-primary1-style) Migration

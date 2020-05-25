@@ -5,17 +5,11 @@ require! {
 }
 gobyte = require \../web3t/plugins/gobyte-coin.ls
 zec = require \../web3t/plugins/zec-coin.ls
-#stt = require \../web3t/plugins/stt-coin.json
-#qiwi = require \../web3t/plugins/qiwi-coin.ls
-#ym = require \../web3t/plugins/ym-coin.ls
-#qiwi_rs = require \../web3t/plugins/qiwi-rs.ls
-#ym_rs = require \../web3t/plugins/ym-rs.ls
-#usd_ac_rs = require \../web3t/plugins/usd-ac-rs.ls
 common = (store)->
     vlx2 = require \../web3t/plugins/vlx2-coin.ls
     btc  = require \../web3t/plugins/btc-coin.ls
     coins = [vlx2, btc]
-    if window.location.search.index-of("plugin=gbx") > -1  
+    if store.url-params.gbx?
         coins.push gobyte
     coins
 export get-coins = (store, cb)->

@@ -1,1 +1,1 @@
-module.exports = <[ locked newseed chooseinit newseedrestore loading loading2 verifyseed terms terms2 ]>
+module.exports = <[ locked reviewwords restorewords chooseinit newseedrestore loading loading2 verifyseed terms terms2 ]>

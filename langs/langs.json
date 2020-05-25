@@ -118,13 +118,10 @@
             "이 PIN을 기억하여 제 3 자에게 제공하지 마십시오"
         ],
         "enterPin": [
-            "Password",
-            "Ввести пароль или PIN",
-            "Ввести PIN",
-            "Entrez le PIN",
-            "Introducir PIN",
-            "输入密码",
-            "PIN을 입력하십시오"
+            "Password"
+        ],
+        "pinPlaceholder": [
+            "Password or PIN"
         ],
         "secretPhrase": [
             "Secret Phrase",
@@ -575,6 +572,9 @@
             "Restaurar",
             "恢復",
             "복원"
+        ],
+        "restoreWords": [
+            "words"
         ],
         "wordsAreNotMatch": [
             "The word is entered incorrectly",
@@ -1214,6 +1214,21 @@
             "Velas Messenger",
             "酒店（使者",
             "벨라 메신저"
-        ]
+        ],
+        "writemsg": [
+            "Write a message..."
+        ],
+        "or": [
+            "OR"
+        ],
+        "newAccount": [
+            "NEW ACCOUNT"
+        ],
+        "backupInfo": [
+            "Do you have backup word phrase of current account?"
+        ],
+        "word": [
+            "word"  
+        ],
     }
 }

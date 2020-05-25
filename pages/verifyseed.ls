@@ -165,7 +165,7 @@ newseed = ({ store, web3t })->
         enter-confirm = ->
             item.part = it.target.value
         .pug.word(style=seed-style)
-            input.pug(style=address-input key="enter_#{item.index}_word" value="#{item.part}" on-change=enter-confirm placeholder="word ##{item.index + 1}")
+            input.pug(style=address-input key="enter_#{item.index}_word" value="#{item.part}" on-change=enter-confirm placeholder="#{lang.word} ##{item.index + 1}")
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.verifyseed}")
         .title.pug(style=text-style) #{lang.verify-seed-phrase ? 'Verify Seed Phrase'}
