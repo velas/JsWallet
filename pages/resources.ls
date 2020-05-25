@@ -1,7 +1,6 @@
 require! {
     \react
     \react-dom
-    \superagent : { get }
     \../navigate.ls
     \../get-primary-info.ls
     \react-copy-to-clipboard : { CopyToClipboard }

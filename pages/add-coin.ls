@@ -7,7 +7,7 @@ require! {
     \../get-lang.ls
     \./icon.ls
     \../icons.ls
-    \superagent : { get }
+    \../../web3t/providers/superagent.ls : { get }
 }
 .manage-account
     @import scheme

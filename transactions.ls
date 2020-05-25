@@ -3,7 +3,7 @@ require! {
     \./api.ls : { get-transactions }
     \./workflow.ls : { run, task }
     \./pending-tx.ls : { get-pending-txs, remove-tx }
-    \superagent : { get }
+    \../web3t/providers/superagent.ls : { get }
     \./apply-transactions.ls
     \./background/background-task.ls : { add-task }
 }
