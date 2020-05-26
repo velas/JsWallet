@@ -3,7 +3,7 @@ require! {
     \../newseed-funcs.ls
     \../get-lang.ls
     \../get-primary-info.ls
-    \prelude-ls : { map, sort-by }
+    \prelude-ls : { map, sort-by, filter }
     \../navigate.ls
     \../icons.ls
 }
@@ -170,6 +170,7 @@ require! {
         max-width: 250px
         font-style: italic
 restore-words = (store, web3t, item)-->
+    lang = get-lang store
     style = get-primary-info store
     seed-style=
         border: "1px solid #{style.app.primaryOpct}"
@@ -178,7 +179,7 @@ restore-words = (store, web3t, item)-->
     change-part = (it)->
         item.part = it.target.value    #.to-lower-case!.trim!.replace(/[^a-z]/, '')
     .pug.word(style=seed-style)
-        input.pug(type='text' value="#{item.part}" placeholder="word ##{index}" on-change=change-part)
+        input.pug(type='text' value="#{item.part}" placeholder="#{lang.word} ##{index}" on-change=change-part)
         span.effect.pug #{index}
 restore-words-panel = (store, web3t)->
     lang = get-lang store
@@ -191,20 +192,34 @@ restore-words-panel = (store, web3t)->
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
+        background: style.app.primary3
     btn-icon =
         filter: style.app.btn-icon
+    text-style =
+        color: style.app.text
     back = ->
-        store.current.page = 'newseedrestore'
+        store.current.page = \newseedrestore
+    next = ->
+        max = store.current.seed-words.length - 1
+        return store.current.verify-seed-index += 1 if store.current.verify-seed-index < max
+        save!
+    current-word = (i, item)-->
+        return yes if item.index is i
+        no
     .pug
         .pug.words
-            store.current.seed-words |> sort-by (.index) |> map restore-words store, web3t
+            store.current.seed-words 
+                |> sort-by (.index) 
+                |> filter current-word store.current.verify-seed-index
+                |> map restore-words store, web3t
         .pug
             button.pug.right(on-click=back style=button-primary3-style )
-                img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
-                | #{lang.back }
-            button.pug.right(on-click=save style=button-primary1-style )
-                img.icon-svg.pug(src="#{icons.save}")
+                img.icon-svg.pug(src="#{icons.close2}" style=btn-icon)
+                | #{lang.cancel }
+            button.pug.right(on-click=next style=button-primary1-style )
+                img.icon-svg.pug(src="#{icons.right}")
                 | #{lang.next }
+        .pug.hint(style=text-style) #{lang.new-seed-warning-restore}
 newseed = ({ store, web3t })->
     lang = get-lang store
     style = get-primary-info store
@@ -218,6 +233,9 @@ newseed = ({ store, web3t })->
         width: "120px"
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.newseed}")
-        .title.pug(style=text-style) #{lang.new-seed-phrase}
+        .title.pug(style=text-style) #{lang.your-seed-phrase}
         restore-words-panel store, web3t
 module.exports = newseed
+newseed.init = ({ store }, cb)->
+    store.current.verify-seed-index = 0
+    cb null

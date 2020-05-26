@@ -322,7 +322,7 @@ module.exports = (store, web3)->
         .pug.menu-items
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
-                    span.arrow_box.pug wallets
+                    span.arrow_box.pug #{lang.your-wallets}
                     img.pug(src="#{icons.wallet}" style=wallet-icon)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking}")
@@ -330,29 +330,29 @@ module.exports = (store, web3)->
                         ul.pug
                             li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
                                 img.pug(src="#{icons.node}" style=icon-node)
-                                | Node
+                                | #{lang.install-node}
                             li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
                                 img.pug(src="#{icons.delegate}" style=icon-node)
-                                | Delegate
+                                | #{lang.delegate-stake}
                             if no
                                 li.pug(on-click=goto-claim style=icon-style class="#{claim-active}")
                                     img.pug(src="#{icons.claim}" style=icon-node)
-                                    | Claim
+                                    | #{lang.claim-reward}
                             li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                 img.pug(src="#{icons.info}" style=icon-node)
-                                | Stats
-                    span.arrow_box.pug staking
+                                | #{lang.stats}
+                    span.arrow_box.pug #{lang.staking}
                     img.pug(src="#{icons.staking}")
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
-                    span.arrow_box.pug search
+                    span.arrow_box.pug #{lang.search}
                     img.pug(src="#{icons.search}")
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
-                    span.arrow_box.pug settings
+                    span.arrow_box.pug #{lang.settings}
                     img.pug(src="#{icons.setting}")
             if no
                 if store.preference.settings-visible is yes
                     .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")
-                        span.arrow_box.pug faq
+                        span.arrow_box.pug #{lang.faq}
                         img.pug(src="#{icons.setting}")

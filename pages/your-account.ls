@@ -311,4 +311,4 @@ module.exports = (store, web3t)->
                             button.pug(style=button-primary2-style)
                                 span.pug
                                     img.icon-svg.pug(src="#{icons.create-acc}")
-                                    | Create Account
+                                    | #{lang.create-account}

@@ -676,7 +676,7 @@ staking-content = (store, web3t)->
     your-balance = " #{round-human get-balance!} "
     your-staking-amount = store.staking.stake-amount-total `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
-    vlx-token = "VLX"
+    vlx-token = "VLX2"
     #calc-reward-click = ->
     #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->
@@ -773,7 +773,7 @@ staking-content = (store, web3t)->
             alert-txn { store }
             .pug.section
                 .title.pug
-                    h3.pug Select pool
+                    h3.pug #{lang.select-pool}
                     if not store.staking.chosen-pool?    
                         .pug
                             .loader.pug(on-click=refresh style=icon-style title="refresh")
@@ -784,12 +784,12 @@ staking-content = (store, web3t)->
                             thead.pug
                                 tr.pug
                                     th.pug(width="3%") #
-                                    th.pug(width="10%" style=staker-pool-style) Staker Pool
-                                    th.pug(width="25%") Total Stake
-                                    th.pug(width="5%" title="When more filled then less award for staker") Filled %
-                                    th.pug(width="25%") My Stake
-                                    th.pug(width="5%") Stakers
-                                    th.pug(width="4%") Select Pool
+                                    th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
+                                    th.pug(width="25%") #{lang.total-stake}
+                                    th.pug(width="5%" title="When more filled then less award for staker") #{lang.filled}
+                                    th.pug(width="25%") #{lang.my-stake}
+                                    th.pug(width="5%") #{lang.stakers}
+                                    th.pug(width="4%") #{lang.selectPool}
                             tbody.pug
                                 store.staking.pools |> map build-staker store, web3t
                 else
@@ -798,7 +798,7 @@ staking-content = (store, web3t)->
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
                         .buttons.pug
-                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: \select }
+                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: \ "#{lang.btn-select}" }
             if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -809,9 +809,9 @@ staking-content = (store, web3t)->
                             input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
                             .pug.balance
                                 span.pug.small-btns
-                                    button.small.pug(style=button-primary3-style on-click=use-min) Min
-                                    button.small.pug(style=button-primary3-style on-click=use-max) Max
-                                span.pug Balance: 
+                                    button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                    button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
+                                span.pug #{lang.balance}: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -868,7 +868,7 @@ staking = ({ store, web3t })->
         if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
-            .pug.header(class="#{show-class}") Delegate Stake
+            .pug.header(class="#{show-class}") #{lang.delegateStake}
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t

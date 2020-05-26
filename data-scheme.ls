@@ -13,6 +13,7 @@ saved-seed = saved!
 create-send =->
     id: ""
     to: ""
+    details: yes
     propose-escrow: no
     address: ''
     value: \0
@@ -157,6 +158,7 @@ store =
         step: "first"
         verify-seed-indexes: []
         switch-account: no
+        tor: no
         open-menu: no
         current-epoch: no
         switch-currency: no

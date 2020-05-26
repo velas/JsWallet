@@ -20,6 +20,15 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    .notice
+        position: fixed
+        width: 230px
+        text-align: left
+        right: 10px
+        bottom: 10px
+        font-size: 13px
+        background: #43207c
+        padding: 10px
     .icon-svg
         position: relative
         height: 12px
@@ -57,6 +66,8 @@ require! {
                 text-align: center
                 width: 100px
                 font-size: 10px
+                span
+                    text-transform: uppercase
                 .line
                     border-top: 1px solid rgba(223, 223, 223, 0.2)
                     position: absolute
@@ -90,6 +101,9 @@ require! {
         padding-top: 15px
         max-width: 400px
         display: inline-block
+        ~div .orange
+            color: #f0c16b
+            text-transform: uppercase
     button
         width: 120px
         &.text-primary
@@ -195,7 +209,7 @@ input = (store, web3t)->
         border: "0"
         color: style.app.text
         background: "transparent"
-        width: "100px"
+        width: "120px"
         height: "36px"
         margin-top: "0px"
     locked-style=
@@ -244,12 +258,14 @@ wrong-trials = (store)->
         res <- confirm store, "#{lang.backup-info}"
         return if res is no
         reset-wallet store
-    wrong-pin-text = "#{left-trials}/#{total-trials} attempts left till wallet reset to default."
+    wrong-pin-text = "#{left-trials}/#{total-trials} #{lang.notice-reset}."
     .pug
         .pug.wrong(key="wrong-trial") #{wrong-pin-text}
-        .pug NOTICE! Try to restore you account from seed phrase in different browser or incognito window before you reset it
+        .pug.notice
+            span.orange.pug #{lang.notice}! 
+            span.pug #{lang.notice-text}
         .pug
-            button.reset.setup.text-primary.pug(on-click=reset-account) Reset Account
+            button.reset.setup.text-primary.pug(on-click=reset-account) #{lang.reset-account}
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store

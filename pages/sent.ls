@@ -189,7 +189,7 @@ module.exports = ({ store, web3t })->
         cb null
     go-home = ->
         err <- inacurate
-        return cb err if err?
+        return err if err?
         navigate store, web3t, \wallets
     lang = get-lang store
     .pug.sent

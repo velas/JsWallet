@@ -149,13 +149,15 @@ require! {
                 opacity: .8
                 font-weight: 400
 total-pool = (store, web3t)->
+    lang = get-lang store
     .pug.col.col-4
         .pug
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{store.staking.pools.length}
-            .pug.header Total Pools
+            .pug.header #{lang.total-pools}
 total-stakers  = (store, web3t)->
+    lang = get-lang store
     stakers =
         store.staking.pools |> map (.stakers) |> foldl plus, 0
     .pug.col.col-4
@@ -163,8 +165,9 @@ total-stakers  = (store, web3t)->
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{stakers}
-            .pug.header Total Stakers
+            .pug.header #{lang.total-stakers}
 staking-amount = (store, web3t)->
+    lang = get-lang store
     amount =
         store.staking.pools |> map (.stake) |> foldl plus, 0
     .pug.col.col-4
@@ -172,8 +175,9 @@ staking-amount = (store, web3t)->
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{round-human(amount)}
-            .pug.header Total Staking
+            .pug.header #{lang.total-staking}
 my-stake = (store, web3t)->
+    lang = get-lang store
     amount =
         store.staking.pools |> map (.my-stake) |> foldl plus, 0
     .pug.col.col-4
@@ -181,16 +185,18 @@ my-stake = (store, web3t)->
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{round-human(amount)}
-            .pug.header Total My Stake
+            .pug.header #{lang.total-my-stake}
 chart-amount-sizes = (store, web3t)->
+    lang = get-lang store
     .col-6.col.pug
         .pug
-            .pug.header Pool stake sizes
+            .pug.header #{lang.stake-sizes}
             staker-stats store, web3t
 chart-stakers-counts = (store, web3t)->
+    lang = get-lang store
     .col-6.col.pug
         .pug
-            .pug.header Pool Population
+            .pug.header #{lang.pool-population}
             staker-stats2 store, web3t
 info = ({ store, web3t })->
     lang = get-lang store

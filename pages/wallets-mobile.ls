@@ -32,7 +32,7 @@ require! {
             @media(max-width: 480px)
                 right: -2px
     @media(max-width: 800px)
-        margin-top: 60px
+        margin-top: 0px
     .wallets
         @import scheme
         $real-height: 300px

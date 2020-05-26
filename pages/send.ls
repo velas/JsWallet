@@ -5,17 +5,15 @@ require! {
     \../get-primary-info.ls
     \./icon.ls
     \../get-lang.ls
-    \../round5.ls
     \./switch-account.ls
     \../icons.ls
     \../round-human.ls
     \../wallets-funcs.ls
-    \../icons.ls
     \./epoch.ls
-    \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/button.ls
     \../components/address-holder.ls
     \../components/identicon.ls
+    \./send-contract.ls
 }
 .content
     position: relative
@@ -64,47 +62,6 @@ require! {
             cursor: pointer
             &:hover
                 color: #CCC
-    .switch-account
-        float: right
-        position: relative
-        display: inline-flex
-        .ckeck
-            color: #3cd5af
-        .cancel
-            color: #c25b5f
-        .name
-            left: 12px
-            position: relative
-        input
-            outline: none
-            width: 100px
-            margin-top: -6px
-            height: 36px
-            line-height: 36px
-            border-radius: 0px
-            padding: 0px 10px
-            font-size: 12px
-            opacity: 1
-        span
-            cursor: pointer
-        .icon
-            vertical-align: middle
-            margin-left: 20px
-    .switch-menu
-        position: absolute
-        top: 35px
-        right: 0px
-        width: 25%
-        background: #321260
-        display: inline-grid
-        z-index: 3
-        .middle
-            padding: 5px 10px
-            height: 37px
-            &.account
-                padding: 10px
-                min-height: 50px
-                overflow: scroll
     .h1
         font-size: 17px
         text-transform: uppercase
@@ -275,6 +232,10 @@ require! {
                                 background: #f1eeee
                                 border-radius: 0
                                 padding-left: 20px
+        .smart-contract
+            overflow: hidden
+            padding: 2px
+            box-sizing: border-box
         >.header
             margin: 0
             padding: 10px
@@ -323,15 +284,6 @@ require! {
                 padding: 0 2px 0 2px
                 height: 13px
                 position: relative
-        .topup
-            display: inline-block
-            margin-left: 5px
-            color: orange
-            vertical-align: top
-            padding: 0 5px
-            border-radius: $border
-            line-height: 12px
-            font-size: 12px
         .balance
             color: #5E72E4
         .send-all
@@ -351,34 +303,6 @@ require! {
             font-size: 12px
             max-height: 20px
             overflow: hidden
-        .fast-cheap
-            text-align: right
-            height: 14px
-            line-height: 14px
-            padding: 0 3px
-            flex-direction: row
-            display: flex
-            margin-top: 5px
-            >*
-                padding: 2px 5px
-                font-size: 12px
-                line-height: 8px
-                border-radius: $border
-                cursor: pointer
-                text-align: center
-                &.chosen
-                    cursor: default
-                    background: #3a63e4
-                    color: white
-                &.space
-                    flex: 1
-        .escrow
-            padding: 5px 11px
-            min-height: 20px
-            @media screen and (max-width: 290px)
-                min-height: 0
-            color: #cc625a
-            font-size: 14px
         .bold
             font-weight: bold
         .button-container
@@ -413,28 +337,15 @@ require! {
                     &:hover
                         background: rgba(#6CA7ED, 0.2)
                         opacity: .9
-build-send-option = ({ store, change-amount} , option)-->
-    { send } = store.current
-    chosen =
-        | option is send.tx-type => \chosen
-        | _ => ""
-    select-option = ->
-        send.tx-type = option
-        <- change-amount store, send.amount-send, no
-    .pug.switch(class="#{chosen}" on-click=select-option) #{option.to-upper-case!}
 form-group = (title, style, content)->
     .pug.form-group
         label.pug.control-label(style=style) #{title}
         content!
 send = ({ store, web3t })->
-    { token, name, fee-token, network, send, wallet, pending, primary-button-style, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, topup, history, cancel, send-anyway, choose-auto, choose-cheap, chosen-auto, chosen-cheap, get-address-link, get-address-title, default-button-style, round5edit, round5, send-options, send-title, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
+    { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
+    return send-contract { store, web3t } if send.details is no
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 10) + \.. + t.substr(t.length - 4, 4)
-        r.to-upper-case!
     style = get-primary-info store
     menu-style=
         background: style.app.background
@@ -449,8 +360,6 @@ send = ({ store, web3t })->
         border: "1px solid #{style.app.background}"
     icon-style =
         color: style.app.icon
-    btn-icon =
-        filter: style.app.btn-icon
     use-max-style =
         background: style.app.wallet
         color: style.app.text
@@ -458,17 +367,9 @@ send = ({ store, web3t })->
         background: style.app.wallet
     more-text=
         color: style.app.text
-    address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
-    filter-body =
-        border: "1px solid #{style.app.border}"
-        background: style.app.header
     border-header =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
-    expand-collapse = ->
-        store.current.send-menu-open = not store.current.send-menu-open
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->
@@ -481,18 +382,11 @@ send = ({ store, web3t })->
         if store.current.convert is convert then 'active' else ''
     active-usd = active-class \usd
     active-eur = active-class \eur
-    cut-send = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        m = Math.max(document.documentElement.clientWidth, window.innerWidth or 0)
-        r =
-            | m > 800 => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 20) + \.. + t.substr(t.length - 4, 4)
-            | _ => t.substr(0, 4) + \.. + t.substr(tx.length - 25, 15) + \.. + t.substr(t.length - 4, 4)
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.content
         .pug.title(style=border-header)
-            .pug.header(class="#{show-class}") Send
+            .pug.header(class="#{show-class}") #{lang.send}
             .pug.close(on-click=cancel)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
@@ -514,19 +408,13 @@ send = ({ store, web3t })->
                                 .pug
                                     span.pug.more-icon(style=icon-style)
                                         icon \Mail, 20
-                                    span.pug.more-text(style=more-text) #{lang.invoice ? 'Invoice'}
+                                    span.pug.more-text(style=more-text) #{lang.invoice}
                     if store.current.device is \mobile    
                         a.pug.more.history(on-click=history)
                             .pug
                                 span.pug.more-icon(style=icon-style)
                                     icon \Inbox, 20
-                                span.pug.more-text(style=more-text) #{lang.history ? 'History'}
-                    if store.current.device is \desktop
-                        a.pug.more.history(on-click=topup)
-                            .pug
-                                span.pug.more-icon(style=icon-style)
-                                    icon \DiffAdded, 20
-                                span.pug.more-text(style=more-text) #{lang.topup ? 'Topup'}
+                                span.pug.more-text(style=more-text) #{lang.history}
             form.pug
                 form-group lang.from, icon-style, ->
                     .address.pug(style=border-style)
@@ -552,7 +440,7 @@ send = ({ store, web3t })->
                                     .label.lusd.pug €
                                     input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
                         .pug.usd
-                            button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max ? 'USE MAX'}
+                            button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max}
                             span.pug #{lang.balance ? 'balance'}
                             span.pug.balance
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
@@ -565,29 +453,23 @@ send = ({ store, web3t })->
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->
-                        input.pug(read-only="readonly" style=input-style value="#{cut-tx show-data!}")
+                        .pug.smart-contract(style=input-style) #{show-data!}
                 table.pug(style=border-style)
                     tbody.pug
                         tr.pug
-                            td.pug #{lang.you-spend ? 'Total'}
+                            td.pug #{lang.you-spend}
                             td.pug
                                 span.pug(title="#{send.amount-charged}") #{round5(send.amount-charged)}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-charged}") #{token}
                                 .pug.usd $ #{round5 send.amount-charged-usd}
                         tr.pug.orange
-                            td.pug #{lang.fee ? 'Transaction Fee'}
+                            td.pug #{lang.fee}
                             td.pug
-                                span.pug(title="#{send.amount-send-fee}") #{round5(send.amount-send-fee)}
+                                span.pug(title="#{send.amount-send-fee}") #{round5 send.amount-send-fee}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-send-fee}") #{fee-token}
-                                .pug.usd $ #{round5(send.amount-send-fee-usd)}
-                if false
-                    .pug.fast-cheap
-                        send-options |> map build-send-option { store, change-amount }
-                        .pug.space
-                        .pug.switch(on-click=choose-auto class="#{chosen-auto}") #{lang.auto ? 'auto'}
-                        .pug.switch(on-click=choose-cheap  class="#{chosen-cheap}") #{lang.cheap ? 'cheap'}
+                                .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
                     button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary }
@@ -602,7 +484,5 @@ module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
     return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]
-    to = ""
-    value = 0
-    err <- send-transaction { to, value }
+    err <- send-transaction { to: "", value: 0 }
     cb null

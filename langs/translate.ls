@@ -72,7 +72,6 @@ translate-lang = (filename, to, data, cb)->
     index = data.languages.index-of to
     update-item = ([name, value])->
         return if data.mapping[name][index] is result[name] and name isnt \test
-        console.log \update, name , result[name]
         data.mapping[name][index] = result[name]
     data.mapping |> obj-to-pairs |> each update-item
     err <- save-json filename, data

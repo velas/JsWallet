@@ -273,4 +273,6 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
         .wallet-middle.title-balance.pug(style=border)
             .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}
-            .name.per.pug(class="#{placeholder}") Per 1 #{ wallet.coin.token.to-upper-case! }
+            .name.per.pug(class="#{placeholder}")
+                span.pug #{lang.per} 
+                | #{ wallet.coin.token.to-upper-case! }

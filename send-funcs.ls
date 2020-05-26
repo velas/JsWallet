@@ -23,6 +23,7 @@ require! {
     \./pages/confirmation.ls : { confirm }
     \./get-lang.ls
     \./apply-transactions.ls
+    \./get-tx-details.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -50,7 +51,8 @@ module.exports = (store, web3t)->
             gas-price: gas-price
         err, data <- create-transaction tx-obj
         return cb err if err?
-        agree <- confirm store, "Send #{round5 tx-obj.amount} #{send.coin.token} to #{send.to}"
+        parts = get-tx-details store
+        agree <- confirm store, parts.0
         #console.log 'after confirm', agree
         return cb "Cancelled" if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }

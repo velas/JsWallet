@@ -997,7 +997,7 @@ staking-content = (store, web3t)->
     your-balance = " #{round-human get-balance!} "
     your-staking-amount = store.staking.stake-amount-total `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
-    vlx-token = "VLX"
+    vlx-token = "VLX2"
     staker-status = if store.staking.is-active-staker then \Active else \Inactive
     check-uncheck = ->
         change = not store.staking.rewards.0.checked
@@ -1059,7 +1059,7 @@ staking-content = (store, web3t)->
                                         CopyToClipboard.pug.copy(text="some code" on-copy=copied-inform(store) style=filter-icon)
                                             copy store
                                     .pug(style=line-style)
-                                        | Coming Soon
+                                        | #{lang.coming-soon}
                                         span.cursor.pug |
                             if active-do is \active
                                 .pug.code
@@ -1069,7 +1069,7 @@ staking-content = (store, web3t)->
                                         CopyToClipboard.pug.copy(text="some code" on-copy=copied-inform(store) style=filter-icon)
                                             copy store
                                     .pug(style=line-style)
-                                        | Coming Soon
+                                        | #{lang.coming-soon}
                                         span.cursor.pug |
             if store.staking.is-active-staker is no
                 .pug.section
@@ -1127,7 +1127,7 @@ staking-content = (store, web3t)->
                                             .number.pug
                                                 | #{store.staking.delegators}
                                         .header.pug
-                                            | Delegators
+                                            | #{lang.delegators}
                                 .col.col-4.pug
                                     div.pug
                                         .value.pug

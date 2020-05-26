@@ -56,13 +56,15 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     amount-send-fee = if network.tx-fee? then network.tx-fee else \0
     amount-send-fee-usd = \0
     propose-escrow = no
+    details = (data ? "").length is 0
     amount-send = value `div` (10 ^ network.decimals)
     wallet = store.current.account.wallets |> find (.coin.token is coin.token)
     send <<<< {
         to, data, decoded-data, network, coin, wallet, value, gas, gas-price, id, amount-send,
         amount-obtain, amount-obtain-usd, amount-send-usd,
-        amount-send-fee, amount-send-fee-usd, propose-escrow
+        amount-send-fee, amount-send-fee-usd, propose-escrow, details
     }
+    console.log { details }, send.details
     { send-anyway, change-amount } = send-funcs store, web3t
     <- change-amount store, amount-send, yes
     navigate store, cweb3, \send

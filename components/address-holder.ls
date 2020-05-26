@@ -102,8 +102,10 @@ module.exports = ({ store, wallet, type })->
     address-link = get-address-link wallet
     address-title = get-address-title wallet
     show-details = ->
+        console.log \show-details
         store.current.hovered-address.address = wallet.address
     hide-details = ->
+        console.log \hide-details
         store.current.hovered-address.address = null
     create-ref = ->
         #module.exports.element = it

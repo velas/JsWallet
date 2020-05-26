@@ -399,6 +399,7 @@ require! {
                         overflow: hidden
                         width: 100%
                         font-size: 14px
+                        line-height: 25px
                         text-decoration: none
                 &.more
                     text-align: center
@@ -455,10 +456,16 @@ require! {
                                 margin-left: -7px
                                 width: 13px
                                 height: 15px
-                            >img:first-child
-                                top: -11px
+                            >img
+                                margin: 5px
+                                &:first-child
+                                    top: -6px
+                                    margin: 0 10px 0 0
                             .browse
                                 right: 0px
+                            >span a
+                                height: 25px
+                                line-height: 25px
                             span
                                 padding: 0
                                 width: 120px
@@ -713,7 +720,7 @@ render-transaction = (store, web3t, tran)-->
                     amount-beautify fee, 10
             .cell.pug.divider.more(on-click=tx-details)
                 img.icon-svg1.pug(src="#{icons.more}" style=icon-pending)
-                .arrow_box.pug details
+                .arrow_box.pug #{lang.details}
         if store.history.tx-details is tx
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider

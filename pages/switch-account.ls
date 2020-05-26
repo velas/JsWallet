@@ -26,7 +26,7 @@ require! {
     height: auto
     box-sizing: border-box
     position: relative
-    right: 10px
+    right: 40px
     bottom: 30px
     $cards-pad: 15px
     z-index: 2
@@ -35,7 +35,7 @@ require! {
     .icon-svg-create
         height: 9px
     .switch-menu
-        right: -20px !important
+        right: 0px !important
         top: 39px !important
     .header 
         &:after

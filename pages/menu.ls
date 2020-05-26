@@ -23,6 +23,7 @@ require! {
         top: 2px
         padding: 0
         cursor: pointer
+        vertical-align: top
     &.wallet-main
         @media(max-width: 800px)
             margin: 0px 15px 0

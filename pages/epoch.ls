@@ -29,7 +29,7 @@ require! {
     height: auto
     box-sizing: border-box
     position: relative
-    right: 10px
+    right: 40px
     bottom: 30px
     $cards-pad: 15px
     z-index: 2

@@ -374,7 +374,6 @@ calc-reward-epoch = (store, web3t, check, [item, ...items], cb)->
     return cb err if err?
     item.reward = reward-long `div` (10^18)
     item.checked = +store.staking.epoch isnt +item.epoch and check > 0
-    console.log \update, item
     cb null
 calc-next-reward = (store, web3t, cb)->
     unloaded =
@@ -459,14 +458,14 @@ module.exports = (store, web3t)->
                         span.pug #{lang.available-reward}: 
                         span.color.pug #{store.staking.reward}
                         img.label-coin.pug(src="#{icons.vlx-icon}")
-                        span.color.pug  VLX
+                        span.color.pug  VLX2
                     .pug.staking-reward
                         store.staking.rewards |> map build-claim-reward store, web3t
                     .pug.balance
                         span.pug #{lang.claim-reward}: 
                         span.color.pug #{store.staking.reward-claim}
                         img.label-coin.pug(src="#{icons.vlx-icon}")
-                        span.color.pug  VLX
+                        span.color.pug  VLX2
                     button { store, on-click: claim , icon : \reward , text : \claimReward , type : \secondary }
             else if store.staking.reward-loading is yes
                 .pug.placeholder Loading... Please wait

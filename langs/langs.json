@@ -118,10 +118,22 @@
             "이 PIN을 기억하여 제 3 자에게 제공하지 마십시오"
         ],
         "enterPin": [
-            "Password"
+            "Password",
+            "Пароль",
+            "Пароль",
+            "Mot de passe",
+            "Contraseña",
+            "密码",
+            "비밀번호"
         ],
         "pinPlaceholder": [
-            "Password or PIN"
+            "Password or PIN",
+            "Пароль или PIN",
+            "Пароль або PIN",
+            "Mot de passe ou un code PIN",
+            "Contraseña o PIN",
+            "密码或PIN",
+            "암호 또는 PIN"
         ],
         "secretPhrase": [
             "Secret Phrase",
@@ -539,8 +551,8 @@
         ],
         "verifySeedPhrase": [
             "Verify Seed Phrase",
-            "Проверьте сид-фразу",
-            "Перевірте сід-фразу",
+            "Подтвердите сид-фразу",
+            "Підтвердіть сід-фразу",
             "Vérifier la phrase de Récupération",
             "Verifica tu frase de recuperación",
             "验证种子短语",
@@ -574,7 +586,13 @@
             "복원"
         ],
         "restoreWords": [
-            "words"
+            "words",
+            "слова",
+            "слова",
+            "mots",
+            "palabras",
+            "话",
+            "말"
         ],
         "wordsAreNotMatch": [
             "The word is entered incorrectly",
@@ -688,10 +706,10 @@
             "Node",
             "Node",
             "Node",
-            "Installer un Nœud",
-            "Instalar Nodo",
-            "安裝節點",
-            "설치 노드"
+            "Nœud",
+            "Nodo",
+            "节点",
+            "노드"
         ],
         "in": [
             "In",
@@ -757,13 +775,13 @@
             "개인 지갑 데이터를 사용하여 지갑에서 생성 된이 스크립트를 다른 사람에게 전송하지 마십시오."
         ],
         "generateScript": [
-            "Generate Script",
-            "Создать скрипт",
-            "Створити сценарій",
-            "Générer un script",
-            "Generar Script",
-            "生成腳本",
-            "스크립트 생성"
+            "Generate",
+            "Генерировать",
+            "Генерувати",
+            "Générer",
+            "Generar",
+            "产生",
+            "성"
         ],
         "plsAllow": [
             "Please allow 30 seconds",
@@ -848,12 +866,12 @@
         ],
         "claimReward": [
             "Claim",
-            "Претензия о вознаграждении",
-            "Вимога про винагороду",
-            "Réclamation récompense",
-            "Reclamar Recompensa",
-            "領取獎勵",
-            "보상 청구"
+            "Требовать",
+            "Заявляти",
+            "Demande",
+            "Reclamación",
+            "要求",
+            "구"
         ],
         "calculateReward": [
             "Calculate",
@@ -992,12 +1010,12 @@
         ],
         "restoreFrom": [
             "From",
-            "Восстановить кошелек из",
-            "Відновити гаманець із",
-            "Restaurer le portefeuille à partir de",
-            "Restaurar wallet desde",
-            "從還原錢包",
-            "에서 지갑 복원"
+            "Из",
+            "Із",
+            "De",
+            "De",
+            "的",
+            "의"
         ],
         "statistics": [
             "Statistics",
@@ -1198,13 +1216,13 @@
             "벨라 걸고 Dapp"
         ],
         "delegateStake": [
-            "Delegate Stake",
-            "Делегат Кола",
-            "Делегат Кола",
-            "Délégué Pieu",
-            "El Delegado De La Estaca",
-            "委托股份",
-            "위임 스테이크"
+            "Delegate",
+            "Делегат",
+            "Делегат",
+            "Délégué",
+            "Delegado",
+            "委派",
+            "대"
         ],
         "velasMessenger": [
             "Velas Messenger",
@@ -1216,19 +1234,292 @@
             "벨라 메신저"
         ],
         "writemsg": [
-            "Write a message..."
+            "Write a message...",
+            "Написать сообщение...",
+            "Написати повідомлення...",
+            "Écrire un message...",
+            "Escribe un mensaje...",
+            "写一个消息...",
+            "메시지를 쓰세요..."
         ],
         "or": [
-            "OR"
+            "or",
+            "или",
+            "або",
+            "ou",
+            "o",
+            "或",
+            "나"
         ],
         "newAccount": [
-            "NEW ACCOUNT"
+            "New account",
+            "Новый аккаунт",
+            "Новий обліковий запис",
+            "Nouveau compte",
+            "De nueva cuenta",
+            "新帐户",
+            "새로운 계정"
         ],
         "backupInfo": [
-            "Do you have backup word phrase of current account?"
+            "Do you have backup word phrase of current account?",
+            "У вас есть резервная слово фразу текущего счета?",
+            "У вас є резервна слово фразу поточного рахунку?",
+            "Vous avez de sauvegarde de mots de la phrase de compte courant?",
+            "¿Tienes copia de seguridad de palabra frase de cuenta corriente?",
+            "你有备用的词语为目前的帐户吗？",
+            "당신은 백업 단어의 문장의 현재 account?"
         ],
         "word": [
-            "word"  
+            "word",
+            "слово",
+            "слово",
+            "mot",
+            "palabra",
+            "字",
+            "단어"
         ],
+        "noticeReset": [
+            "attempts left till wallet reset to default",
+            "попытки осталось до кошелек по умолчанию",
+            "спроби залишилося до гаманець за замовчуванням",
+            "les tentatives de gauche jusqu'à ce que le portefeuille réinitialiser les paramètres par défaut",
+            "los intentos de la izquierda hasta la cartera de restablecer a la configuración predeterminada",
+            "试图左一直到重置为默认的钱包",
+            "도 왼쪽까지 지갑 기본값으로 재설정"
+        ],
+        "notice": [
+            "Notice",
+            "Уведомление",
+            "Повідомлення",
+            "Avis",
+            "Aviso",
+            "注意到",
+            "알"
+        ],
+        "noticeText": [
+            "Try to restore you account from seed phrase in different browser or incognito window before you reset it",
+            "Попробуйте восстановить ваш аккаунт из семян фразу в другом окне браузера или инкогнито, прежде чем сбросить его",
+            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні браузера або інкогніто, перш ніж скинути його",
+            "Essayez de restaurer votre compte à partir de la graine de la phrase dans différents navigateur ou d'une fenêtre de navigation privée avant de le réinitialiser",
+            "Intente restaurar la cuenta desde la semilla frase en otro navegador o ventana de incógnito antes de reiniciarlo",
+            "尝试恢复你的帐户种语在不同的浏览器或隐姓埋名的窗口之前你重置它",
+            "를 복원하려고 당신은 계정에서 씨앗이 문구를 다른 브라우저 또는 시크릿 창을 하기 전에 당신은 그것을 다시 설정"
+        ],
+        "resetAccount": [
+            "Reset Account",
+            "Сбросить Учетную Запись ",
+            "Скинути Обліковий Запис ",
+            "Réinitialiser Le Compte",
+            "Restablecer La Cuenta",
+            "重设的帐户",
+            "Reset 계정"
+        ],
+        "createAccount": [
+            "Create Account",
+            "Создать Аккаунт",
+            "Створити Акаунт",
+            "Créer Un Compte",
+            "Crear Cuenta",
+            "创建的帐户",
+            "계정 만들기"
+        ],
+        "per": [
+            "Per 1",
+            "За 1",
+            "За 1",
+            "Par 1",
+            "Por 1",
+            "每1",
+            "1"
+        ],
+        "selectPool": [
+            "Select pool",
+            "Выберите пул",
+            "Виберіть пул",
+            "Sélectionnez la piscine",
+            "Seleccione la piscina",
+            "选择泳池",
+            "선택 수영장"
+        ],
+        "stakerPool": [
+            "Staker Pool",
+            "Стейкер Пул",
+            "Стейкер Пул",
+            "Stakeur Piscine",
+            "Staker Piscina",
+            "Staker游泳池",
+            "Staker 수영장"
+        ],
+        "totalStake": [
+            "Total Stake",
+            "Общая Ставка",
+            "Загальна Ставка",
+            "La Mise Totale",
+            "La Apuesta Total",
+            "总的股份",
+            "총 지분"
+        ],
+        "filled": [
+            "Filled %",
+            "Заполненные %",
+            "Заповнені %",
+            "Rempli %",
+            "Rellena %",
+            "充满%",
+            "으로 가득%"
+        ],
+        "myStake": [
+            "My Stake",
+            "Моя Ставка",
+            "Моя Ставка",
+            "Mon Pieu",
+            "Mi Apuesta",
+            "我的股份",
+            "나의 스테이크"
+        ],
+        "stakers": [
+            "Stakers",
+            "Стейкеры",
+            "Стейкери",
+            "Stakers",
+            "Stakers",
+            "Stakers",
+            "Stakers"
+        ],
+        "min": [
+            "min",
+            "мин",
+            "мiн",
+            "min",
+            "min",
+            "min",
+            "min"
+        ],
+        "max": [
+            "max",
+            "макс",
+            "макс",
+            "max",
+            "max",
+            "max",
+            "max"
+        ],
+        "btnSelect": [
+            "Select",
+            "Выберите",
+            "Виберіть",
+            "Sélectionnez",
+            "Seleccione",
+            "选择",
+            "선택"
+        ],
+        "totalPools": [
+            "Total Pools",
+            "Всего Пулов",
+            "Всього Пулів",
+            "Total Des Piscines",
+            "Total De Piscinas",
+            "总池",
+            "총 수영장"
+        ],
+        "totalStakers": [
+            "Total Stakers",
+            "Всего Стейкеров",
+            "Всього Стейкерів",
+            "Total Des Stakers",
+            "Total Stakers",
+            "总Stakers",
+            "총 Stakers"
+        ],
+        "totalStaking": [
+            "Total Staking",
+            "Общая Ставка",
+            "Загальна Ставка",
+            "Total De Jalonnement",
+            "Total De Estaca",
+            "总赌",
+            "총 감시"
+        ],
+        "totalMyStake": [
+            "Total My Stake",
+            "Всего Моя Ставка",
+            "Всього Моя Ставка",
+            "Total Mon Pieu",
+            "Total De Mi Estaca",
+            "总的我的股份",
+            "총 내 스테이크"
+        ],
+        "stakeSizes": [
+            "Pool stake sizes",
+            "Бассейн Кола размеры",
+            "Басейн Кола розміри",
+            "Piscine enjeu tailles",
+            "Piscina tallas de apuesta",
+            "游泳池股的大小",
+            "수영장 스테이크 크기"
+        ],
+        "poolPopulation": [
+            "Pool Population",
+            "Население Бассейна ",
+            "Населення Басейну ",
+            "La Piscine De La Population",
+            "La Piscina De La Población",
+            "游泳池的人口",
+            "수영장 인구"
+        ],
+        "settings": [
+            "Settings",
+            "Параметры",
+            "Параметри",
+            "Paramètres",
+            "Configuración",
+            "设置",
+            "설정"
+        ],
+        "faq": [
+            "Faq",
+            "Вопросы",
+            "Питання",
+            "Faq",
+            "Preguntas frecuentes",
+            "常见问题",
+            "Faq"
+        ],
+        "stats": [
+            "Stats",
+            "Статистика",
+            "Статистика",
+            "Stats",
+            "Estadísticas",
+            "统计数据",
+            "통계"
+        ],
+        "details": [
+            "Details",
+            "Детали",
+            "Деталі",
+            "Détails",
+            "Detalles",
+            "详细信息",
+            "상세정보"
+        ],
+        "comingSoon": [
+            "Coming Soon",
+            "В Ближайшее Время ",
+            "Найближчим Часом ",
+            "Bientôt",
+            "Próximamente",
+            "很快来",
+            "곧"
+        ],
+        "delegators": [
+            "Delegators",
+            "Делегаты",
+            "Делегати",
+            "Delegators",
+            "Delegators",
+            "委派器",
+            "Delegators"
+        ]
     }
 }

@@ -9,6 +9,7 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \./epoch.ls
+    \./tor.ls
     \../icons.ls
 }
 .videostorage
@@ -1159,6 +1160,7 @@ videostorage = ({ store, web3t })->
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t
+            tor store, web3t
         if store.sound.menu-open
             menu store, web3t
         .pug.search-input

@@ -91,7 +91,7 @@ require! {
     button
         outline: none
         width: auto
-        min-width: 180px
+        min-width: 80px
         height: 36px
         margin: 15px 5px 0
         text-transform: uppercase
@@ -160,7 +160,7 @@ newseed = ({ store, web3t })->
         save!
     back = ->
         return store.current.verify-seed-indexes += 1 if store.current.verify-seed-indexes > 0
-        store.current.page = \newseed
+        store.current.page = \reviewwords
     build-verify-seed = (store, item)-->
         enter-confirm = ->
             item.part = it.target.value
@@ -172,15 +172,14 @@ newseed = ({ store, web3t })->
         .pug.words
             build-verify-seed store, store.current.verify-seed-indexes[store.current.verify-seed-index]
         .pug
-            button.pug.right(style=button-primary1-style on-click=verify-seed)
-                span.pug
-                    img.icon-svg.pug(src="#{icons.confirm}")
-                    | #{lang.confirm ? 'Confirm' }
-        .pug
             button.pug.right(style=button-primary3-style on-click=back)
                 span.pug
-                    img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
-                    | #{lang.back ? 'Back' }
+                    img.icon-svg.pug(src="#{icons.close2}" style=btn-icon)
+                    | #{lang.cancel}
+            button.pug.right(style=button-primary1-style on-click=verify-seed)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.right}")
+                    | #{lang.next}
         if store.current.verify-seed-error is yes
             .pug.warning(style=text-style)
                 .pug #{lang.words-are-not-match ? 'The word is entered incorrectly' }

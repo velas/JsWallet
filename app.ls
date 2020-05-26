@@ -40,8 +40,9 @@ require! {
         height: 12px
         top: 2px
         margin-right: 3px
-    .title
+    >.title
         z-index: 3 !important
+    .title
         .header
             @media(max-width: 620px)
                 &.hide
