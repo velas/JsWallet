@@ -242,6 +242,8 @@ module.exports = (store, web3)->
     claim-active = if store.current.page is \claim then \active else \not-active
     menu-style=
         color: style.app.text
+    icon-color=
+        filter: style.app.icon-filter
     icon-style =
         color: style.app.icon
     icon-style2 =
@@ -269,13 +271,16 @@ module.exports = (store, web3)->
         background: style.app.header
     lock-icon = 
         width: "14px"
+        filter: style.app.icon-filter
     wallet-icon = 
         width: "18px"
+        filter: style.app.icon-filter
     icon-node =
         position: "inherit"
         vertical-align: "sub"
         width: "12px"
         padding-right: "10px"
+        filter: style.app.icon-filter
     text-style=
         color: style.app.text
     background-menu=
@@ -343,15 +348,15 @@ module.exports = (store, web3)->
                                 img.pug(src="#{icons.info}" style=icon-node)
                                 | #{lang.stats}
                     span.arrow_box.pug(style=tooltip) #{lang.staking}
-                    img.pug(src="#{icons.staking}")
+                    img.pug(src="#{icons.staking}"style=icon-color)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
                     span.arrow_box.pug(style=tooltip) #{lang.search}
-                    img.pug(src="#{icons.search}")
+                    img.pug(src="#{icons.search}" style=icon-color)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     span.arrow_box.pug(style=tooltip) #{lang.settings}
-                    img.pug(src="#{icons.setting}")
+                    img.pug(src="#{icons.setting}" style=icon-color)
             if no
                 if store.preference.settings-visible is yes
                     .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")

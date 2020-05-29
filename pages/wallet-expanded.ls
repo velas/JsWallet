@@ -17,6 +17,8 @@ require! {
 }
 #
 .wallet-detailed
+    height: 200px
+    box-sizing: border-box
     >.wallet-part
         display: inline-block
         box-sizing: border-box
@@ -26,14 +28,18 @@ require! {
         &.left
             text-align: left
             >.buttons
-                text-align: center
+                margin-top: 10px
+                .btn
+                    margin: 0
+                    &:last-child
+                        margin-left: 10px
             >.details
                 display: none
         &.right
         >.wallet-header
             &.chart
                 text-align: right
-                padding-top: 20px
+                padding-top: 0px
                 border-left: 1px solid rgba(white, 0.2)
             >.wallet-header-part
                 display: inline-block
@@ -41,9 +47,9 @@ require! {
                 vertical-align: top
                 &.left
                     img
-                        width: 100px
+                        width: 60px
                 &.right
-                    padding: 9px
+                    padding: 0 10px
                     >.title
                         font-size: 25px
                 .counts
@@ -53,18 +59,24 @@ require! {
                         font-size: 12px
         .stats
             $size: 150px
+            $size-tablet: 100px
             margin-right: 20px
             display: inline-block
             height: $size
             max-height: $size
             width: $size
             max-width: $size
+            @media screen and (max-width: 1200px)
+                height: $size-tablet
+                max-height: $size-tablet
+                width: $size-tablet
+                max-width: $size-tablet
             >*
                 height: inherit
                 width: inherit
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
-    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
+    { uninstall, wallet, balance, balance-usd, pending, send, receive, usd-rate } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
@@ -72,18 +84,6 @@ module.exports = (store, web3t, wallets, wallet)-->
         | _ => "#{lang.hide}"
     wallet-style=
         color: style.app.text3
-    border =
-        border-top: "1px solid #{style.app.border}"
-        border-right: "1px solid #{style.app.border}"
-    button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
-        color: style.app.text2
-        background: style.app.primary3
-    address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
-    btn-icon =
-        filter: style.app.btn-icon
     placeholder = 
         | store.current.refreshing => "placeholder"
         | _ => ""
@@ -107,7 +107,11 @@ module.exports = (store, web3t, wallets, wallet)-->
             |> round-human
     total-sent = get-total \OUT
     total-received = get-total \IN
-    .wallet-detailed.pug(key="#{token}")
+    wallet-style=
+        color: style.app.text3
+        background: style.app.wallet
+        border-bottom: "1px solid #{style.app.border}"
+    .wallet-detailed.pug(key="#{token}" style=wallet-style)
         .wallet-part.left.pug
             .wallet-header.pug
                 .wallet-header-part.left.pug
@@ -130,8 +134,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
             .pug
                 if wallet.coin.token not in <[ btc vlx vlx2 ]>
-                    .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
-        .wallet-part.right.pug(style=border)
+                    .pug.uninstall(on-click=uninstall) #{label-uninstall}
+        .wallet-part.right.pug
             .wallet-header.pug.chart
                 .wallet-header-part.left.pug
                     .stats.pug

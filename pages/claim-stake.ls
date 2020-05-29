@@ -404,6 +404,8 @@ calc-reward = (store, web3t)->
 build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
+    box-background =
+        background: style.app.addressBg
     checked = item.checked
     load-or-skip = (item, cb)->
         return cb null if item.reward isnt '..'
@@ -416,7 +418,7 @@ build-claim-reward = (store, web3t)-> (item)->
         item.checked = not item.checked
         store.staking.reward-claim = round5 get-checked-amount store
     .col.col-4.pug
-        .pug
+        .pug(style=box-background)
             .value.pug
                 input.pug(type='checkbox' checked=checked on-change=check)
                 .number.pug

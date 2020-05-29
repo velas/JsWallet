@@ -8,6 +8,7 @@ require! {
     \./get-size.ls
     \./package.json : { version }
     \qs
+    \localStorage
 }
 saved-seed = saved!
 create-send =->
@@ -37,7 +38,7 @@ url-params =
 store =
     url-params: url-params
     root: null
-    theme: \velas
+    theme: localStorage.get-item('theme') ? \velas
     lang: \en
     langs: langs
     icons: \icons

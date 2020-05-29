@@ -45,7 +45,6 @@ require! {
         right: 180px
         top: 39px
         width: 170px
-        background: #321260
         display: inline-grid
         z-index: 3
         box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)

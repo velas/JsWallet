@@ -318,7 +318,7 @@ require! {
         bottom: 10px
         right: 10px
         width: 226px
-        background: #321260
+        background: inherit
         position: fixed
         display: inline-grid
         z-index: 3
@@ -402,7 +402,7 @@ require! {
                 margin-top: 10px
     .menu
         width: 160px
-        background: #321260
+        background: inherit
         position: absolute
         top: 188px
         right: 0px

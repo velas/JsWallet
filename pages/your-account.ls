@@ -34,7 +34,6 @@ require! {
         right: -1px
         top: 60px
         width: 170px
-        background: #321260
         display: inline-grid
         z-index: 3
         box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
@@ -75,7 +74,6 @@ require! {
                 min-height: 155px
                 overflow: scroll
                 background: linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%
-                background-color: #321260
                 background-repeat: no-repeat
                 background-attachment: local, local, scroll, scroll
                 background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px

@@ -138,7 +138,7 @@ require! {
                 opacity: .8
         .filter
             width: 226px
-            background: #321260
+            background: inherit
             position: absolute
             top: 59px
             right: 0
@@ -307,9 +307,9 @@ require! {
             opacity: .75
     .table
         width: 100%
-        height: calc(100vh - 80px)
         overflow-y: scroll
         margin-top: -1px
+        height: calc(100vh - 260px)
         .head, .record
             &.record
                 border-radius: 0px
@@ -320,7 +320,7 @@ require! {
                 .tx-middle
                     height: 60px
                 &:last-child
-                    margin-bottom: 12px
+                    margin-bottom: 0px
             .cell
                 padding: 10px 0 10px 10px
                 display: inline-block
@@ -336,7 +336,7 @@ require! {
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 10%
+                    width: 5%
                     div
                         text-align: center
                 &.txhash
@@ -438,16 +438,18 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 40%
+                    width: 45%
                     text-align: left
                     height: 60px
                     div:last-child
-                        width: 330px
+                        height: 36px
                     .action
                         .address-holder
                             text-align: left
+                            height: 22px
+                            width: 85%
                             .copy
-                                margin-left: -7px
+                                margin-left: 0px
                                 width: 13px
                                 height: 15px
                             >img
@@ -456,23 +458,25 @@ require! {
                                     top: -6px
                                     margin: 0 10px 0 0
                             .browse
-                                right: 0px
+                                right: -5px
                             >span a
                                 height: 25px
                                 line-height: 25px
                             span
                                 padding: 0
-                                width: 120px
+                                width: 80%
                                 text-align: left
+                                @media screen and (min-width: 1441px)
+                                    width: 95%
                                 a
                                     img
                                         height: 16px
                                 div
-                                    width: 98px
+                                    width: 100%
                                     margin-right: 0px
                                     a
                                         padding: 0
-                                        width: 250px
+                                        min-width: 250px
                                         text-align: left
             .gray
                 $gray: #8290ad

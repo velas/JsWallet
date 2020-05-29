@@ -9,6 +9,7 @@ require! {
     \../navigate.ls
     \../icons.ls
     \../components/button.ls
+    \./choose-themes.ls
 }
 .settings-menu
     @import scheme
@@ -383,17 +384,21 @@ manage-account = (store, web3t)->
         .pug.section
             .pug.title(style=color) #{lang.switch-account-index ? 'Switch Account Index'}
             .pug.description(style=color)
-                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}.
                 span.pug #{lang.switch-account-info ? 'You could have a lot of unique addresses by switching account index. By default, you are given an index of 1, but you can change it in range 0 - 2,147,483,647'}
             .pug.content
                 switch-account store, web3t
         .pug.section
             .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
             .pug.description(style=color)
-                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
                 span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
             .pug.content
                 button { store, text: \showSecret , on-click: export-private-key, icon: \show, type: \secondary }
+        .pug.section
+            .pug.title(style=color) Themes
+            .pug.description(style=color)
+                span.pug Use custom themes (alpha)
+            .pug.content
+                choose-themes store, web3t
         .pug.section
             .pug.title(style=color)
                 .pug.logo
@@ -415,6 +420,8 @@ module.exports = ({ store, web3t } )->
     style = get-primary-info store
     account-body-style = 
         color: style.app.text
+    icon-color=
+        filter: style.app.icon-filter
     border-style =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
@@ -424,7 +431,7 @@ module.exports = ({ store, web3t } )->
         .pug.title(style=border-style)
             .pug.header #{lang.manage-account}
             .pug.close(on-click=go-back)
-                img.icon-svg.pug(src="#{icons.arrow-left}")
+                img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
         .account-body.pug(style=account-body-style)
             .pug.settings
                 manage-account store, web3t

@@ -18,7 +18,13 @@ require! {
     \./velas/velas-api.ls
     \./send-funcs.ls
     \./pages.ls
+    \./themes.ls
+    \localStorage
 }
+supported-themes =
+    themes 
+        |> obj-to-pairs 
+        |> map (-> it.0)
 state =
     time: null
 titles = <[ name@email.com name.ethnamed.io domain.com ]>
@@ -194,8 +200,9 @@ module.exports = (store, config)->
         return cb err if err?
         refresh-page cb
     set-theme = (it, cb)->
-        return cb "support only dark an light" if it not in <[ dark light monochrome dark_mojave ]>
+        return cb "support only dark an light" if it not in supported-themes
         store.theme = it
+        localStorage.set-item \theme, it
         set-page-theme store, it
         cb null
     set-lang = (it, cb)->

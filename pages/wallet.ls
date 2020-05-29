@@ -187,9 +187,6 @@ require! {
                 @media screen and (max-width: 800px)
                     width: 40px
                     line-height: 30px
-                &:hover
-                    background: #7aa7f3
-                    color: white
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
     { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
@@ -202,7 +199,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.text3
     border-style =
         border-bottom: "1px solid #{style.app.border}"
-        background: style.app.wallet
+        background: if active is \active then style.app.addressBg else style.app.wallet
     border =
         border-top: "1px solid #{style.app.border}"
         border-right: "1px solid #{style.app.border}"
@@ -242,7 +239,7 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
-    .wallet.pug(class="#{last + ' ' + active + ' ' + big}" key="#{wallet.coin.token}" style=border-style)
+    .wallet.pug(class="#{big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
                 .img.pug(class="#{placeholder-coin}")

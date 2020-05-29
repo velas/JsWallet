@@ -55,10 +55,6 @@ require! {
                     transition: all .5s
                     background: #9c41eb !important
                     border-color: #9c41eb !important
-            .wallet
-                &:hover
-                    background: rgb(98, 52, 171) !important
-                    transition: .5s !important
             .top-right
                 width: 33% !important
                 button
@@ -165,6 +161,9 @@ require! {
             width: 100%
             border-top: 1px solid #213040
             display: inline-block
+        .history-area
+            max-height: 54vh
+            overflow: auto
         .info
             text-align: left
             margin-left: 0px
@@ -197,6 +196,7 @@ mobile = ({ store, web3t })->
         display: "flex"
         height: "100vh"
         margin-left: "60px"
+        overflow: "hidden"
     left-side =
         width: "35%"
     right-side =
@@ -207,6 +207,8 @@ mobile = ({ store, web3t })->
         padding: "17px 0px 20px"
         color: style.app.text
         text-align: "left"
+    icon-style=
+        filter: style.app.icon-filter
     input=
         background: style.app.wallet
         border: "1px solid #{style.app.border}"
@@ -237,9 +239,9 @@ mobile = ({ store, web3t })->
         .pug.switch-account.h1
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                img.icon-svg1.pug(src="#{icons.create}")
+                img.icon-svg1.pug(src="#{icons.create}" style=icon-style)
             span.pug.icon(on-click=open-account class="#{rotate-class}")
-                img.icon-svg2.pug(src="#{icons.arrow-down}")
+                img.icon-svg2.pug(src="#{icons.arrow-down}" style=icon-style)
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)
@@ -270,5 +272,6 @@ mobile = ({ store, web3t })->
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)
                 wallet-expanded store, web3t, wallets, wallet-detail
-                history { store, web3t }
+                .history-area.pug
+                    history { store, web3t }
 module.exports = mobile

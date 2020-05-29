@@ -508,7 +508,6 @@ require! {
                     flex: 0 0 100%
                     max-width: 100%
             > div
-                background: #3b1771
                 padding: 30px 20px
     .staking-reward
         display: block
@@ -1003,6 +1002,8 @@ staking-content = (store, web3t)->
     check-uncheck = ->
         change = not store.staking.rewards.0.checked
         store.staking.rewards |> map (-> it.checked = change)
+    box-background =
+        background: style.app.addressBg
     .pug.staking-content
         #placeholder store, web3t
         alert-txn { store }
@@ -1108,7 +1109,7 @@ staking-content = (store, web3t)->
                         .pug.left
                             .staking-info.pug
                                 .col.col-4.pug
-                                    div.pug
+                                    div.pug(style=box-background)
                                         .value.pug
                                             .number.pug
                                                 span.pug #{your-staking}
@@ -1116,21 +1117,21 @@ staking-content = (store, web3t)->
                                         .header.pug
                                             | #{lang.staking}
                                 .col.col-4.pug
-                                    div.pug
+                                    div.pug(style=box-background)
                                         .value.pug.green
                                             .number.pug
                                                 | #{staker-status}
                                         .header.pug
                                             | #{lang.your-status}
                                 .col.col-4.pug
-                                    div.pug
+                                    div.pug(style=box-background)
                                         .value.pug
                                             .number.pug
                                                 | #{store.staking.delegators}
                                         .header.pug
                                             | #{lang.delegators}
                                 .col.col-4.pug
-                                    div.pug
+                                    div.pug(style=box-background)
                                         .value.pug
                                             .number.pug
                                                 | #{store.staking.epoch}
@@ -1142,26 +1143,6 @@ staking-content = (store, web3t)->
                                         ol.pug
                                             li.pug #{lang.your-status1}
                                             li.pug #{lang.your-status2}
-                            if no
-                                .table.pug
-                                    .pug.balance
-                                        span.pug.header #{lang.staking}: 
-                                        span.pug.color #{your-staking}
-                                        span.pug.color #{vlx-token}
-                                    .pug.balance
-                                        span.pug.header #{lang.your-status}:
-                                        span.pug.color.green #{staker-status}
-                                    .pug.balance
-                                        span.pug.header Delegators:
-                                        span.pug.color #{store.staking.delegators}
-                                    if store.staking.is-active-staker is no
-                                        .pug.warning
-                                            ol.pug
-                                                li.pug #{lang.your-status1}
-                                                li.pug #{lang.your-status2}
-                                    .pug.balance
-                                        span.pug.header #{lang.epoch}:
-                                        span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
                             amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }

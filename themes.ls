@@ -35,6 +35,7 @@ module.exports =
         th: "rgb(75, 40, 136)"
         tr-odd: "rgba(98, 52, 171, 0.4)"
         tr-even: "rgba(75, 39, 135, 0.4)"
+        icon-filter: "none"
     light:
         background: \#F0EFF5
         menu: \#F0EFF5
@@ -42,17 +43,17 @@ module.exports =
         demo: \#2f475a
         input: \#FFF
         dragarea: \#00000057
-        primary1: \#FFF
+        primary1: \#CCCCCC
         primaryOpct: \#FFF
-        primary2: \#FFF
-        primary3: \#FFF
+        primary2: \#F0EFF5
+        primary3: \#F0EFF5
         primary4: \#FFF
         wallet: \#FFF
         wallet-light: \#FFF
         header: \#FFF
         tooltip: \#fff
         icon: \gray
-        btn-icon: "none"
+        btn-icon: "grayscale(100%) brightness(60%) sepia(100%) hue-rotate(-150deg) saturate(0%) contrast(0.5)"
         loader: \gray
         border: \#CCCCCC
         bg-btn: \#CCCCCC
@@ -70,6 +71,7 @@ module.exports =
         th: "rgb(75, 40, 136)"
         tr-odd: "rgba(98, 52, 171, 0.4)"
         tr-even: "rgba(75, 39, 135, 0.4)"
+        icon-filter: "grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-150deg) saturate(0%) contrast(0.5)"
     dark:
         background: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
         menu: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
@@ -77,10 +79,10 @@ module.exports =
         demo: "rgb(39, 57, 76)"
         input: \#213040
         dragarea: \#15222fd9
-        primary1: \#2d4967
-        primaryOpct: \#2d4967
-        primary2: \#2f475a
-        primary3: \#2d4967
+        primary1: \#9d41eb
+        primaryOpct: "rgb(106, 39, 161)"
+        primary2: \#3cd5af
+        primary3: \#ffffff
         primary4: \#c35c5f
         wallet: \#213040
         wallet-light: \#213040
@@ -105,6 +107,7 @@ module.exports =
         th: \#2f475a
         tr-odd: "rgba(64, 91, 119, 0.3)"
         tr-even: \#213040
+        icon-filter: "none"
     dark_mojave:
         background: \#292A2F
         menu: \#292A2F
@@ -140,9 +143,10 @@ module.exports =
         th: "rgb(75, 40, 136)"
         tr-odd: "rgba(98, 52, 171, 0.4)"
         tr-even: "rgba(75, 39, 135, 0.4)"
+        icon-filter: "none"
     monochrome:
-        background: \#000000
-        menu: \#000000
+        background: \#172431
+        menu: \#213040
         background-image: "none"
         demo: \#213040
         input: \#213040
@@ -175,3 +179,4 @@ module.exports =
         th: "rgb(75, 40, 136)"
         tr-odd: "rgba(98, 52, 171, 0.4)"
         tr-even: "rgba(75, 39, 135, 0.4)"
+        icon-filter: "none"

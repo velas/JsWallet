@@ -31,7 +31,6 @@ require! {
         bottom: 10px
         right: 10px
         width: 226px
-        background: #321260
         position: fixed
         display: inline-grid
         z-index: 1
@@ -115,7 +114,6 @@ require! {
                 margin-top: 10px
     .menu
         width: 226px
-        background: #321260
         position: absolute
         top: 60px
         right: 0
