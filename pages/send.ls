@@ -21,8 +21,8 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
-    width: calc(100% - 60px) !important
-    margin-left: 60px !important
+    width: calc(100% - 0px) !important
+    margin-left: 0px !important
     max-width: none !important
     @media(max-width:800px)
         margin-left: 0 !important
@@ -370,6 +370,7 @@ send = ({ store, web3t })->
     border-header =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
+        background: style.app.background
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->

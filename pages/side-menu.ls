@@ -102,8 +102,6 @@ require! {
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                         img
                             filter: none
-                &.arrow_box
-                    border: 1px solid #6b268e
         &:hover
             svg, img
                 transform: scale(1.2)
@@ -117,11 +115,10 @@ require! {
                 font-weight: 600
                 color: #fff
                 padding: 5px
-                background: #210b4a
+                background: #000
                 opacity: 1
                 transition: opacity .5s
                 &.arrow_box
-                    border: 1px solid #6b268e
                     &:after, &:before
                         right: 100%
                         top: 21%
@@ -133,12 +130,11 @@ require! {
                         pointer-events: none
                     &:after
                         border-color: rgba(136, 183, 213, 0)
-                        border-right-color: #210b4a
+                        border-right-color: #000
                         border-width: 6px
                         margin-top: 2px
                     &:before
                         border-color: rgba(194, 225, 245, 0)
-                        border-right-color: #6b268e
                         border-width: 8px
                         margin-top: 0px
         &.active
@@ -282,6 +278,9 @@ module.exports = (store, web3)->
         padding-right: "10px"
     text-style=
         color: style.app.text
+    background-menu=
+        background: style.app.header
+        border: "1px solid #{style.app.border}"
     wallet = ->
         navigate store, web3t, \wallets
     goto-search = ->
@@ -306,6 +305,8 @@ module.exports = (store, web3)->
         navigate store, web3t, \claim
     comming-soon =
         opacity: ".3"
+    tooltip=
+        background: "#000"
     open-submenu = ->
         store.current.submenu = not store.current.submenu
     menu-staking =
@@ -322,11 +323,11 @@ module.exports = (store, web3)->
         .pug.menu-items
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
-                    span.arrow_box.pug #{lang.your-wallets}
+                    span.arrow_box.pug(style=tooltip) #{lang.your-wallets}
                     img.pug(src="#{icons.wallet}" style=wallet-icon)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking}")
-                    .menu.pug.arrow_box
+                    .menu.pug.arrow_box(style=background-menu)
                         ul.pug
                             li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
                                 img.pug(src="#{icons.node}" style=icon-node)
@@ -341,18 +342,18 @@ module.exports = (store, web3)->
                             li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                 img.pug(src="#{icons.info}" style=icon-node)
                                 | #{lang.stats}
-                    span.arrow_box.pug #{lang.staking}
+                    span.arrow_box.pug(style=tooltip) #{lang.staking}
                     img.pug(src="#{icons.staking}")
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
-                    span.arrow_box.pug #{lang.search}
+                    span.arrow_box.pug(style=tooltip) #{lang.search}
                     img.pug(src="#{icons.search}")
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
-                    span.arrow_box.pug #{lang.settings}
+                    span.arrow_box.pug(style=tooltip) #{lang.settings}
                     img.pug(src="#{icons.setting}")
             if no
                 if store.preference.settings-visible is yes
                     .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")
-                        span.arrow_box.pug #{lang.faq}
+                        span.arrow_box.pug(style=tooltip) #{lang.faq}
                         img.pug(src="#{icons.setting}")

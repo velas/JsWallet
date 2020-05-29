@@ -1520,6 +1520,15 @@
             "Delegators",
             "委派器",
             "Delegators"
+        ],
+        "votePower": [
+            "Vote power",
+            "Сила голоса ",
+            "Сила голосу ",
+            "Vote de la puissance",
+            "Voto de energía",
+            "投票电",
+            "투표가 힘"
         ]
     }
 }

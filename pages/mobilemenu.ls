@@ -320,7 +320,7 @@ module.exports = (store, web3)->
         color: style.app.icon
     lock-style =
         color: style.app.icon
-        bottom: "20px"
+        bottom: "30px"
         position: "absolute"
     lang = get-lang store
     info = get-primary-info store

@@ -33,9 +33,8 @@ require! {
         font-weight: 600
         color: #fff
         padding: 5px
-        background: #210b4a
+        background: #000
         visibility: hidden
-        border: 1px solid #6b268e
         &:after, &:before
             right: 100%
             top: 21%
@@ -47,12 +46,11 @@ require! {
             pointer-events: none
         &:after
             border-color: rgba(136, 183, 213, 0)
-            border-right-color: #210b4a
+            border-right-color: #000
             border-width: 6px
             margin-top: 2px
         &:before
             border-color: rgba(194, 225, 245, 0)
-            border-right-color: #6b268e
             border-width: 8px
             margin-top: 0px
     .icon-svg1
@@ -323,8 +321,6 @@ require! {
                     height: 60px
                 &:last-child
                     margin-bottom: 12px
-                &:first-child
-                    border-top: 1px solid rgb(107, 38, 142)
             .cell
                 padding: 10px 0 10px 10px
                 display: inline-block
@@ -423,7 +419,6 @@ require! {
                         background: #210b4a
                         opacity: 0
                         transition: opacity .5s
-                        border: 1px solid #6b268e
                         &:after, &:before
                             left: 100%
                             top: 15%
@@ -435,12 +430,11 @@ require! {
                             pointer-events: none
                         &:after
                             border-color: rgba(136, 183, 213, 0)
-                            border-left-color: #210b4a
+                            border-left-color: #000
                             border-width: 6px
                             margin-top: 2px
                         &:before
                             border-color: rgba(194, 225, 245, 0)
-                            border-left-color: #6b268e
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
@@ -474,7 +468,7 @@ require! {
                                     img
                                         height: 16px
                                 div
-                                    width: auto
+                                    width: 98px
                                     margin-right: 0px
                                     a
                                         padding: 0
@@ -640,6 +634,8 @@ render-transaction = (store, web3t, tran)-->
         background: style.app.wallet-light
     lightText=
         color: style.app.addressText
+    tooltip=
+        background: "#000"
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
     coin = 
         coins |> find (.token is token)
@@ -720,7 +716,7 @@ render-transaction = (store, web3t, tran)-->
                     amount-beautify fee, 10
             .cell.pug.divider.more(on-click=tx-details)
                 img.icon-svg1.pug(src="#{icons.more}" style=icon-pending)
-                .arrow_box.pug #{lang.details}
+                .arrow_box.pug(style=tooltip) #{lang.details}
         if store.history.tx-details is tx
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider
@@ -768,6 +764,8 @@ module.exports = ({ store, web3t })->
         color: style.app.text
     border-b =
         border-bottom: "1px solid #{style.app.border}"
+    border-t =
+        border-top: "1px solid #{style.app.border}"
     filter-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
@@ -793,7 +791,6 @@ module.exports = ({ store, web3t })->
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
     length = store.transactions.applied.length
-    console.log { length }
     rowRenderer = ({ key, index, isScrolling, isVisible, style })->
         return render-transaction store, web3t, store.transactions.applied[index] # if isVisible
         null
@@ -833,7 +830,7 @@ module.exports = ({ store, web3t })->
                             button.pug(key="#{coin.token}" class="#{is-active(coin.token)}" style=filter-style on-click=switch-filter(coin.token))
                                 img.pug(src="#{coin.image}")
         .pug
-            .pug.table
+            .pug.table(style=border-t)
                 store.transactions.applied |> take 20 |> map render-transaction store, web3t
             if length is 0
                 .pug.nothin-to-show(style=menu-style)

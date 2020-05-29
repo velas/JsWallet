@@ -107,7 +107,7 @@ require! {
     button
         width: 120px
         &.text-primary
-            color: rgb(156, 65, 235) !important
+            color: rgb(156, 65, 235)
             &:hover
                 text-decoration: underline
         &.setup
@@ -207,7 +207,7 @@ input = (store, web3t)->
         margin-top: "10px"
     button-primary0-style=
         border: "0"
-        color: style.app.text
+        color: style.app.text-primary
         background: "transparent"
         width: "120px"
         height: "36px"
@@ -253,7 +253,17 @@ total-trials = 8
 wrong-trials = (store)->
     return null if store.current.pin-trial is 0
     lang = get-lang store
+    style = get-primary-info store
     left-trials = total-trials - store.current.pin-trial
+    notice=
+        background: style.app.wallet
+    button-primary0-style=
+        border: "0"
+        color: style.app.text-primary
+        background: "transparent"
+        width: "120px"
+        height: "36px"
+        margin-top: "0px"
     reset-account = ->
         res <- confirm store, "#{lang.backup-info}"
         return if res is no
@@ -261,11 +271,11 @@ wrong-trials = (store)->
     wrong-pin-text = "#{left-trials}/#{total-trials} #{lang.notice-reset}."
     .pug
         .pug.wrong(key="wrong-trial") #{wrong-pin-text}
-        .pug.notice
+        .pug.notice(style=notice)
             span.orange.pug #{lang.notice}! 
             span.pug #{lang.notice-text}
         .pug
-            button.reset.setup.text-primary.pug(on-click=reset-account) #{lang.reset-account}
+            button.reset.setup.text-primary.pug(style=button-primary0-style on-click=reset-account) #{lang.reset-account}
 setup-button = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store

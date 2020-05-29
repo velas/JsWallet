@@ -14,6 +14,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
+    \./alert-demo.ls
 }
 .resources
     @import scheme
@@ -310,10 +311,14 @@ resources = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
-    border-style2 =
+        background: info.app.background
+    resource =
         color: info.app.text
-        border-bottom: "1px solid #{info.app.border}"
-        background: "#4b2888"
+        border: "1px solid #{info.app.border}"
+        background: info.app.header
+    resource-header =
+        color: info.app.text
+        background: info.app.demo
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
@@ -348,11 +353,16 @@ resources = ({ store, web3t })->
         background: "url('#{icons.bg-gpu}')"
     bg-spacing=
         background: "url('#{icons.bg-spacing}')"
+    th=
+        background: info.app.th
+    tr-odd=
+        background: info.app.tr-odd
+    tr-even=
+        background: info.app.tr-even
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.resources
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Resources Center
             .pug.close(on-click=goto-search)
@@ -361,9 +371,9 @@ resources = ({ store, web3t })->
             switch-account store, web3t
         .container-price.pug
             .plan.pug
-                .plan-inner.pug
+                .plan-inner.pug(style=resource)
                     .entry-title.cpu.pug
-                        h3.pug CPU
+                        h3.pug(style=resource-header) CPU
                         .pug.top
                             .price.pug(style=bg-cpu)
                             .price-month.pug
@@ -390,9 +400,9 @@ resources = ({ store, web3t })->
                                 copy store
                             button.pug(style=button-primary2-style) Deposit
             .plan.pug
-                .plan-inner.pug
+                .plan-inner.pug(style=resource)
                     .entry-title.gpu.pug
-                        h3.pug GPU
+                        h3.pug(style=resource-header) GPU
                         .pug.top
                             .price.pug(style=bg-gpu)
                             .price-month.pug
@@ -419,9 +429,9 @@ resources = ({ store, web3t })->
                                 copy store
                             button.pug(style=button-primary2-style) Deposit
             .plan.pug
-                .plan-inner.pug
+                .plan-inner.pug(style=resource)
                     .entry-title.spcng.pug
-                        h3.pug STORAGE
+                        h3.pug(style=resource-header) STORAGE
                         .pug.top
                             .price.pug(style=bg-spacing)
                             .price-month.pug
@@ -450,7 +460,7 @@ resources = ({ store, web3t })->
         .wrapper-task.pug
             .pug.title
                 .pug.header Deposit
-            .table-deposit.pug
+            .table-deposit.pug(style=resource)
                 .row-deposit.pug
                     .content-deposit.pug 
                         | Please deposit VLX on this address to buy all these 3 resources. Once you use RESOURCES via
@@ -470,12 +480,12 @@ resources = ({ store, web3t })->
             .pug.title
                 .pug.header Invoices
             .table-task.pug
-                .row-task.header.pug
+                .row-task.header.pug(style=th)
                     .cell-task.pug Task Name
                     .cell-task.pug Task Status
                     .cell-task.pug Date Finished
                     .cell-task.pug Budget Spent
-                .row-task.pug
+                .row-task.pug(style=tr-odd)
                     .cell-task.pug(data-title='Task Name')
                         | CPU Usage
                     .cell-task.pug(data-title='Task Status')
@@ -484,7 +494,7 @@ resources = ({ store, web3t })->
                         | 2020/03/24
                     .cell-task.pug(data-title='Budget Spent')
                         | 200 VLX
-                .row-task.pug
+                .row-task.pug(style=tr-even)
                     .cell-task.pug(data-title='Task Name')
                         | GPU Usage
                     .cell-task.pug(data-title='Task Status')
@@ -493,7 +503,7 @@ resources = ({ store, web3t })->
                         | 2020/03/24
                     .cell-task.pug(data-title='Budget Spent')
                         | 400 VLX
-                .row-task.pug
+                .row-task.pug(style=tr-odd)
                     .cell-task.pug(data-title='Task Name')
                         | Disk Write
                     .cell-task.pug(data-title='Task Status')
@@ -502,7 +512,7 @@ resources = ({ store, web3t })->
                         | 2020/03/24
                     .cell-task.pug(data-title='Budget Spent')
                         | 500 VLX
-                .row-task.pug
+                .row-task.pug(style=tr-even)
                     .cell-task.pug(data-title='Task Name')
                         | Disk Keep
                     .cell-task.pug(data-title='Task Status')

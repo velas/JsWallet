@@ -9,6 +9,7 @@ require! {
     \prelude-ls : { map, filter }
     \localStorage
     \../icons.ls
+    \./tor.ls
 }
 .your-account
     @import scheme
@@ -207,7 +208,7 @@ module.exports = (store, web3t)->
         color: style.app.text
         border-radius: "50px"
         border: "0"
-        background: "rgba(157, 127, 206, 0.3)"
+        background: style.app.bg-btn
         line-height: "25px"
         padding: "10px"
         width: "40px"
@@ -238,7 +239,7 @@ module.exports = (store, web3t)->
         color: style.app.loader
         border-radius: "50px"
         border: "0"
-        background: "rgba(157, 127, 206, 0.3)"
+        background: style.app.bg-btn
         padding: "0px"
         width: "40px"
         height: "40px"
@@ -285,6 +286,8 @@ module.exports = (store, web3t)->
             if store.current.device is \mobile
                 button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-primary4-style)
                     img.icon-svg-plus.pug(src="#{icons.create}")
+            if store.current.device is \mobile
+                tor store, web3t
             if store.current.device is \mobile
                 button.pug.button.lock.mt-5(on-click=show style=button-primary4-style class="#{show-class}")
                     img.icon-svg-plus.pug(src="#{icons.menu}")

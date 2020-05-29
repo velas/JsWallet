@@ -28,9 +28,13 @@ calc-wallet = (store, cb)->
             | usd-rate is \.. => 0
             | _ => round5 usd-rate
         eur-rate = 0.893191
+        btc-rate = 0
         wallet.eur-rate =
             | usd-rate is \.. => \..
             | _ => round5 (usd-rate `times` eur-rate)
+        wallet.btc-rate =
+            | usd-rate is \.. => \..
+            | _ => round5 (usd-rate `times` btc-rate)
         err, balance <- get-balance { wallet.address, wallet.network, token, account: { wallet.address, wallet.private-key } }
         return cb err if err?
         pending-sent =

@@ -150,52 +150,70 @@ require! {
                 font-weight: 400
 total-pool = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     .pug.col.col-4
-        .pug
+        .pug(style=stats)
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{store.staking.pools.length}
             .pug.header #{lang.total-pools}
 total-stakers  = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     stakers =
         store.staking.pools |> map (.stakers) |> foldl plus, 0
     .pug.col.col-4
-        .pug
+        .pug(style=stats)
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{stakers}
             .pug.header #{lang.total-stakers}
 staking-amount = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     amount =
         store.staking.pools |> map (.stake) |> foldl plus, 0
     .pug.col.col-4
-        .pug
+        .pug(style=stats)
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{round-human(amount)}
             .pug.header #{lang.total-staking}
 my-stake = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     amount =
         store.staking.pools |> map (.my-stake) |> foldl plus, 0
     .pug.col.col-4
-        .pug
+        .pug(style=stats)
             .value.pug
                 .symbol.pug
                 .number.pug(title='') #{round-human(amount)}
             .pug.header #{lang.total-my-stake}
 chart-amount-sizes = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     .col-6.col.pug
-        .pug
+        .pug(style=stats)
             .pug.header #{lang.stake-sizes}
             staker-stats store, web3t
 chart-stakers-counts = (store, web3t)->
     lang = get-lang store
+    info = get-primary-info store
+    stats=
+        background: info.app.stats
     .col-6.col.pug
-        .pug
+        .pug(style=stats)
             .pug.header #{lang.pool-population}
             staker-stats2 store, web3t
 info = ({ store, web3t })->
@@ -208,10 +226,7 @@ info = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
-    border-style2 =
-        color: info.app.text
-        border-bottom: "1px solid #{info.app.border}"
-        background: "#4b2888"
+        background: info.app.background
     border-style3 =
         color: info.app.text
         border-bottom: "0"

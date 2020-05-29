@@ -32,6 +32,7 @@ require! {
     \../components/button.ls
     \../components/address-holder.ls
     \./alert-txn.ls
+    \../components/amount-field.ls
 }
 .staking
     @import scheme
@@ -211,8 +212,8 @@ require! {
                                     background: red
                         button
                             width: 100%
-                            height: 30px
-                            margin-top: 0
+                            height: 36px
+                            margin: 0
                     table
                         width: 100%
                         border-collapse: collapse
@@ -556,11 +557,6 @@ show-validator = (store, web3t)-> (validator)->
 staking-content = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
-    input-style =
-        background: style.app.wallet
-        color: style.app.text
-        overflow-x: \auto
-        margin-top: \10px
     button-primary3-style=
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
@@ -698,21 +694,14 @@ staking-content = (store, web3t)->
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
             return cb err if err?
             store.staking.stake-amount-total = amount.to-fixed!
-            err, amount <- web3t.velas.Staking.orderedWithdrawAmount store.staking.chosen-pool.address, staking-address
-            return cb err if err?
-            store.staking.withdraw-amount = amount.to-fixed!
-            err, max-withdraw-ordered <- web3t.velas.Staking.maxWithdrawOrderAllowed store.staking.chosen-pool.address, staking-address
-            return cb err if err?
-            store.staking.max-withdraw-ordered = max-withdraw-ordered.to-fixed!
-            err, max-withdraw <- web3t.velas.Staking.maxWithdrawAllowed store.staking.chosen-pool.address, staking-address
-            return cb err if err?
-            store.staking.max-withdraw = max-withdraw.to-fixed!
             err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
             return cb "#{err}" if err?
             err, staking-epoch <- web3t.velas.Staking.stakingEpoch
             return cb "#{err}" if err?
             res = staking-epoch `minus` last-epoch
             store.staking.wait-for-epoch-change = if +res is 0 then yes else no
+            err <- exit-stake.init { store, web3t }
+            return cb err if err?
         to-eth = ->
             item.eth = not item.eth
         cut-tx = (tx)->
@@ -741,6 +730,7 @@ staking-content = (store, web3t)->
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
             td.pug(data-column='Amount') #{stake}
+            td.pug n/a
             td.pug(data-column="Filled" style=filled-color) #{filled}
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
@@ -768,6 +758,9 @@ staking-content = (store, web3t)->
         width: "inherit"
     staker-pool-style =
         max-width: 200px
+        background: style.app.stats
+    stats=
+        background: style.app.stats
     .pug.staking-content
         .form-group.pug
             alert-txn { store }
@@ -783,13 +776,14 @@ staking-content = (store, web3t)->
                         table.pug
                             thead.pug
                                 tr.pug
-                                    th.pug(width="3%") #
+                                    th.pug(width="3%" style=stats) #
                                     th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
-                                    th.pug(width="25%") #{lang.total-stake}
-                                    th.pug(width="5%" title="When more filled then less award for staker") #{lang.filled}
-                                    th.pug(width="25%") #{lang.my-stake}
-                                    th.pug(width="5%") #{lang.stakers}
-                                    th.pug(width="4%") #{lang.selectPool}
+                                    th.pug(width="25%" style=stats) #{lang.total-stake}
+                                    th.pug(width="5%" title="Vote power" style=stats) #{lang.vote-power}
+                                    th.pug(width="5%" title="When more filled then less award for staker" style=stats) #{lang.filled}
+                                    th.pug(width="25%" style=stats) #{lang.my-stake}
+                                    th.pug(width="5%" style=stats) #{lang.stakers}
+                                    th.pug(width="4%" style=stats) #{lang.selectPool}
                             tbody.pug
                                 store.staking.pools |> map build-staker store, web3t
                 else
@@ -806,7 +800,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
@@ -828,7 +822,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{vlx-token}
                             hr.pug
                             label.pug Stake More
-                            input.pug(type='text' value="#{store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -852,6 +846,7 @@ staking = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
+        background: info.app.background
     border-style2 =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
@@ -876,7 +871,6 @@ staking = ({ store, web3t })->
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
     #store.staking.data-generation += 1
-    store.staking.max-withdraw-ordered = 0
     store.staking.max-withdraw = 0
     random = ->
         Math.random!

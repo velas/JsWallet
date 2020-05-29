@@ -10,6 +10,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
+    \./alert-demo.ls
 }
 .filestore
     @import scheme
@@ -449,10 +450,7 @@ filestorage = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
-    border-style2 =
-        color: info.app.text
-        border-bottom: "1px solid #{info.app.border}"
-        background: "#4b2888"
+        background: info.app.background
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
@@ -480,6 +478,8 @@ filestorage = ({ store, web3t })->
         color: info.app.addressText
     icon-style=
         filter: info.app.nothingIcon
+    dragarea-bg=
+        background: info.app.dragarea
     expand-collapse = ->
         store.filestore.menu-open = not store.filestore.menu-open
         store.current.dragfile = not store.current.dragfile
@@ -490,8 +490,7 @@ filestorage = ({ store, web3t })->
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.filestore
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") File Storage
             .pug.close(on-click=goto-search)
@@ -553,7 +552,7 @@ filestorage = ({ store, web3t })->
                             img.pug(src="#{icons.file-folder}")
                             .pug Images
             .pug.store-content(class="#{dragarea}")
-                .header-table.dragfile.pug(class="#{dragarea}")
+                .header-table.dragfile.pug(class="#{dragarea}" style=dragarea-bg)
                     .pug.cell.network(style=dashed-border)
                         img.pug.bounce(src="#{icons.file-drag}" style=icon-style)
                         | Drag and Drop here

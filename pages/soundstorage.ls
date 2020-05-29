@@ -9,8 +9,9 @@ require! {
     \./icon.ls
     \./switch-account.ls
     \./epoch.ls
-    \./tor.ls
+    \./hint.ls
     \../icons.ls
+    \./alert-demo.ls
 }
 .videostorage
     @import scheme
@@ -859,7 +860,10 @@ play-bar = (store, web3t)->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
     info = get-primary-info store
-    .pug.play-bar
+    play-bar=
+        background: info.app.background
+        border-top: "1px solid #{info.app.border}"
+    .pug.play-bar(style=play-bar)
         ul.pug.btn-area
             li.pug
                 img.pug(src="#{icons.prev}")
@@ -1005,6 +1009,7 @@ home = (store, web3t)->
                                         span.pug Mighty
         .block-content.pug(style=header-style-light)
             h2.header.pug Party
+            hint store, web3t
             .pug.section
                 .source.pug
                     iframe.pug(width='100%' height='300' scrolling='no' frameborder='no' allow='autoplay' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/51957607&color=%2343207c&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
@@ -1070,6 +1075,7 @@ videostorage = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
+        background: info.app.background
     border-style2 =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
@@ -1152,15 +1158,13 @@ videostorage = ({ store, web3t })->
                         .pug.file-name File.txt
                     .col.folder-menu.progress.pug
                         progress.pug(value="30" max="100")
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Sound storage
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t
-            tor store, web3t
         if store.sound.menu-open
             menu store, web3t
         .pug.search-input

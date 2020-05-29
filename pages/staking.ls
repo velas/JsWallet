@@ -33,6 +33,7 @@ require! {
     \./epoch.ls
     \../components/button.ls
     \./alert-txn.ls
+    \../components/amount-field.ls
 }
 .staking
     @import scheme
@@ -1089,7 +1090,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
+                            amount-field { store, value: tore.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1163,7 +1164,7 @@ staking-content = (store, web3t)->
                                         span.pug.color #{store.staking.epoch}
                             hr.pug
                             label.pug #{lang.stake-more}
-                            input.pug(type='text' value="#{round5 store.staking.add.add-validator-stake}" on-change=change-stake style=input-style placeholder="#{lang.stake}")
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1194,6 +1195,7 @@ staking = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
+        background: info.app.background
     border-style2 =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
@@ -1226,15 +1228,15 @@ staking.init = ({ store, web3t }, cb)->
     #exit for now
     #return cb null
     staking-address = store.staking.keystore.staking.address
-    err, amount <- web3t.velas.Staking.orderedWithdrawAmount staking-address, staking-address
-    return cb err if err?
+    #err, amount <- web3t.velas.Staking.orderedWithdrawAmount staking-address, staking-address
+    #return cb err if err?
     err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
     return cb "#{err}" if err?
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?
     res = staking-epoch `minus` last-epoch
     store.staking.wait-for-epoch-change = if +res is 0 then yes else no
-    store.staking.withdraw-amount = amount.to-fixed!
+    #store.staking.withdraw-amount = amount.to-fixed!
     store.staking.add.add-validator-stake = 0
     store.staking.epoch = staking-epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)
@@ -1245,6 +1247,8 @@ staking.init = ({ store, web3t }, cb)->
     err, delegators <- web3t.velas.Staking.poolDelegators(staking-address)
     return cb err if err?
     store.staking.delegators = delegators.length
+    err <- exit-stake.init { store, web3t }
+    return cb err if err?
     cb null
 module.exports = staking
 staking.focus = ({ store, web3t }, cb)->

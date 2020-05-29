@@ -418,6 +418,7 @@ module.exports = ({ store, web3t } )->
     border-style =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
+        background: style.app.background
     lang = get-lang store
     .pug.settings-menu
         .pug.title(style=border-style)

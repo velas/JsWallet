@@ -5,6 +5,7 @@ require! {
     \../get-primary-info.ls
     \../icons.ls
     \prelude-ls : { map, find, foldl, unique, take, sort-by }
+    \./confirmation.ls : { confirm }
 }
 # verification seed
 .newseed
@@ -160,6 +161,8 @@ newseed = ({ store, web3t })->
         save!
     back = ->
         return store.current.verify-seed-indexes += 1 if store.current.verify-seed-indexes > 0
+        yesno <- confirm store, "This action can reset all your words and you have to write down them again. Do you want to continue?"
+        return if yesno is no
         store.current.page = \reviewwords
     build-verify-seed = (store, item)-->
         enter-confirm = ->

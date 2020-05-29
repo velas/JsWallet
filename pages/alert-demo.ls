@@ -8,6 +8,12 @@ require! {
         color: rgb(255, 255, 255)
         border-bottom: 1px solid rgb(107, 38, 142)
         background: rgb(75, 40, 136)
-module.exports = ({ store, web3t } )->
-    .pug.title.alert
+module.exports = (store, web3t)->
+    lang = get-lang store
+    style = get-primary-info store
+    border-style2 =
+        color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
+        background: style.app.demo
+    .pug.title.alert(style=border-style2)
         .pug.header This page is under development. You see this only as demo

@@ -160,9 +160,11 @@ create-item = ({ store, web3t }, item)-->
     button-style =
         border: "1px solid #{style.app.text}"
         color: style.app.text
+    background = 
+        background: style.app.wallet
     menu-style=
         color: style.app.text
-    .item.pug
+    .item.pug(style=background)
         img.pug(src="#{item.image}")
         span.pug.title(style=menu-style) #{title}
         button.pug(on-click=add style=button-style)
@@ -188,10 +190,14 @@ add-by-address = (store, web3t)->
         color: style.app.text
     input-style=
         color: style.app.text
-        background: style.app.wallet
+        background: style.app.addressBg
         border: "0"
-    .item.pug
-        img.pug(src="#{icons.erc20-token}")
+    erc-bg=
+        background: style.app.addressBg
+    background = 
+        background: style.app.wallet
+    .item.pug(style=background)
+        img.pug(src="#{icons.erc20-token}" style=erc-bg)
         input.search.pug(placeholder="0x...." value="#{store.contract-address}" on-change=coin-contract style=input-style)
         button.pug(on-click=add style=button-style)
             icon \Plus, 20

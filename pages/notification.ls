@@ -1457,10 +1457,7 @@ notice = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
-    border-style2 =
-        color: info.app.text
-        border-bottom: "1px solid #{info.app.border}"
-        background: "#4b2888"
+        background: info.app.background
     border-users =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"

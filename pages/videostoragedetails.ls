@@ -10,6 +10,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
+    \./alert-demo.ls
 }
 .videodetails
     @import scheme
@@ -993,10 +994,7 @@ videodetails = ({ store, web3t })->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
-    border-style2 =
-        color: info.app.text
-        border-bottom: "1px solid #{info.app.border}"
-        background: "#4b2888"
+        background: info.app.background
     border-style3 =
         color: info.app.text
         border-bottom: "0"
@@ -1039,8 +1037,7 @@ videodetails = ({ store, web3t })->
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.videodetails
-        .pug.title.alert(style=border-style2)
-            .pug.header This page is under development. You see this only as demo
+        alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Video storage
             .pug.close(on-click=go-back)
@@ -1055,7 +1052,7 @@ videodetails = ({ store, web3t })->
                     h2.iron.pug
                         span.logo.pug
                             icon \TriangleRight, 10
-                        span.pug Vtube
+                        span.pug Vortex
                 .description.search-field.pug
                     .pug.left
                         input.pug(type='text' style=input-style value="velas" placeholder="velas")

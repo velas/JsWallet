@@ -26,6 +26,14 @@ require! {
         display: block
         max-width: 450px
         border: 0 !important
+        .tor
+            right: 0px
+            bottom: -27px
+            .tor-content
+                right: -55px
+                &:after, &:before
+                    right: 33%
+                    top: -10%
         .switch-menu
             right: -1px
             top: 165px

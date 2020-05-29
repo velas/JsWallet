@@ -1,7 +1,8 @@
 require! {
     \react
+    \./wallet-expanded.ls
     \./wallet.ls
-    \prelude-ls : { map, take, drop, filter }
+    \prelude-ls : { map, take, drop, filter, find }
     \./menu.ls
     \../seed.ls : { get }
     \../web3.ls
@@ -164,60 +165,6 @@ require! {
             width: 100%
             border-top: 1px solid #213040
             display: inline-block
-    .show-detail
-        overflow: hidden
-        .wallet-top
-            padding: 0 20px
-            margin-bottom: 10px
-            height: 50%
-            @media (max-width: 920px)
-                display: flex
-            .top-left
-                width: auto
-                float: left
-                height: auto
-                color: #fff
-                overflow: auto
-                text-overflow: unset
-                img
-                    height: 60px !important
-                    width: 60px !important
-                    max-width: 60px !important
-                .info
-                    display: none
-            .top-middle
-                width: 35%
-                float: left
-                color: #fff
-                text-align: left
-                .title-balance
-                    display: inline-block !important
-                .title
-                    font-size: 17px
-                    font-weight: 700
-                .balance
-                    font-weight: 600
-                    font-size: 16px
-                .price
-                    opacity: .8
-                    overflow: hidden
-                    text-overflow: ellipsis
-            .top-right
-                width: auto
-                float: right
-                color: #fff
-                position: relative
-                top: 25px
-                button
-                    width: 100px
-                    &.btn-open
-                        display: none
-                    span
-                        line-height: 26px
-                    svg
-                        float: left
-                @media (max-width: 920px)
-                    top: 0px
         .info
             text-align: left
             margin-left: 0px
@@ -239,10 +186,6 @@ require! {
             width: 100%
             height: calc(100vh - 260px)
             margin-top: -1px
-        .wallet
-            &.big
-                height: 200px
-                padding-top: 10px
 mobile = ({ store, web3t })->
     return null if not store.current.account?
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t
@@ -255,9 +198,9 @@ mobile = ({ store, web3t })->
         height: "100vh"
         margin-left: "60px"
     left-side =
-        width: "45%"
+        width: "35%"
     right-side =
-        width: "55%"
+        width: "65%"
         border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
@@ -305,7 +248,11 @@ mobile = ({ store, web3t })->
             span.cancel.pug.icon(on-click=cancel-edit-account-name)
                 icon "X", 20
     chosen-account-template =
-        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!  
+        if store.current.edit-account-name is "" then view-account-template! else edit-account-template! 
+    wallet-detail =
+        wallets
+            |> find (-> wallets.index-of(it) is store.current.wallet-index)
+    return null if not wallet-detail?
     .wallets-container.pug(key="wallets")
         .pug(style=row)
             .pug(style=left-side)
@@ -322,8 +269,6 @@ mobile = ({ store, web3t })->
                         wallets
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)
-                wallets
-                    |> filter (-> wallets.index-of(it) is store.current.wallet-index)
-                    |> map wallet store, web3t, wallets
+                wallet-expanded store, web3t, wallets, wallet-detail
                 history { store, web3t }
 module.exports = mobile
