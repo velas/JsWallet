@@ -788,7 +788,7 @@ require! {
                     .in
                         text-align: left
                         >span
-                            background: #391e61
+                            background: var(--active-wallet)
                             &:after
                                 border-left: 15px solid transparent
                                 left: -10px
@@ -797,11 +797,11 @@ require! {
                                 content: ''
                                 width: 0
                                 height: 0
-                                border-bottom: 15px solid #391e61
+                                border-bottom: 15px solid var(--active-wallet)
                     .out
                         text-align: right
                         >span
-                            background: #43207c
+                            background: var(--active)
                             &:after
                                 border-right: 15px solid transparent
                                 right: -10px
@@ -810,7 +810,7 @@ require! {
                                 content: ''
                                 width: 0
                                 height: 0
-                                border-bottom: 15px solid #43207c
+                                border-bottom: 15px solid var(--active)
             &.file-tree
                 margin-left: 0px
                 @media(max-width: 800px)
@@ -1173,11 +1173,11 @@ require! {
                         svg
                             vertical-align: middle !important
                     &.active
-                        background: rgb(67, 32, 124)
+                        background: var(--active)
                         .icon-svg
                             opacity: 1
                     &:hover
-                        background: rgb(67, 32, 124)
+                        background: var(--active)
                         transition: .5s
                         &:first-child
                             background: transparent
@@ -1482,6 +1482,10 @@ notice = ({ store, web3t })->
         background: info.app.header
     border-b =
         border-bottom: "1px solid #{info.app.border}"
+    search-bg =
+        border-bottom: "1px solid #{info.app.border}"
+        border-right: "1px solid #{info.app.border}"
+        background: info.app.demo
     button-primary1-style=
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
@@ -1494,6 +1498,10 @@ notice = ({ store, web3t })->
         color: info.app.addressText
     icon-style=
         filter: info.app.nothingIcon
+    border-t =
+        border-top: "1px solid #{info.app.border}"
+        border-right: "1px solid #{info.app.border}"
+        background: info.app.header
     activate = (tab)-> ->
         store.faq.tab = tab 
     activate-item = activate \item
@@ -1533,9 +1541,9 @@ notice = ({ store, web3t })->
             .pug.main-content(class="#{file-tree}" style=border-users)
                 .pug.section.filter(style=border-right)
                     .tabs.pug
-                        .pug.left-menu
+                        .pug.left-menu(style=border-t)
                         ul.pug(style=border-style3)
-                            li.pug(style=border-b)
+                            li.pug(style=search-bg)
                                 input.pug(type='text' style=input-style value="" placeholder="#{lang.search}")
                                 img.edit.pug(src="#{icons.create}")
                             li.pug(on-click=activate-item class="#{active-item}" style=border-b)

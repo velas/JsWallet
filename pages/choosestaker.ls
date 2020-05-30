@@ -36,7 +36,6 @@ require! {
 }
 .staking
     @import scheme
-    color: white
     position: relative
     display: block
     width: auto
@@ -219,10 +218,8 @@ require! {
                         border-collapse: collapse
                         margin: 0px auto
                     tr:nth-of-type(odd)
-                        background: rgba(107, 38, 142, 0.2)
+                        background: rgba(gray, 0.2)
                     th
-                        background: rgb(67, 32, 124)
-                        color: white
                         font-weight: 400
                         &:first-child
                             text-align: center
@@ -859,13 +856,15 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
+    icon-color=
+        filter: info.app.icon-filter
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.delegateStake}
             .pug.close(on-click=goto-search)
-                img.icon-svg.pug(src="#{icons.arrow-left}")
+                img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t

@@ -720,12 +720,12 @@ json-parse = (text, cb)->
                             vertical-align: middle !important
                     &.active
                         color: #c671f1
-                        background: rgb(67, 32, 124)
+                        background: var(--active)
                         padding-bottom: 15px
                         img
                             filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                     &:hover
-                        background: rgb(67, 32, 124)
+                        background: var(--active)
                         padding-bottom: 15px
                         transition: .5s
     .iron
@@ -1362,6 +1362,9 @@ videostorage = ({ store, web3t })->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+    tabs-style =
+        color: info.app.text
+        border-bottom: "1px solid #{info.app.border}"
     border-style3 =
         color: info.app.text
         border-bottom: "0"
@@ -1472,7 +1475,7 @@ videostorage = ({ store, web3t })->
             .pug.menu-content(class="#{file-tree}")
                 .pug.section.filter(style=border-right)
                     .tabs.pug
-                        ul.pug(style=border-style)
+                        ul.pug(style=tabs-style)
                             li.pug(on-click=activate-home class="#{active-home}")
                                 span.icon.pug
                                     img.icon-svg-menu.pug(src="#{icons.home}")
@@ -1485,7 +1488,7 @@ videostorage = ({ store, web3t })->
                                 span.icon.pug
                                     img.icon-svg-menu.pug(src="#{icons.subscriptions}")
                                     |   Subscriptions
-                        ul.pug(style=border-style)
+                        ul.pug(style=tabs-style)
                             li.pug(on-click=activate-history class="#{active-history}")
                                 span.icon.pug
                                     img.icon-svg-menu.pug(src="#{icons.history}")

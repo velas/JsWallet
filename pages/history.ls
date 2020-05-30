@@ -22,6 +22,7 @@ require! {
     .from-to
         width: 40px
         display: inline-block
+        line-height: 25px
     .tooltip
         position: absolute
         text-transform: uppercase
@@ -340,7 +341,7 @@ require! {
                     div
                         text-align: center
                 &.txhash
-                    width: 60%
+                    width: 65%
                     div:first-child
                         display: inline
                     .loader-ios
@@ -356,12 +357,14 @@ require! {
                         left: 3px
                         position: relative
                 &.amount
-                    width: 24%
+                    width: 14%
                     text-align: right
+                    @media screen and (max-width: 1020px)
+                        width: 19%
                 &.divider2
                     width: 30%
                 &.divider
-                    width: 10%
+                    width: 5%
                     .direction
                         text-align: center
                         line-height: 40px
@@ -372,8 +375,10 @@ require! {
                     opacity: .5
                     padding-left: 0
                 &.created
-                    width: 20%
-                    text-align: left
+                    width: 30%
+                    text-align: right
+                    @media screen and (max-width: 1020px)
+                        width: 25%
                     .syncing
                         svg
                             width: auto
@@ -381,11 +386,12 @@ require! {
                             margin: 0
                             vertical-align: middle !important
                     .bold
-                        margin-right: 5px
+                        margin-right: 0px
                         .icon-check
                             opacity: .8;
                             vertical-align: inherit
                             top: 1px
+                            margin-right: 2px
                             position: relative
                             width: 15px
                             height: 13px !important
@@ -395,7 +401,7 @@ require! {
                         overflow: hidden
                         width: 100%
                         font-size: 14px
-                        line-height: 25px
+                        line-height: 22px
                         text-decoration: none
                 &.more
                     text-align: center
@@ -651,7 +657,7 @@ render-transaction = (store, web3t, tran)-->
             | store.history.tx-details is tx => null
             | _ => tx
     icon-pending=
-        filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else ''
+        filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else style.app.icon-filter
     amount-pending=
         color: if pending is yes then 'orange' else ''
     about = 
@@ -679,29 +685,29 @@ render-transaction = (store, web3t, tran)-->
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.details-from
                 .pug.gray(style=lightText)
+                    span.action.pug
+                        address-holder { store, wallet: wallet-from }
                     span.from-to.pug 
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
-                        span.pug #{lang.from}:
-                    span.action.pug
-                        address-holder { store, wallet: wallet-from }
+                        span.pug #{lang.from}
             if no
                 .cell.pug.arrow
                     img.icon-svg1.pug(src="#{icons.arrow-right}")
             .cell.pug.details-to
                 .pug.gray(style=lightText)
+                    span.action.pug
+                        address-holder { store, wallet: wallet-to }
                     span.from-to.pug
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
-                        span.pug #{lang.to}:
-                    span.action.pug
-                        address-holder { store, wallet: wallet-to }
+                        span.pug #{lang.to}
             .cell.pug.created
-                .pug.gray(style=lightText)
-                    span.pug #{lang.created}: 
                 .time-ago.pug
+                    |#{ago time}
+                .pug.gray(style=lightText)
                     if pending is yes
                         span.pug
                             span.pug.bold
@@ -710,7 +716,7 @@ render-transaction = (store, web3t, tran)-->
                         span.pug
                             span.pug.bold
                                 img.icon-check.pug(src='data:image/svg+xml;base64,\PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTA0LjUwMiw3NS40OTZjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5OC0zNi4yMDQsMEwxNjEuNTk0LDM4Mi4yMDNMNDMuNzAyLDI2NC4zMTFjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5Ny0zNi4yMDQsMCAgICBjLTkuOTk4LDkuOTk3LTkuOTk4LDI2LjIwNSwwLDM2LjIwM2wxMzUuOTk0LDEzNS45OTJjOS45OTQsOS45OTcsMjYuMjE0LDkuOTksMzYuMjA0LDBMNTA0LjUwMiwxMTEuNyAgICBDNTE0LjUsMTAxLjcwMyw1MTQuNDk5LDg1LjQ5NCw1MDQuNTAyLDc1LjQ5NnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzNDRDVBRiIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD4KCTwvZz4KPC9nPjwvZz4gPC9zdmc+')
-                    |#{ago time}
+                    span.pug #{lang.created}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}
@@ -772,9 +778,9 @@ module.exports = ({ store, web3t })->
         border-top: "1px solid #{style.app.border}"
     filter-body =
         border: "1px solid #{style.app.border}"
-        background: style.app.header
+        background: style.app.filterBg
     input-style=
-        background: style.app.wallet
+        background: style.app.addressBg
         border: "1px solid #{style.app.border}"
         color: style.app.text
     button-primary3-style=
@@ -792,6 +798,8 @@ module.exports = ({ store, web3t })->
     header-table-style=
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.wallet-light
+    icon-filter=
+        filter: style.app.icon-filter
     expand-collapse = ->
         store.history.filter-open = not store.history.filter-open
     length = store.transactions.applied.length
@@ -807,7 +815,7 @@ module.exports = ({ store, web3t })->
                     img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
             span.pug.head.left.h1 #{lang.your-transactions}
             span.pug.head.right(on-click=expand-collapse)
-                img.icon-svg1.pug(src="#{icons.filter}")
+                img.icon-svg1.pug(src="#{icons.filter}" style=icon-filter)
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)

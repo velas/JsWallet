@@ -94,8 +94,11 @@ require! {
                 height: auto
                 margin-bottom: 0px
             .wallet
+                background: var(--active)
                 &:last-child
                     margin-bottom: 0px
+                &.big
+                    background: var(--active)
             @media(max-width: $mobile)
                 border-width: 1px 0 0 0 !important
         .switch-account

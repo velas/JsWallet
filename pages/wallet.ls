@@ -196,10 +196,9 @@ module.exports = (store, web3t, wallets, wallet)-->
         | store.current.refreshing => \...
         | _ => \ "#{lang.hide}"
     wallet-style=
-        color: style.app.text3
+        color: style.app.text
     border-style =
         border-bottom: "1px solid #{style.app.border}"
-        background: if active is \active then style.app.addressBg else style.app.wallet
     border =
         border-top: "1px solid #{style.app.border}"
         border-right: "1px solid #{style.app.border}"

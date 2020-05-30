@@ -170,6 +170,8 @@ module.exports = (store, web3t)->
         background: style.app.wallet
         border: "1px solid #{style.app.border}"
         color: style.app.text
+    icon-color=
+        filter: style.app.icon-filter
     header-left =
         margin-left: "10px"
     border-right=
@@ -200,11 +202,11 @@ module.exports = (store, web3t)->
         .pug.switch-account.h1(class="#{show-class}")
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                img.icon-svg-edit.pug(src="#{icons.create}")
+                img.icon-svg-edit.pug(src="#{icons.create}" style=icon-color)
             span.pug.icon(on-click=open-account class="#{rotate-class}")
-                img.icon-svg-create.pug(src="#{icons.arrow-down}")
+                img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
             span.pug.icon.menus(on-click=open-menu class="#{show-class}")
-                img.icon-svg-create.pug(src="#{icons.menu}")
+                img.icon-svg-create.pug(src="#{icons.menu}" style=icon-color)
     edit-account-template = ->
         .pug.switch-account.h1
             input.h1.pug(value="#{store.current.edit-account-name}" on-change=edit-account style=input)

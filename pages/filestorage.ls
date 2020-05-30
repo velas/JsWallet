@@ -350,7 +350,6 @@ require! {
                 display: inline-block
                 vertical-align: top
                 box-sizing: border-box
-                color: rgb(204, 204, 204)
                 overflow-y: hidden
                 text-overflow: ellipsis
                 white-space: nowrap

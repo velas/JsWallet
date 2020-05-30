@@ -119,9 +119,6 @@ require! {
             font-size: 16px
     .entry-content
         padding: 20px 12px
-        color: #323232
-        block-li 
-            border-bottom: 1px solid #fff
         ul
             margin: 0
             padding: 0
@@ -130,7 +127,6 @@ require! {
         li
             border-bottom: 1px solid #5c3f89
             padding: 10px 0
-            color: #fff
             &:last-child
                 border: none
     button
@@ -188,6 +184,15 @@ require! {
         margin: 0 auto
         padding: 0 40px
         max-width: 1080px
+        .title
+            text-align: center
+            font-size: 17px
+            text-transform: uppercase
+            letter-spacing: 2px
+            opacity: .8
+            line-height: 30px
+            font-weight: 400
+            margin: 0
     .table-task
         margin: 20px 0 40px 0
         width: 100%
@@ -260,7 +265,6 @@ require! {
                     padding-right: 35px
     .row-task, .row-deposit
         display: table-row
-        color: #fff
         background: rgba(98, 52, 171, 0.4)
         @media screen and (max-width: 580px)
             display: block
@@ -268,8 +272,6 @@ require! {
             background: #4b278769
         &.header
             text-transform: uppercase
-            color: #ffffff
-            background: #4b2788
             .cell-task
                 @media screen and (max-width: 580px)
                     display: none
@@ -459,7 +461,7 @@ resources = ({ store, web3t })->
                             button.pug(style=button-primary2-style) Deposit
         .wrapper-task.pug
             .pug.title
-                .pug.header Deposit
+                .pug Deposit
             .table-deposit.pug(style=resource)
                 .row-deposit.pug
                     .content-deposit.pug 
@@ -478,7 +480,7 @@ resources = ({ store, web3t })->
                                 | Deposit
         .wrapper-task.pug
             .pug.title
-                .pug.header Invoices
+                .pug Invoices
             .table-task.pug
                 .row-task.header.pug(style=th)
                     .cell-task.pug Task Name

@@ -114,38 +114,20 @@ require! {
     .placeholder-coin
         display: none !important
     .placeholder
-        -webkit-animation-duration: 1s
-        animation-duration: 1s
-        -webkit-animation-fill-mode: forwards
+        -webkit-mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, #000000 50%, rgba(255, 255, 255, 0.6) 70%)
+        -webkit-mask-size: 50%
+        animation: fb 1s infinite
         animation-fill-mode: forwards
-        -webkit-animation-iteration-count: infinite
-        animation-iteration-count: infinite
-        -webkit-animation-name: placeload
-        animation-name: placeload
-        -webkit-animation-timing-function: linear
-        animation-timing-function: linear
-        background: #f6f7f8
-        background: #eeeeee
-        background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee))
-        background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%)
-        background: linear-gradient(to right, #442080 8%, #422375 18%, #3b1b6f 33%)
-        -webkit-background-size: 800px 104px
-        background-size: 1200px 104px
-        position: relative
+        background: var(--placeholder)
         color: transparent !important
         width: 100%
         display: inline-block
         height: 16px
-    @-webkit-keyframes placeload
+    @keyframes fb 
         0%
-            background-position: -468px 0
+            -webkit-mask-position: left
         100%
-            background-position: 468px 0
-    @keyframes placeload
-        0%
-            background-position: -468px 0
-        100%
-            background-position: 468px 0
+            -webkit-mask-position: right
     @media (max-width: 800px)
         .wallet-main, >.content, .history, .search, .filestore, .resources, .staking, .settings-menu, .staking-res, .stats, .monitor
             margin: 60px 0 0
@@ -153,6 +135,11 @@ require! {
                 margin: 0
                 position: fixed
                 z-index: 11
+# use var(--background);
+define-root = (store)->
+    style = get-primary-info store
+    text = ":root { --background: #{style.app.background};--active: #{style.app.wallet};--active-wallet: #{style.app.addressBg};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--gradient: #{style.app.gradient};--addressText: #{style.app.addressText}; }"
+    style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?
     current-page =
@@ -160,12 +147,14 @@ module.exports = ({ store, web3t })->
     theme = get-primary-info(store)
     style =
         background: theme.app.background
+        color: theme.app.text
     syncing = 
         | store.current.refreshing => "syncing"
         | _ => ""
     open-menu = ->
         store.current.open-menu = not store.current.open-menu
     .pug
+        define-root store
         description store
         .app.pug(key="content" style=style class="#{syncing}")
             modal-control store, web3t

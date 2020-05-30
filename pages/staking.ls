@@ -37,7 +37,6 @@ require! {
 }
 .staking
     @import scheme
-    color: white
     position: relative
     display: block
     width: auto
@@ -409,7 +408,6 @@ require! {
             list-style: none
             margin-left: 0
             font-size: 13px
-            color: #fff
             font-size: 14px
             margin-bottom: 5px
             list-style-position: inside
@@ -1091,7 +1089,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            amount-field { store, value: tore.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1189,13 +1187,15 @@ staking = ({ store, web3t })->
         background: info.app.wallet-light
     lightText=
         color: info.app.addressText
+    icon-color=
+        filter: info.app.icon-filter
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.staking
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.staking}
             .pug.close(on-click=goto-search)
-                img.icon-svg.pug(src="#{icons.arrow-left}")
+                img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t

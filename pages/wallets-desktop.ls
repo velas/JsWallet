@@ -46,8 +46,6 @@ require! {
             .big
                 height: 60px
             .big.active
-                background: rgb(98, 52, 171) !important
-                transition: .5s !important
                 .icon
                     transition: all .5s
                     filter: none !important
@@ -161,6 +159,10 @@ require! {
             width: 100%
             border-top: 1px solid #213040
             display: inline-block
+            .wallet
+                background: var(--active)
+                &.big
+                    background: var(--active-wallet)
         .history-area
             max-height: 54vh
             overflow: auto

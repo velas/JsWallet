@@ -257,6 +257,8 @@ module.exports = (store, web3t)->
         background: style.app.primary2
         margin: "0"
         width: "100%"
+    icon-color=
+        filter: style.app.icon-filter
     open-epoch = ->
         cb = alert
         store.current.current-epoch = not store.current.current-epoch
@@ -307,7 +309,7 @@ module.exports = (store, web3t)->
             .pug.current-epoch.h1(class="#{show-class}")
                 span.name.pug(on-click=open-epoch) #{lang.epoch}
                 span.pug.icon(on-click=open-epoch class="#{rotate-class}")
-                    img.icon-svg-create.pug(src="#{icons.arrow-down}")
+                    img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
             if store.current.current-epoch
                 .pug.epoch(style=filter-body on-mouse-leave=on-exit)
                     .pug.middle.account

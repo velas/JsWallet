@@ -151,12 +151,12 @@ require! {
         line-height: 5px
         margin: 5px auto
     ::placeholder
-        color: #ffffff91
+        color: var(--addressText)
         font-size: 12px
         letter-spacing: 0
         line-height: 18px
     ::-ms-input-placeholder
-        color: #ffffff91
+        color: var(--addressText)
         font-size: 12px !important
         letter-spacing: 0
         line-height: 22px

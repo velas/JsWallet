@@ -79,7 +79,7 @@ require! {
             vertical-align: top
             text-align: center
             height: $card-top-height - 14px
-            color: rgb(204, 204, 204)
+            color: var(--addressText)
             font-size: 14px
             line-height: $card-top-height - 14px
             display: inline-block
@@ -116,7 +116,7 @@ module.exports = ({ store, wallet, type })->
         identicon { store, address: address-title }
         span.pug(style=input)
             a.browse.pug(target="_blank" href="#{address-link}")
-                img.pug(src="#{icons.browse-open}")
+                img.pug(src="#{icons.browse-open}" style=filter-icon)
             MiddleEllipsis.pug
                 a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
         CopyToClipboard.pug(text="#{address-title}" on-copy=copied-inform(store) style=filter-icon)

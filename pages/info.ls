@@ -21,7 +21,6 @@ require! {
 }
 .stats
     @import scheme
-    color: white
     $border-radius: $border
     $smooth: opacity .15s ease-in-out
     position: relative
@@ -248,6 +247,8 @@ info = ({ store, web3t })->
         color: info.app.addressText
     icon-style=
         filter: info.app.nothingIcon
+    icon-color=
+        filter: info.app.icon-filter
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.stats
@@ -255,7 +256,7 @@ info = ({ store, web3t })->
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.statistics}
             .pug.close(on-click=go-back)
-                img.icon-svg.pug(src="#{icons.arrow-left}")
+                img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
             epoch store, web3t
             switch-account store, web3t
         .pug.wrapper
