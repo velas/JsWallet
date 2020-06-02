@@ -12,17 +12,10 @@ require! {
     \./epoch.ls
     \./videoupload.ls
     \./alert-demo.ls
+    \../components/upload-video.ls
+    \../components/upload-video-progress.ls
+    \../components/video-list.ls
 }
-#TODO: move to utils
-as-callback = (p, cb)->
-    p.catch (err) -> cb err
-    p.then (data)->
-        cb null, data
-json-parse = (text, cb)->
-    try
-        cb null, JSON.parse(text)
-    catch err
-        cb err
 .videostorage
     @import scheme
     $border-radius: $border
@@ -337,14 +330,6 @@ json-parse = (text, cb)->
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     >.toolbar
         position: relative
         height: 60px
@@ -720,12 +705,12 @@ json-parse = (text, cb)->
                             vertical-align: middle !important
                     &.active
                         color: #c671f1
-                        background: var(--active)
+                        background: var(--bg-secondary)
                         padding-bottom: 15px
                         img
                             filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                     &:hover
-                        background: var(--active)
+                        background: var(--bg-secondary)
                         padding-bottom: 15px
                         transition: .5s
     .iron
@@ -829,7 +814,7 @@ home = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -844,58 +829,17 @@ home = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     goto-details = ->
         navigate store, web3t, \videostoragedetails
     drag-file-close = ->
         store.video.drag = not store.video.drag
-    on-browse-files = ->
-        (document.get-element-by-id 'browse-files-video').click!
-    input-file-style= 
-        {visibility: \hidden, width: 0, height: 0}
     .pug.panel-content.dragarea(class="#{file-tree}")
-        if store.video.drag
-            .header-table.dragfile.dragarea.pug(on-click=drag-file-close)
-                .pug.cell.network(style=dashed-border)
-                    img.pug.bounce(src="#{icons.img-drag}" style=icon-style)
-                    | Drag and Drop here
-                    br.pug
-                    | or
-                    input.pug(id='browse-files-video' type='file' multiple=yes on-change=upload-video-files style=input-file-style)
-                    span.pug(on-click=on-browse-files) Browse files
+        upload-video ({store})
         h2.header.pug Recommended
-        .pug.section
-            .source.pug(on-click=goto-details)
-                span.pug.play
-                    icon \TriangleRight, 15
-                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/USGLlp-zfhI' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-                .pug.title-video
-                    span.pug
-                        img.pug.account(src="#{info.branding.logo}")
-                    span.pug
-                        .pug.header Velas Explainer Video
-                        ul.pug.stat
-                            li.pug
-                                span.pug 2K views
-                            li.pug
-                                span.pug 5 days ago
-        .pug.section
-            .source.pug(on-click=goto-details)
-                span.pug.play
-                    icon \TriangleRight, 15
-                iframe.pug(on-click=goto-details width='560' height='315' src='https://www.youtube.com/embed/2jdA5EwQV9M' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-                .pug.title-video
-                    span.pug
-                        img.pug.account(src="#{info.branding.logo}")
-                    span.pug
-                        .pug.header Velas Explainer Video
-                        ul.pug.stat
-                            li.pug
-                                span.pug 50K views
-                            li.pug
-                                span.pug 1 mounth ago
+        video-list ({store, web3t})
 trend = (store, web3t)->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -929,7 +873,7 @@ trend = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -944,7 +888,7 @@ trend = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     goto-details = ->
@@ -954,8 +898,7 @@ trend = (store, web3t)->
     file-tree =
         if store.current.files then \file-tree else \ ""
     .pug.similarvideo(class="#{file-tree}")
-        h2.header.pug Trending
-        .pug.section
+        h2.header.pug Trending        .pug.section
             .source.pug(on-click=goto-details)
                 span.pug.play
                     icon \TriangleRight, 15
@@ -1022,7 +965,7 @@ subscr = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1037,7 +980,7 @@ subscr = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     goto-details = ->
@@ -1168,7 +1111,7 @@ history = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1183,7 +1126,7 @@ history = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     goto-details = ->
@@ -1256,82 +1199,9 @@ history = (store, web3t)->
                     ul.pug.stat-text
                         li.pug
                             span.pug Velas blockchain uses AI-enhanced DPOS (AIDPOS) consensus for high volume transactions processing without sacrificing decentralization and security.
-make-video-thumbnail = (file, cb) ->
-    url = URL.createObjectURL file
-    video = document.create-element 'video'
-    timeupdate = ->
-        if snap-image!
-            video.remove-event-listener 'timeupdate', timeupdate
-            video.pause!
-    video.add-event-listener 'loadeddata', ->
-        if snap-image!
-            video.remove-event-listener 'timeupdate', timeupdate
-    video.add-event-listener 'error', ->
-        if cb and not cb.is-callback-called
-            cb null
-            cb.is-callback-called = yes
-    snap-image = ->
-        canvas = document.create-element 'canvas'
-        canvas.width = video.video-width;
-        canvas.height = video.video-height;
-        (canvas.get-context '2d').draw-image video, 0, 0, canvas.width, canvas.height
-        image = canvas.to-dataURL!
-        success = image.length > 1000
-        if success
-            img = document.create-element 'img'
-            img.src = image
-            (document.get-elements-by-tag-name 'div').0.append-child img
-            URL.revoke-objectURL url
-            if cb and not cb.is-callback-called
-                cb (image.split ',').1
-                cb.is-callback-called = yes
-        else
-            if cb and not cb.is-callback-called
-                cb null
-                cb.is-callback-called = yes
-        return success
-    video.add-event-listener 'timeupdate', timeupdate
-    video.preload = 'metadata'
-    video.src = url
-    video.muted = yes
-    video.plays-inline = yes
-    video.play!
-upload-video-files-recursive = ([file, ...files], cb)->
-    data <- make-video-thumbnail file
-    console.log data
-    form-data = new Form-data
-    formData.append 'key', '3132333435363738393031323334353637383930313233343536373839303132'
-    formData.append 'video', file
-    params =
-        headers:
-            'Accept': 'application/json'
-            # 'Content-Type': 'multipart/form-data'
-        method: \POST
-        body: formData
-    url = 'http://127.0.0.1:8080/upload'
-    p = fetch url, params
-    err, data <- as-callback p
-    return cb err if err?
-    return cb "expected data" if not data?
-    err, text <- as-callback data.text!
-    return cb err if err?
-    console.log text
-    err, body <- json-parse text
-    return cb err if err?
-    cb null, { body, text }
-    return null if files.length is 0
-    return upload-video-files-recursive files,cb
-upload-video-files = (event) ->
-    files = event.target.files or event.data-transfer.files
-    return null if files.length is 0
-    err, data <- upload-video-files-recursive files
 video = (store, web3t)->
     .pug.panel-content
-        p.pug.results Upload your video(s)
-        input.pug(type='file' multiple='multiple' on-change=upload-video-files)
-# video = (store, web3t)->
-#     .pug.panel-content
-#         p.results.pug This tab is under development
+        p.results.pug This tab is under development
 videostorage = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -1382,7 +1252,7 @@ videostorage = ({ store, web3t })->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1397,7 +1267,7 @@ videostorage = ({ store, web3t })->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     activate = (tab)-> ->
@@ -1422,30 +1292,7 @@ videostorage = ({ store, web3t })->
         store.video.upload-link = yes
     .pug.videostorage
         videoupload { store, web3t }
-        .pug.active-download(style=filter-body)
-            .pug.top(style=header-table-style)
-                .pug.table-row-menu
-                    span.col.folder-menu.pug
-                        .pug Uploading 1 item
-                    ul.action.col.pug(class="#{active}")
-                        li.pug(on-click=switch-progress class="#{hide-progress}")
-                            span.pug
-                                icon "ChevronDown", 15
-                        li.pug
-                            span.pug
-                                icon \X, 15
-            .pug(style=header-table-style class="#{hide-progress}")
-                .pug.table-row-menu
-                    span.col.folder-menu.pug
-                        .pug Left 7min.
-                    span.col.cancel.pug Cancel
-            .pug(class="#{hide-progress}")
-                .pug.table-row-menu
-                    .col.folder-menu.pending.pug
-                        img.pug(src="#{store.filestore.extension-icons.txt}")
-                        .pug.file-name File.txt
-                    .col.folder-menu.progress.pug
-                        progress.pug(value="30" max="100")
+        upload-video-progress { store, web3t }
         alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Video storage
