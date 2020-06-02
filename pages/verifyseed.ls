@@ -143,7 +143,7 @@ newseed = ({ store, web3t })->
     btn-icon =
         filter: style.app.btn-icon
     seed-style=
-        border: "1px solid #{style.app.primaryOpct}"
+        border: "1px solid #{style.app.border}"
         color: style.app.text
     newseed-style=
         # filter: style.app.nothingIcon

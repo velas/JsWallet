@@ -7,7 +7,7 @@ require! {
 }
 .confirmation
     @import scheme
-    position: absolute
+    position: fixed
     z-index: 99999999
     height: 100vh
     top: 0

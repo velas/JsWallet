@@ -115,6 +115,7 @@ require! {
                 font-weight: 600
                 color: #fff
                 padding: 5px
+                white-space: nowrap
                 background: #000
                 opacity: 1
                 transition: opacity .5s

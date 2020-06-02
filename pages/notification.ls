@@ -602,14 +602,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     >.toolbar
         position: relative
         height: 60px
@@ -788,7 +780,7 @@ require! {
                     .in
                         text-align: left
                         >span
-                            background: var(--active-wallet)
+                            background: var(--bg-primary-light)
                             &:after
                                 border-left: 15px solid transparent
                                 left: -10px
@@ -797,11 +789,11 @@ require! {
                                 content: ''
                                 width: 0
                                 height: 0
-                                border-bottom: 15px solid var(--active-wallet)
+                                border-bottom: 15px solid var(--bg-primary-light)
                     .out
                         text-align: right
                         >span
-                            background: var(--active)
+                            background: var(--bg-secondary)
                             &:after
                                 border-right: 15px solid transparent
                                 right: -10px
@@ -810,7 +802,7 @@ require! {
                                 content: ''
                                 width: 0
                                 height: 0
-                                border-bottom: 15px solid var(--active)
+                                border-bottom: 15px solid var(--bg-secondary)
             &.file-tree
                 margin-left: 0px
                 @media(max-width: 800px)
@@ -1173,11 +1165,11 @@ require! {
                         svg
                             vertical-align: middle !important
                     &.active
-                        background: var(--active)
+                        background: var(--bg-secondary)
                         .icon-svg
                             opacity: 1
                     &:hover
-                        background: var(--active)
+                        background: var(--bg-secondary)
                         transition: .5s
                         &:first-child
                             background: transparent
@@ -1253,7 +1245,7 @@ item = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1272,7 +1264,7 @@ item = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1357,7 +1349,7 @@ item2 = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1376,7 +1368,7 @@ item2 = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1476,7 +1468,7 @@ notice = ({ store, web3t })->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1495,7 +1487,7 @@ notice = ({ store, web3t })->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     border-t =

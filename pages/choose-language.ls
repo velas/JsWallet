@@ -61,14 +61,6 @@ require! {
             background: black
             >.header
                 margin: 5px
-            >.close
-                position: absolute
-                font-size: 20px
-                right: 20px
-                top: 13px
-                cursor: pointer
-                &:hover
-                    color: #CCC
         >.settings
             padding-top: 0px
             overflow-y: auto

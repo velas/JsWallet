@@ -311,6 +311,7 @@ require! {
         overflow-y: scroll
         margin-top: -1px
         height: calc(100vh - 260px)
+        opacity: .8
         .head, .record
             &.record
                 border-radius: 0px
@@ -410,7 +411,7 @@ require! {
                     cursor: pointer
                     &:hover
                         .arrow_box
-                            opacity: 1
+                            display: block
                     .arrow_box
                         position: absolute
                         text-transform: uppercase
@@ -423,7 +424,7 @@ require! {
                         color: #fff
                         padding: 5px
                         background: #210b4a
-                        opacity: 0
+                        display: none
                         transition: opacity .5s
                         &:after, &:before
                             left: 100%
@@ -464,7 +465,8 @@ require! {
                                     top: -6px
                                     margin: 0 10px 0 0
                             .browse
-                                right: -5px
+                                right: 0px
+                                padding: 0
                             >span a
                                 height: 25px
                                 line-height: 25px
@@ -472,13 +474,15 @@ require! {
                                 padding: 0
                                 width: 80%
                                 text-align: left
-                                @media screen and (min-width: 1441px)
-                                    width: 95%
+                                @media screen and (min-width: 1921px)
+                                    width: 340px
+                                @media screen and (min-width: 1441px) and (max-width: 1920px)
+                                    width: 340px
                                 a
                                     img
                                         height: 16px
                                 div
-                                    width: 100%
+                                    width: 310px
                                     margin-right: 0px
                                     a
                                         padding: 0
@@ -643,7 +647,7 @@ render-transaction = (store, web3t, tran)-->
     light-style =
         background: style.app.wallet-light
     lightText=
-        color: style.app.addressText
+        color: style.app.color3
     tooltip=
         background: "#000"
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
@@ -780,7 +784,7 @@ module.exports = ({ store, web3t })->
         border: "1px solid #{style.app.border}"
         background: style.app.filterBg
     input-style=
-        background: style.app.addressBg
+        background: style.app.bg-primary-light
         border: "1px solid #{style.app.border}"
         color: style.app.text
     button-primary3-style=
@@ -792,7 +796,7 @@ module.exports = ({ store, web3t })->
         color: style.app.text
         background: style.app.primary1
     lightText=
-        color: style.app.addressText
+        color: style.app.color3
     nothing-icon=
         filter: style.app.nothingIcon
     header-table-style=

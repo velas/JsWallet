@@ -5,6 +5,7 @@ require! {
     \../round.ls
     \prelude-ls : { find }
     \../math.ls : { times }
+    \./keyboard.ls
 }
 .input-area
     position: relative
@@ -71,7 +72,7 @@ module.exports = ({ store, value, on-change, placeholder })->
     eur = value `times` wallet.eur-rate
     actual-placeholder = placeholder ? ""
     .pug.input-area
-        input.pug(type="text" value="#{round5 value}" style=input-style on-change=on-change placeholder=actual-placeholder)
+        input.pug(type="text" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder)
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
             span.pug VLX2

@@ -326,14 +326,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
 get-pair = (wallet, path, index, password, with-keystore)->
     w = wallet.derive-path(path).derive-child(index).get-wallet!
     address  = "0x" + w.get-address!.to-string(\hex)
@@ -630,7 +622,7 @@ staking = ({ store, web3t })->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.staking-res

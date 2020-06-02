@@ -172,14 +172,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     .wrapper-task
         margin: 0 auto
         padding: 0 40px
@@ -343,10 +335,10 @@ resources = ({ store, web3t })->
     filter-icon=
         filter: info.app.filterIcon
     address-input=
-        color: info.app.addressText
-        background: info.app.addressBg
+        color: info.app.color3
+        background: info.app.bg-primary-light
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     expand-collapse = ->
         store.filestore.menu-open = not store.filestore.menu-open
     bg-cpu=

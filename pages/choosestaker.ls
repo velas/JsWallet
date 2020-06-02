@@ -7,7 +7,7 @@ require! {
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
-    \prelude-ls : { map, split, filter, find, foldl, sort-by, unique, head }
+    \prelude-ls : { map, split, filter, find, foldl, sort-by, unique, head, each }
     \../math.ls : { div, times, plus, minus }
     \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
@@ -174,7 +174,7 @@ require! {
                             font-weight: 600
                     &.table-scroll
                         overflow-x: scroll
-                        background: linear-gradient(#321260 30%, rgba(50, 18, 96, 0)), linear-gradient(rgba(50, 18, 96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0, 0, 0, 0)) 0 100%
+                        background: linear-gradient(var(--color1) 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), var(--color1) 70%) 0 100%, radial-gradient(farthest-side at 50% 0, var(--color2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, var(--color2), rgba(0,0,0,0)) 0 100%
                         background-repeat: no-repeat
                         background-attachment: local, local, scroll, scroll
                         background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
@@ -191,7 +191,7 @@ require! {
                                 cursor: pointer
                         tr
                             &.active
-                                color: #b6efe1
+                                color: var(--color-td)
                             &.inactive
                                 color: orange
                             &.banned
@@ -513,14 +513,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
         &:checked + label:before
             background-color: #3cd5af
             border-color: #3cd5af
@@ -691,12 +683,6 @@ staking-content = (store, web3t)->
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
             return cb err if err?
             store.staking.stake-amount-total = amount.to-fixed!
-            err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
-            return cb "#{err}" if err?
-            err, staking-epoch <- web3t.velas.Staking.stakingEpoch
-            return cb "#{err}" if err?
-            res = staking-epoch `minus` last-epoch
-            store.staking.wait-for-epoch-change = if +res is 0 then yes else no
             err <- exit-stake.init { store, web3t }
             return cb err if err?
         to-eth = ->
@@ -721,13 +707,16 @@ staking-content = (store, web3t)->
             address: ethToVlx item.address
             network: vlx2.network
             coin: vlx2.coin
+        vote-power = 
+            | item.vote-power? => "#{item.vote-power}%"
+            | _ => "..."
         tr.pug(class="#{item.status}")
             td.pug 
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
             td.pug(data-column='Amount') #{stake}
-            td.pug n/a
+            td.pug #{vote-power}
             td.pug(data-column="Filled" style=filled-color) #{filled}
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
@@ -855,7 +844,7 @@ staking = ({ store, web3t })->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-color=
         filter: info.app.icon-filter
     show-class =
@@ -869,22 +858,15 @@ staking = ({ store, web3t })->
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
-    #store.staking.data-generation += 1
+    err <- web3t.refresh
     store.staking.max-withdraw = 0
     random = ->
         Math.random!
     store.staking.withdraw-amount = 0
     store.staking.stake-amount-total = 0
-    #0x7bcec192f4147867c100ff7e5cd16c6079d6febc - pool 
-    #0x30A0AA46d734336473b75A84b962EF61255f6440 - delegatore
-    #err, reward-long <- web3t.velas.Staking.getRewardAmount([], "0x7bcec192f4147867c100ff7e5cd16c6079d6febc", "0x30A0AA46d734336473b75A84b962EF61255f6440")
-    #return cb err if err?
-    #console.log \reward-long , reward-long.to-fixed!
     store.staking.keystore = to-keystore store, no
     store.staking.reward = null
     store.staking.chosen-pool = null
-    #exit for now
-    #return cb null
     store.staking.add.add-validator-stake = 0
     return cb null if store.staking.pools.length > 0
     err, pools-inactive <- web3t.velas.Staking.getPoolsInactive
@@ -902,8 +884,7 @@ staking.init = ({ store, web3t }, cb)->
             |> map -> { address: it , checked: no, stake: '..', stakers: '..', eth: no, is-validator: '..', status: '', reward-amount: '..', validator-reward-percent: '..', my-stake: '..' }
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
-    #err, amount <- web3t.velas.Staking.stakeAmountTotal(store.staking.keystore.staking.address)
-    #store.staking.stake-amount-total = amount.to-fixed!
+    err <- exit-stake.init { store, web3t }
     cb null
 module.exports = staking
 human-bool = ->
@@ -937,8 +918,20 @@ fill-pools = ({ store, web3t }, [item, ...rest], cb)->
         | store.staking.pools-inactive.index-of(item.address) > -1 => \inactive
         | _ => \pending
     fill-pools { store, web3t }, rest, cb
+fill-vote-power = ({ store, web3t }, cb)->
+    total-stake =
+        store.staking.pools 
+            |> map (.stake)
+            |> foldl plus, 0
+    total-stake-percent = 100 `div` total-stake
+    fill-power = (it)->
+        it.vote-power =  round5(it.stake `times` total-stake-percent)
+    store.staking.pools |> each fill-power
+    cb null
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'
     err <- fill-pools { store, web3t }, store.staking.pools
+    return cb err if err?
+    err <- fill-vote-power { store, web3t }
     cb null
 #V31V1kD7DpT9eoRcdXf7T1fbFqcNh

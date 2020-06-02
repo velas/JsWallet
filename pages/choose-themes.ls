@@ -25,7 +25,7 @@ create-button = (store, web3t)-> (text)->
     button-style=
         background: themes[text].primary1
     control-style=
-        background: themes[text].addressBg
+        background: themes[text].bg-primary-light
     .pug.theme
         .pug.pallete
             .box.pug(style=background-style)

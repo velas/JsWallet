@@ -173,7 +173,7 @@ create-word = (store, words, word)-->
     index = words.index-of(word) + 1
     style = get-primary-info store
     seed-style=
-        border: "1px solid #{style.app.primaryOpct}"
+        border: "1px solid #{style.app.border}"
         color: style.app.text
     .pug.word(style=seed-style)
         span.pug #{index}

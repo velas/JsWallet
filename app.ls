@@ -13,6 +13,7 @@ require! {
     \./modal.ls : { modal-control }
     \./get-primary-info.ls
     \./pages/confirmation.ls : { confirmation-control }
+    \./pages/hovered-address.ls
 }
 .app
     input
@@ -59,14 +60,20 @@ require! {
                     font-size: 12px !important
         .close
             @media(max-width: 820px)
-                position: absolute !important
-                font-size: 20px !important
-                left: 0 !important
-                top: 0 !important
-                height: 60px !important
-                width: 60px !important
-                cursor: pointer !important
-                border-right: 1px solid #6b258e !important
+                position: absolute
+                font-size: 20px
+                left: 0
+                top: 0
+                height: 60px
+                width: 60px
+                cursor: pointer
+                border-right: 1px solid var(--border)
+            @media(min-width: 821px)
+                position: absolute
+                font-size: 20px
+                left: 20px
+                top: 13px
+                cursor: pointer
             img
                 @media(max-width: 820px)
                     top: 16px !important
@@ -138,7 +145,7 @@ require! {
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
-    text = ":root { --background: #{style.app.background};--active: #{style.app.wallet};--active-wallet: #{style.app.addressBg};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--gradient: #{style.app.gradient};--addressText: #{style.app.addressText}; }"
+    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};}"
     style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?
@@ -169,3 +176,4 @@ module.exports = ({ store, web3t })->
             if store.current.device is \desktop
                 side-menu store, web3t
             current-page { store, web3t }
+            hovered-address { store }

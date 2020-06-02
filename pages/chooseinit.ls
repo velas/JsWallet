@@ -181,7 +181,7 @@ newseed = ({ store, web3t })->
     .newseed.pug
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)
-            .title.pug #{style.branding.title}
+            .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.welcome-wallet ? 'Welcome!'}
         .pug.align-v
             button.pug.left(style=button-primary2-style on-click=new-wallet)

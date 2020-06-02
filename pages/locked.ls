@@ -12,6 +12,7 @@ require! {
     \../icons.ls
     \./confirmation.ls : { confirm }
     \../components/button.ls
+    \../components/text-field.ls
 }
 .locked
     @import scheme
@@ -56,6 +57,9 @@ require! {
         font-size: 20px
         margin-bottom: 1rem
     >.inputs
+        max-width: 400px
+        width: 130px
+        display: inline-block
         div
             position: relative
             .division
@@ -78,23 +82,26 @@ require! {
                     &.r
                         right: 0
         input
-            text-align: center
+            text-align: left
             font-size: 12px
             display: inline-block
             height: 36px
             background: transparent
-            border: 1px solid #549D90
+            border: 0
             border-radius: $border
             outline: none
-            width: 120px
+            width: 130px
             margin-bottom: 5px
             letter-spacing: 5px
-            padding: 7px 0
+            padding: 7px 25px 7px 7px
             box-sizing: border-box
             &:focus
                 border-color: #248295
             &:placeholder
                 color: $primary + 40
+            @media screen and (max-width: 800px)
+                padding: 7px 0
+                text-align: center
     >div>.wrong
         color: red
         font-size: 15px
@@ -105,7 +112,8 @@ require! {
             color: #f0c16b
             text-transform: uppercase
     button
-        width: 120px
+        width: 130px
+        margin: 5px 0
         &.text-primary
             color: rgb(156, 65, 235)
             &:hover
@@ -113,8 +121,8 @@ require! {
         &.setup
             font-weight: bold
             cursor: pointer
-            margin-top: 15px
-            width: 120px
+            margin: 5px 0
+            width: 130px
             height: 36px
             font-size: 10px
             text-transform: uppercase
@@ -151,12 +159,12 @@ require! {
         line-height: 5px
         margin: 5px auto
     ::placeholder
-        color: var(--addressText)
+        color: var(--color3)
         font-size: 12px
         letter-spacing: 0
         line-height: 18px
     ::-ms-input-placeholder
-        color: var(--addressText)
+        color: var(--color3)
         font-size: 12px !important
         letter-spacing: 0
         line-height: 22px
@@ -202,14 +210,14 @@ input = (store, web3t)->
         border: "1px solid #{style.app.primary1}"
         color: style.app.text
         background: style.app.primary1
-        width: "120px"
+        width: "130px"
         height: "36px"
         margin-top: "10px"
     button-primary0-style=
         border: "0"
         color: style.app.text-primary
         background: "transparent"
-        width: "120px"
+        width: "130px"
         height: "36px"
         margin-top: "0px"
     locked-style=
@@ -230,7 +238,7 @@ input = (store, web3t)->
     drag =
         if store.current.pin-trial is 0 then \ "" else \drag
     .pug
-        input.pug.password(class="#{drag}" key="pin" style=locked-style type="password" value="#{store.current.pin}" placeholder="#{lang.pin-placeholder}" on-change=change on-key-down=catch-key auto-complete="off")
+        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key }
         if exists!
             .pug
                 button { store, on-click: enter, type: \primary , text: \enter }
@@ -261,7 +269,7 @@ wrong-trials = (store)->
         border: "0"
         color: style.app.text-primary
         background: "transparent"
-        width: "120px"
+        width: "130px"
         height: "36px"
         margin-top: "0px"
     reset-account = ->
@@ -328,12 +336,14 @@ locked = ({ store, web3t })->
         color: info.app.text
         background-image: info.app.background-image
         background-size: "cover"
+    txt-style=
+        color: info.app.text
     logo-style =
         filter: info.app.filterLogo
     .pug.locked(key="locked" style=locked-style)
         .pug.logo
             img.iron.pug(style=logo-style src="#{info.branding.logo}")
-            .title.pug #{info.branding.title}
+            .title.pug(style=txt-style) #{info.branding.title}
             version store, web3t
         .pug.title(key="locked-title") #{title}
         .pug.inputs(key="locked-inputs")

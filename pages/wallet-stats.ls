@@ -13,10 +13,11 @@ get-color = (store, items)-> (it)->
     res  =
         | it.type is \IN => style.app.primary2
         | it.type is \OUT => style.app.primary1
-        | _ => \black
+        | _ => style.app.wallet
 get-from-or-to = ->
     | it.type is \IN => "FROM #{it.from}"
     | it.type is \OUT => "TO #{it.to}"
+    | _ => "NOTHING"
 build-data = (store, items)-->
     #{ token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
     datasets: [{
@@ -27,8 +28,9 @@ build-data = (store, items)-->
 legend =
     display: no
 module.exports = (store, web3t)->
-    return null if store.transactions.applied.length is 0
+    #return null if store.transactions.applied.length is 0
     items =
-        store.transactions.applied |> sort-by (.type)
+        | store.transactions.applied.length > 0 => store.transactions.applied |> sort-by (.type)
+        | _ => [{amount: 1}]
     data = build-data store, items
-    Doughnut.pug(data=data width="300px" height="300px" legend=legend)
+    Doughnut.pug(data=data width=300 height=300 legend=legend)

@@ -22,8 +22,8 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
-    width: calc(100% - 60px) !important
-    margin-left: 60px !important
+    width: calc(100% - 0px) !important
+    margin-left: 0px
     max-width: none !important
     @media(max-width:800px)
         margin-left: 0 !important
@@ -50,16 +50,7 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     .h1
-        font-size: 17px
         text-transform: uppercase
         letter-spacing: 2px
         opacity: .8
@@ -78,11 +69,21 @@ require! {
         @import scheme
         color: gray
         text-aling: center
+        >img
+            display: block
+            margin: 0 auto 20px
+            width: 110px
         a
             color: #6f6fe2
         .contract-body
             display: inline-block
             text-align: left
+            ul
+                list-style: none
+                padding: 0
+                text-align: center
+                li
+                    line-height: 24px
             >.center
                 text-align: center
                 a
@@ -167,6 +168,7 @@ send-contract = ({ store, web3t })->
     border-header =
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
+        background: style.app.background
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     show-class =
@@ -182,6 +184,7 @@ send-contract = ({ store, web3t })->
             epoch store, web3t
             switch-account store, web3t
         .pug.content-body(style=more-text)
+            img.pug(src="#{icons.attention}")
             .contract-body.pug
                 ul.pug
                     text-parts |> map build-part store

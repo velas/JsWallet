@@ -434,14 +434,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
 module.exports = ({store, web3t})->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -469,7 +461,7 @@ module.exports = ({store, web3t})->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     .pug.claim
         .pug.title(style=border-style)
             .pug.header Claim Reward

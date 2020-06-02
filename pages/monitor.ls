@@ -16,7 +16,7 @@ require! {
         height: calc(100vh - 105px)
         overflow-x: scroll
         margin: 30px
-        background: linear-gradient(#321260 30%, rgba(50, 18, 96, 0)), linear-gradient(rgba(50, 18, 96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0, 0, 0, 0)) 0 100%
+        background: linear-gradient(var(--color1) 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), var(--color1) 70%) 0 100%, radial-gradient(farthest-side at 50% 0, var(--color2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, var(--color2), rgba(0,0,0,0)) 0 100%
         background-repeat: no-repeat
         background-attachment: local, local, scroll, scroll
         background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
@@ -38,10 +38,8 @@ require! {
                 max-width: 100px
                 overflow: hidden
                 text-overflow: ellipsis
-            &:first-child
-                background: #43207c !important
             &:nth-of-type(odd)
-                background: rgba(107, 38, 142, 0.2)
+                background: rgba(128, 128, 128, 0.2)
         .check
             width: 13px
             height: 13px
@@ -62,14 +60,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
         button
             outline: none
             cursor: pointer
@@ -150,7 +140,10 @@ build-row = (store, web3t, headers)-> (peer)->
             |> filter -> it not in hidden-fields
             |> map build-cell store, web3t, peer
 build-header = (store, web3t)-> (peer)->
-    tr.pug
+    style = get-primary-info store
+    stats=
+        background: style.app.stats
+    tr.pug(style=stats)
         peer 
             |> keys 
             |> filter -> it not in hidden-fields 
@@ -160,6 +153,7 @@ header = (store, web3t)->
     border-style =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
+        background: info.app.background
     go-back = ->
         navigate store, web3t, \wallets
     show-class =

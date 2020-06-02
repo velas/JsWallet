@@ -54,6 +54,7 @@ check-ptxs-in-background = (store, web3, network, token, [ptx, ...rest], cb)->
 export rebuild-history = (store, web3, wallet, cb)->
     { address, network, coin, private-key } = wallet
     err, data <- get-transactions { address, network, coin.token, account: { address, private-key } }
+    #console.log \rebuild-history, coin.token, err, data
     return cb err if err?
     ids = 
         data |> map (.tx.to-upper-case!)

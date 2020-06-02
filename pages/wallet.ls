@@ -207,8 +207,8 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.text2
         background: style.app.primary3
     address-input=
-        color: style.app.addressText
-        background: style.app.addressBg
+        color: style.app.color3
+        background: style.app.bg-primary-light
     btn-icon =
         filter: style.app.btn-icon
     placeholder = 

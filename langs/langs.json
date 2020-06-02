@@ -15,7 +15,7 @@
             "Підтвердження",
             "Confirmation",
             "Confirmación",
-            "确认书",
+            "请注意并确认",
             "확인"
         ],
         "search": [
@@ -81,15 +81,6 @@
             "待定",
             "대기 중"
         ],
-        "fundingAddress": [
-            "Funding Address",
-            "Адрес пополнения",
-            "Адреса поповнення",
-            "Adresse d'Envoie",
-            "Dirección de Envío",
-            "资助地址",
-            "자금 주소"
-        ],
         "wrongPinShould": [
             "PIN should be 4 digits",
             "PIN - это 4 цифры",
@@ -123,7 +114,7 @@
             "Пароль",
             "Mot de passe",
             "Contraseña",
-            "密码",
+            "设置密码或PIN码",
             "비밀번호"
         ],
         "pinPlaceholder": [
@@ -324,15 +315,6 @@
             "历史",
             "역사"
         ],
-        "seedWarning": [
-            "We found some problem in your seed phrase which can lead to zero balances. We can try to fix formatting issue when you click this button",
-            "Мы нашли некоторую проблему в вашей исходной фразе, которая может привести к нулевым балансам. Мы можем попытаться решить проблему с форматированием, нажав эту кнопку",
-            "Ми знайшли деяку проблему в своїй вихідній фразе, яка може привести до нульового балансу. Мы можемо попросити вирішити проблему з форматированием, натиснути на цю кнопку",
-            "Nous avons trouvé un problème dans votre phrase de départ qui peut conduire à des soldes nuls. Nous pouvons essayer de résoudre le problème de formatage lorsque vous cliquez sur ce bouton",
-            "Se ha detectado un problema en tu frase de recuperación que puede desencadenar que los balances se muestren a cero. Podemos intentar resolver el problema de formato al hacer click en este botón",
-            "我们在您的种子短语中发现了一些问题，可能会导致余额为零。 当您单击此按钮时，我们可以尝试解决格式问题",
-            "시드 문구에서 잔액이 0이 될 수있는 문제가 있습니다. 이 버튼을 클릭하면 서식 문제를 해결할 수 있습니���"
-        ],
         "topup": [
             "Topup",
             "Пополнить",
@@ -429,7 +411,7 @@
             "Баланс",
             "Solde",
             "Saldo",
-            "平衡",
+            "余额",
             "균형"
         ],
         "accountIndex": [
@@ -465,7 +447,7 @@
             "Тут нічого немає!",
             "Rien à voir ici!",
             "¡Nada que mostrar!",
-            "这没东西看！",
+            "暂无任何信息",
             "여기는 볼게 없다!"
         ],
         "makeTx": [
@@ -546,7 +528,7 @@
             "Гаманьці",
             "Portefeuilles",
             "Monederos",
-            "您的钱包",
+            "钱包",
             "지갑"
         ],
         "verifySeedPhrase": [
@@ -585,13 +567,22 @@
             "恢復",
             "복원"
         ],
-        "restoreWords": [
+        "restoreWords12": [
+            "words",
+            "слов",
+            "слів",
+            "mots",
+            "palabras",
+            "个单词",
+            "말"
+        ],
+        "restoreWords24": [
             "words",
             "слова",
             "слова",
             "mots",
             "palabras",
-            "话",
+            "个单词",
             "말"
         ],
         "wordsAreNotMatch": [
@@ -609,7 +600,7 @@
             "Назад",
             "Retour",
             "Atrás",
-            "背部",
+            "返回",
             "뒤"
         ],
         "privacyPolicy": [
@@ -657,24 +648,6 @@
             "创建钱包",
             "월렛 만들기"
         ],
-        "aboutSeed": [
-            "Seed phrase is a list of 12(24) words that store all the information needed to restore a crypto wallet. A wallet usually generates a mnemonic backup phrase itself so that the user writes it on paper.",
-            "Сид-фраза представляет собой список из 24 слов, в которых хранится вся информация, необходимая для восстановления крипто-кошелька. Кошелек обычно сам генерирует сид-фразу, чтобы пользователь записал ее на бумаге.",
-            "Сід-фраза являє собою список з 24 слів, в яких зберігається вся інформація, необхідна для відновлення крипто-гаманця. Гаманець зазвичай сам генерує сiд-фразу, щоб користувач записав її на папері.",
-            "La phrase de départ est une liste de 24 mots qui stockent toutes les informations nécessaires pour restaurer un portefeuille crypté. Un portefeuille génère généralement lui-même une phrase de sauvegarde mnémonique afin que l'utilisateur l'écrive sur papier.",
-            "Frase de recuperación es una lista de 12(24) palabras que almacena la información necesaria para restaurar un Cripto-Monedero. Un monedero generalmente genera por sí mismo una frase mnemonica para que el usuario la escriba en un papel.",
-            "種子短語是24個單詞的列表，其中存儲了還原加密錢包所需的所有信息。 錢包通常會自己生成助記符備用短語，以便用戶將其寫在紙上。",
-            "시드 문구는 암호화 지갑을 복원하는 데 필요한 모든 정보를 저장하는 24 개의 단어 목록입니다. 지갑은 일반적으로 니모닉 백업 문구 자체를 생성하여 사용자가 종이에 쓸 수 있도록합니다."
-        ],
-        "btnMigrate": [
-            "Migrate",
-            "Перенести",
-            "Міграція",
-            "Migrer",
-            "Migrar",
-            "遷移",
-            "이주"
-        ],
         "hide": [
             "Hide",
             "Спрятать",
@@ -690,7 +663,7 @@
             "Вхід",
             "Entrer",
             "Entrar",
-            "輸入",
+            "进入",
             "시작하다"
         ],
         "staking": [
@@ -699,7 +672,7 @@
             "Стейкінг",
             "Staking",
             "Staking",
-            "放樣",
+            "质押",
             "스테이 킹"
         ],
         "installNode": [
@@ -735,7 +708,7 @@
             "Від",
             "De",
             "Desde",
-            "從",
+            "恢复原钱包",
             "에서"
         ],
         "to": [
@@ -888,7 +861,7 @@
             "Далі",
             "Prochain",
             "Próximo",
-            "下",
+            "继续",
             "다음"
         ],
         "yourSeedPhrase": [
@@ -1221,7 +1194,7 @@
             "Делегат",
             "Délégué",
             "Delegado",
-            "委派",
+            "委托",
             "대"
         ],
         "velasMessenger": [
@@ -1257,7 +1230,7 @@
             "Новий обліковий запис",
             "Nouveau compte",
             "De nueva cuenta",
-            "新帐户",
+            "创建新账号",
             "새로운 계정"
         ],
         "backupInfo": [
@@ -1266,7 +1239,7 @@
             "У вас є резервна слово фразу поточного рахунку?",
             "Vous avez de sauvegarde de mots de la phrase de compte courant?",
             "¿Tienes copia de seguridad de palabra frase de cuenta corriente?",
-            "你有备用的词语为目前的帐户吗？",
+            "您有备份当前账号的助记词吗？",
             "당신은 백업 단어의 문장의 현재 account?"
         ],
         "word": [
@@ -1275,7 +1248,7 @@
             "слово",
             "mot",
             "palabra",
-            "字",
+            "个单词",
             "단어"
         ],
         "noticeReset": [
@@ -1299,7 +1272,7 @@
         "noticeText": [
             "Try to restore you account from seed phrase in different browser or incognito window before you reset it",
             "Попробуйте восстановить ваш аккаунт из семян фразу в другом окне браузера или инкогнито, прежде чем сбросить его",
-            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні браузера або інкогніто, перш ніж скинути його",
+            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні б��аузера або інкогніто, перш ніж скинути його",
             "Essayez de restaurer votre compte à partir de la graine de la phrase dans différents navigateur ou d'une fenêtre de navigation privée avant de le réinitialiser",
             "Intente restaurar la cuenta desde la semilla frase en otro navegador o ventana de incógnito antes de reiniciarlo",
             "尝试恢复你的帐户种语在不同的浏览器或隐姓埋名的窗口之前你重置它",
@@ -1320,7 +1293,7 @@
             "Створити Акаунт",
             "Créer Un Compte",
             "Crear Cuenta",
-            "创建的帐户",
+            "创建账号",
             "계정 만들기"
         ],
         "per": [
@@ -1338,7 +1311,7 @@
             "Виберіть пул",
             "Sélectionnez la piscine",
             "Seleccione la piscina",
-            "选择泳池",
+            "选择池子",
             "선택 수영장"
         ],
         "stakerPool": [
@@ -1347,7 +1320,7 @@
             "Стейкер Пул",
             "Stakeur Piscine",
             "Staker Piscina",
-            "Staker游泳池",
+            "质押池",
             "Staker 수영장"
         ],
         "totalStake": [
@@ -1356,7 +1329,7 @@
             "Загальна Ставка",
             "La Mise Totale",
             "La Apuesta Total",
-            "总的股份",
+            "质押总金额",
             "총 지분"
         ],
         "filled": [
@@ -1374,7 +1347,7 @@
             "Моя Ставка",
             "Mon Pieu",
             "Mi Apuesta",
-            "我的股份",
+            "我的质押",
             "나의 스테이크"
         ],
         "stakers": [
@@ -1383,7 +1356,7 @@
             "Стейкери",
             "Stakers",
             "Stakers",
-            "Stakers",
+            "质押者",
             "Stakers"
         ],
         "min": [
@@ -1523,12 +1496,21 @@
         ],
         "votePower": [
             "Vote power",
-            "Сила голоса ",
-            "Сила голосу ",
+            "Право голоса ",
+            "Право голосу ",
             "Vote de la puissance",
             "Voto de energía",
-            "投票电",
+            "投票权",
             "투표가 힘"
+        ],
+        "account": [
+            "Account",
+            "Аккаунт",
+            "Акаунт",
+            "Account",
+            "Account",
+            "账号",
+            "Account"
         ]
     }
 }

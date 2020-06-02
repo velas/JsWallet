@@ -405,7 +405,7 @@ build-claim-reward = (store, web3t)-> (item)->
     style = get-primary-info store
     lang = get-lang store
     box-background =
-        background: style.app.addressBg
+        background: style.app.bg-primary-light
     checked = item.checked
     load-or-skip = (item, cb)->
         return cb null if item.reward isnt '..'

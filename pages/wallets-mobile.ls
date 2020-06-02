@@ -94,11 +94,11 @@ require! {
                 height: auto
                 margin-bottom: 0px
             .wallet
-                background: var(--active)
+                background: var(--bg-secondary)
                 &:last-child
                     margin-bottom: 0px
                 &.big
-                    background: var(--active)
+                    background: var(--bg-secondary)
             @media(max-width: $mobile)
                 border-width: 1px 0 0 0 !important
         .switch-account
@@ -152,8 +152,8 @@ require! {
         .header
             max-width: 450px
             margin: 0 auto
-            border-left: 1px solid rgb(107, 38, 142)
-            border-right: 1px solid rgb(107, 38, 142)
+            border-left: 1px solid var(--border)
+            border-right: 1px solid var(--border)
             @media(max-width: $mobile)
                 border: 0
     .wallet

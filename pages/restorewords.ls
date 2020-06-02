@@ -173,13 +173,15 @@ restore-words = (store, web3t, item)-->
     lang = get-lang store
     style = get-primary-info store
     seed-style=
-        border: "1px solid #{style.app.primaryOpct}"
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
+    txt-style=
         color: style.app.text
     index = store.current.seed-words.index-of(item) + 1
     change-part = (it)->
         item.part = it.target.value    #.to-lower-case!.trim!.replace(/[^a-z]/, '')
     .pug.word(style=seed-style)
-        input.pug(type='text' value="#{item.part}" placeholder="#{lang.word} ##{index}" on-change=change-part)
+        input.pug(type='text' value="#{item.part}" placeholder="#{lang.word} ##{index}" on-change=change-part style=txt-style)
         span.effect.pug #{index}
 restore-words-panel = (store, web3t)->
     lang = get-lang store

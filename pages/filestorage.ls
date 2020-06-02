@@ -211,14 +211,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     >.toolbar
         position: relative
         height: 60px
@@ -461,7 +453,7 @@ filestorage = ({ store, web3t })->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -472,7 +464,7 @@ filestorage = ({ store, web3t })->
         color: info.app.text
         background: info.app.primary1
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     dragarea-bg=

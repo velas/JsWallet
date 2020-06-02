@@ -1,16 +1,15 @@
 require! {
     \prelude-ls : { sort-by, reverse, filter }
 }
-module.exports = (store)->
+filter-txs = (store, tx)-->
     filt = store.current.filter
-    filter-txs = (tx)->
-        { type, token } = tx
-        type in filt and token in filt
-    #<- transaction
+    { type, token } = tx
+    type in filt and token in filt
+module.exports = (store)->
+    return store.transactions.applied.length = 0 if store.transactions.all.length is 0
+    console.log \apply-transactions, store.transactions.all
     store.transactions.applied = 
         store.transactions.all 
-            |> filter filter-txs 
+            |> filter filter-txs store
             |> sort-by (.time) 
             |> reverse
-    #console.log \tx-length, store.transactions.all.length
-    #console.log \atx-length, store.transactions.applied.length

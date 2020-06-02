@@ -26,8 +26,8 @@ module.exports =
         text2: \#9d41eb     
         text3: \#fff
         text-primary: \#9c41eb
-        addressText: \#cccccc
-        addressBg: \#6234ab
+        color3: \#cccccc
+        bg-primary-light: \#6234ab
         stats: \#3b1771
         filterIcon: "brightness(2.5)"
         filterLogo: "brightness(1)"
@@ -39,7 +39,9 @@ module.exports =
         placeholder: \#31135f
         placeholder-menu: \#270f53
         filterBg: \#331463
-        gradient: "linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%"
+        color1: \#321260
+        color2: \#594aaa
+        color-td: \#b6efe1
     light:
         background: \#F0EFF5
         menu: \#F0EFF5
@@ -47,10 +49,10 @@ module.exports =
         demo: \#e3e1e8
         input: \#FFF
         dragarea: \#00000057
-        primary1: \#CCCCCC
+        primary1: \#9d41eb
         primaryOpct: \#FFF
-        primary2: \#E7E5ED
-        primary3: \#F0EFF5
+        primary2: \#3cd5af
+        primary3: \#ffffff
         primary4: \#FFF
         wallet: \#FFF
         wallet-light: \#FFF
@@ -66,8 +68,8 @@ module.exports =
         text2: \black
         text3: \#677897
         text-primary: \black
-        addressText: \#000000
-        addressBg: \#e7e5ed
+        color3: \#000000
+        bg-primary-light: \#e7e5ed
         stats: \#E7E5ED
         filterIcon: "brightness(.5)"
         filterLogo: "brightness(.8)"
@@ -79,7 +81,9 @@ module.exports =
         placeholder: \#eeeeee
         placeholder-menu: \#e9e9ea
         filterBg: \#f0eff5
-        gradient: "linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%"
+        color1: \#ffffff
+        color2: \#e2e1e6
+        color-td: \#52b59d
     dark:
         background: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
         menu: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
@@ -89,25 +93,25 @@ module.exports =
         dragarea: \#15222fd9
         primary1: \#9d41eb
         primaryOpct: "rgb(106, 39, 161)"
-        primary2: \#405b77
-        primary3: \#405b77
+        primary2: \#3cd5af
+        primary3: \#ffffff
         primary4: \#c35c5f
         wallet: \#213040
         wallet-light: \#213040
         header: \#213040
         tooltip: \#213040
         icon: \#276A9F
-        btn-icon: "none"
+        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
         loader: "rgb(60, 213, 175)"
         border: \#405b77
         bg-btn: \#405b77
         border-light: \#405b77
         text: \#FFF
-        text2: \#FFF
+        text2: \#9d41eb
         text3: \#FFF
         text-primary: \#FFF
-        addressText: \#677897
-        addressBg: \#2f4156
+        color3: \#677897
+        bg-primary-light: \#2f4156
         stats: \#2f4156
         filterIcon: "brightness(1.5)"
         filterLogo: "brightness(1)"
@@ -119,7 +123,9 @@ module.exports =
         placeholder: \#1c2c3e
         placeholder-menu: \#1e2c3b
         filterBg: \#213040
-        gradient: "linear-gradient(#1b2838 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #1c2938 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #1c2939, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #1e436d, rgba(0,0,0,0)) 0 100%"
+        color1: \#213040
+        color2: \#3a526b
+        color-td: \#b6efe1
     dark_mojave:
         background: \#292A2F
         menu: \#292A2F
@@ -127,27 +133,27 @@ module.exports =
         demo: \#31323a
         input: \#213040
         dragarea: \##00000057
-        primary1: \#213040
+        primary1: \#9d41eb
         primaryOpct: \#213040
-        primary2: \#213040
-        primary3: \#213040
+        primary2: \#3cd5af
+        primary3: \#ffffff
         primary4: \#213040
         wallet: \#2e2f35
         wallet-light: \#213040
         header: \#2f3035
         tooltip: \#213040
         icon: \#276A9F
-        btn-icon: "none"
+        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
         loader: \#276A9F
-        border: \#213040
+        border: \#3e4048
         bg-btn: \#213040
-        border-light: \#213040
+        border-light: \#3e4048
         text: \#FFF
-        text2: \#FFF
+        text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
-        addressText: \#677897
-        addressBg: \#383942
+        color3: \#677897
+        bg-primary-light: \#383942
         stats: \#1c1c21
         filterIcon: "brightness(1)"
         filterLogo: "brightness(1)"
@@ -159,7 +165,9 @@ module.exports =
         placeholder: \#25272d
         placeholder-menu: \#25272d
         filterBg: \#292a2f
-        gradient: "linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%"
+        color1: \#2e2f35
+        color2: \#4d4e58
+        color-td: \#b6efe1
     monochrome:
         background: \#172431
         menu: \#213040
@@ -167,27 +175,27 @@ module.exports =
         demo: \#1e2b3a
         input: \#213040
         dragarea: \#00000057
-        primary1: \#466482
+        primary1: \#9d41eb
         primaryOpct: \#213040
-        primary2: \#899db3
-        primary3: \#466482
+        primary2: \#3cd5af
+        primary3: \#ffffff
         primary4: \#213040
         wallet: \#213040
         wallet-light: \#213040
         header: \#213040
         tooltip: \#213040
         icon: \#276A9F
-        btn-icon: "none"
+        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
         loader: \#276A9F
-        border: \#213040
+        border: \#35485d
         bg-btn: \#213040
         border-light: \#213040
         text: \#FFF
-        text2: \#FFF
+        text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
-        addressText: \#677897
-        addressBg: \#283b50
+        color3: \#677897
+        bg-primary-light: \#283b50
         stats: \#283b50
         filterIcon: "brightness(1)"
         filterLogo: "brightness(1)"
@@ -199,4 +207,6 @@ module.exports =
         placeholder: \#1d2c3c
         placeholder-menu: \#1a2735
         filterBg: \#172431
-        gradient: "linear-gradient(#321260 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), #321260 70%) 0 100%, radial-gradient(farthest-side at 50% 0, #594aaa, rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, #594aaa, rgba(0,0,0,0)) 0 100%"
+        color1: \#213040
+        color2: \#3b536d
+        color-td: \#b6efe1

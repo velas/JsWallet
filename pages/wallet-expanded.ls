@@ -19,12 +19,16 @@ require! {
 .wallet-detailed
     height: 200px
     box-sizing: border-box
+    $tablet: 1200px
     >.wallet-part
         display: inline-block
+        position: relative
         box-sizing: border-box
         vertical-align: top
         width: 50%
         padding: 20px
+        @media screen and (max-width: $tablet)
+            padding: 10px 20px
         &.left
             text-align: left
             >.buttons
@@ -35,12 +39,32 @@ require! {
                         margin-left: 10px
             >.details
                 display: none
+            .uninstall
+                position: absolute
+                top: 20px
+                right: 20px
+                text-transform: uppercase
+                font-size: 10px
+                padding: 7px 10px
+                cursor: pointer
+                @media screen and (max-width: $tablet)
+                    top: 10px
+            >.address-holder
+                margin-top: 10px
+                @media screen and (max-width: $tablet)
+                    margin-top: 20px
         &.right
         >.wallet-header
             &.chart
                 text-align: right
                 padding-top: 0px
                 border-left: 1px solid rgba(white, 0.2)
+                @media screen and (max-width: $tablet)
+                    >.wallet-header-part
+                        width: 100%
+                        text-align: center
+                        >.stats
+                            margin: 0 auto
             >.wallet-header-part
                 display: inline-block
                 box-sizing: border-box
@@ -51,7 +75,7 @@ require! {
                 &.right
                     padding: 0 10px
                     >.title
-                        font-size: 25px
+                        font-size: 21px
                 .counts
                     margin-bottom: 5px
                     .label
@@ -66,11 +90,11 @@ require! {
             max-height: $size
             width: $size
             max-width: $size
-            @media screen and (max-width: 1200px)
-                height: $size-tablet
-                max-height: $size-tablet
-                width: $size-tablet
-                max-width: $size-tablet
+            @media screen and (max-width: $tablet)
+                height: $size-tablet - 10
+                max-height: $size-tablet - 10
+                width: $size-tablet - 10
+                max-width: $size-tablet - 10
             >*
                 height: inherit
                 width: inherit
@@ -111,8 +135,12 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.text3
         background: style.app.wallet
         border-bottom: "1px solid #{style.app.border}"
+    uninstall=
+        background: style.app.bg-primary-light
+    text=
+        color: style.app.text
     .wallet-detailed.pug(key="#{token}" style=wallet-style)
-        .wallet-part.left.pug
+        .wallet-part.left.pug(style=text)
             .wallet-header.pug
                 .wallet-header-part.left.pug
                     img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
@@ -134,13 +162,13 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
             .pug
                 if wallet.coin.token not in <[ btc vlx vlx2 ]>
-                    .pug.uninstall(on-click=uninstall) #{label-uninstall}
+                    .pug.uninstall(on-click=uninstall style=uninstall) #{label-uninstall}
         .wallet-part.right.pug
             .wallet-header.pug.chart
                 .wallet-header-part.left.pug
                     .stats.pug
                         wallet-stats store, web3t
-                .wallet-header-part.right.pug
+                .wallet-header-part.right.pug(style=text)
                     .pug.counts
                         .pug #{ total-sent + ' ' token }
                         .pug.label(style=color1) Total Sent

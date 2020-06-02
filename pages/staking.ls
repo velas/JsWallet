@@ -458,14 +458,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     .staking-info
         display: block
         overflow-y: scroll
@@ -1001,7 +993,7 @@ staking-content = (store, web3t)->
         change = not store.staking.rewards.0.checked
         store.staking.rewards |> map (-> it.checked = change)
     box-background =
-        background: style.app.addressBg
+        background: style.app.bg-primary-light
     .pug.staking-content
         #placeholder store, web3t
         alert-txn { store }
@@ -1186,7 +1178,7 @@ staking = ({ store, web3t })->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-color=
         filter: info.app.icon-filter
     show-class =
@@ -1200,24 +1192,16 @@ staking = ({ store, web3t })->
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
+    err <- web3t.refresh
     store.staking.keystore = to-keystore store, no
     store.staking.chosen-pool =
         address: store.staking.keystore.staking.address
     store.staking.reward = null
     store.staking.withdraw-amount = 0
     store.staking.stake-amount-total = 0
-    #exit for now
-    #return cb null
     staking-address = store.staking.keystore.staking.address
-    #err, amount <- web3t.velas.Staking.orderedWithdrawAmount staking-address, staking-address
-    #return cb err if err?
-    err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
-    return cb "#{err}" if err?
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
-    return cb "#{err}" if err?
-    res = staking-epoch `minus` last-epoch
-    store.staking.wait-for-epoch-change = if +res is 0 then yes else no
-    #store.staking.withdraw-amount = amount.to-fixed!
+    return cb err if err?
     store.staking.add.add-validator-stake = 0
     store.staking.epoch = staking-epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)

@@ -63,9 +63,9 @@ require! {
             text-align: left
             &:hover
                 cursor: pointer
-                background: rgba(75, 40, 136, 0.6)
+                background: var(--bg-primary-light)
             &.active
-                background: rgba(75, 40, 136, 0.6)
+                background: var(--bg-primary-light)
         .middle
             padding: 11px 10px
             height: 37px
@@ -73,7 +73,7 @@ require! {
                 padding: 10px
                 min-height: 155px
                 overflow: scroll
-                background: var(--gradient)
+                background: linear-gradient(var(--color1) 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), var(--color1) 70%) 0 100%, radial-gradient(farthest-side at 50% 0, var(--color2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, var(--color2), rgba(0,0,0,0)) 0 100%
                 background-repeat: no-repeat
                 background-attachment: local, local, scroll, scroll
                 background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
@@ -260,7 +260,7 @@ module.exports = (store, web3t)->
             store.current.account-index = index
             store.current.switch-account = no
             <- web3t.refresh
-        default-account-name = -> "Account #{index}"
+        default-account-name = -> "#{lang.account} #{index}"
         current-account-name = ->
             local-storage.get-item(default-account-name!) ? default-account-name!
         account-name = current-account-name!

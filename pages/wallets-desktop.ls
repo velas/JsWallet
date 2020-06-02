@@ -160,9 +160,9 @@ require! {
             border-top: 1px solid #213040
             display: inline-block
             .wallet
-                background: var(--active)
+                background: var(--bg-secondary)
                 &.big
-                    background: var(--active-wallet)
+                    background: var(--bg-primary-light)
         .history-area
             max-height: 54vh
             overflow: auto

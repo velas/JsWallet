@@ -600,14 +600,6 @@ require! {
             text-align: center
             @media(max-width:800px)
                 text-align: center
-        >.close
-            position: absolute
-            font-size: 20px
-            left: 20px
-            top: 13px
-            cursor: pointer
-            &:hover
-                color: #CCC
     >.toolbar
         position: relative
         height: 60px
@@ -1026,7 +1018,7 @@ item = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1041,7 +1033,7 @@ item = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1286,7 +1278,7 @@ item2 = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1301,7 +1293,7 @@ item2 = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1411,7 +1403,7 @@ item3 = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1426,7 +1418,7 @@ item3 = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1495,7 +1487,7 @@ item4 = (store, web3t)->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1510,7 +1502,7 @@ item4 = (store, web3t)->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     switch-files = ->
@@ -1592,7 +1584,7 @@ faq = ({ store, web3t })->
         position: "sticky"
     dashed-border=
         border-color: "#{info.app.border}"
-        color: info.app.addressText
+        color: info.app.color3
     filter-body =
         border: "1px solid #{info.app.border}"
         background: info.app.header
@@ -1607,7 +1599,7 @@ faq = ({ store, web3t })->
         border: "0"
         color: info.app.text
     lightText=
-        color: info.app.addressText
+        color: info.app.color3
     icon-style=
         filter: info.app.nothingIcon
     activate = (tab)-> ->

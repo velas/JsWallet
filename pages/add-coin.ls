@@ -190,10 +190,10 @@ add-by-address = (store, web3t)->
         color: style.app.text
     input-style=
         color: style.app.text
-        background: style.app.addressBg
+        background: style.app.bg-primary-light
         border: "0"
     erc-bg=
-        background: style.app.addressBg
+        background: style.app.bg-primary-light
     background = 
         background: style.app.wallet
     .item.pug(style=background)
