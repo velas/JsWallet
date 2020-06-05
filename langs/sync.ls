@@ -69,7 +69,7 @@ wallet-rows =
         |> map build-row langs
 
 
-cb = console.log
-err <- sync-all google-rows, langs, wallet-rows
-return cb err if err?
-cb null, \done
+module.exports = ({ program }, cb)->
+    err <- sync-all google-rows, langs, wallet-rows
+    return cb err if err?
+    cb null, \done
