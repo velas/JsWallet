@@ -5,6 +5,7 @@ require! {
     \prelude-ls : { map, pairs-to-obj, find }
     \./mirror.ls
     \./apply-transactions.ls
+    \./scam-warning.ls
 }
 export set-account = (web3, store, cb)->
     err, account <- new-account store, store.current.seed
@@ -21,6 +22,7 @@ export set-account = (web3, store, cb)->
             |> pairs-to-obj
     cb null
 export refresh-account = (web3, store, cb)-->
+    scam-warning!
     err <- set-account web3, store
     return cb err if err?
     #err, name <- web3.get-account-name store

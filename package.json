@@ -25,11 +25,12 @@
     "react-dom": "16.2.0",
     "react-middle-ellipsis": "1.1.0",
     "react-simple-file-input": "2.1.0",
+    "read-write-google-spreadsheet": "^1.0.3",
     "web3": "0.18.4"
   },
   "scripts": {
-      "setup" : "npm i livescript -g",
-      "wallet":      "lsxc -a wallet -t index.html -wsfkibh -c main.ls",
-      "wallet-fast": "lsxc -a wallet -t index.html -wsfkibh -c main.ls"
+    "setup": "npm i livescript -g",
+    "wallet": "lsxc -a wallet -t index.html -wsfkibh -c main.ls",
+    "wallet-fast": "lsxc -a wallet -t index.html -wsfkibh -c main.ls"
   }
 }

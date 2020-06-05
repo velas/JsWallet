@@ -11,17 +11,19 @@ module.exports = ({ store, web3t } )->
     info = get-primary-info store
     goto-details = ->
         navigate store, web3t, \videostoragedetails
+    video-style = 
+        background: \black
     videos = 
         file-descriptions.map (desc) ->
             goto-details = -> 
-                location.href = "http://127.0.0.1:8080/#{desc.id}/#{desc.key}"
+                location.href = "https://video.velas.com/#{desc.id}/#{desc.key}"
             layout = 
                 .pug.section
                     .source.pug(on-click=goto-details)
                         span.pug.play
                             icon \TriangleRight, 15
-                        video.pug(width='560' height='315' controls='controls' poster="#{desc.thumbnail}")
-                            source.pug(src="http://127.0.0.1:8080/#{desc.id}/#{desc.key}" type="#{desc.file.type}")
+                        video.pug(width='224' height='150' controls='controls' poster="#{desc.thumbnail}" style=video-style)
+                            source.pug(src="/#{desc.id}/#{desc.key}" type="#{desc.file.type}" preload="metadata")
                         .pug.title-video
                             span.pug
                                 img.pug.account(src="#{info.branding.logo}")

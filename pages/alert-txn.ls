@@ -27,4 +27,4 @@ module.exports = ({ store, web3t } )->
             |> (.length > 0)
     return null if not has-pending
     .pug.title.alert.txn
-        .pug.header You have a Velas pending transaction. Some of the counts may be inaccurate.
+        .pug.header You have a pending VLX transaction. Some of the counts may be inaccurate.

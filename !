@@ -1,8 +1,0 @@
-
-> ethnamed@0.12.80 wallet-fast /root/web3.space/wallet
-> lsxc -a wallet -t index.html -wsfkibh -c main.ls
-
-----------------------
-[✓] start main file                       main.ls
-[✓] save                                  /root/web3.space/wallet/.compiled-ssr/wallet/components/video-list.ls
-[✓] compile                               /root/web3.space/wallet/components/video-list.ls

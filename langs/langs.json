@@ -60,7 +60,7 @@
             "Сума",
             "Montant",
             "Cantidad",
-            "量",
+            "金额",
             "양"
         ],
         "useMax": [
@@ -69,7 +69,7 @@
             "все",
             "Max",
             "Usar Todo",
-            "使用最大",
+            "全部",
             "최대 사용"
         ],
         "pending": [
@@ -78,7 +78,7 @@
             "В обробці",
             "En Attente",
             "Pendiente",
-            "待定",
+            "处理中",
             "대기 중"
         ],
         "wrongPinShould": [
@@ -100,7 +100,7 @@
             "설정"
         ],
         "pinInfo": [
-            "Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your word seed phrase",
+            "Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your original seed phrase",
             "Запомните этот ПИН-код и не передавайте его третьим лицам",
             "Запам'ятайте цей ПІН-код і не передавайте його третім особам",
             "Veuillez vous assurer d'utiliser un PIN dont vous vous souvenez. Vous avez 7 essais. Après cela, vous devez restaurer le portefeuille à partir de votre phrase de récupération de 12 mots.",
@@ -132,7 +132,7 @@
             "Секретний ключ",
             "Phrase de Récupération",
             "Frase Secreta",
-            "秘密短语",
+            "助记词",
             "비밀 문구"
         ],
         "secretPhraseWarning": [
@@ -145,12 +145,12 @@
             "이 문구를 안전하게 보관할 책임은 귀하에게 있습니다. 이 문구를 잃어버린 경우 복원 할 수 없습니다."
         ],
         "secretPhraseChange": [
-            "If you edit this, you lose your old wallet and the associated coins.",
+            "If you edit these words, you will lose your old wallet and the associated coins.",
             "Если вы отредактируете это, ваш старый кошелек исчезнет, и все ваши монеты будут потеряны",
             "Якщо ви відредагуєте це, старий гаманець зникне, і всі ваші монети втратяться",
             "Si vous modifiez cela, vous perdez votre ancien portefeuille et les pièces associées.",
             "Si modificas esto, perderás acceso a tu viejo monedero y a las monedas que este tenía asociadas.",
-            "如果您对此进行编辑，则旧钱包不见了，所有硬币都丢失了",
+            "如果您对此进行编辑，那么您的旧钱包将消失并且所有硬币都将丢失",
             "이것을 편집하면 기존 지갑이 사라지고 모든 동전이 손실됩니다."
         ],
         "save": [
@@ -181,12 +181,12 @@
             "닉네임"
         ],
         "yourNicknameInfo": [
-            "You are able to attach nickname, email or phone number to your account and share it with friends. They will use your nick to resolve your crypto-address",
+            "Create and attach a nickname, email, or phone number to your account. Share it with friends. They will use your nickname to find your crypto-address",
             "Вы можете прикрепить псевдоним, адрес электронной почты или номер телефона к своей учетной записи и поделиться им с друзьями. Они будут использовать ваш ник для разрешения вашего криптоадреса",
             "Ви можете прикріпити псевдонім, адреса електронної пошти або номер телефону до свого облікового запису і поділитися ним з друзями. Вони будуть використовувати ваш нік для вирішення вашого кріптоадреса",
             "Vous pouvez joindre un pseudo, un e-mail ou un numéro de téléphone à votre compte et le partager avec vos amis. Ils utiliseront votre pseudo pour résoudre votre adresse cryptographique",
             "Puedes añadir un apodo, email o número de teléfono a tu cuenta y compartirlo con tus amigos. Ellos podrán usar tu apodo para asociarlo a tu dirección de criptomonedas",
-            "您可以将昵称，电子邮件或电话号码附加到您的帐户，并与朋友分享。 他们将使用您的昵称来解析您的加密地址",
+            "您可以将昵称，邮箱或电话号码附加到您的帐户，并与朋友分享。 他们将使用您的昵称来解析您的加密地址",
             "당신은 당신의 계정에 별명, 이메일 또는 전화 번호를 첨��하고 친구들과 공유 할 수 있습니다. 그들은 당신의 암호를 해결하기 위해 당신의 닉을 사용합니다"
         ],
         "switchAccountIndex": [
@@ -231,7 +231,7 @@
             "Будь ласка, ніколи не робіть цього, якщо ви не розумієте точну причину цієї дії і не приймаєте на себе ризики",
             "Les clés privées prouvent la propriété des actifs associés à une adresse de portefeuille particulière. Soyez prudent lorsque vous exportez vos clés privées. N'importe qui avec vos clés peut avoir un accès complet à vos fonds.",
             "La clave privada demuestra la posesión sobre los activos asociados con una dirección de monedero en particular. Se cauteloso al exportar tu clave privada. Cualquiera con acceso a tus claves podría tener acceso a tus fondos.",
-            "如果您不了解此操作的确切原因并且不承担风险，请不要这样做",
+            "如果您不了解此操作的确切原因并且不承担风险，请不要进行操作",
             "이 조치의 정확한 이유를 이해하지 못하고 위험을 감수하지 않는 경우에는 절대로 수행하지 마십시오."
         ],
         "showSecret": [
@@ -240,7 +240,7 @@
             "Показати",
             "Révéler la Phrase de Récupération",
             "Mostrar frase de recuperación",
-            "显示秘密",
+            "显示",
             "비밀 표시"
         ],
         "verifyNickname": [
@@ -267,7 +267,7 @@
             "Реєструвати",
             "S'inscrire",
             "Registrar",
-            "寄存器",
+            "登记",
             "레지스터"
         ],
         "newSeedPhrase": [
@@ -285,16 +285,16 @@
             "Натисніть кнопку 'Друк' і роздрукувати інструкції паперу і запишіть свої 24 слова насіння вивчили. Хто має доступ до вашого відновлення фраза може заволодіти вашими активами, надійно зберігати його. Ми не зберігаємо резервних копій 24 слова, Якщо ви втратите всі монети у вашому гаманці буде назавжди!",
             "Cliquez sur 'Imprimer' et imprimer des instructions de papier et écrivez votre 24 mots de graines soigneusement. Toute personne ayant accès à votre rétablissement phrase pourrait prendre de vos biens, de les stocker de manière sécurisée. Nous n'avons pas de garder une copie de sauvegarde de votre 24 mots, si vous les perdez toutes les pièces de monnaie dans votre porte-monnaie sera à jamais disparu!",
             "Haga clic en 'Imprimir' y imprimir las instrucciones de papel y anote sus 24 palabras de semilla abundante. Cualquier persona con acceso a tu frase de recuperación podría tomar sus activos, almacenar de forma segura. No guardamos una copia de seguridad de su 24 palabras, si usted pierde todas las monedas en su monedero, se ha ido para siempre!",
-            "击打印和印刷出来文的指示写下你的24话的种子门洞. 有权访问你的回收的短语可能需要您的资产，存放它的安全。 我们不保持一个备份的24个字，如果你失去它所有的硬币，你的钱包就会永远消失!",
+            "请点击“打印”按钮，打印出纸质说明，并写下您助记词的24个单词的种子。 知道您恢复助记词的人都可以占有您的钱包和资产，请保管好您助记词。 我们不会存储24个单词的备份，如果丢失了，钱包中的所有硬币将永远存在在中！",
             "클릭하'인쇄 및 인쇄 종이 지침에 적 24 말 씨 carefuly. 대한 액세스 권한이 있는 모든 사람을 당신의 복구를 구할 수 없습을 귀하의 자산이,저장 이를 안전하게 보관합니다. 우리가 지키지 않는 백업하고 24 말,당신이 그것을 잃으면 모든 동전 지갑에 영원히 사라질 것입니다!"
         ],
         "newSeedWarningRestore": [
-            "Please pay close attention to spelling and the order of words you are being asked, incorrect order will create different wallet from original.",
+            "Please pay close attention to spelling and the order of the words. Incorrect order will create a different wallet from original.",
             "Пожалуйста, обратите пристальное внимание на орфографию и порядок слов, что вас просят, неправильный порядок будет создать другой кошелек от оригинала.",
             "Будь ласка, зверніть пильну увагу на орфографію і порядок слів, що вас просять, неправильний порядок буде створити інший гаманець від оригіналу.",
             "S'il vous plaît prêter une attention particulière à l'orthographe et l'ordre des mots qui vous sont posées, ordre incorrect permettra de créer différents porte-monnaie à partir de l'original.",
             "Por favor, preste atención a la ortografía y el orden de las palabras que se te pide, orden incorrecto creará cartera diferente de la original.",
-            "请密切注意的拼写和秩序的话，你是在问，不正确的顺序将建立不同的钱包里从原来的。",
+            "请注意您输入的单词拼音和顺序的正确性! 如果输入顺序或单词有误, 无法登陆您原本钱包以及会注册全新钱包。",
             "주의하시기 바랍니다 맞춤법 및 순서의 단어는 요청을 받고,잘못되었기를 만들 다른 지갑에서 원래 있습니다."
         ],
         "receive": [
@@ -312,7 +312,7 @@
             "Транзакції",
             "Historique",
             "Historial",
-            "历史",
+            "历史记录",
             "역사"
         ],
         "topup": [
@@ -339,7 +339,7 @@
             "Всього",
             "Total",
             "Total",
-            "總",
+            "总金额",
             "합계"
         ],
         "auto": [
@@ -348,7 +348,7 @@
             "авто",
             "auto",
             "auto",
-            "汽车",
+            "自动",
             "자동"
         ],
         "cheap": [
@@ -357,7 +357,7 @@
             "дешевий",
             "Pas cher",
             "económico",
-            "便宜的",
+            "便宜",
             "싼"
         ],
         "transaction": [
@@ -375,7 +375,7 @@
             "була надіслана",
             "a été Envoyé",
             "Enviado",
-            "已经发送了",
+            "已发出",
             "전송 된"
         ],
         "home": [
@@ -384,7 +384,7 @@
             "Додому",
             "Home",
             "Inicio",
-            "家",
+            "返回首页",
             "집"
         ],
         "terms": [
@@ -429,7 +429,7 @@
             "Редагувати",
             "Modifier la Phrase de Récupération",
             "Modificar Frase de Recuperación",
-            "编辑秘密",
+            "编辑",
             "비밀 편집"
         ],
         "yourTransactions": [
@@ -456,7 +456,7 @@
             "Зробіть свою першу транзакцію або поміняйте свої фільтри.",
             "Effectuez votre première transaction ou changez vos filtres.",
             "Haz tu primera transacción o modifica los filtros.",
-            "进行第一次交易或更改过滤器。",
+            "进行第一次交易或更改过滤筛选。",
             "첫 거래를하거나 필터를 변경하십시오."
         ],
         "fee": [
@@ -465,7 +465,7 @@
             "Комісія",
             "Frais",
             "Comisión",
-            "费用",
+            "手续费",
             "회비"
         ],
         "delete": [
@@ -501,7 +501,7 @@
             "Скопійовано!",
             "Copié dans le presse-papier!",
             "¡Copiado al portapapeles!",
-            "复制到剪贴板！",
+            "已复制到剪贴板！",
             "클립 보드에 복사했습니다!"
         ],
         "privateKeyEnterPin": [
@@ -514,12 +514,12 @@
             "PIN 코드를 입력하십시오"
         ],
         "privateKeyEnterCoin": [
-            "Enter the coin. Example: BTC, ETH, GBX",
+            "Enter the coin acronym that you wish to reveal the private keys for. Example: BTC, ETH, GBX",
             "Введите монету. Пример: BTC, ETH, GBX",
             "Введіть монету. Приклад: BTC, ETH, GBX",
             "Entrez le coin. Exemple: BTC, ETH, GBX",
             "Selecciona la moneda. Ejemplo: BTC, ETH, GBX",
-            "输入硬币。 示例：BTC，ETH，GBX",
+            "输入硬币符号。 示例：BTC，ETH，GBX",
             "동전을 입력하십시오. 예 : BTC, ETH, GBX"
         ],
         "yourWallets": [
@@ -555,7 +555,7 @@
             "Створити",
             "Créer",
             "Crear",
-            "創建",
+            "创建",
             "창조하다"
         ],
         "restoreWallet": [
@@ -564,7 +564,7 @@
             "Відновити",
             "Restaurer",
             "Restaurar",
-            "恢復",
+            "恢复",
             "복원"
         ],
         "restoreWords12": [
@@ -654,7 +654,7 @@
             "Сховати",
             "Cacher",
             "Ocultar",
-            "隱藏",
+            "隐藏",
             "숨는 장소"
         ],
         "enter": [
@@ -690,7 +690,7 @@
             "Отримано",
             "Dans",
             "Entrada",
-            "在",
+            "已接受",
             "에"
         ],
         "out": [
@@ -699,7 +699,7 @@
             "Відправлено",
             "En dehors",
             "Salida",
-            "出",
+            "已发出",
             "밖"
         ],
         "from": [
@@ -708,7 +708,7 @@
             "Від",
             "De",
             "Desde",
-            "恢复原钱包",
+            "从",
             "에서"
         ],
         "to": [
@@ -726,7 +726,7 @@
             "Цей скрипт автоматично розгортає ваш вузол через термінал. Крім того, він використовує адреси, пов’язані з вашим поточним обліковим записом, для управління вузлом у гаманці.",
             "Ce script déploie automatiquement votre nœud via le terminal. En outre, il utilise des adresses associées à votre compte actuel pour gérer le nœud dans le portefeuille.",
             "Este Script despliega tú nodo automáticamente desde la terminal. Además, utiliza las direcciones asociadas con tu cuenta para administrar el nodo en tu monedero.",
-            "該腳本通過終端自動部署您的節點。 而且，它使用與您當前帳戶關聯的地址來管理錢包中的節點。",
+            "该脚本通过终端自动部署您的节点。 此外，它使用与您当前帐户关联的地址来管理钱包中的节点。",
             "이 스크립트는 터미널을 통해 자동으로 노드를 배포합니다. 또한 현재 계정과 연결된 주소를 사용하여 전자 지갑의 노드를 관리합니다."
         ],
         "important": [
@@ -744,7 +744,7 @@
             "Не передавайте цей скрипт нікому, оскільки він генерується у вашому гаманці, використовуючи особисті дані гаманця.",
             "Ne transférez pas ce script à quiconque, car il est généré dans votre portefeuille, à l'aide de données personnelles du portefeuille.",
             "No transferir el script a nadie, al ser generado en tu monedero, contiene información personal sobre tu monedero.",
-            "請勿使用個人錢包數據將此腳本傳輸給任何人，因為該腳本是在您的錢包中生成的。",
+            "请勿使用个人钱包数据将此脚本传输给任何人，因为该脚本是在您的钱包中生成的。",
             "개인 지갑 데이터를 사용하여 지갑에서 생성 된이 스크립트를 다른 사람에게 전송하지 마십시오."
         ],
         "generateScript": [
@@ -762,7 +762,7 @@
             "Будь ласка, зачекайте 30 секунд",
             "Veuillez prévoir 30 secondes",
             "Por favor permite 30 segundos",
-            "請等待30秒",
+            "请等待30秒",
             "30 초만 기다려주세요"
         ],
         "lineByLine": [
@@ -780,7 +780,7 @@
             "Як один єдиний рядок",
             "Comme une seule chaîne",
             "Como una sola cadena",
-            "作為一個單一的字符串",
+            "一字符串",
             "하나의 단일 문자열로"
         ],
         "installSsh": [
@@ -789,7 +789,7 @@
             "Встановити через ssh",
             "Installer via ssh",
             "Instalar vía ssh",
-            "通過ssh安裝",
+            "通过SSH安装",
             "ssh를 통해 설치"
         ],
         "installDo": [
@@ -807,7 +807,7 @@
             "Станьте валідатором",
             "Devenez validateur",
             "Convertirse en Staker",
-            "成為驗證者",
+            "成为验证者",
             "검증 인되기"
         ],
         "stake": [
@@ -816,7 +816,7 @@
             "Ваш Стейк",
             "Votre enjeu",
             "Tu Stake",
-            "您的賭注",
+            "您的抵押",
             "스테이크"
         ],
         "btnApply": [
@@ -825,7 +825,7 @@
             "Застосувати",
             "Appliquer",
             "Aplicar",
-            "應用",
+            "应用",
             "대다"
         ],
         "uRewards": [
@@ -834,7 +834,7 @@
             "Ваші нагороди",
             "Vos récompenses",
             "Tus recompensas",
-            "您的獎勵",
+            "您的奖励",
             "당신의 보상"
         ],
         "claimReward": [
@@ -852,7 +852,7 @@
             "Розрахуйте винагороду",
             "Calculer la récompense",
             "Calcular Recompensa",
-            "計算獎勵",
+            "计算奖励",
             "보상 계산"
         ],
         "next": [
@@ -870,7 +870,7 @@
             "Твоя сiд-фраза",
             "Votre Phrase de Graine",
             "Tu Frase de Recuperación",
-            "您的種子短語",
+            "您的种子短语",
             "씨구"
         ],
         "checkNode": [
@@ -879,7 +879,7 @@
             "Виберіть свій вузол",
             "Vérifiez votre nœud",
             "Comprueba tu Nodo",
-            "檢查您的節點",
+            "检查您的节点",
             "노드 확인"
         ],
         "checkNode1": [
@@ -888,7 +888,7 @@
             "Системний годинник повинен бути синхронізований",
             "L'horloge système doit être synchronisée",
             "El reloj del sistema debe estar sincronizado",
-            "系統時鐘必須同步",
+            "系统时间必须同步",
             "시스템 시계를 동기화해야합니다"
         ],
         "checkNode2": [
@@ -897,7 +897,7 @@
             "Порт 30304 повинен бути видно зовні",
             "Le port 30304 doit être visible à l'extérieur",
             "El puerto 30304 debe ser visible desde el exterior",
-            "端口30304應該在外部可見",
+            "端口30304必须从外部可见。",
             "포트 30304는 외부에서 볼 수 있어야합니다"
         ],
         "checkNode3": [
@@ -906,7 +906,7 @@
             "Вузол повинен бути синхронізований. Перевірте останню висоту",
             "Le nœud doit être synchronisé. Vérifiez la dernière hauteur",
             "El nodo debe estar sincronizado. Comprueba la última altura",
-            "該節點必須同步。 檢查最新高度",
+            "该节点必须同步。 检查最新高度",
             "노드가 동기화되어야합니다. 최신 높이 확인"
         ],
         "checkNode4": [
@@ -915,7 +915,7 @@
             "Зачекайте зміни епохи і знову перевірити стан вузла",
             "Attendez le changement d'époque et vérifiez à nouveau l'état du nœud ici",
             "Espera un cambio de época y comprueba el estado de tu nodo de nuevo aquí",
-            "等待紀元更改，然後在此處再次檢查節點狀態",
+            "等待纪元的改变，然后在这里再次检查节点的状态",
             "에포크 변경을 기다렸다가 여기서 노드 상태를 다시 확인하십시오."
         ],
         "yourStatus": [
@@ -924,7 +924,7 @@
             "статус",
             "Votre statut",
             "Tu Estado",
-            "你的狀態",
+            "状态",
             "당신의 상태"
         ],
         "yourStatus1": [
@@ -933,7 +933,7 @@
             "Переконайтеся, що вузол увімкнено та синхронізовано, синхронізуються годинники та видно порт",
             "Assurez-vous que le nœud est actif et synchronisé, que les horloges sont synchronisées et que le port est visible",
             "Asegúrese de que el nodo esté activo y sincronizado, los relojes estén sincronizados y el puerto sea visible",
-            "確保節點已啟動並同步，時鐘已同步並且端口可見",
+            "确保节点已启动并且正在运行，时钟已同步并且端口可见",
             "노드가 작동 및 동기화되고 시계가 동기화되며 포트가 보이는지 확인하십시오."
         ],
         "yourStatus2": [
@@ -942,7 +942,7 @@
             "Спробуйте надіслати невелику суму на ставку ще раз",
             "Essayez d'envoyer à nouveau le petit montant à miser",
             "Intenta enviar una cantidad pequeña para hacer Stake de nuevo",
-            "嘗試再次發送少量股份",
+            "尝试发送少量以再次抵押",
             "소액을 다시 스테이크로 보내십시오."
         ],
         "stakeMore": [
@@ -951,7 +951,7 @@
             "Більше",
             "Impliquer plus",
             "Aumentar Stake",
-            "下注更多",
+            "抵押更多",
             "더 스테이크"
         ],
         "availableReward": [
@@ -960,7 +960,7 @@
             "Доступна винагорода",
             "Récompense disponible",
             "Recompensa disponible",
-            "可用獎勵",
+            "可用",
             "사용 가능한 보상"
         ],
         "epoch": [
@@ -969,7 +969,7 @@
             "Епоха",
             "Époque",
             "Epoca",
-            "時代",
+            "纪元",
             "시대"
         ],
         "language": [
@@ -978,7 +978,7 @@
             "Мова",
             "Langue",
             "Idioma",
-            "語言",
+            "语言",
             "언어"
         ],
         "restoreFrom": [
@@ -987,7 +987,7 @@
             "Із",
             "De",
             "De",
-            "的",
+            "从",
             "의"
         ],
         "statistics": [
@@ -1005,7 +1005,7 @@
             "Зміна",
             "Changement",
             "Cambio",
-            "改变",
+            "变更",
             "변경"
         ],
         "currentEpoch": [
@@ -1014,7 +1014,7 @@
             "Нинішня Епоха",
             "Époque Actuelle",
             "Época Actual",
-            "目前的时代",
+            "当前的纪元",
             "Epoch 현재"
         ],
         "currentBlock": [
@@ -1023,7 +1023,7 @@
             "Поточний Блок",
             "Bloc Courant",
             "Bloque Actual",
-            "当前块",
+            "当前的区块",
             "현재 블록"
         ],
         "all": [
@@ -1032,7 +1032,7 @@
             "Всі",
             "Tous",
             "Todos",
-            "所有",
+            "全部",
             "모든"
         ],
         "dapps": [
@@ -1068,7 +1068,7 @@
             "Веб",
             "Web",
             "Web",
-            "网",
+            "网络",
             "웹사"
         ],
         "underDevelopment": [
@@ -1077,7 +1077,7 @@
             "Ця вкладка знаходиться в стадії розробки",
             "Cet onglet est en cours de développement",
             "Esta ficha está en desarrollo",
-            "这个标签是在发展",
+            "此选项在开发中",
             "이 탭은 개발"
         ],
         "estimatedResults": [
@@ -1095,7 +1095,7 @@
             "с",
             "sec",
             "sec",
-            "sec",
+            "秒",
             "sec"
         ],
         "velasSphere": [
@@ -1104,7 +1104,7 @@
             "сфера Velas",
             "velas sphère",
             "velas esfera",
-            "酒店（领域",
+            "维拉斯范围",
             "벨라 구체"
         ],
         "velasBlockchain": [
@@ -1113,7 +1113,7 @@
             "Velas блокчейн",
             "velas blockchain",
             "velas blockchain",
-            "酒店（区块链",
+            "维拉斯区块链",
             "벨라 blockchain"
         ],
         "storageDescription": [
@@ -1122,16 +1122,16 @@
             "Зберігайте ваші дані в зашифрованому розподілених серверах опір цензури. Отримайте доступ до них в зручному і звичним способом.",
             "Gardez vos données sur les serveurs distribués avec la censure de la résistance. Avoir accès à eux dans un moyen pratique et familièrement.",
             "Mantener sus datos cifrados servidores distribuidos con la censura de la resistencia. De acceder a ellos en un cómodo y familiar y a la forma.",
-            "保持你的数据加密的分布服务器的与审查的阻力。 获得他们在一个方便的和熟悉的方式。",
+            "将您的数据存储在具有防审查功能的加密分布式服务器中。 以方便且熟悉的方式访问它们。",
             "유지 귀하의 데이터를 암호화된 분산 서버와 검열 저항입니다. 스에서 그들에게 편리하고 익숙한 방법입니다."
         ],
         "cpuDescription": [
-            "Use distributed resources to perform complex tasks for science, AI, video rendering.",
+            "Use distributed resources to perform complex tasks for science, AI, and video rendering.",
             "Использование распределенных ресурсов для выполнения сложных задач для науки, АИ, рендеринг видео.",
             "Використання розподілених ресурсів для виконання складних завдань для науки, АІ, рендеринг відео.",
             "L'utilisation de ressources distribuées à effectuer des tâches complexes de la science, de l'IA, le rendu vidéo.",
             "El uso de los recursos distribuidos para realizar tareas complejas, para la ciencia, AI, procesamiento de vídeo.",
-            "采用分布式资源，以执行复杂的任务，科学、大赦国际、视频渲染。",
+            "使用分布式资源来执行科学，人工智能，视频渲染的复杂任务。",
             "사용 배포를 수행하는 리소스가 복잡한 작업을 위해 과학,AI,동영상 렌더링이 가능합니다."
         ],
         "stakingDescription": [
@@ -1140,7 +1140,7 @@
             "Допоможіть блокчейн буде більш децентралізованим шляхом запуску додаткової перевірки.",
             "Aider à la blockchain être plus décentralisée, par le lancement d'un supplément de programme de validation.",
             "Ayudar a la blockchain ser más descentralizado, con el lanzamiento de un adicional de validación.",
-            "帮助区块链可以更加分散的通过启动一个额外的验证程序。",
+            "通过启动其他验证程序，帮助区块链更加分散。",
             "도록 더 분산 시작하여 추가적인 검증이다."
         ],
         "storageDapp": [
@@ -1149,7 +1149,7 @@
             "Velas ДАПП Зберігання ",
             "Velas De Stockage Dapp",
             "Velas De Almacenamiento Dapp",
-            "酒店（储存Dapp",
+            "维拉斯储存Dapp",
             "벨라 저장 Dapp"
         ],
         "videoStorage": [
@@ -1167,7 +1167,7 @@
             "Velas ЦП/ГПУ/зберігання кернери ДАПП",
             "Velas CPU/GPU/STOCKAGE de Jalonnement Dapp",
             "Velas de la CPU/GPU/ALMACENAMIENTO de Estacando de Dapp",
-            "酒店（CPU/GPU/存储赌Dapp",
+            "维拉斯 CPU/GPU/存质押Dapp",
             "벨라 CPU/GPU/저장소 감시 Dapp"
         ],
         "velasCpu": [
@@ -1176,7 +1176,7 @@
             "Velas ЦП/ГПУ/ДАПП зберігання ",
             "Velas CPU/GPU/STOCKAGE Dapp",
             "Velas de la CPU/GPU/ALMACENAMIENTO Dapp",
-            "酒店（CPU/GPU/存储Dapp",
+            "维拉斯CPU/GPU/存储Dapp",
             "벨라 CPU/GPU/관 Dapp"
         ],
         "stakingDapp": [
@@ -1185,7 +1185,7 @@
             "Velas Кернери ДАПП",
             "Velas Jalonnement Dapp",
             "Velas De Estacando De Dapp",
-            "酒店（赌Dapp",
+            "维拉斯质押Dapp",
             "벨라 걸고 Dapp"
         ],
         "delegateStake": [
@@ -1203,7 +1203,7 @@
             "Мессенджер Velas ",
             "Velas Messenger",
             "Velas Messenger",
-            "酒店（使者",
+            "维拉斯使者",
             "벨라 메신저"
         ],
         "writemsg": [
@@ -1212,7 +1212,7 @@
             "Написати повідомлення...",
             "Écrire un message...",
             "Escribe un mensaje...",
-            "写一个消息...",
+            "撰写消息...",
             "메시지를 쓰세요..."
         ],
         "or": [
@@ -1234,7 +1234,7 @@
             "새로운 계정"
         ],
         "backupInfo": [
-            "Do you have backup word phrase of current account?",
+            "Do you have backup word phrase of the current account?",
             "У вас есть резервная слово фразу текущего счета?",
             "У вас є резервна слово фразу поточного рахунку?",
             "Vous avez de sauvegarde de mots de la phrase de compte courant?",
@@ -1248,16 +1248,16 @@
             "слово",
             "mot",
             "palabra",
-            "个单词",
+            "单词",
             "단어"
         ],
         "noticeReset": [
-            "attempts left till wallet reset to default",
+            "Attempts left until wallet reset to default",
             "попытки осталось до кошелек по умолчанию",
             "спроби залишилося до гаманець за замовчуванням",
             "les tentatives de gauche jusqu'à ce que le portefeuille réinitialiser les paramètres par défaut",
             "los intentos de la izquierda hasta la cartera de restablecer a la configuración predeterminada",
-            "试图左一直到重置为默认的钱包",
+            "尝试离开，直到钱包重置为默认值",
             "도 왼쪽까지 지갑 기본값으로 재설정"
         ],
         "notice": [
@@ -1266,7 +1266,7 @@
             "Повідомлення",
             "Avis",
             "Aviso",
-            "注意到",
+            "请注意",
             "알"
         ],
         "noticeText": [
@@ -1275,7 +1275,7 @@
             "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні б��аузера або інкогніто, перш ніж скинути його",
             "Essayez de restaurer votre compte à partir de la graine de la phrase dans différents navigateur ou d'une fenêtre de navigation privée avant de le réinitialiser",
             "Intente restaurar la cuenta desde la semilla frase en otro navegador o ventana de incógnito antes de reiniciarlo",
-            "尝试恢复你的帐户种语在不同的浏览器或隐姓埋名的窗口之前你重置它",
+            "在重设账号之前，请尝试在其他浏览器或隐私窗口中使用种子短语恢复您的帐户",
             "를 복원하려고 당신은 계정에서 씨앗이 문구를 다른 브라우저 또는 시크릿 창을 하기 전에 당신은 그것을 다시 설정"
         ],
         "resetAccount": [
@@ -1284,7 +1284,7 @@
             "Скинути Обліковий Запис ",
             "Réinitialiser Le Compte",
             "Restablecer La Cuenta",
-            "重设的帐户",
+            "重设账号",
             "Reset 계정"
         ],
         "createAccount": [
@@ -1303,7 +1303,7 @@
             "Par 1",
             "Por 1",
             "每1",
-            "1"
+            1
         ],
         "selectPool": [
             "Select pool",
@@ -1365,7 +1365,7 @@
             "мiн",
             "min",
             "min",
-            "min",
+            "最低",
             "min"
         ],
         "max": [
@@ -1374,7 +1374,7 @@
             "макс",
             "max",
             "max",
-            "max",
+            "全部",
             "max"
         ],
         "btnSelect": [
@@ -1392,7 +1392,7 @@
             "Всього Пулів",
             "Total Des Piscines",
             "Total De Piscinas",
-            "总池",
+            "池数量",
             "총 수영장"
         ],
         "totalStakers": [
@@ -1401,7 +1401,7 @@
             "Всього Стейкерів",
             "Total Des Stakers",
             "Total Stakers",
-            "总Stakers",
+            "质押者数量",
             "총 Stakers"
         ],
         "totalStaking": [
@@ -1410,7 +1410,7 @@
             "Загальна Ставка",
             "Total De Jalonnement",
             "Total De Estaca",
-            "总赌",
+            "质押总额",
             "총 감시"
         ],
         "totalMyStake": [
@@ -1419,7 +1419,7 @@
             "Всього Моя Ставка",
             "Total Mon Pieu",
             "Total De Mi Estaca",
-            "总的我的股份",
+            "我的质押总金额",
             "총 내 스테이크"
         ],
         "stakeSizes": [
@@ -1428,7 +1428,7 @@
             "Басейн Кола розміри",
             "Piscine enjeu tailles",
             "Piscina tallas de apuesta",
-            "游泳池股的大小",
+            "池子质押大小",
             "수영장 스테이크 크기"
         ],
         "poolPopulation": [
@@ -1437,7 +1437,7 @@
             "Населення Басейну ",
             "La Piscine De La Population",
             "La Piscina De La Población",
-            "游泳池的人口",
+            "池子人数",
             "수영장 인구"
         ],
         "settings": [
@@ -1482,7 +1482,7 @@
             "Найближчим Часом ",
             "Bientôt",
             "Próximamente",
-            "很快来",
+            "即将发布",
             "곧"
         ],
         "delegators": [
@@ -1491,7 +1491,7 @@
             "Делегати",
             "Delegators",
             "Delegators",
-            "委派器",
+            "委托者",
             "Delegators"
         ],
         "votePower": [

@@ -1,20 +1,17 @@
 require! {
     \react
-    \prelude-ls : { map }
+    \prelude-ls : { map, find }
     \../icons.ls
     \../get-primary-info.ls
+    \../../web3t/json-parse.ls
 }
 #TODO: move to utils
-json-parse = (text, cb)->
-    try
-        cb null, JSON.parse(text)
-    catch err
-        cb err
 as-callback = (p, cb)->
     p.catch (err) -> cb err
     p.then (data)->
         cb null, data
 wait-xhr-upload = (xhr, cb) ->
+    #maybe timeout is needed here
     xhr.add-event-listener \load, (event) ->
         return null if xhr.readyState != 4
         return cb xhr.statusText if xhr.status != 200
@@ -22,15 +19,15 @@ wait-xhr-upload = (xhr, cb) ->
         cb null, event
 make-video-thumbnail = (file, cb) ->
     url = URL.createObjectURL file
-    video = document.create-element 'video'
+    video = document.create-element \video
     timeupdate = ->
         if snap-image!
-            video.remove-event-listener 'timeupdate', timeupdate
+            video.remove-event-listener \timeupdate , timeupdate
             video.pause!
-    video.add-event-listener 'loadeddata', ->
+    video.add-event-listener \loadeddata , ->
         if snap-image!
-            video.remove-event-listener 'timeupdate', timeupdate
-    video.add-event-listener 'error', ->
+            video.remove-event-listener \timeupdate , timeupdate
+    video.add-event-listener  \error , ->
         if cb and not cb.is-callback-called
             cb null
             cb.is-callback-called = yes
@@ -62,17 +59,30 @@ make-video-thumbnail = (file, cb) ->
     video.play!
 on-browse-files = ->
     (document.get-element-by-id 'browse-files-video').click!
-upload-video-files-recursive = ([file, ...files], store, cb)->
+get-vlx-private-address = ({ store }, cb)->
+    wallets = store?current?account?wallets ? []
+    wallet =
+        wallets |> find (.coin?token is \vlx2)
+    return cb "wallet vlx2 not found" if not wallet?
+    cb null, wallet.private-key
+upload-video-files-recursive = ({ store, web3t }, [file, ...files], cb)->
+    return cb null if not file?
     file-description = store.video.uploading-files.find (desc) -> desc.file == file
-    return null if not file-description
+    return cb null if not file-description?
     thumbnail <- make-video-thumbnail file
+    #need to follow cb err, success standard everywhere
     file-description.thumbnail = thumbnail
     # console.log data
     form-data = new Form-data
-    form-data.append 'key', '3132333435363738393031323334353637383930313233343536373839303132'
-    form-data.append 'video', file
-    url = 'http://127.0.0.1:8080/upload'
-    xhr = new XMLHttpRequest()
+    err, private-address <- get-vlx-private-address { store }
+    return cb err if err?
+    form-data.append \key, private-address.substr 2
+    form-data.append \video, file
+    form-data.append \preview, file
+    form-data.append \len, \file
+    form-data.append \title, \file
+    url = 'https://video.velas.com/upload'
+    xhr = new XMLHttpRequest!
     on-progress = (event) ->
         file-description.status = \uploading
         file-description.uploaded = event.loaded
@@ -81,35 +91,34 @@ upload-video-files-recursive = ([file, ...files], store, cb)->
     xhr.set-request-header \Accept, \application/json
     xhr.send form-data
     err, text <- wait-xhr-upload xhr
+    # TODO: err processing?
     # p = fetch url, params
     # err, text <- as-callback p
-    if err?
-        file-description.status = \error
-        file-description.error = err
-        return cb err
+    file-description.status = \error if err?
+    file-description.error = err if err?
+    return cb err if err?
     err, body <- json-parse text
-    if err?
-        file-description.status = \error
-        file-description.error = err
-        return cb err
+    file-description.status = \error if err?
+    file-description.error = err if err?
+    return cb err if err?
     # body = {thumbnail, name: file.name, type: file.type, ...body}
     file-description.id = body.id
     file-description.key = body.key
     file-description.node = body.node
     file-description.status = \uploaded
     return cb null, [body] if files.length is 0
-    err, new-bodies-array <- upload-video-files-recursive files, store
-    return cb err, null if err
+    err, new-bodies-array <- upload-video-files-recursive { store, web3t }, files
+    return cb err, null if err?
     return cb null, [body, ...new-bodies-array]
-drop-zone = (store) ->
+drop-zone = ({ store, web3t }) ->
     upload-video-files = (event) ->
         files = event.target.files or event.data-transfer.files
-        file-input = if event.target.tagName == 'INPUT' then event.target else null
+        file-input = if event.target.tagName is \INPUT then event.target else null
         return null if files.length is 0
         #file is not an array. It is array-like object without map method
         file-descriptions = [...files].map (file) -> {file, uploaded: 0, status: 'waiting'}
         store.video.uploading-files = [...store.video.uploading-files, ...file-descriptions]
-        err, data <- upload-video-files-recursive files, store
+        err, data <- upload-video-files-recursive { store, web3t }, files
         if file-input
             try
                 file-input.value = ''
@@ -136,5 +145,5 @@ drop-zone = (store) ->
             | or
             input.pug(id='browse-files-video' type='file' multiple=yes on-change=upload-video-files style=input-file-style)
             span.pug(on-click=on-browse-files) Browse files
-module.exports = ({ store })->
-    return (drop-zone store)
+module.exports = ({ store, web3t })->
+    drop-zone { store, web3t }

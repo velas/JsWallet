@@ -898,7 +898,8 @@ trend = (store, web3t)->
     file-tree =
         if store.current.files then \file-tree else \ ""
     .pug.similarvideo(class="#{file-tree}")
-        h2.header.pug Trending        .pug.section
+        h2.header.pug Trending
+        .pug.section
             .source.pug(on-click=goto-details)
                 span.pug.play
                     icon \TriangleRight, 15

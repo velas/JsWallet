@@ -17,6 +17,7 @@ require! {
     text-align: center
     position: relative
     overflow: visible
+    z-index: 0
     .browse
         display: inline-block
         position: absolute

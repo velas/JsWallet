@@ -2,7 +2,8 @@ require! {
     \read-write-google-spreadsheet : Spreadsheet
     \./config.json : { oauth2 }
     \./langs.json
-    \prelude-ls : { obj-to-pairs, map, zip, pairs-to-obj, find }
+    \prelude-ls : { obj-to-pairs, map, zip, pairs-to-obj, find, each }
+    \fs : { write-file }
 }
 
 opts =
@@ -23,24 +24,45 @@ build-row = (langs, lang)-->
     all-pairs = [["key", name]] ++ pairs
     pairs-to-obj all-pairs
 
+update-from-drive = (google-row, langs, cb)->
+    #console.log \update-from-drive , google-row
+    return cb null if not google-row?
+    lang = langs.mapping[google-row.key]
+    return cb "not exists" if not lang?
+    #update from google drive is not implemented yet
+    headers = langs.languages
+    update-langs = ([name, value])->
+        return if name is \key
+        #console.log name, value
+        #console.log \update-from-drive, name, value
+        index = headers.index-of(name)
+        return if index is -1
+        lang[index] = value
+    google-row |> obj-to-pairs |> each update-langs 
+    cb null
+
 sync-row = (google-rows, langs, wallet-row, cb)->
-    console.log \sync-row, wallet-row
+    console.log \sync-row, wallet-row.key
     already-there =
         google-rows |> find (.key is wallet-row.key)
-    return cb null if already-there?
+    return update-from-drive already-there, langs, cb  if already-there?
     err <- spreadsheet.add-new-row wallet-row
     return cb err if err?
     cb null
 
-sync-all = (google-rows, langs, [wallet-row, ...wallet-rows])-->
-    return cb null if not wallet-row?
-    err <- sync-row google-rows, langs, wallet-row
-    return cb err if err?
-    
-    err <- sync-all google-rows, langs, wallet-rows
+save-langs-updated = (langs, cb)->
+    err <- write-file "\./langs/langs.updated.json", JSON.stringify(langs, null, 4)
     return cb err if err?
     cb null
 
+sync-all = (google-rows, langs, [wallet-row, ...wallet-rows])-->
+    return save-langs-updated langs, cb if not wallet-row?
+    err <- sync-row google-rows, langs, wallet-row
+    return cb err if err?
+    err <- sync-all google-rows, langs, wallet-rows
+    return cb err if err?
+    #finalize changes
+    cb null
 wallet-rows =
     langs.mapping 
         |> obj-to-pairs 

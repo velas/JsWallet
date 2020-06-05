@@ -16,20 +16,20 @@ init-flow = (prev)->
     return \terms if prev is \verifyseed
     #return \chooseinit if not saved!
     \wallets
-get-page = (store, page, prev)->
+get-page = (store, page, prev) ->
     return page if page isnt \:init
     init-flow prev
-init-control = (scope, name, cb)->
+init-control = (scope, name, cb) !->
     #<- set-timeout _, 1
     control = pages[name] 
     return cb null if typeof! control?init isnt \Function
     control.init scope, cb
-focus-control = (scope, name, cb)->
+focus-control = (scope, name, cb) !->
     scroll-top!
     control = pages[name] 
     return cb null if typeof! control?focus isnt \Function
     control.focus scope, cb
-module.exports = (store, web3t, page)->
+module.exports = (store, web3t, page) !->
     return alert "store is required" if not store?
     return alert "web3t is required" if not web3t?
     scroll-top!

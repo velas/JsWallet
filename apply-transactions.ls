@@ -7,7 +7,6 @@ filter-txs = (store, tx)-->
     type in filt and token in filt
 module.exports = (store)->
     return store.transactions.applied.length = 0 if store.transactions.all.length is 0
-    console.log \apply-transactions, store.transactions.all
     store.transactions.applied = 
         store.transactions.all 
             |> filter filter-txs store

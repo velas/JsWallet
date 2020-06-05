@@ -100,7 +100,7 @@ order-withdraw-process = (store, web3t)->
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
-        amount = store.staking.maxWithdrawOrderAllowed
+        amount = store.staking.maxWithdrawOrderAllowed `times` (10^18)
         return alert store, "max is #{max.to-fixed!}" if +amount > +max.to-fixed!
         return alert store, "Max Withdraw Orer Allowed is 0 now", cb if +amount is 0
         data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
@@ -130,7 +130,7 @@ order-withdraw-process = (store, web3t)->
                                 .pug
                                     .pug
                                         amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
-                                    button { store, text: "Request exit", icon: 'exit', on-click: order }
+                                    button { store, text: "Request exit", icon: 'exit', on-click: order, type: "secondary" }
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
                         .pug.step-content Come back in later for a your staking amount
@@ -139,7 +139,7 @@ order-withdraw-process = (store, web3t)->
                         .pug.step-content
                             .pug Withdraw the staking amount
                             if active-third is \active
-                                button { store, text: "Withdraw", icon: 'exit', on-click: exit }
+                                button { store, text: "Withdraw", icon: 'exit', on-click: exit, type: "secondary" }
 fast-withdraw-process = (store, web3t)->
     lang = get-lang store
     exit = ->
@@ -148,7 +148,7 @@ fast-withdraw-process = (store, web3t)->
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
-        amount = store.staking.withdrawAmount
+        amount = store.staking.withdrawAmount `times` (10^18)
         return alert store, "max is #{max.to-fixed!}" if +amount > +max.to-fixed!
         return alert store, "Max Withdraw Allowed is 0", cb if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
@@ -164,7 +164,7 @@ fast-withdraw-process = (store, web3t)->
             .pug Withdraw the staking amount
             .pug
                 amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
-            button { store, text: "Withdraw", icon: 'exit', on-click: exit }
+            button { store, text: "Withdraw", icon: 'exit', on-click: exit, type: "secondary" }
 not-available-right-now = ->
     .pug.section
         .title.pug
@@ -179,7 +179,6 @@ registry =
     \exit_closed  : not-available-right-now
 module.exports = (store, web3t)->
     func = registry[store.staking.exit-tab]
-    console.log \render-exit, store.staking.exit-tab, func
     return null if not func?
     func store, web3t
 module.exports.init = ({ store, web3t}, cb)->
@@ -203,6 +202,7 @@ module.exports.init = ({ store, web3t}, cb)->
     return cb err if err?
     store.staking.orderedWithdrawAmount = amount.to-fixed!
     err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
+    console.log "web3t.velas.Staking.orderWithdrawEpoch('#{store.staking.chosen-pool.address}', '#{staking-address}')"
     return cb "#{err}" if err?
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?
@@ -215,5 +215,4 @@ module.exports.init = ({ store, web3t}, cb)->
         | +store.staking.maxWithdrawOrderAllowed > 0 => \exit_order
         | +store.staking.stake-amount-total > 0 => \exit_closed
         | _ => ''
-    console.log \store.staking.exit-tab, store.staking.exit-tab
     cb null

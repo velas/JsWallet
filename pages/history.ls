@@ -676,8 +676,12 @@ render-transaction = (store, web3t, tran)-->
         | _ => \ "#{icons.unknown}"
     wallet-from =
         address: from
+        network: network
+        coin: coin
     wallet-to =
         address: to
+        network: network
+        coin: coin
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network

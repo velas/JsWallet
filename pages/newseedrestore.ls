@@ -192,7 +192,7 @@ newseed = ({ store, web3t })->
     .newseed-restore.pug
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)
-            .title.pug #{style.branding.title}
+            .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v
             button.pug.left(style=button-primary1-style on-click=restore12)

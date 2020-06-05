@@ -72,7 +72,7 @@ module.exports =
         bg-primary-light: \#e7e5ed
         stats: \#E7E5ED
         filterIcon: "brightness(.5)"
-        filterLogo: "brightness(.8)"
+        filterLogo: "brightness(1)"
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1)) hue-rotate(0deg)"
         th: \#E7E5ED
         tr-odd: \#dad9de

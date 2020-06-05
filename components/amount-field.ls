@@ -21,6 +21,7 @@ require! {
         height: inherit
         line-height: inherit
         vertical-align: top
+        z-index: 1
     >input
         display: inline-block
         width: calc(100% - 70px) !important
@@ -71,8 +72,9 @@ module.exports = ({ store, value, on-change, placeholder })->
     usd = value `times` wallet.usd-rate
     eur = value `times` wallet.eur-rate
     actual-placeholder = placeholder ? ""
+    value-vlx = value ? 0
     .pug.input-area
-        input.pug(type="text" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder)
+        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change placeholder=actual-placeholder)
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
             span.pug VLX2

@@ -33,4 +33,6 @@ module.exports = (store, web3t)->
         | store.transactions.applied.length > 0 => store.transactions.applied |> sort-by (.type)
         | _ => [{amount: 1}]
     data = build-data store, items
+    options =
+        border-width: \5px
     Doughnut.pug(data=data width=300 height=300 legend=legend)
