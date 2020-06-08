@@ -39,6 +39,17 @@ module.exports = (store, web3t)->
         navigate store, web3t, \locked
     refresh = ->
         <- web3t.refresh
+    not-in-dictionary = (word)->
+        word not in bip39.wordlists.EN
+    check-problem = (seed)->
+        return "expected seed" if typeof! seed isnt \String
+        return "expected lowercase" if seed.to-lower-case! isnt seed
+        words = seed.split(' ')
+        return "expected 12/24 words" if words.length not in [12,24]
+        wrong-words =
+            words |> filter not-in-dictionary
+        return "some words are not in dictionary" if wrong-words.length > 0
+        ""
     #active-page = (page)->
     #    if current.page is page then \active
     #choose-account = (selected, event)-->
@@ -53,6 +64,7 @@ module.exports = (store, web3t)->
     change-seed = (event)->
         state.timeout = clear-timeout state.timeout
         current.seed = event.target.value
+        current.seed-problem = check-problem event.target.value
         state.timeout = set-timeout refresh, 2000
     save-seed = ->
         seed.set current.seed

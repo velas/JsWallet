@@ -15,7 +15,7 @@ cb = console.log
 program = new Command!
 
 program.option('--newword <word>', 'enter word')
-program.option('--sync <word>', 'sync all words with https://docs.google.com/spreadsheets/d/1CsISZgog2swmXOarx418BNN-Zy_9zBptWOXqsutzRWs/edit#gid=0')
+program.option('--sync', 'sync all words with https://docs.google.com/spreadsheets/d/1CsISZgog2swmXOarx418BNN-Zy_9zBptWOXqsutzRWs/edit#gid=0')
 
 program.parse(process.argv)
 
@@ -27,12 +27,13 @@ body = JSON.parse content
 err, body <- newword { filename, program, body }
 return cb err if err?
 
-err <- sync { filename, program }
-return cb err if err?
 
 languages = 
     body |> (.languages)
 
 err, result <- translate filename, languages, body
 return cb err if err?
-cb null, \done
+
+err <- sync { filename, program }
+return cb err if err?
+cb null

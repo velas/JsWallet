@@ -368,6 +368,7 @@ manage-account = (store, web3t)->
                                 .pug.title
                                     span.pug #{lang.secret-phrase ? 'Secret Phrase'}
                                 textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase ? 'Secret Phrase'}")
+                                .pug #{current.seed-problem}
                                 .pug
                                     button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
                         case current.saved-seed is yes

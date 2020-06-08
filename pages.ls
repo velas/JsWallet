@@ -30,7 +30,9 @@ require! {
     \./pages/soundstorage.ls
     \./pages/monitor.ls
     \./pages/notification.ls
+    \./pages/offlinewallets.ls
 }
+export offlinewallets
 export monitor
 export resources
 export staking

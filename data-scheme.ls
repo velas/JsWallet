@@ -156,6 +156,7 @@ store =
     transactions: 
         all: []
         applied: []
+    releases: []
     current:
         try-copy: null
         hovered-address:
@@ -218,6 +219,7 @@ store =
         can-buy: no
         checking-name: no
         seed: ""
+        seed-problem: ""
         seed-words: []
         seed-temp: ""
         seed-generated: no

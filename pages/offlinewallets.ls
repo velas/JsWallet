@@ -1,0 +1,106 @@
+require! {
+    \react
+    \../components/button.ls
+    \prelude-ls : { map, filter, head, find } 
+    \../../web3t/providers/superagent.ls : { get }
+    \../get-primary-info.ls
+}
+.wallets
+    >.header
+        padding: 50px
+        font-size: 40px
+    >.platforms
+        text-align: center
+        >.platform
+            display: inline-block
+            width: 300px
+            padding: 20px
+            vertical-align: top
+            text-overflow: ellipsis
+            border: 1px solid white
+            margin: 5px
+            overflow: hidden
+            a
+                padding: 10px
+            >.title
+                font-size: 15px
+                font-weight: bold
+            >.source
+                font-size: 12px
+                box-sizing: content-box
+                padding: 20px
+            >.download
+                font-size: 15px
+                box-sizing: content-box
+                padding: 20px
+build-version = (store, release)-->
+    style = get-primary-info store
+    button-primary1-style=
+        border: "1px solid #{style.app.primary1}"
+        color: style.app.text
+        background: style.app.primary1
+    button-primary3-style=
+        border: "1px solid #{style.app.primary3}"
+        color: style.app.text2
+        background: style.app.primary3
+    button-primary2-style=
+        border: "1px solid #{style.app.primary2}"
+        color: style.app.text
+        background: style.app.primary2
+    #md5-file = store.releases |> filter (.name is "#{name}.md5") |> head
+    #md5 = md5-file.release.browser_download_url
+    [...parts, last] = release.name.split('.')
+    source = "https://github.com/velas/JsWalletDesktop"
+    name = 
+        | last is 'dmg' => \Mac 
+        | last is 'exe' => \Windows
+        | last is 'snap' => \Linux
+    console.log "#{release.name}.md5"
+    md5-file =
+        store.releases |> find (-> it.name is "#{release.name}.md5")
+    .pug.platform
+        .pug.title #{name}
+        .pug.tag_name #{release.tag_name}
+        .pug.source
+            a.pug(href="#{md5-file?browser_download_url}" style=button-primary3-style target="_blank") MD5
+        .pug.source
+            a.pug(href="#{source}" style=button-primary3-style target="_blank") Source Code
+        .pug.download
+            a.pug(href="#{release.browser_download_url}" style=button-primary1-style target="_blank") Download
+only-version = (item)->
+    [...parts, last] = item.name.split('.')
+    last in <[ dmg exe snap ]>
+only-md5 = (item)->
+    [...parts, last] = item.name.split('.')
+    last in <[ md5 ]>
+module.exports = ({ store, web3t })->
+    .pug.wallets
+        .pug.header Download Wallets
+        .pug.platforms
+            store.releases |> filter only-version |> map build-version store
+#update-md5 = ([release, ...releases], cb)->
+#    return cb null if not release?
+#    err, data <- get release.browser_download_url .end
+#    return cb err if err?
+#    console.log data.text
+#    release.content = data.text 
+#    update-md5 releases, cb
+module.exports.init = ({ store, web3t}, cb)->
+    console.log \init
+    #https://github.com/velas/JsWalletDesktop/releases/download/v0.12.111/velas-desktop-wallet-0.12.111-mac.zip
+    #https://uploads.github.com/repos/velas/JsWalletDesktop/releases/27269358/assets{?name,label}
+    err, data <- get \https://api.github.com/repos/velas/JsWalletDesktop/releases .end
+    return cb err if err?
+    console.log \init, err, data
+    latest-release =
+        data.body |> head
+    return cb "latest release is not found" if not latest-release? 
+    console.log \latest-release.assets_url , latest-release.assets_url
+    err, data <- get latest-release.assets_url .end
+    console.log \init, err, data
+    return cb err if err?
+    store.releases = data.body |> map (-> { ...it, latest-release.tag_name })
+    #md5-items = 
+    #    store.releases |> filter only-md5
+    #<- update-md5 md5-items
+    cb null

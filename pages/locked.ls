@@ -13,6 +13,7 @@ require! {
     \./confirmation.ls : { confirm }
     \../components/button.ls
     \../components/text-field.ls
+    \../components/export-import-seed.ls
 }
 .locked
     @import scheme
@@ -348,6 +349,7 @@ locked = ({ store, web3t })->
         .pug.title(key="locked-title") #{title}
         .pug.inputs(key="locked-inputs")
             input store, web3t
+        export-import-seed store
         footer store, web3t
 focus = ({ store }, cb)->
     cb null
