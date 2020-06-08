@@ -1,7 +1,9 @@
 # Velas Multi-Currency Wallet
 
 
+
 ### Install Web Wallet on your server
+
 
 1. mkdir wallet-area
 2. cd wallet-area
@@ -14,6 +16,8 @@
 7. npm i lsxc -g
 7. npm run wallet-start
 8. open http://127.0.0.1:8080
+
+Tested with `node --version` v11.10.1
 
 ### Features
 

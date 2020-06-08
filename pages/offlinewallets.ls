@@ -40,8 +40,8 @@ require! {
             vertical-align: top
             text-overflow: ellipsis
             border: 1px solid white
-            margin: 5px
             overflow: hidden
+            margin: 10px 1%
             a
                 padding: 10px
             >.title
@@ -69,6 +69,10 @@ build-version = (store, release)-->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+    resource =
+        color: style.app.text
+        border: "1px solid #{style.app.border}"
+        background: style.app.header
     #md5-file = store.releases |> filter (.name is "#{name}.md5") |> head
     #md5 = md5-file.release.browser_download_url
     [...parts, last] = release.name.split('.')
@@ -80,7 +84,7 @@ build-version = (store, release)-->
     console.log "#{release.name}.md5"
     md5-file =
         store.releases |> find (-> it.name is "#{release.name}.md5")
-    .pug.platform
+    .pug.platform(style=resource)
         .pug.title #{name}
         .pug.tag_name #{release.tag_name}
         .pug.source
