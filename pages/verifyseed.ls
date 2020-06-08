@@ -153,6 +153,7 @@ newseed = ({ store, web3t })->
         console.log item.original.part, item.part
         item.original.part isnt item.part
     verify-seed = ->
+        store.current.verify-seed-error = no
         ixs = store.current.verify-seed-indexes
         item = ixs[store.current.verify-seed-index]
         wrong = item.original.part isnt item.part

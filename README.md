@@ -1,6 +1,19 @@
 # Velas Multi-Currency Wallet
 
-![Wallet](https://res.cloudinary.com/nixar-work/image/upload/v1580027538/2020-01-26_10.31.05.jpg)
+
+### Install Web Wallet on your server
+
+1. mkdir wallet-area
+2. cd wallet-area
+1. git clone https://github.com/velas/JsWallet wallet
+2. git clone http://github.com/web3space/web3t
+3. cd web3t
+4. npm i 
+5. cd ../wallet
+6. npm i 
+7. npm i lsxc -g
+7. npm run wallet-start
+8. open http://127.0.0.1:8080
 
 ### Features
 
@@ -32,11 +45,7 @@
 * and other less known
 
 
-### Install on your server
 
-1. npm run setup
-2. npm run wallet
-3. Serve main-index.html main-bundle.js main-bundle.css by your http server
 
 
 

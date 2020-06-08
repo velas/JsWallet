@@ -4,6 +4,8 @@ require! {
     \prelude-ls : { map, filter, head, find } 
     \../../web3t/providers/superagent.ls : { get }
     \../get-primary-info.ls
+    \../icons.ls
+    \../navigate.ls
 }
 .wallets
     @media screen and (min-width: 800px)
@@ -30,6 +32,7 @@ require! {
         font-size: 40px
     >.platforms
         text-align: center
+        padding: 40px 0
         >.platform
             display: inline-block
             width: 300px
@@ -92,9 +95,23 @@ only-version = (item)->
 only-md5 = (item)->
     [...parts, last] = item.name.split('.')
     last in <[ md5 ]>
+header = (store, web3t)->
+    info = get-primary-info store
+    border-style =
+        color: info.app.text
+        border-bottom: "1px solid #{info.app.border}"
+        background: info.app.background
+    goto-search = ->
+        navigate store, web3t, \search
+    show-class =
+        if store.current.open-menu then \hide else \ ""
+    .pug.title(style=border-style)
+        .pug.header(class="#{show-class}") Download Wallets
+        .pug.close(on-click=goto-search)
+            img.icon-svg.pug(src="#{icons.arrow-left}")
 module.exports = ({ store, web3t })->
     .pug.wallets
-        .pug.header Download Wallets
+        header store, web3t
         .pug.platforms
             store.releases |> filter only-version |> map build-version store
 #update-md5 = ([release, ...releases], cb)->
