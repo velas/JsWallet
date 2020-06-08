@@ -317,6 +317,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \soundstorage
     goto-notice = ->
         navigate store, web3t, \notification
+    goto-wallets = ->
+        navigate store, web3t, \offlinewallets
     .pug.panel-content
         p.results.pug 
             | #{lang.estimated-results}: 
@@ -354,6 +356,11 @@ dapps = (store, web3t)->
                     span.pug About
                 li.pug
                     span.pug FAQs
+        .pug.section
+            .source.pug(on-click=goto-wallets)
+                .pug.address Download Velas Wallets
+                .pug.header Velas Wallets
+            .pug.description For mac, windows, ios, android devices
         .pug.section
             .source.pug(on-click=goto-staking)
                 .pug.address #{lang.velas-blockchain}

@@ -6,6 +6,25 @@ require! {
     \../get-primary-info.ls
 }
 .wallets
+    @media screen and (min-width: 800px)
+        margin-left: 60px
+    >.title
+        position: sticky
+        position: -webkit-sticky
+        z-index: 1
+        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        box-sizing: border-box
+        top: 0
+        width: 100%
+        color: gray
+        font-size: 22px
+        padding: 10px
+        height: 60px
+        >.header
+            margin: 5px
+            text-align: center
+            @media(max-width:800px)
+                text-align: center
     >.header
         padding: 50px
         font-size: 40px
