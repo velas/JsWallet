@@ -964,7 +964,7 @@ staking-content = (store, web3t)->
             | +store.staking.stake-amount-total >= 1000000 => 1
             | _ => data `div` (10^18)
         max = get-balance! `minus` 0.1
-        return cb "You balance is less than minimum staking amount" if +min > + max
+        return cb lang.balanceLessStaking if +min > + max
         cb null, { min, max }
     use-min = ->
         err, options <- get-options
@@ -977,7 +977,7 @@ staking-content = (store, web3t)->
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert err if err?
-        return alert "Consensus change is initiated. Operation is not permitted" if can isnt yes
+        return alert lang.actionProhibited if can isnt yes
         data = web3t.velas.ValidatorSet.emitInitiateChange.get-data!
         to = web3t.velas.ValidatorSet.address
         amount = 0
@@ -1137,8 +1137,8 @@ staking-content = (store, web3t)->
                             amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
-                                    button.small.pug(style=button-primary3-style on-click=use-min) Min
-                                    button.small.pug(style=button-primary3-style on-click=use-max) Max
+                                    button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                    button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
                                 span.pug Your balance: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
