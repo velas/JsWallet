@@ -98,8 +98,12 @@ module.exports = ({ store, wallet, type })->
         | _ => address-input
     filter-icon=
         filter: style.app.filterIcon
-    address-link = get-address-link wallet
-    address-title = get-address-title wallet
+    address-link = 
+        | store.current.refreshing is no => get-address-link wallet
+        | _ => "..."
+    address-title = 
+        | store.current.refreshing is no => get-address-title wallet
+        | _ => "..."
     show-details = ->
         store.current.hovered-address.address = wallet.address
     hide-details = ->

@@ -69,10 +69,14 @@ module.exports = ({ store, value, on-change, placeholder })->
     { wallets } = store.current.account
     wallet =
         wallets |> find (-> it.coin.token is \vlx2)
-    usd = value `times` wallet.usd-rate
-    eur = value `times` wallet.eur-rate
-    actual-placeholder = placeholder ? ""
     value-vlx = value ? 0
+    usd = 
+        | wallet.usd-rate? => value-vlx `times` wallet.usd-rate
+        | _ => ".."
+    eur = 
+        | wallet.eur-rate? => value-vlx `times` wallet.eur-rate
+        | _ => ".."
+    actual-placeholder = placeholder ? ""
     .pug.input-area
         input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change placeholder=actual-placeholder)
         span.suffix.pug(style=input-style)

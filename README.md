@@ -4,7 +4,6 @@
 
 ### Install Web Wallet on your server
 
-
 1. mkdir wallet-area
 2. cd wallet-area
 1. git clone https://github.com/velas/JsWallet wallet

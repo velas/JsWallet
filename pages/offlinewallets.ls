@@ -42,19 +42,36 @@ require! {
             border: 1px solid white
             overflow: hidden
             margin: 10px 1%
+            >.tag_name
+                margin-bottom: 10px
+            .title-icons
+                height: 40px
+                margin: 10px 0
             a
                 padding: 10px
             >.title
                 font-size: 15px
                 font-weight: bold
             >.source
-                font-size: 12px
+                &.link
+                    a
+                        text-decoration: underline
+                        padding: 0
+            >.source, >.download
+                padding: 10px 0 0
                 box-sizing: content-box
-                padding: 20px
-            >.download
-                font-size: 15px
-                box-sizing: content-box
-                padding: 20px
+                a
+                    text-decoration: none
+                    text-transform: uppercase
+                    font-size: 10px
+                    font-weight: bold
+                    cursor: pointer
+                    outline: none
+                    display: inline-block
+                    text-overflow: ellipsis
+                    overflow: hidden
+                    white-space: nowrap
+                    width: 80px
 build-version = (store, release)-->
     style = get-primary-info store
     button-primary1-style=
@@ -69,6 +86,10 @@ build-version = (store, release)-->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+    button-link=
+        border: "0"
+        color: style.app.text2
+        background: "transparent"
     resource =
         color: style.app.text
         border: "1px solid #{style.app.border}"
@@ -78,21 +99,26 @@ build-version = (store, release)-->
     [...parts, last] = release.name.split('.')
     source = "https://github.com/velas/JsWalletDesktop"
     name = 
-        | last is 'dmg' => \Mac 
+        | last is 'dmg' => \MacOS
         | last is 'exe' => \Windows
         | last is 'snap' => \Linux
+    icon = 
+        | last is 'dmg' => \ "#{icons.macos}"
+        | last is 'exe' => \ "#{icons.windows}"
+        | last is 'snap' => \ "#{icons.linux}"
     console.log "#{release.name}.md5"
     md5-file =
         store.releases |> find (-> it.name is "#{release.name}.md5")
     .pug.platform(style=resource)
+        img.pug.title-icons(src="#{icon}")
         .pug.title #{name}
         .pug.tag_name #{release.tag_name}
-        .pug.source
-            a.pug(href="#{md5-file?browser_download_url}" style=button-primary3-style target="_blank") MD5
         .pug.source
             a.pug(href="#{source}" style=button-primary3-style target="_blank") Source Code
         .pug.download
             a.pug(href="#{release.browser_download_url}" style=button-primary1-style target="_blank") Download
+        .pug.source.link
+            a.pug(href="#{md5-file?browser_download_url}" style=button-link target="_blank") MD5
 only-version = (item)->
     [...parts, last] = item.name.split('.')
     last in <[ dmg exe snap ]>
