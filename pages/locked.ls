@@ -290,7 +290,7 @@ setup-button = (store, web3t)->
     style = get-primary-info store
     { open-language } = menu-funcs store, web3t
     setup = ->
-        return alert(lang.wrong-pin-should ? 'PIN should be 4 at least 4 chars length') if store.current.pin.length < 4
+        return alert(lang.wrong-pin-should) if store.current.pin.length < 4
         set store.current.pin
         check-pin store, web3t
     text-color=
@@ -305,8 +305,8 @@ setup-button = (store, web3t)->
         button.setup.pug(on-click=setup style=button-style)
             span.pug
                 img.icon-svg.pug(src="#{icons.key}" style=btn-icon)
-                | #{lang.setup ? 'Setup'}
-        .hint.p.pug(style=text-color) #{lang.pin-info ? 'Please make sure to use a pin you remember. You have 7 tries. After that, you need to restore the wallet from your 12-word recovery Phrase.'}
+                | #{lang.setup}
+        .hint.p.pug(style=text-color) #{lang.pin-info}
 create-wallet = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store
@@ -327,8 +327,8 @@ locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
     title = 
-        | not exists! => lang.enter-pin ? "Password"
-        | _ => lang.enter-pin ? "Password"
+        | not exists! => lang.enter-pin 
+        | _ => lang.enter-pin
     footer =
         | not exists! => setup-button
         | _ => wrong-trials

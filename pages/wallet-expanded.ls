@@ -171,7 +171,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .wallet-header-part.right.pug(style=text)
                     .pug.counts
                         .pug #{ total-sent + ' ' token }
-                        .pug.label(style=color1) Total Sent
+                        .pug.label(style=color1) #{lang.totalSent}
                     .pug.counts
                         .pug #{ total-received + ' ' token }
-                        .pug.label(style=color2) Total Received
+                        .pug.label(style=color2) #{lang.totalReceived}
