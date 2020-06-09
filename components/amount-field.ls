@@ -78,11 +78,15 @@ module.exports = ({ store, value, on-change, placeholder })->
         | _ => ".."
     actual-placeholder = placeholder ? ""
     normalize = ->
-        it.trim(\0)
+        return \0 if not it?
+        return parse-int it if it.index-of('.') is -1
+        return parse-int(it) + "." if it.substr(it.length - 1, 1) is "."
+        [first=\0, second=\0] = it.split('.')
+        "#{parse-int first}.#{second}"
     get-number = (value)->
         | value is "" => \0
         | typeof! value not in <[String Number]> => \0
-        | _ => normalize value.match(/\d+(\.\d{1,2})?/)?0
+        | _ => normalize value.match(/\d+(\.)?(\d{1,})?/)?0
     on-change-internal = (it)->
         value = get-number it.target?value
         on-change { target: { value } }
