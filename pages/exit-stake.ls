@@ -96,19 +96,19 @@ order-withdraw-process = (store, web3t)->
     order = ->
         err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
         return cb err if err?
-        return alert store, "Stake and Withdraw is not allowed right now", cb if data isnt yes
+        return alert store, lang.actionProhibited, cb if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
         amount = store.staking.maxWithdrawOrderAllowed `times` (10^18)
-        return alert store, "max is #{max.to-fixed!}" if +amount > +max.to-fixed!
-        return alert store, "Max Withdraw Orer Allowed is 0 now", cb if +amount is 0
+        return alert store, "#{lang.max} #{max.to-fixed!}" if +amount > +max.to-fixed!
+        return alert store, lang.actionProhibited, cb if +amount is 0
         data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }        
     exit = ->
-        return alert store, "No Ordered Amount", cb if +store.staking.orderedWithdrawAmount is 0
+        return alert store, lang.actionProhibited, cb if +store.staking.orderedWithdrawAmount is 0
         pool-address = store.staking.chosen-pool.address
         data = web3t.velas.Staking.claimOrderedWithdraw.get-data(pool-address)
         to = web3t.velas.Staking.address
@@ -125,21 +125,21 @@ order-withdraw-process = (store, web3t)->
                     .pug.step(on-click=activate-first class="#{active-first}")
                         .pug.step-count 1
                         .pug.step-content
-                            .pug Please click the "Request exit" button
+                            .pug #{lang.requestExit}
                             if active-first is \active
                                 .pug
                                     .pug
                                         amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
-                                    button { store, text: "Request exit", icon: 'exit', on-click: order, type: "secondary" }
+                                    button { store, text: lang.requestExit, icon: 'exit', on-click: order, type: "secondary" }
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
-                        .pug.step-content Come back in later for a your staking amount
+                        .pug.step-content #{lang.comeBack}
                     .pug.step(on-click=activate-third class="#{active-third}")
                         .pug.step-count 3
                         .pug.step-content
-                            .pug Withdraw the staking amount
+                            .pug #{lang.withdraw}
                             if active-third is \active
-                                button { store, text: "Withdraw", icon: 'exit', on-click: exit, type: "secondary" }
+                                button { store, text: lang.withdraw, icon: 'exit', on-click: exit, type: "secondary" }
 fast-withdraw-process = (store, web3t)->
     lang = get-lang store
     exit = ->
@@ -149,8 +149,8 @@ fast-withdraw-process = (store, web3t)->
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
         amount = store.staking.withdrawAmount `times` (10^18)
-        return alert store, "max is #{max.to-fixed!}" if +amount > +max.to-fixed!
-        return alert store, "Max Withdraw Allowed is 0", cb if +amount is 0
+        return alert store, "#{lang.max} #{max.to-fixed!}" if +amount > +max.to-fixed!
+        return alert store, lang.actionProhibited, cb if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
         to = web3t.velas.Staking.address
         amount = 0
@@ -159,18 +159,18 @@ fast-withdraw-process = (store, web3t)->
         store.staking.withdrawAmount = it.target.value
     .pug.section
         .title.pug
-            h3.pug Exit
+            h3.pug #{lang.exit}
         .description.pug
-            .pug Withdraw the staking amount
+            .pug #{lang.withdraw}
             .pug
                 amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
-            button { store, text: "Withdraw", icon: 'exit', on-click: exit, type: "secondary" }
+            button { store, text: lang.withdraw, icon: 'exit', on-click: exit, type: "secondary" }
 not-available-right-now = ->
     .pug.section
         .title.pug
-            h3.pug Exit
+            h3.pug #{lang.exit}
         .description.pug
-            .pug Not available right now. Please check later
+            .pug #{lang.actionProhibited}
 registry =
     \exit_ordered : order-withdraw-process
     \exit_order   : order-withdraw-process

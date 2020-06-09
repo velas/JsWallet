@@ -26,7 +26,7 @@ module.exports = ({ program, filename, body } , cb)->
     
     return cb "`#{program.newword}` is already exist" if res.length > 0
     
-    return cb "#{program.newword} is wrong. supports only [a-z]" if program.newword.match(/[a-zA-Z]+/)?0 isnt program.newword
+    #return cb "#{program.newword} is wrong. supports only [a-z]" if program.newword.match(/[a-zA-Z]+/)?0 isnt program.newword
     
     
     res =
@@ -51,8 +51,8 @@ module.exports = ({ program, filename, body } , cb)->
         return cb null if origin is program.newword
         cb "Word is not perfect. `#{program.newword}` -> #{translation} -> #{origin}"
     
-    err, data <- check-grammar
-    return cb err if err?
+    #err, data <- check-grammar
+    #return cb err if err?
     
     keys = 
         body.mapping |> obj-to-pairs |> filter (-> it.0 is program.newword.to-lower-case!)

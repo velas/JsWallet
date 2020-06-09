@@ -638,7 +638,7 @@ staking-content = (store, web3t)->
         #    | _ => data `div` (10^18)
         min = 10000
         max = get-balance! `minus` 0.1
-        return cb "You balance is less than minimum staking amount" if +min > + max
+        return cb lang.balanceLessStaking if +min > + max
         cb null, { min, max }
     use-min = ->
         err, options <- get-options
@@ -651,7 +651,7 @@ staking-content = (store, web3t)->
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert store, err, cb if err?
-        return alert store, "Please wait for epoch change", cb if can isnt yes
+        return alert store, lang.actionProhibited, cb if can isnt yes
         data = web3t.velas.ValidatorSet.emitInitiateChange.get-data!
         #console.log { data }
         to = web3t.velas.ValidatorSet.address
@@ -769,8 +769,8 @@ staking-content = (store, web3t)->
                                     th.pug(width="3%" style=stats) #
                                     th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
                                     th.pug(width="25%" style=stats) #{lang.total-stake}
-                                    th.pug(width="5%" title="Vote power" style=stats) #{lang.vote-power}
-                                    th.pug(width="5%" title="When more filled then less award for staker" style=stats) #{lang.filled}
+                                    th.pug(width="5%" style=stats) #{lang.vote-power}
+                                    th.pug(width="5%" style=stats) #{lang.filled}
                                     th.pug(width="25%" style=stats) #{lang.my-stake}
                                     th.pug(width="5%" style=stats) #{lang.stakers}
                                     th.pug(width="4%" style=stats) #{lang.selectPool}
@@ -815,8 +815,8 @@ staking-content = (store, web3t)->
                             amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
-                                    button.small.pug(style=button-primary3-style on-click=use-min) Min
-                                    button.small.pug(style=button-primary3-style on-click=use-max) Max
+                                    button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                    button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
                                 span.pug Your balance: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
@@ -892,8 +892,6 @@ staking.init = ({ store, web3t }, cb)->
     err <- exit-stake.init { store, web3t }
     cb null
 module.exports = staking
-human-bool = ->
-    if it then 'Yes' else 'No'
 fill-pools = ({ store, web3t }, [item, ...rest], cb)->
     staking-address = store.staking.keystore.staking.address
     return cb null if not item?

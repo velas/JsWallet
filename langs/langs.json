@@ -972,7 +972,7 @@
         ],
         "checkNode": [
             "Check Your Node",
-            "Проверьте свою ноду",
+            "Проверьте сво�� ноду",
             "Виберіть свій вузол",
             "Vérifiez votre nœud",
             "Comprueba tu Nodo",
@@ -1679,6 +1679,86 @@
             "账号",
             "Account",
             "الحساب"
+        ],
+        "pendingTransactions": [
+            "You have a pending VLX transaction. Some of the counts may be inaccurate.",
+            "У вас есть незавершенные транзакции vlx по. Некоторые значения могут быть неточными.",
+            "У вас є незавершені транзакції vlx по. Деякі значення можуть бути неточними.",
+            "Vous avez une attente de VLX transaction. Certains des chefs d'accusation peuvent être inexacts.",
+            "Tiene pendiente un VLX transacción. Algunos de los recuentos pueden ser inexactos.",
+            "你有一个未决VLX交易。 一些计数可能不准确。",
+            "당신이 보류 중인 VLX 트랜잭션이 있습니다. 의 일부를 계산이 정확하지 않을 수 있습니다.",
+            "لديك ريثما VLX الصفقة. بعض التهم قد تكون غير دقيقة."
+        ],
+        "actionProhibited": [
+            "The action is prohibited.",
+            "Данное действие запрещено.",
+            "Дана дія заборонено.",
+            "L'action est interdite.",
+            "La acción está prohibida.",
+            "该行动是禁止的。",
+            "행동이 금지됩니다.",
+            "عمل محظور."
+        ],
+        "balanceLessStaking": [
+            "You balance is less than minimum staking amount",
+            "У вас баланс меньше минимальной суммы ставок",
+            "У вас баланс менше мінімальної суми ставок",
+            "Vous l'équilibre est moins que le minimum de jalonnement montant",
+            "El equilibrio es menor que el mínimo de estacando de cantidad",
+            "你的余额低于最小赌量",
+            "당신은 균형은 보다 적은 최소 양을 감시",
+            "لك الرصيد إلى أقل من الحد الأدنى عمادا المبلغ"
+        ],
+        "epochLength": [
+            "The maximum length of epoch is ^. Please uncheck ^ epochs",
+            "Максимальная длина эпохи ^. Пожалуйста, снимите ^ эпох",
+            "Максимальна довжина епохи ^. Будь ласка, зніміть ^ епох",
+            "La longueur maximale de l'époque est ^. Veuillez décocher ^ époques",
+            "La longitud máxima de la época es ^. Por favor desmarque ^ épocas",
+            "在最长的时代是^. 请取消^时代",
+            "최대 길이의 시대입니다^. 선택 해제하십시오^epochs",
+            "الحد الأقصى لطول الحقبة هو ^. يرجى إلغاء ^ العهود"
+        ],
+        "comeBack": [
+            "Come back in later for a your staking amount",
+            "Вернуться в дальнейшем на вашу ставку сумму",
+            "Повернутися надалі на вашу ставку суму",
+            "Revenez plus tard pour votre jalonnement montant",
+            "Volver más tarde para su estaca cantidad",
+            "回来以后你赌量",
+            "돌아와서 나에 대한 귀하의 걸고 양",
+            "أعود لاحقا الخاص بك عمادا المبلغ"
+        ],
+        "requestExit": [
+            "Request exit",
+            "Запрос на выход",
+            "Запит на вихід",
+            "Demande de sortie",
+            "Solicitud de salida",
+            "请求退出",
+            "요청 종료",
+            "طلب الخروج"
+        ],
+        "withdraw": [
+            "Withdraw",
+            "Снять",
+            "Зняти",
+            "Retirer",
+            "Retirar",
+            "撤出",
+            "을 철회",
+            "سحب"        ],
+        "exit": [
+            "Exit",
+            "Выход",
+            "Вихід",
+            "Sortie",
+            "Salida",
+            "退出",
+            "구",
+            "خروج"
+
         ]
     }
 }
