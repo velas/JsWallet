@@ -1,0 +1,4 @@
+node_modules/
+_private/
+npm-debug.log
+.jshintrc
