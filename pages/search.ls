@@ -160,7 +160,7 @@ require! {
             line-height: 1.8
             &.path
     >.wrapper
-        height: 540px
+        height: calc(100vh - 250px)
         display: block
         overflow-y: scroll
         scrollbar-width: none

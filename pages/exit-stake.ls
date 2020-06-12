@@ -45,6 +45,8 @@ require! {
                 content: none
         .step-content
             font-size: 13px
+            >div
+                height: 40px
         button
             width: auto
             display: block
@@ -100,7 +102,7 @@ order-withdraw-process = (store, web3t)->
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
-        amount = store.staking.maxWithdrawOrderAllowed `times` (10^18)
+        amount = store.staking.withdrawAmount `times` (10^18)
         return alert store, "#{lang.max} #{max.to-fixed!}" if +amount > +max.to-fixed!
         return alert store, lang.actionProhibited, cb if +amount is 0
         data = web3t.velas.Staking.order-withdraw.get-data(pool-address, amount)
@@ -165,7 +167,8 @@ fast-withdraw-process = (store, web3t)->
             .pug
                 amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
             button { store, text: lang.withdraw, icon: 'exit', on-click: exit, type: "secondary" }
-not-available-right-now = ->
+not-available-right-now = (store)->
+    lang = get-lang store
     .pug.section
         .title.pug
             h3.pug #{lang.exit}
@@ -209,9 +212,9 @@ module.exports.init = ({ store, web3t}, cb)->
     res = staking-epoch `minus` last-epoch
     store.staking.wait-for-epoch-change = if +res is 0 then yes else no
     store.staking.exit-tab =
-        | +store.staking.maxWithdrawAllowed > 0 => \exit
         | +store.staking.orderedWithdrawAmount > 0 and store.staking.wait-for-epoch-change => \exit_wait
         | +store.staking.orderedWithdrawAmount > 0 => \exit_ordered
+        | +store.staking.maxWithdrawAllowed > 0 => \exit
         | +store.staking.maxWithdrawOrderAllowed > 0 => \exit_order
         | +store.staking.stake-amount-total > 0 => \exit_closed
         | _ => ''

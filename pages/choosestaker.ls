@@ -9,7 +9,6 @@ require! {
     \./icon.ls
     \prelude-ls : { map, split, filter, find, foldl, sort-by, unique, head, each }
     \../math.ls : { div, times, plus, minus }
-    \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
     \../../web3t/providers/deps.js : { hdkey, bip39 }
     \md5
@@ -33,6 +32,7 @@ require! {
     \../components/address-holder.ls
     \./alert-txn.ls
     \../components/amount-field.ls
+    \./move-stake.ls
 }
 .staking
     @import scheme
@@ -101,7 +101,6 @@ require! {
         .form-group
             text-align: center
             padding-top: 0px
-            overflow-y: auto
             input, textarea
                 margin: 5px 0
                 outline: none
@@ -678,6 +677,7 @@ staking-content = (store, web3t)->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
+            store.staking.chosen-pool.new-address = ""
             claim-stake.calc-reward store, web3t
             staking-address = store.staking.keystore.staking.address
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
@@ -824,6 +824,7 @@ staking-content = (store, web3t)->
                         button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
             claim-stake store, web3t
             exit-stake store, web3t
+            move-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t

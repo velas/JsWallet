@@ -1162,7 +1162,7 @@
         ],
         "images": [
             "Images",
-            "Изображения",
+            "Изобр��жения",
             "Зображення",
             "Images",
             "Imágenes",
@@ -1789,6 +1789,76 @@
             "总共收到",
             "총을 받았",
             "مجموع ما تلقاه"
+        ],
+        "network": [
+            "Test network",
+            "Тестовая сеть",
+            "Тестова мережа",
+            "Réseau de test",
+            "Prueba de red",
+            "测试网络",
+            "테스트 네트워크",
+            "اختبار الشبكة"
+        ],
+        "networkDescription": [
+            "The default network for all transactions is Mainnet.",
+            "Сеть по умолчанию для всех транзакций - Mainnet",
+            "Мережа для всіх транзакцій за замовчуванням - Mainnet",
+            "Le réseau par défaut pour toutes les transactions est Mainnet",
+            "La red predeterminada para todas las transacciones es Mainnet",
+            "所有交易的默认网络是主网",
+            "모든 거래의 기본 네트워크는 메인 넷입니다",
+            "الشبكة الافتراضية لجميع المعاملات هي Mainnet"
+        ],
+        "languageType": [
+            "English",
+            "Русский",
+            "Українська",
+            "Français",
+            "Español",
+            "한국어",
+            "中文語言",
+            "عرب"
+        ],
+        "themes": [
+            "Themes",
+            "Темы",
+            "Теми",
+            "Thèmes",
+            "Temas",
+            "主题",
+            "Themes",
+            "المواضيع"
+        ],
+        "themesDescription": [
+            "Use custom themes (alpha)",
+            "Использовать пользовательские темы (Альфа)",
+            "Використовувати користувальницькі теми (Альфа)",
+            "Utiliser des thèmes personnalisés (alpha)",
+            "El uso de temas personalizados (alfa)",
+            "使用定义的主题(alpha)",
+            "사용자 지정 테마(alpha)",
+            "استخدام العرف المواضيع (ألفا)"
+        ],
+        "yourStaking": [
+            "Your staking",
+            "Ваш ставку",
+            "Ваш ставку",
+            "Votre jalonnement",
+            "Su estaca",
+            "你赌",
+            "귀하의 감시",
+            "الخاص بك عمادا"
+        ],
+        "languageWebWallet": [
+            "Web wallet language",
+            "Язык веб-кошелька ",
+            "Мова веб-гаманця ",
+            "Web portefeuille langue",
+            "Web de la cartera de idioma",
+            "网络钱包的语言",
+            "웹 지갑 언어",
+            "ويب المحفظة اللغة"
         ]
     }
 }

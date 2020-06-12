@@ -13,5 +13,7 @@ module.exports = (store)->
         title: coin?branding?title ? "WALLET"
     links = coin?links ? []
     color = coin?color ? "#000000"
-    app = themes[store.theme] ? themes.dark
+    app = 
+        | store.current.network is \mainnet => themes[store.theme] ? themes.dark
+        | _ => themes.testnet
     { app, branding, links, color }
