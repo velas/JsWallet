@@ -443,12 +443,11 @@ module.exports = (store, web3t)->
                 |> map (.epoch)
         max = 25
         rest = epochs.length - max
-        return alert "The maximum length of epoch is #{max}. Please uncheck #{rest} epochs" if rest > 0
+        return alert lang.epochLength.replace("^", max).replace('^', rest) if rest > 0
         #staking-address = store.staking.keystore.staking.address
         data = web3t.velas.Staking.claimReward.get-data(epochs, store.staking.chosen-pool.address)
         to = web3t.velas.Staking.address
         amount = 0
-        console.log \send, to, data, amount
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
     .pug.section-reward.reward
         .title.pug

@@ -42,5 +42,5 @@ module.exports = (store, web3t)->
         .pug.closed(on-click=closed)
             icon \X, 20
         .pug.hint
-            .pug.hint-header Click “Print” and print out paper instructions and write down your 24 words seed carefuly.
+            .pug.hint-header #{lang.newSeedWarning}
             img.pug.arrow(src="#{icons.arrow-hint-l}")

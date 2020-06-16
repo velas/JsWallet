@@ -20,6 +20,7 @@ require! {
             font-size: 12px
             .lavel
 module.exports = ({ store, web3t } )->
+    lang = get-lang store
     has-pending =
         store.transactions.applied
             |> filter (.token is \vlx2)
@@ -27,4 +28,4 @@ module.exports = ({ store, web3t } )->
             |> (.length > 0)
     return null if not has-pending
     .pug.title.alert.txn
-        .pug.header You have a pending VLX transaction. Some of the counts may be inaccurate.
+        .pug.header #{lang.pendingTransactions}

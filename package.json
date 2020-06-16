@@ -33,6 +33,7 @@
     "setup": "npm i livescript -g",
     "wallet": "lsxc -a wallet -t index.html -wsfkibh -c main.ls",
     "wallet-fast": "lsxc -a wallet -t index.html -wsfkibh -c main.ls",
-    "wallet-start": "lsxc -a wallet -t index.html -wsfkibnh -c main.ls"
+    "wallet-start": "lsxc -a wallet -t index.html -wsfkibnh -c main.ls",
+    "sync-languages" : "lsc langs/index.ls --sync"
   }
 }

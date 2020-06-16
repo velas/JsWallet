@@ -77,8 +77,21 @@ module.exports = ({ store, value, on-change, placeholder })->
         | wallet.eur-rate? => value-vlx `times` wallet.eur-rate
         | _ => ".."
     actual-placeholder = placeholder ? ""
+    normalize = ->
+        return \0 if not it?
+        return parse-int it if it.index-of('.') is -1
+        return parse-int(it) + "." if it.substr(it.length - 1, 1) is "."
+        [first=\0, second=\0] = it.split('.')
+        "#{parse-int first}.#{second}"
+    get-number = (value)->
+        | value is "" => \0
+        | typeof! value not in <[String Number]> => \0
+        | _ => normalize value.match(/\d+(\.)?(\d{1,})?/)?0
+    on-change-internal = (it)->
+        value = get-number it.target?value
+        on-change { target: { value } }
     .pug.input-area
-        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change placeholder=actual-placeholder)
+        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change-internal placeholder=actual-placeholder)
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
             span.pug VLX2

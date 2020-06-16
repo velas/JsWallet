@@ -194,6 +194,7 @@ store =
         progress: no
         hide-btn: no
         submenu: no
+        language-menu: no
         wallet-index: 0
         edit-account-name: ""
         account-index: 1

@@ -9,7 +9,6 @@ require! {
     \./icon.ls
     \prelude-ls : { map, split, filter }
     \../math.ls : { div, times, plus }
-    \../velas/velas-web3.ls
     \../velas/velas-node-template.ls
     \../../web3t/providers/deps.js : { hdkey, bip39 }
     \md5

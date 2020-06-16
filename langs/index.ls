@@ -12,6 +12,7 @@ filename = "./langs/langs.json"
 
 cb = console.log
 
+
 program = new Command!
 
 program.option('--newword <word>', 'enter word')

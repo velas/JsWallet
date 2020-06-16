@@ -43,6 +43,10 @@ require! {
                 position: absolute
                 bottom: 0
                 left: 0
+            &.testnet
+                background: orange
+                color: white
+                min-height: 10px
             &.lang
                 bottom: 0
     .logo
@@ -103,7 +107,7 @@ require! {
                         img
                             filter: none
         &:hover
-            svg, img
+            >svg, >img
                 transform: scale(1.2)
                 transition: transform .5s
             span
@@ -158,7 +162,7 @@ require! {
             animation-iteration-count: infinite
             animation-timing-function: linear
         cursor: pointer
-        opacity: 0.9
+        opacity: 1
         &:hover
             opacity: 1
         vertical-align: bottom
@@ -225,7 +229,7 @@ require! {
         100%
             -webkit-mask-position: left
 #setup-pages = <[ locked newseed chooseinit loading loading2 verifyseed terms terms2 ]>
-module.exports = (store, web3)->
+module.exports = (store, web3t)->
     return null if not store? or store.current.page in setup-pages
     { current, open-account, lock, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, refresh, lock } = menu-funcs store, web3t
     style = get-primary-info store
@@ -320,6 +324,10 @@ module.exports = (store, web3)->
     menu-out = ->
         store.current.submenu = no
     staking = if store.current.submenu then \active else \not-active
+    color =
+        color: style.app.text
+    goto-mainnet = ->
+        web3t.use \mainnet
     .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
             img.pug(src="#{info.branding.logo-sm}" style=logo-style)
@@ -358,8 +366,7 @@ module.exports = (store, web3)->
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     span.arrow_box.pug(style=tooltip) #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
-            if no
-                if store.preference.settings-visible is yes
-                    .menu-item.pug(on-click=goto-faq style=icon-style2 class="#{faq}")
-                        span.arrow_box.pug(style=tooltip) #{lang.faq}
-                        img.pug(src="#{icons.setting}")
+            if store.current.network is \testnet
+                .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
+                    span.arrow_box.pug(style=tooltip) testnet
+                    img.pug(src="#{icons.test}" style=icon-color)

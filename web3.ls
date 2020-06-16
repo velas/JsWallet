@@ -134,6 +134,8 @@ get-apis = (cweb3, store, cb)->
     cb null, res
 refresh-apis = (cweb3, store, cb)->
     store.coins |> map (.token) |> each (-> delete cweb3[it])
+    cweb3.velas = velas-api store
+    #console.log \refresh-apis,
     err, coins <- get-coins store
     return cb err if err?
     store.coins = coins
@@ -220,6 +222,6 @@ module.exports = (store, config)->
     set-preference config if typeof! config is \Object
     refresh-interface ->
     web3 = new Web3!
-    velas = velas-api
+    velas = velas-api store
     cweb3 <<<< { velas, web3.utils, unlock, set-preference, get-supported-tokens, use, refresh, lock, init, install, uninstall, install-by-name, naming, get-account-name, set-theme, set-lang, install-quick }
     cweb3

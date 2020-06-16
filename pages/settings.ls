@@ -10,6 +10,7 @@ require! {
     \../icons.ls
     \../components/button.ls
     \./choose-themes.ls
+    \prelude-ls : { obj-to-pairs, pairs-to-obj, map }
 }
 .settings-menu
     @import scheme
@@ -124,6 +125,45 @@ require! {
                 height: 72px
                 resize: none
                 font-size: 15px
+            .active-network
+                position: relative
+                display: inline-block
+                width: 48px
+                height: 20px
+                margin-top: 7px
+                margin-right: 0px
+                input
+                    display: none
+                    &:checked + .track
+                        background-color: #3cd5af
+                        &:before
+                            -webkit-transform: translateX(28px)
+                            transform: translateX(28px)
+                .track
+                    cursor: pointer
+                    position: absolute
+                    top: 0
+                    left: 0
+                    right: 0
+                    bottom: 0
+                    background-color: #463f50
+                    -webkit-transition: 0.25s
+                    transition: 0.25s
+                    &:before
+                        content: ""
+                        position: absolute
+                        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)
+                        background-color: #fafafa
+                        -webkit-transition: 0.25s
+                        transition: 0.25s
+                .thumb
+                    border-radius: 35px
+                    &:before
+                        top: 0px
+                        right: 28px
+                        width: 20px
+                        height: 20px
+                        border-radius: 50%
             .switch-account
                 color: #8e8e93
                 font-size: 12px
@@ -152,6 +192,50 @@ require! {
             color: #f0c16b
         .section
             border-bottom: 1px solid rgba(240, 237, 237, 0.16)
+            &.hide
+                display: none
+            .langs-drop
+                position: absolute
+                right: 0
+                padding: 0
+                top: 25px
+                height: 300px
+                margin: 5px
+                width: 180px
+                box-sizing: border-box
+                display: inline-grid
+                z-index: 3
+                box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
+                ul
+                    padding: 15px
+                    margin: 0
+                    overflow: scroll
+                    background: linear-gradient(var(--color1) 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), var(--color1) 70%) 0 100%, radial-gradient(farthest-side at 50% 0, var(--color2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, var(--color2), rgba(0,0,0,0)) 0 100%
+                    background-repeat: no-repeat
+                    background-attachment: local, local, scroll, scroll
+                    background-size: 100% 30px, 100% 30px, 100% 15px, 100% 15px
+                    animation: breathe 3s ease-in infinite
+                    -moz-transition: breathe 3s ease-in infinite
+                    -web-kit-transition: breathe 3s ease-in infinite
+                .search
+                    width: 100%
+                    margin: 0
+                    transition: all .5s
+                    &:focus
+                        transition: all .5s
+                        text-align: left
+                .lang-item
+                    display: flex
+                    white-space: nowrap
+                    margin-bottom: 20px
+                    &:last-child
+                        margin-bottom: 0
+                    img
+                        float: none
+                        width: 20px
+                        height: 20px
+                        @media(max-width: 800px)
+                            display: block
             .langs
                 width: 80%
                 @media(max-width: 800px)
@@ -223,6 +307,11 @@ require! {
                     text-align: center
             .content
                 width: 30%
+                >span
+                    position: relative
+                    button
+                        img
+                            transform: rotate(90deg)
                 @media (max-width: 800px)
                     width: 100%
             .logo
@@ -244,6 +333,92 @@ require! {
             padding: 1px
             border-radius: 0 !important
             text-align: center
+list-language = (store, web3t)->
+    style = get-primary-info store
+    lang = get-lang store
+    set-lang = (lang)->
+        #return alert "lang is not available" if not store.langs[store.lang]?
+        store.lang = lang
+    change-lang-en = ->
+        store.current.language-menu = no
+        return set-lang \en
+    change-lang-ru = ->
+        store.current.language-menu = no
+        return set-lang \ru
+    change-lang-ua = ->
+        store.current.language-menu = no
+        return set-lang \uk
+    change-lang-cn = ->
+        store.current.language-menu = no
+        return set-lang \zh
+    change-lang-kr = ->
+        store.current.language-menu = no
+        return set-lang \ko
+    change-lang-fr = ->
+        store.current.language-menu = no
+        return set-lang \fr
+    change-lang-es = ->
+        store.current.language-menu = no
+        return set-lang \es
+    menu-out = ->
+        store.current.language-menu = no
+    color =
+        color: style.app.text
+    comming-soon =
+        opacity: ".3"
+        cursor: "no-drop"
+    ul.pug(on-mouse-leave=menu-out)
+        li.pug.lang-item(style=comming-soon)
+            img.pug(src="#{icons.langs-gr}")
+            | Deutsch
+        li.pug.lang-item(on-click=change-lang-fr style=color)
+            img.pug(src="#{icons.langs-fr}")
+            | Français
+        li.pug.lang-item(on-click=change-lang-en style=color)
+            img.pug(src="#{icons.langs-en}")
+            | English
+        li.pug.lang-item(on-click=change-lang-kr style=color)
+            img.pug(src="#{icons.langs-cn}")
+            | 한국어
+        li.pug.lang-item(on-click=change-lang-cn style=color)
+            img.pug(src="#{icons.langs-kr}")
+            | 中文語言
+        li.pug.lang-item(style=comming-soon)
+            img.pug(src="#{icons.langs-jp}")
+            | 日本語
+        li.pug.lang-item(style=comming-soon)
+            img.pug(src="#{icons.langs-hn}")
+            | हिंदी
+        li.pug.lang-item(on-click=change-lang-es style=color)
+            img.pug(src="#{icons.langs-sp}")
+            | Español
+        li.pug.lang-item(on-click=change-lang-ua style=color)
+            img.pug(src="#{icons.langs-ua}")
+            | Українська
+        li.pug.lang-item(on-click=change-lang-ru style=color)
+            img.pug(src="#{icons.langs-ru}")
+            | Русский
+        li.pug.lang-item(style=comming-soon)
+            img.pug(src="#{icons.langs-kz}")
+            | Қазақ
+switch-language = (store, web3t)->
+    style = get-primary-info store
+    lang = get-lang store
+    filter-body =
+        border: "1px solid #{style.app.border}"
+        background: style.app.header
+    input-style =
+        background: style.app.wallet
+        color: style.app.text
+        border: "0"
+    open-language = ->
+        store.current.language-menu = not store.current.language-menu
+    span.pug
+        button { store, on-click: open-language , type: \secondary , icon : \arrowRight, text: \languageType }
+        if store.current.language-menu
+            .pug.langs-drop(style=filter-body)
+                input.pug.search(value="" style=input-style placeholder="#{lang.search}")
+                list-language store, web3t
 switch-account = (store, web3t)->
     {  account-left, account-right, change-account-index } = menu-funcs store, web3t
     style = get-primary-info store
@@ -266,10 +441,28 @@ switch-account = (store, web3t)->
             input.pug.change-index(value="#{store.current.account-index}" style=input-style on-change=change-account-index)
         span.pug.button.right(on-click=account-right style=button-primary2-style)
             icon \ChevronRight, 15
+networks =
+    mainnet: no
+    testnet: yes
+networks-reverted =
+    networks 
+        |> obj-to-pairs 
+        |> map -> [it.1, it.0] 
+        |> pairs-to-obj
+switch-network = (store, web3t)->
+    style = get-primary-info store
+    lang = get-lang store
+    change-network = ->
+        value = it.target.value is \true
+        web3t.use networks-reverted[not value]
+    value= networks[store.current.network]
+    label.active-network.pug
+        input.pug(type='checkbox' on-change=change-network value=value)
+        .track.thumb.pug
 naming-part = ({ store, web3t })->
     .pug.section
-        .pug.title #{lang.your-nickname ? 'Your Nickname'}
-        .pug.description #{lang.your-nickname-info ? 'You are able to attach nickname, email or phone number to your account and share it with friends. They will use your nick to resolve your crypto-address'}
+        .pug.title #{lang.your-nickname}
+        .pug.description #{lang.your-nickname-info }
         .pug.content
             naming { store, web3t }
 manage-account = (store, web3t)->
@@ -350,46 +543,59 @@ manage-account = (store, web3t)->
                     li.pug.lang-item(style=comming-soon)
                         | Қазақ
                         img.pug(src="#{icons.langs-kz}")
+        .pug.section.hide
+            .pug.title(style=color) #{lang.language}
+            .pug.description(style=color)
+                span.pug #{lang.languageWebWallet}
+                span.pug - #{lang.language-type}
+            .pug.content
+                switch-language store, web3t
         if store.url-params.internal?
             .pug.section
-                .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
-                .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}
+                .pug.title(style=color) #{lang.secret-phrase }
+                .pug.description(style=color) #{lang.secret-phrase-warning }
                 .pug.content
                     switch
                         case current.try-edit-seed is yes
                             .pug.box
                                 .pug
-                                    input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin ? 'Enter PIN'}")
+                                    input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin }")
                                     button.pug(on-click=check-pin style=button-style2) >
                                 .pug    
                                     button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
                         case current.saved-seed is no
                             .pug.box
                                 .pug.title
-                                    span.pug #{lang.secret-phrase ? 'Secret Phrase'}
-                                textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase ? 'Secret Phrase'}")
+                                    span.pug #{lang.secret-phrase }
+                                textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase}")
                                 .pug #{current.seed-problem}
                                 .pug
                                     button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
                         case current.saved-seed is yes
                             .pug
-                                button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret ? 'Edit Secret'}
+                                button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret }
         .pug.section
-            .pug.title(style=color) #{lang.switch-account-index ? 'Switch Account Index'}
+            .pug.title(style=color) #{lang.switch-account-index}
             .pug.description(style=color)
-                span.pug #{lang.switch-account-info ? 'You could have a lot of unique addresses by switching account index. By default, you are given an index of 1, but you can change it in range 0 - 2,147,483,647'}
+                span.pug #{lang.switch-account-info }
             .pug.content
                 switch-account store, web3t
         .pug.section
-            .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
+            .pug.title(style=color) #{lang.export-private-key}
             .pug.description(style=color)
-                span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
+                span.pug #{lang.export-private-key-warning}.
             .pug.content
                 button { store, text: \showSecret , on-click: export-private-key, icon: \show, type: \secondary }
         .pug.section
-            .pug.title(style=color) Themes
+            .pug.title(style=color) #{lang.network}
             .pug.description(style=color)
-                span.pug Use custom themes (alpha)
+                span.pug #{lang.network-description}
+            .pug.content
+                switch-network store, web3t
+        .pug.section
+            .pug.title(style=color) #{lang.themes}
+            .pug.description(style=color)
+                span.pug #{lang.themes-description}
             .pug.content
                 choose-themes store, web3t
         .pug.section
@@ -399,13 +605,13 @@ manage-account = (store, web3t)->
                 span.pug Velas Wallet
                 span.pug.bold.low #{store.version}
             .pug.description.pb-0(style=color)
-                span.pug #{lang.about-wallet ? 'Multi-currency Wallet Managed by one mnemonic phrase'}.
+                span.pug #{lang.about-wallet}.
                 br.pug
-                span.pug #{lang.pls-read ? 'Please read our'} 
+                span.pug #{lang.pls-read } 
                 span.pug 
-                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy ? 'Privacy Policy'}
+                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy }
                 span.pug  & 
-                span.pug.link(on-click=goto-terms) #{lang.terms-of-use ? 'Terms of Use'}
+                span.pug.link(on-click=goto-terms) #{lang.terms-of-use }
             .pug.content
 module.exports = ({ store, web3t } )->
     go-back = ->

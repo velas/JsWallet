@@ -183,7 +183,7 @@ module.exports = ({ store, web3t })->
     console.log \time-difference , store.transactions.applied.0?time , moment!.unix!
     inacurate = (cb)->
         return cb null if has-pending is no
-        agree <- confirm store, "Your still have a pending transaction. Some of the counts may be inaccurate."
+        agree <- confirm store, lang.pendingTransactions
         #console.log 'after confirm', agree
         return cb "disagree" if not agree
         cb null

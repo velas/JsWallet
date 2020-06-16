@@ -126,6 +126,48 @@ module.exports =
         color1: \#213040
         color2: \#3a526b
         color-td: \#b6efe1
+    testnet:
+        background: "rgb(31, 31, 31)"
+        menu: \#292A2F
+        background-image: "none"
+        demo: \#31323a
+        input: \#213040
+        dragarea: \##00000057
+        primary1: \#9d41eb
+        primaryOpct: \#213040
+        primary2: \#3cd5af
+        primary3: \#ffffff
+        primary4: \#213040
+        wallet: \#2e2f35
+        wallet-light: \#213040
+        header: \#2f3035
+        tooltip: \#213040
+        icon: \#276A9F
+        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)"
+        loader: \#276A9F
+        border: \#3e4048
+        bg-btn: \#213040
+        border-light: \#3e4048
+        text: \#FFF
+        text2: \#9d41eb
+        text3: \#677897
+        text-primary: \#FFF
+        color3: \#677897
+        bg-primary-light: \#383942
+        stats: \#1c1c21
+        filterIcon: "brightness(1)"
+        filterLogo: "brightness(1)"
+        nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) hue-rotate(45deg)"
+        th: \#1c1c21
+        tr-odd: \#3b3c40
+        tr-even: \#292a2f
+        icon-filter: "none"
+        placeholder: \#25272d
+        placeholder-menu: \#25272d
+        filterBg: \#292a2f
+        color1: \#2e2f35
+        color2: \#4d4e58
+        color-td: \#b6efe1
     dark_mojave:
         background: \#292A2F
         menu: \#292A2F
