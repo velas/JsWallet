@@ -6,6 +6,7 @@ require! {
     \prelude-ls : { map, sort-by, filter }
     \../navigate.ls
     \../icons.ls
+    \../../web3t/providers/deps.ls : { bip39 }
 }
 .newseed
     @import scheme
@@ -203,6 +204,9 @@ restore-words-panel = (store, web3t)->
         store.current.page = \newseedrestore
     next = ->
         max = store.current.seed-words.length - 1
+        word = (store.current.seed-words |> sort-by (.index))[store.current.verify-seed-index].part
+        if word not in bip39.wordlists.EN
+            return alert "Not a valid word"
         return store.current.verify-seed-index += 1 if store.current.verify-seed-index < max
         save!
     current-word = (i, item)-->
