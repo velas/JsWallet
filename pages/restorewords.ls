@@ -206,7 +206,7 @@ restore-words-panel = (store, web3t)->
         max = store.current.seed-words.length - 1
         word = (store.current.seed-words |> sort-by (.index))[store.current.verify-seed-index].part
         if word not in bip39.wordlists.EN
-            return alert "Not a valid word"
+            return alert lang.wordIncorrect
         return store.current.verify-seed-index += 1 if store.current.verify-seed-index < max
         save!
     current-word = (i, item)-->
