@@ -45,8 +45,8 @@ require! {
                 content: none
         .step-content
             font-size: 13px
-            >div
-                height: 40px
+            button
+                width: 125px
         button
             width: auto
             display: block
@@ -98,7 +98,7 @@ order-withdraw-process = (store, web3t)->
     order = ->
         err, data <- web3t.velas.Staking.areStakeAndWithdrawAllowed!
         return cb err if err?
-        return alert store, lang.actionProhibited, cb if data isnt yes
+        return alert store, lang.exitNotAllowed, cb if data isnt yes
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
         err, max <- web3t.velas.Staking.maxWithdrawOrderAllowed(pool-address, staking-address)
@@ -118,9 +118,10 @@ order-withdraw-process = (store, web3t)->
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }
     change-max = (it)->
         store.staking.withdrawAmount = it.target.value
+    epoch-next = store.dashboard.epoch-next ? 'loading...'
     .pug.section
         .title.pug
-            h3.pug Exit
+            h3.pug #{lang.exit}
         .description.pug
             .pug.left
                 .steps.pug
@@ -136,6 +137,7 @@ order-withdraw-process = (store, web3t)->
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
                         .pug.step-content #{lang.comeBack}
+                        .pug.step-content (#{epoch-next})
                     .pug.step(on-click=activate-third class="#{active-third}")
                         .pug.step-count 3
                         .pug.step-content
