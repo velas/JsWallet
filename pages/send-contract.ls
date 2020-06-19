@@ -189,7 +189,7 @@ send-contract = ({ store, web3t })->
                 ul.pug
                     text-parts |> map build-part store
                 .pug.center
-                    a.pug(on-click=see-details) See details
+                    a.pug(on-click=see-details) #{lang.details}
             .pug.button-container
                 .pug.buttons
                     button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary }

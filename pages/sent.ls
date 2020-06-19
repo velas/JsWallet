@@ -195,14 +195,19 @@ module.exports = ({ store, web3t })->
     .pug.sent
         .pug.animation
             if no-recent
-                img.icon-sent.pug(style=sent-icon src="#{icons.sent}")
+                img.icon-sent.pug(style=sent-icon src="#{icons.sent-check}")
             else if has-pending
                 img.icon-sent.pug(style=sent-icon src="#{icons.sent-plane}")
             else
                 img.icon-sent.pug(src="#{icons.sent-check}")
         .pug.text(style=text-style)
-            a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction ? 'transaction'}
-            span.pug  #{lang.has-been-sent ? 'has been sent'}
+            a.pug(style=link-style href="#{store.current.last-tx-url}" target="_blank") #{lang.transaction}
+            if no-recent
+                span.pug  #{lang.has-been-sent}
+            else if has-pending
+                span.pug  #{lang.inProgress}..
+            else
+                span.pug  #{lang.has-been-sent}
         button { store, on-click : go-home , type : \secondary , text: \home }
         .limited-history.pug
             history { store, web3t }

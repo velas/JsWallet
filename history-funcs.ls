@@ -11,6 +11,7 @@ require! {
     \./apply-transactions.ls
     \./get-lang.ls
     \./icons.ls
+    \./round-human.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -55,7 +56,7 @@ module.exports = (store, web3t)->
                     span.color.pug #{str}
         [_, first, last] = data
         span.pug.balance
-            span.color.pug #{first}
+            span.color.pug #{round-human first}
             span.rest.pug #{last}
     is-active = (value)->
         if value in filt then \active else ''

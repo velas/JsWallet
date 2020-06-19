@@ -122,6 +122,7 @@ require! {
                         &:last-child
                             text-align: right
             text-align: left
+            margin: auto 10px
             >.form-group
                 &:nth-child(2)
                     div
@@ -257,7 +258,7 @@ require! {
                         vertical-align: middle
             img
                 width: 34px
-                border-radius: 50px
+                border-radius: 0px
         .usd
             font-size: 11px
             padding-left: 3px
@@ -434,7 +435,7 @@ send = ({ store, web3t })->
                                     input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
                         .pug.usd
                             button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max}
-                            span.pug #{lang.balance ? 'balance'}
+                            span.pug #{lang.balance}
                             span.pug.balance
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
                                     img.label-coin.pug(src="#{send.coin.image}")

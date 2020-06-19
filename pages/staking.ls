@@ -33,6 +33,7 @@ require! {
     \../components/button.ls
     \./alert-txn.ls
     \../components/amount-field.ls
+    \../seed.ls : seedmem
 }
 .staking
     @import scheme
@@ -61,6 +62,8 @@ require! {
         border-radius: 0px
         position: relative
         box-sizing: border-box
+        .input-area
+            margin: 10px 0
         .claim-table
             margin: 15px 0
             max-height: 100px
@@ -107,6 +110,7 @@ require! {
                     padding: 20px
                 &:last-child
                     border: 0
+                    padding-bottom: $ios-m-b
                 &.reward
                     background-image: $reward
                     background-repeat: no-repeat
@@ -850,8 +854,7 @@ get-pair = (wallet, path, index, password, with-keystore)->
         | _ => ""
     { address, keystore }
 to-keystore = (store, with-keystore)->
-    mnemonic = store.current.seed
-    seed = bip39.mnemonic-to-seed(mnemonic)
+    seed = bip39.mnemonic-to-seed(seedmem.mnemonic)
     wallet = hdkey.from-master-seed(seed)
     index = store.current.account-index
     password = md5 wallet.derive-path("m1").derive-child(index).get-wallet!.get-address!.to-string(\hex)

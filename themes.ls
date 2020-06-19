@@ -42,6 +42,7 @@ module.exports =
         color1: \#321260
         color2: \#594aaa
         color-td: \#b6efe1
+        drag-bg: "rgba(51, 20, 97, 0.78)"
     light:
         background: \#F0EFF5
         menu: \#F0EFF5
@@ -84,6 +85,7 @@ module.exports =
         color1: \#ffffff
         color2: \#e2e1e6
         color-td: \#52b59d
+        drag-bg: "rgba(255, 255, 255, 0.71)"
     dark:
         background: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
         menu: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
@@ -126,6 +128,7 @@ module.exports =
         color1: \#213040
         color2: \#3a526b
         color-td: \#b6efe1
+        drag-bg: "rgba(33, 48, 64, 0.7)"
     testnet:
         background: "rgb(31, 31, 31)"
         menu: \#292A2F
@@ -168,6 +171,7 @@ module.exports =
         color1: \#2e2f35
         color2: \#4d4e58
         color-td: \#b6efe1
+        drag-bg: "rgba(47, 48, 53, 0.68)"
     dark_mojave:
         background: \#292A2F
         menu: \#292A2F
@@ -210,6 +214,7 @@ module.exports =
         color1: \#2e2f35
         color2: \#4d4e58
         color-td: \#b6efe1
+        drag-bg: "rgba(47, 48, 53, 0.68)"
     monochrome:
         background: \#172431
         menu: \#213040
@@ -252,3 +257,4 @@ module.exports =
         color1: \#213040
         color2: \#3b536d
         color-td: \#b6efe1
+        drag-bg: "rgba(33, 48, 64, 0.78)"

@@ -64,7 +64,7 @@ terms = ({ store, web3t })->
             .pug.header Terms of Use
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
-                .pug #{lang.terms ? 'Please accept terms of use'}
+                .pug #{lang.terms}
                 button { store, text: \accept , on-click: accept, type: \primary }
 terms.init = ({ store }, cb)->
     err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end

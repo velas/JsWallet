@@ -195,8 +195,8 @@ switch-account = (store, web3t)->
             icon \ChevronRight, 15
 naming-part = ({ store, web3t })->
     .pug.section
-        .pug.title #{lang.your-nickname ? 'Your Nickname'}
-        .pug.description #{lang.your-nickname-info ? 'You are able to attach nickname, email or phone number to your account and share it with friends. They will use your nick to resolve your crypto-address'}
+        .pug.title #{lang.your-nickname}
+        .pug.description #{lang.your-nickname-info}
         .pug.content
             naming { store, web3t }
 manage-account = (store, web3t)->
@@ -228,49 +228,49 @@ manage-account = (store, web3t)->
                 span.pug Velas Wallet
                 span.pug.bold.low #{store.version}
             .pug.description.pb-0(style=color)
-                span.pug #{lang.about-wallet ? 'Multi-currency Wallet Managed by one mnemonic phrase'}.
+                span.pug #{lang.about-wallet}.
                 br.pug
-                span.pug #{lang.pls-read ? 'Please read our'} 
+                span.pug #{lang.pls-read} 
                 span.pug 
-                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy ? 'Privacy Policy'}
+                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy}
                 span.pug  & 
-                span.pug.link(on-click=goto-terms) #{lang.terms-of-use ? 'Terms of Use'}
+                span.pug.link(on-click=goto-terms) #{lang.terms-of-use}
         .pug.section
-            .pug.title(style=color) #{lang.secret-phrase ? 'Secret Phrase'}
-            .pug.description(style=color) #{lang.secret-phrase-warning ? 'You are responsible for keeping this phrase safe. In case of loss of this phrase, we will not be able to help you restore it.'}
+            .pug.title(style=color) #{lang.secret-phrase}
+            .pug.description(style=color) #{lang.secret-phrase-warning}
             .pug.content
                 switch
                     case current.try-edit-seed is yes
                         .pug.box
                             .pug
-                                input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style placeholder="#{lang.enter-pin ? 'Enter PIN'}")
+                                input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style placeholder="#{lang.enter-pin}")
                             .pug    
                                 button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
                     case current.saved-seed is no
                         .pug.box
                             .pug.title 
-                                span.pug #{lang.secret-phrase ? 'Secret Phrase'}
+                                span.pug #{lang.secret-phrase}
                                 a.pug.generate(on-click=generate) (generate)
-                            textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase ? 'Secret Phrase'}")
+                            textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase}")
                             .pug
                                 button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
                     case current.saved-seed is yes
                         .pug
-                            button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret ? 'Edit Secret'}
+                            button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret}
         .pug.section
-            .pug.title(style=color) #{lang.switch-account-index ? 'Switch Account Index'}
+            .pug.title(style=color) #{lang.switch-account-index}
             .pug.description(style=color)
-                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}.
-                span.pug #{lang.switch-account-info ? 'You could have a lot of unique addresses by switching account index. By default, you are given an index of 1, but you can change it in range 0 - 2,147,483,647'}
+                span.pug.bold #{lang.for-advanced-users}.
+                span.pug #{lang.switch-account-info}
             .pug.content
                 switch-account store, web3t
         .pug.section.last
-            .pug.title(style=color) #{lang.export-private-key ? 'Export PRIVATE KEY'}
+            .pug.title(style=color) #{lang.export-private-key}
             .pug.description(style=color)
-                span.pug.bold #{lang.for-advanced-users ? 'For advanced users only'}
-                span.pug #{lang.export-private-key-warning ? 'Please never do it in case when you do not understand exact reason of this action and do not accept risks'}.
+                span.pug.bold #{lang.for-advanced-users}
+                span.pug #{lang.export-private-key-warning}.
             .pug.content
-                button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret ? 'Show Secret'}
+                button.pug(on-click=export-private-key style=button-primary2-style) #{lang.show-secret}
 module.exports = ({ store, web3t } )->
     return null if store.current.manage-account isnt yes
     { close-account } = menu-funcs store, web3t

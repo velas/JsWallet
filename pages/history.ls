@@ -338,7 +338,7 @@ require! {
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 5%
+                    width: 6%
                     div
                         text-align: center
                 &.txhash
@@ -363,9 +363,9 @@ require! {
                     @media screen and (max-width: 1020px)
                         width: 19%
                 &.divider2
-                    width: 30%
+                    width: 29%
                 &.divider
-                    width: 5%
+                    width: 6%
                     .direction
                         text-align: center
                         line-height: 40px
@@ -445,7 +445,7 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 45%
+                    width: 44%
                     text-align: left
                     height: 60px
                     div:last-child

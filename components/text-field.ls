@@ -10,7 +10,7 @@ require! {
 }
 .input-area
     position: relative
-    margin-bottom: 5px
+    margin: 10px 0
     width: 100%
     box-sizing: border-box
     height: 36px

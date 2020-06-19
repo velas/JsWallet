@@ -9,7 +9,7 @@ require! {
 }
 .input-area
     position: relative
-    margin-top: 10px
+    margin: 10px 0
     width: 100%
     box-sizing: border-box
     height: 36px

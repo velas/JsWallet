@@ -65,7 +65,7 @@ terms = ({ store, web3t })->
         <- web3t.refresh
     .pug.terms
         .pug.terms-body
-            .pug.header #{lang.terms-of-use ? 'Terms of Use'}
+            .pug.header #{lang.terms-of-use}
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
                 button { store, text: \back , on-click: go-back, icon: \arrowLeft, type: \primary }

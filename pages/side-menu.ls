@@ -221,7 +221,7 @@ require! {
                 font-size: 10px
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -250,7 +250,7 @@ module.exports = (store, web3t)->
     icon-color=
         filter: style.app.icon-filter
     icon-style =
-        color: style.app.icon
+        color: style.app.text
     icon-style2 =
         opacity: "0"
         bottom: "-280px"

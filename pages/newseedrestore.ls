@@ -126,7 +126,7 @@ require! {
         margin: 0 auto
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -205,7 +205,7 @@ newseed = ({ store, web3t })->
                     | 24 #{lang.restore-words24}
             button.pug.right(on-click=back style=button-primary3-style )
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
-                | #{lang.back ? 'Back' }
+                | #{lang.back}
 focus = ({ store }, cb)->
     <- set-timeout _, 1000
     # textarea null here

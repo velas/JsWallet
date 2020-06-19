@@ -145,7 +145,7 @@ require! {
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
-    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};}"
+    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};}"
     style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?

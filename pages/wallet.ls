@@ -113,7 +113,6 @@ require! {
                     max-width: 50px
                     $s: 35px
                     border-radius: 0
-                    width: $s
                     height: $s
             >.info
                 text-align: left

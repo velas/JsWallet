@@ -217,7 +217,7 @@ review-words-panel = (store, web3t)->
                 button.pug.right.save(on-click=next style=button-primary1-style)
                     img.icon-svg.pug(src="#{icons.right}")
                     | #{lang.next }
-        .pug.hint(style=text-style) #{lang.new-seed-warning ? 'Click 'Print' and print out paper instructions and write down your 24 words seed carefuly. Anyone with access to your recovery phrase could take your assets, store it securely. We do not keep a backup of your 24 words, if you lose it all coins in your wallet will be gone forever!'}
+        .pug.hint(style=text-style) #{lang.new-seed-warning}
 reviewwords = ({ store, web3t })->
     lang = get-lang store
     style = get-primary-info store

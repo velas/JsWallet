@@ -192,8 +192,9 @@ require! {
             color: #f0c16b
         .section
             border-bottom: 1px solid rgba(240, 237, 237, 0.16)
-            &.hide
-                display: none
+            &:last-child
+                border-bottom: 0
+                padding-bottom: $ios-m-b
             .langs-drop
                 position: absolute
                 right: 0
@@ -360,14 +361,12 @@ list-language = (store, web3t)->
     change-lang-es = ->
         store.current.language-menu = no
         return set-lang \es
-    menu-out = ->
-        store.current.language-menu = no
     color =
         color: style.app.text
     comming-soon =
         opacity: ".3"
         cursor: "no-drop"
-    ul.pug(on-mouse-leave=menu-out)
+    ul.pug
         li.pug.lang-item(style=comming-soon)
             img.pug(src="#{icons.langs-gr}")
             | Deutsch
@@ -413,10 +412,12 @@ switch-language = (store, web3t)->
         border: "0"
     open-language = ->
         store.current.language-menu = not store.current.language-menu
+    menu-out = ->
+        store.current.language-menu = no
     span.pug
         button { store, on-click: open-language , type: \secondary , icon : \arrowRight, text: \languageType }
         if store.current.language-menu
-            .pug.langs-drop(style=filter-body)
+            .pug.langs-drop(style=filter-body on-mouse-leave=menu-out)
                 input.pug.search(value="" style=input-style placeholder="#{lang.search}")
                 list-language store, web3t
 switch-account = (store, web3t)->
@@ -482,68 +483,10 @@ manage-account = (store, web3t)->
         background: style.app.primary2
     goto-terms = ->
         navigate store, web3t, \terms2
-    set-lang = (lang)->
-        #return alert "lang is not available" if not store.langs[store.lang]?
-        store.lang = lang
-    change-lang-en = ->
-        return set-lang \en 
-    change-lang-ru = ->
-        return set-lang \ru
-    change-lang-ua = ->
-        return set-lang \uk
-    change-lang-cn = ->
-        return set-lang \zh
-    change-lang-kr = ->
-        return set-lang \ko
-    change-lang-fr = ->
-        return set-lang \fr
-    change-lang-es = ->
-        return set-lang \es
-    comming-soon =
-        opacity: ".3"
-        cursor: "no-drop"
     input-style2 = { ...input-style, width: "85px" } 
     button-style2 = { ...button-primary2-style, width: "20px" }
     .pug
         .pug.section
-            .pug.title(style=color) #{lang.language}
-            .pug.langs
-                ul.pug
-                    li.pug.lang-item(style=comming-soon)
-                        | Deutsch
-                        img.pug(src="#{icons.langs-gr}")
-                    li.pug.lang-item(on-click=change-lang-fr style=color)
-                        | Français
-                        img.pug(src="#{icons.langs-fr}")
-                    li.pug.lang-item(on-click=change-lang-en style=color)
-                        | English
-                        img.pug(src="#{icons.langs-en}")
-                    li.pug.lang-item(on-click=change-lang-kr style=color)
-                        | 한국어
-                        img.pug(src="#{icons.langs-cn}")
-                    li.pug.lang-item(on-click=change-lang-cn style=color)
-                        | 中文語言
-                        img.pug(src="#{icons.langs-kr}")
-                    li.pug.lang-item(style=comming-soon)
-                        | 日本語
-                        img.pug(src="#{icons.langs-jp}")
-                ul.pug
-                    li.pug.lang-item(style=comming-soon)
-                        | हिंदी
-                        img.pug(src="#{icons.langs-hn}")
-                    li.pug.lang-item(on-click=change-lang-es style=color)
-                        | Español
-                        img.pug(src="#{icons.langs-sp}")
-                    li.pug.lang-item(on-click=change-lang-ua style=color)
-                        | Українська
-                        img.pug(src="#{icons.langs-ua}")
-                    li.pug.lang-item(on-click=change-lang-ru style=color)
-                        | Русский
-                        img.pug(src="#{icons.langs-ru}")
-                    li.pug.lang-item(style=comming-soon)
-                        | Қазақ
-                        img.pug(src="#{icons.langs-kz}")
-        .pug.section.hide
             .pug.title(style=color) #{lang.language}
             .pug.description(style=color)
                 span.pug #{lang.languageWebWallet}
@@ -589,7 +532,10 @@ manage-account = (store, web3t)->
         .pug.section
             .pug.title(style=color) #{lang.network}
             .pug.description(style=color)
-                span.pug #{lang.network-description}
+                if store.current.network is \testnet
+                    span.pug #{lang.network-description2}
+                else
+                    span.pug #{lang.network-description}
             .pug.content
                 switch-network store, web3t
         .pug.section

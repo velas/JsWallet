@@ -164,7 +164,7 @@ module.exports = ({ store, web3t })->
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
                     .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
-                .currency.h1.pug #{lang.balance ? 'Balance'}
+                .currency.h1.pug #{lang.balance}
                 .pug
                     if store.current.device is \desktop
                         if store.preference.refresh-visible is yes

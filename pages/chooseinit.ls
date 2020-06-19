@@ -128,7 +128,7 @@ require! {
         margin: 0 auto
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -182,16 +182,16 @@ newseed = ({ store, web3t })->
         .pug.logo
             img.iron.pug(src="#{style.branding.logo}" style=logo-style)
             .title.pug(style=text-style) #{style.branding.title}
-        .welcome.pug(style=text-style) #{lang.welcome-wallet ? 'Welcome!'}
+        .welcome.pug(style=text-style) #{lang.welcome-wallet}
         .pug.align-v
             button.pug.left(style=button-primary2-style on-click=new-wallet)
                 span.pug
                     img.icon-svg.pug(src="#{icons.create-wallet}")
-                    | #{lang.new-wallet ? 'Create New Wallet'}
+                    | #{lang.new-wallet}
             button.pug.right(style=button-primary3-style on-click=restore-option)
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
-                    | #{lang.restore-wallet ? 'Restore Existing Wallet'}
+                    | #{lang.restore-wallet}
             choose-language { store, web3t }
 focus = ({ store }, cb)->
     <- set-timeout _, 1000

@@ -1710,6 +1710,16 @@
             "행동이 금지됩니다.",
             "عمل محظور."
         ],
+        "exitNotAllowed": [
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch"
+        ],
         "balanceLessStaking": [
             "You balance is less than minimum staking amount",
             "У вас баланс меньше минимальной суммы ставок",

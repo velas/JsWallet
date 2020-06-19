@@ -172,7 +172,7 @@ newseed = ({ store, web3t })->
             input.pug(style=address-input key="enter_#{item.index}_word" value="#{item.part}" on-change=enter-confirm placeholder="#{lang.word} ##{item.index + 1}")
     .newseed.pug
         img.pug(style=newseed-style src="#{icons.verifyseed}")
-        .title.pug(style=text-style) #{lang.verify-seed-phrase ? 'Verify Seed Phrase'}
+        .title.pug(style=text-style) #{lang.verify-seed-phrase}
         .pug.words
             build-verify-seed store, store.current.verify-seed-indexes[store.current.verify-seed-index]
         .pug
@@ -186,7 +186,7 @@ newseed = ({ store, web3t })->
                     | #{lang.next}
         if store.current.verify-seed-error is yes
             .pug.warning(style=text-style)
-                .pug #{lang.words-are-not-match ? 'The word is entered incorrectly' }
+                .pug #{lang.words-are-not-match}
 random = ->
     Math.floor((Math.random! * 10) + 1)
 get-verifier = (store)-> (original)->

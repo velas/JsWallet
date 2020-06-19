@@ -99,6 +99,8 @@ store =
             add-validator: ""
             add-validator-stake: ""
             result: ""
+            new-address: ""
+            move-stake: 0
         validators:
             pending: []
             active: []

@@ -143,8 +143,8 @@ module.exports = ({ store, web3t })->
             .pug
                 switch store.current.status
                     case \verify
-                        .pug #{lang.verify-nickname ? 'Nickname Verification...'}
+                        .pug #{lang.verify-nickname}
                     case \buy-nickname
-                        .pug #{lang.get-nickname ? 'Get Nickname'}
+                        .pug #{lang.get-nickname}
                     else
-                        button.pug(on-click=buy-nickname-click) #{lang.register ? 'Register'}
+                        button.pug(on-click=buy-nickname-click) #{lang.register}

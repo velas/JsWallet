@@ -143,7 +143,7 @@ require! {
         margin: 0 auto
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -293,6 +293,7 @@ setup-button = (store, web3t)->
         return alert(lang.wrong-pin-should) if store.current.pin.length < 4
         set store.current.pin
         check-pin store, web3t
+        store.current.pin = ""
     text-color=
         color: style.app.text
     button-style =
@@ -322,7 +323,7 @@ create-wallet = (store, web3t)->
         button.setup.pug(on-click=create style=button-primary2-style)
             span.pug
                 img.icon-svg.pug(src="#{icons.create-wallet}")
-                | #{lang.create-wallet ? 'Create Wallet'}
+                | #{lang.create-wallet}
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
