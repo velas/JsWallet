@@ -88,6 +88,7 @@ require! {
                 color: orange
 module.exports = ({ store, wallet, type })->
     style = get-primary-info store
+    address-suffix = store.current.address-suffix
     address-input=
         color: style.app.color3
     address-input-bg=
@@ -99,25 +100,30 @@ module.exports = ({ store, wallet, type })->
     filter-icon=
         filter: style.app.filterIcon
     address-link = 
-        | store.current.refreshing is no => get-address-link wallet
+        | store.current.refreshing is no => get-address-link wallet, address-suffix
         | _ => "..."
     address-title = 
-        | store.current.refreshing is no => get-address-title wallet
+        | store.current.refreshing is no => get-address-title wallet, address-suffix
         | _ => "..."
     show-details = ->
         store.current.hovered-address.address = wallet.address
     hide-details = ->
         store.current.hovered-address.address = null
-    create-ref = ->
-        #module.exports.element = it
-        #store.current.hovered-address.element = it
-        #create-ref.element = it
     active = if wallet.address is store.current.hovered-address.address then 'active' else ''
-    .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details ref=create-ref)
+    rotate-address-suffix = ->
+        store.current.address-suffix =
+            | store.current.address-suffix is '' and wallet.address2  => "2"
+            | store.current.address-suffix is '2' and wallet.address3 => '3'
+            | _ => ""
+    .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details)
         identicon { store, address: address-title }
         span.pug(style=input)
-            a.browse.pug(target="_blank" href="#{address-link}")
-                img.pug(src="#{icons.browse-open}" style=filter-icon)
+            if store.url-params.internal?
+                a.browse.pug(on-click=rotate-address-suffix)
+                    img.pug(src="#{icons.choose}" style=filter-icon)
+            else
+                a.browse.pug(target="_blank" href="#{address-link}")
+                    img.pug(src="#{icons.browse-open}" style=filter-icon)
             MiddleEllipsis.pug
                 a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
         copy { store, text: address-title }

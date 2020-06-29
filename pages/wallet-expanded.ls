@@ -161,7 +161,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
             .pug
-                if wallet.coin.token not in <[ btc vlx vlx2 ]>
+                if wallet.coin.token not in <[ btc vlx2 ]>
                     .pug.uninstall(on-click=uninstall style=uninstall) #{label-uninstall}
         .wallet-part.right.pug
             .wallet-header.pug.chart

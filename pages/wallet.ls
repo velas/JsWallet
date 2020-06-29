@@ -264,7 +264,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
         .wallet-middle.pug(style=border)
             address-holder { store, wallet, type: \bg }
-            if wallet.coin.token not in <[ btc vlx vlx2 ]>
+            if wallet.coin.token not in <[ btc vlx2 ]>
                 .pug.uninstall(on-click=uninstall style=wallet-style) #{label-uninstall}
         .wallet-middle.title-balance.pug(style=border)
             .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}

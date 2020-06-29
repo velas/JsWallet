@@ -8,7 +8,6 @@ require! {
     \./round5edit.ls
     \./get-primary-info.ls
     \prelude-ls : { map }
-    \./address-link.ls : { get-address-link, get-address-title }
     \../web3t/providers/superagent.ls : { put }
 }
 module.exports = (store, web3t)->
@@ -51,4 +50,4 @@ module.exports = (store, web3t)->
     token = invoice.coin.token.to-upper-case!
     description-change = (event)->
         invoice.data = event.target.value
-    { invoice, description-change, token, wallet, primary-button-style, recipient-change, amount-change, amount-usd-change, cancel, send-anyway, get-address-link, get-address-title, default-button-style, round5edit }
+    { invoice, description-change, token, wallet, primary-button-style, recipient-change, amount-change, amount-usd-change, cancel, send-anyway, default-button-style, round5edit }

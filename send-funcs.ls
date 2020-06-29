@@ -17,7 +17,6 @@ require! {
     \./pending-tx.ls : { create-pending-tx }
     \./transactions.ls : { rebuild-history }
     \prelude-ls : { map }
-    \./address-link.ls : { get-address-link, get-address-title }
     \./web3.ls
     \./api.ls : { calc-fee }
     \./pages/confirmation.ls : { confirm }
@@ -220,8 +219,6 @@ module.exports = (store, web3t)->
     export choose-cheap 
     export chosen-auto 
     export chosen-cheap
-    export get-address-link 
-    export get-address-title
     export default-button-style
     export round5edit 
     export round5

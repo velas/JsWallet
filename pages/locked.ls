@@ -195,7 +195,7 @@ wrong-pin = (store)->
     left-trials = total-trials - store.current.pin-trial
     reset-wallet store if left-trials <= 0
 check-pin = (store, web3t)->
-    <- set-timeout _, 100
+    # <- set-timeout _, 100
     return if not exists!
     return wrong-pin store if not check(store.current.pin)
     store.current.pin-trial = 0

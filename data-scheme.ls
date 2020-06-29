@@ -160,6 +160,7 @@ store =
         applied: []
     releases: []
     current:
+        address-suffix: ''
         try-copy: null
         hovered-address:
             address: null

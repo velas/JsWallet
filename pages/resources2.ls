@@ -18,7 +18,6 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
     \./switch-account.ls
     \../icons.ls
     \./placeholder.ls
