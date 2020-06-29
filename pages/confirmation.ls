@@ -55,7 +55,7 @@ require! {
                 display: inline-block
                 cursor: pointer
                 height: 36px
-                width: 110px
+                width: 120px
                 font-weight: bold
                 font-size: 10px
                 text-transform: uppercase

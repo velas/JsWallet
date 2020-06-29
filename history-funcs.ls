@@ -53,7 +53,7 @@ module.exports = (store, web3t)->
         if not data?
             return
                 .pug.balance
-                    span.color.pug #{str}
+                    span.color.pug #{round-human str}
         [_, first, last] = data
         span.pug.balance
             span.color.pug #{round-human first}

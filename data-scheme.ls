@@ -1,6 +1,6 @@
 require! {
     \prelude-ls : { map, pairs-to-obj }
-    \./seed.ls : { saved }
+    \./seed.ls : seedmem
     \./browser/location.ls
     \./langs/langs.json
     \./icons.ls
@@ -10,7 +10,7 @@ require! {
     \qs
     \localStorage
 }
-saved-seed = saved!
+saved-seed = seedmem.saved!
 create-send =->
     id: ""
     to: ""

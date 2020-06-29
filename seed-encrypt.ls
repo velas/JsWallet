@@ -23,6 +23,10 @@ seed-pattern =
     | _ => "01233201"
 libs =
     seed-pattern |> split '' |> map -> libs-source[+it]
+libs-old =
+    "0" |> split '' |> map -> libs-source[+it]
+libs-new =
+    "0" |> split '' |> map -> libs-source[+it]
 encrypt-each = (key)-> (value, lib)->
     lib.encrypt(value, key).to-string!
 export encrypt = (value, key)->
@@ -34,3 +38,7 @@ decrypt-each = (key)-> (value, lib)->
         return ""
 export decrypt = (value, key)->
     libs |> reverse |> foldl decrypt-each(key), value
+export decrypt-old = (value, key)->
+    libs-old |> reverse |> foldl decrypt-each(key), value
+export encrypt-new = (value, key)->
+    libs-new |> foldl encrypt-each(key), value

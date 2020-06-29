@@ -20,6 +20,20 @@ export exists = ->
 export encrypt = (str)->
     return mem.encrypt(str) if typeof! mem.encrypt is \Function
     \unsecure
+try-migrate = (value)->
+    res = local-storage.get-item(\spin) ? ""
+    key = get-key value
+    decrypted = seed-encrypt.decrypt-old(res, key)
+    if decrypted is not value
+        return no
+    local-storage.set-item \spinbkp, local-storage.get-item(\spin)
+    local-storage.set-item \sseedbkp, local-storage.get-item(\sseed)
+    key-sseed = encrypt \sseed
+    local-storage.set-item \spin, (seed-encrypt.encrypt decrypted, key)
+    sseed = seed-encrypt.decrypt-old (local-storage.get-item(\sseed) ? ""), key-sseed
+    local-storage.set-item \sseed, (seed-encrypt.encrypt sseed, key-sseed)
+    console.log "Migration successed"
+    return yes
 export check = (value)->
     return no if typeof! value isnt \String
     return no if value.length < 4
@@ -29,4 +43,8 @@ export check = (value)->
     return no if res.length is 0
     key = get-key value
     decrypted = seed-encrypt.decrypt(res, key)
-    decrypted is value
+    if decrypted is value
+        return yes
+    #Not decrypted. Try to use old method. Reencrypt in case of success
+    try-migrate value
+#    decrypted is value

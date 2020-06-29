@@ -1382,8 +1382,8 @@
         ],
         "backupInfo": [
             "Do you have backup word phrase of the current account?",
-            "У вас есть резервная слово фразу текущего счета?",
-            "У вас є резервна слово фразу поточного рахунку?",
+            "У вас есть резервное словосочетание текущего аккаунта?",
+            "Чи є у вас резервні словосполучення поточного аккаунта?",
             "Vous avez de sauvegarde de mots de la phrase de compte courant?",
             "¿Tienes copia de seguridad de palabra frase de cuenta corriente?",
             "您有备份当前账号的助记词吗？",
@@ -1836,8 +1836,8 @@
             "Українська",
             "Français",
             "Español",
-            "한국어",
             "中文語言",
+            "한국어",
             "عرب"
         ],
         "themes": [

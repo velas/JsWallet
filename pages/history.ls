@@ -358,7 +358,7 @@ require! {
                         left: 3px
                         position: relative
                 &.amount
-                    width: 14%
+                    width: 16%
                     text-align: right
                     @media screen and (max-width: 1020px)
                         width: 19%
@@ -376,7 +376,7 @@ require! {
                     opacity: .5
                     padding-left: 0
                 &.created
-                    width: 30%
+                    width: 28%
                     text-align: right
                     @media screen and (max-width: 1020px)
                         width: 25%

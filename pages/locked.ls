@@ -6,7 +6,7 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \../send-form.ls : { notify-form-result }
-    \../seed.ls
+    \../seed.ls : seedmem
     \../menu-funcs.ls
     \./choose-language.ls
     \../icons.ls
@@ -253,8 +253,8 @@ input = (store, web3t)->
 reset-wallet = (store)->
     setbkp!
     del!
-    seed.setbkp!
-    seed.del!
+    seedmem.setbkp!
+    seedmem.del!
     store.current.pin = ""
     store.current.pin-trial = 0
     store.current.page = 'chooseinit'
