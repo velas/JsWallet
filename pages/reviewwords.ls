@@ -169,10 +169,10 @@ require! {
         margin-bottom: 20px
         max-width: 250px
         font-style: italic
-create-word = (store, words, word)-->
-    index = words.index-of(word) + 1
+create-word = (store, index, word) ->
+    index = index + 1
     style = get-primary-info store
-    seed-style=
+    seed-style =
         border: "1px solid #{style.app.border}"
         color: style.app.text
     .pug.word(style=seed-style)
@@ -205,7 +205,7 @@ review-words-panel = (store, web3t)->
         window.open('https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view')
     .pug
         .pug.words
-            store.current.seed-words |> map create-word store, store.current.seed-words
+            store.current.seed-words.map((word, index) -> create-word store, index, word ) 
         .pug
             .pug.button-container
                 button.pug.right(on-click=back style=button-primary3-style )
