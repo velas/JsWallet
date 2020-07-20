@@ -164,6 +164,7 @@ require! {
                         line-height: 11px
                         vertical-align: middle
                         margin-top: -25px
+                        margin-right: 7px
                         @media(max-width: 500px)
                             margin-right: 5px
     .about

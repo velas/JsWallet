@@ -137,7 +137,6 @@ order-withdraw-process = (store, web3t)->
                     .pug.step(on-click=activate-second class="#{active-second}")
                         .pug.step-count 2
                         .pug.step-content #{lang.comeBack}
-                        .pug.step-content (#{epoch-next})
                     .pug.step(on-click=activate-third class="#{active-third}")
                         .pug.step-count 3
                         .pug.step-content

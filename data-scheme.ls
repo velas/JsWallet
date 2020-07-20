@@ -46,6 +46,13 @@ store =
     terms: "Loading..."
     terms2: "Loading..."
     collapse: ""
+    development:
+        proposals: []
+        new-proposal: 
+            description: ""
+            url: ""
+            opened: no
+            progress: \0
     preference:
         settings-visible: yes
         invoice-visible: yes
@@ -161,6 +168,7 @@ store =
     releases: []
     current:
         address-suffix: ''
+        page-pin: null
         try-copy: null
         hovered-address:
             address: null
@@ -177,6 +185,8 @@ store =
         verify-seed-indexes: []
         switch-account: no
         tor: no
+        rate: no
+        view: no
         hint: yes
         open-menu: no
         current-epoch: no

@@ -319,6 +319,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \notification
     goto-wallets = ->
         navigate store, web3t, \offlinewallets
+    goto-vote = ->
+        navigate store, web3t, \vote
     .pug.panel-content
         p.results.pug 
             | #{lang.estimated-results}: 
@@ -373,6 +375,11 @@ dapps = (store, web3t)->
             .source.pug(on-click=goto-notice)
                 .pug.address #{lang.velas-sphere}
                 .pug.header #{lang.velas-messenger}
+            .pug.description
+        .pug.section
+            .source.pug(on-click=goto-vote)
+                .pug.address #{lang.velas-sphere}
+                .pug.header Vote
             .pug.description 
         .pug.section.developing
             .source.pug

@@ -89,10 +89,12 @@ require! {
         img
             height: 50px
             border-radius: 0
-            margin-bottom: 30px
+            margin-bottom: 15px
         .head
             font-weight: 600
             margin-bottom: 10px
+            font-size: 14px
+            opacity: .7
         .content
             font-size: 14px
             opacity: .7
@@ -856,4 +858,3 @@ module.exports = ({ store, web3t })->
                 .pug.nothin-to-show(style=menu-style)
                     img.pug(style=nothing-icon src="#{icons.search-history}"
                     .pug.head #{lang.nothing-to-show}
-                    .pug.content #{lang.make-tx}

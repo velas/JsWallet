@@ -29,7 +29,12 @@ focus-control = (scope, name, cb) !->
     control = pages[name] 
     return cb null if typeof! control?focus isnt \Function
     control.focus scope, cb
-module.exports = (store, web3t, page) !->
+perform-ask-pin = (store, page)->
+    scroll-top!
+    store.current.page = \locked
+    store.current.page-pin = page    
+module.exports = (store, web3t, page, ask-pin) !->
+    return perform-ask-pin store, page if ask-pin is yes
     return alert "store is required" if not store?
     return alert "web3t is required" if not web3t?
     scroll-top!

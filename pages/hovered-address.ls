@@ -10,6 +10,11 @@ require! {
     color: white
     width: 300px
     background: transparent
+    canvas
+        height: 300px
+        width: 300px
+        padding: 0 10px 10px 10px
+        margin-bottom: -5px
     >.text
         font-size: 11px
         padding: 10px 0px

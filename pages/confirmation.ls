@@ -187,6 +187,8 @@ prompt-modal = (store)->
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
 export confirmation-control = (store)->
+    #for situation when we ask peen before action. this window should be hidden
+    return null if store.current.page-pin?
     .pug
         confirmation-modal store
         prompt-modal store

@@ -44,8 +44,8 @@ require! {
             display: block
             position: absolute
             top: 36px
-            left: 0
-            width: 100%
+            right: 0
+            width: auto
             padding: 0
             color: white
             height: 90px

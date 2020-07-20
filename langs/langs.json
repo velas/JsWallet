@@ -931,7 +931,7 @@
             "تطبيق"
         ],
         "uRewards": [
-            "Awards",
+            "Rewards",
             "Ваши награды",
             "Ваші нагороди",
             "Vos récompenses",
@@ -1881,17 +1881,18 @@
             "ويب المحفظة اللغة"
         ],
         "comeBack": [
-            "Try again after the epoch change",
-            "Попробуйте снова после смены эпохи ",
-            "Спробуйте знову після зміни епохи ",
-            "Essayez à nouveau après l'époque de changement",
-            "Inténtelo de nuevo después de la época de cambio",
-            "尝试之后的又一次划时代的变化",
-            "후에 다시 시도하십시오 epoch 변경",
-            "حاول مرة أخرى بعد عصر التغيير"
+            "Come back later for your staking amount",
+            "Вернись позже, чтобы узнать сумму ставки",
+            "Повертайтеся пізніше, щоб отримати ставку",
+            "Revenez plus tard pour votre montant de mise",
+            "Vuelve más tarde por tu cantidad de apuesta",
+            "稍等一会再回来",
+            "스테이 킹 금액을 위해 나중에 다시 오십시오",
+            "عد لاحقًا لمقدار التوقيع المساحي"
+            
         ],
         "award": [
-            "Award",
+            "Reward",
             "Награда",
             "Нагорода",
             "Prix",

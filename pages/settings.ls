@@ -483,6 +483,8 @@ manage-account = (store, web3t)->
         background: style.app.primary2
     goto-terms = ->
         navigate store, web3t, \terms2
+    goto-privacy = ->
+        navigate store, web3t, \privacy
     input-style2 = { ...input-style, width: "85px" } 
     button-style2 = { ...button-primary2-style, width: "20px" }
     .pug
@@ -554,10 +556,9 @@ manage-account = (store, web3t)->
                 span.pug #{lang.about-wallet}.
                 br.pug
                 span.pug #{lang.pls-read } 
-                span.pug 
-                    a.pug.link(href="https://velas.com/privacy.html" target="_blank") #{lang.privacy-policy }
+                span.pug.link(on-click=goto-privacy) #{lang.privacy-policy}
                 span.pug  & 
-                span.pug.link(on-click=goto-terms) #{lang.terms-of-use }
+                span.pug.link(on-click=goto-terms) #{lang.terms-of-use}
             .pug.content
 module.exports = ({ store, web3t } )->
     go-back = ->

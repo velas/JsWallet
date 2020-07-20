@@ -57,6 +57,7 @@ require! {
         img
             width: 25px
             vertical-align: bottom
+            cursor: pointer
     .menu-item
         span
             opacity: 0
@@ -328,9 +329,11 @@ module.exports = (store, web3t)->
         color: style.app.text
     goto-mainnet = ->
         web3t.use \mainnet
+    goto-wallet = ->
+        navigate store, web3t, \wallets
     .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
-            img.pug(src="#{info.branding.logo-sm}" style=logo-style)
+            img.pug(src="#{info.branding.logo-sm}" style=logo-style on-click=goto-wallet)
         if store.preference.lock-visible is yes
             .menu-item.bottom.pug(on-click=lock style=icon-style)
                 img.pug(src="#{icons.lock}" style=lock-icon)

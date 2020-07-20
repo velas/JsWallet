@@ -23,14 +23,13 @@ require! {
     box-sizing: border-box
     text-align: center
     .notice
-        position: fixed
-        width: 230px
-        text-align: left
-        right: 10px
-        bottom: 10px
-        font-size: 13px
-        background: #43207c
+        max-width: 300px
+        text-align: center
+        color: red
+        margin: 10px auto
+        font-size: 15px
         padding: 10px
+        border: 1px solid rgba(255, 0, 0, 0.5)
     .icon-svg
         position: relative
         height: 12px
@@ -110,8 +109,10 @@ require! {
         max-width: 400px
         display: inline-block
         ~div .orange
-            color: #f0c16b
+            color: orange
             text-transform: uppercase
+            letter-spacing: 1px
+            display: block
     button
         width: 130px
         margin: 5px 0
@@ -195,14 +196,17 @@ wrong-pin = (store)->
     left-trials = total-trials - store.current.pin-trial
     reset-wallet store if left-trials <= 0
 check-pin = (store, web3t)->
-    # <- set-timeout _, 100
     return if not exists!
     return wrong-pin store if not check(store.current.pin)
     store.current.pin-trial = 0
     store.current.pin = ""
     store.current.loading = yes
-    navigate store, web3t, \:init
-    notify-form-result \unlock, null
+    if store.current.page-pin?
+        store.current.page = store.current.page-pin
+        store.current.page-pin = null
+    else
+        navigate store, web3t, \:init
+        notify-form-result \unlock, null
 version = (store, web3t)->
     .version.pug #{store.version}
 input = (store, web3t)->
