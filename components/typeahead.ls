@@ -54,6 +54,8 @@ module.exports = ({ store, value, on-change, placeholder, on-key-down, list })->
         list |> filter get-actual-values value
     console.log { actual-list, list }
     typeahead-placeholder = actual-list.0
+    on-typehead-focus = ->
+        (document.query-selector \.userinput).focus!
     .pug.input-area
-        input.typeahead.pug(type="text" style=input-style placeholder=typeahead-placeholder auto-complete="off")
+        input.typeahead.pug(type="text" style=input-style placeholder=typeahead-placeholder auto-complete="off" on-key-down=on-key-down on-focus=on-typehead-focus)
         input.userinput.pug(type="text" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder auto-complete="off" on-key-down=on-key-down)

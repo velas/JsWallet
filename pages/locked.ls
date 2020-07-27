@@ -230,7 +230,13 @@ input = (store, web3t)->
         background: style.app.wallet
         border: "0"
     enter = ->
-        check-pin store, web3t
+        if exists!
+            check-pin store, web3t
+        else
+            return alert(lang.wrong-pin-should) if store.current.pin.length < 4
+            set store.current.pin
+            check-pin store, web3t
+            store.current.pin = ""
     change = (e)->
         store.current.pin = e.target.value
     lang = get-lang store

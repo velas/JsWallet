@@ -173,7 +173,7 @@ require! {
         margin-bottom: 20px
         max-width: 250px
         font-style: italic
-restore-words = (store, web3t, item)-->
+restore-words = (store, web3t, next, item)-->
     lang = get-lang store
     style = get-primary-info store
     seed-style=
@@ -185,8 +185,10 @@ restore-words = (store, web3t, item)-->
     list = bip39.wordlists.EN
     change-part = (it)->
         item.part = it.target.value    #.to-lower-case!.trim!.replace(/[^a-z]/, '')
+    on-key-down = ->
+        next! if it.key-code is 13
     .pug.word(style=seed-style)
-        typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, list }
+        typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
         span.effect.pug #{index}
 restore-words-panel = (store, web3t)->
     lang = get-lang store
@@ -221,7 +223,7 @@ restore-words-panel = (store, web3t)->
             store.current.seed-words 
                 |> sort-by (.index) 
                 |> filter current-word store.current.verify-seed-index
-                |> map restore-words store, web3t
+                |> map restore-words store, web3t, next
         .pug
             button.pug.right(on-click=back style=button-primary3-style )
                 img.icon-svg.pug(src="#{icons.close2}" style=btn-icon)
