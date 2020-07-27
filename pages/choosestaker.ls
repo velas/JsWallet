@@ -873,8 +873,8 @@ staking = ({ store, web3t })->
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
-    err <- web3t.refresh
-    return cb err if err?
+    # err <- web3t.refresh
+    # return cb err if err?
     store.staking.max-withdraw = 0
     random = ->
         Math.random!
