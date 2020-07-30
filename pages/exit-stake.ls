@@ -9,6 +9,7 @@ require! {
     \../staking/can-make-staking.ls
     \../components/amount-field.ls
     \../components/button.ls
+    \./confirmation.ls : { alert }
 }
 .steps
     @media(max-width:800px)
