@@ -28,14 +28,18 @@ module.exports = (store, web3t)->
         if empty.length is not 0
             store.current.alert = "Please fill all words"
             return cb "cancelled"
-        wrong = 
-            store.current.seed-words 
-                |> map (.part)
-                |> filter not-in-dictionary 
-        return cb null if wrong.length is 0
-        res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
-        return cb "cancelled" if res is no
-        cb null
+        # wrong = 
+        #     store.current.seed-words 
+        #         |> map (.part)
+        #         |> filter not-in-dictionary 
+        # return cb null if wrong.length is 0
+        # res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
+        try
+            bip39.mnemonic-to-entropy store.current.seed-words.map(-> it.part).join(" ")
+            cb null
+        catch
+            res <- confirm store, "Seed phrase checksum not match. Do you want to continue?"
+            return cb "cancelled" if res is no
     save = ->
         err <- verify-seed
         return if err?

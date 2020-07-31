@@ -9,6 +9,7 @@ require! {
     \../staking/can-make-staking.ls
     \../components/amount-field.ls
     \../components/button.ls
+    \./confirmation.ls : { alert }
 }
 .steps
     @media(max-width:800px)
@@ -125,7 +126,7 @@ order-withdraw-process = (store, web3t)->
         .description.pug
             .pug.left
                 .steps.pug
-                    .pug.step(on-click=activate-first class="#{active-first}")
+                    .pug.step(on-click-commented=activate-first class="#{active-first}")
                         .pug.step-count 1
                         .pug.step-content
                             .pug #{lang.requestExit}
@@ -134,10 +135,10 @@ order-withdraw-process = (store, web3t)->
                                     .pug
                                         amount-field { store, value: store.staking.withdrawAmount, on-change: change-max }
                                     button { store, text: lang.requestExit, icon: 'exit', on-click: order, type: "secondary" }
-                    .pug.step(on-click=activate-second class="#{active-second}")
+                    .pug.step(on-click-commented=activate-second class="#{active-second}")
                         .pug.step-count 2
                         .pug.step-content #{lang.comeBack}
-                    .pug.step(on-click=activate-third class="#{active-third}")
+                    .pug.step(on-click-commented=activate-third class="#{active-third}")
                         .pug.step-count 3
                         .pug.step-content
                             .pug #{lang.withdraw}
