@@ -14,6 +14,8 @@ require! {
     \./get-primary-info.ls
     \./pages/confirmation.ls : { confirmation-control }
     \./pages/hovered-address.ls
+    \./services/connection-detector.ls
+    \react-detect-offline : { Offline, Online }
 }
 .app
     input
@@ -142,6 +144,19 @@ require! {
                 margin: 0
                 position: fixed
                 z-index: 11
+    .error-no-connection
+        -webkit-mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, #000000 50%, rgba(255, 255, 255, 0.6) 70%)
+        -webkit-mask-size: 50%
+        animation: fb 1s infinite
+        animation-fill-mode: forwards
+        background: var(--placeholder)
+        padding: 10px 20px
+        display: inline-block
+    .fixed-n-centered
+        position: fixed
+        bottom: 0
+        left: 0
+        right: 0
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
@@ -177,3 +192,5 @@ module.exports = ({ store, web3t })->
                 side-menu store, web3t
             current-page { store, web3t }
             hovered-address { store }
+            Offline.pug
+                .notification.fixed-n-centered.error-no-connection.pug Warning! You have no internet connection!\nOffline mode is on!
