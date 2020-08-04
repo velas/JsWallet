@@ -40,7 +40,7 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.error = "Balance is not loaded" if not wallet?
     return cb "Balance is not loaded" if not wallet?
     result-amount-send = amount-send ? 0
-    { fee-type, tx-type } = store.current.send
+    { fee-type, tx-type, fee-custom-amount } = store.current.send
     usd-rate = wallet?usd-rate ? 0
     fee-usd-rate = fee-wallet?usd-rate ? 0
     account = { wallet.address, wallet.private-key }
@@ -52,16 +52,33 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.amount-send-usd = calc-usd store, amount-send
     send.amount-send-eur = calc-eur store, amount-send
     calc-fee-fun = if fast then calc-fee else calc-fee-proxy
-    console.log \test
-    err, calced-fee <- calc-fee-fun { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, tx-type, account }
-    send.error = "Calc Fee Error: #{err.message ? err}" if err?
-    return cb "Calc Fee Error: #{err.message ? err}" if err?
-    tx-fee = 
-        | calced-fee? => calced-fee 
-        | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
-        | _ => send.network.tx-fee
+    get-tx-fee = (fee-type, cb) ->
+        err, calced-fee <- calc-fee-fun { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, fee-custom-amount, tx-type, account }
+        send.error = "#{err.message ? err}" if err?
+        return cb "Calc Fee Error: #{err.message ? err}", null if err?
+        tx-fee =
+            | calced-fee? => calced-fee
+            | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
+            | _ => send.network.tx-fee
+        cb null, tx-fee
+    err, tx-fee-cheap <- get-tx-fee \cheap
+    return err if err?
+    err, tx-fee-auto <- get-tx-fee \auto
+    return err if err?
+    calc-current = (cb) ->
+        switch fee-type
+        case \auto
+            return cb null, tx-fee-auto
+        case \cheap
+            return cb null, tx-fee-cheap
+        default
+            get-tx-fee fee-type, cb
+    err, tx-fee <- calc-current!
+    return err if err?
     send.amount-send-fee = tx-fee
-    send.amount-charged =  
+    send.amount-send-fee-options.auto = tx-fee-auto
+    send.amount-send-fee-options.cheap = tx-fee-cheap
+    send.amount-charged = 
         | (result-amount-send ? "").length is 0 => tx-fee
         | result-amount-send is \0 => tx-fee
         | result-amount-send is 0 => tx-fee

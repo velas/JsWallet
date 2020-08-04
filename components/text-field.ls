@@ -44,7 +44,7 @@ require! {
 module.exports = ({ store, value, on-change, placeholder, type, on-key-down })->
     style = get-primary-info store
     input-style =
-        background: style.app.wallet
+        background: style.app.input-bg
         color: style.app.text
         overflow-x: \auto
         margin-bottom: \5px

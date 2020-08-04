@@ -307,7 +307,7 @@ require! {
             font-weight: 600
         .rest
             color: inherit
-            opacity: .75
+            opacity: .5
     .table
         width: 100%
         overflow-y: scroll
@@ -767,7 +767,6 @@ module.exports = ({ store, web3t })->
         border-bottom: "1px solid #{style.app.border}"
         color: style.app.text
     header-style-light =
-        border-bottom: "1px solid #{style.app.border-light}"
         color: style.app.text
     button-style=
         color: style.app.text

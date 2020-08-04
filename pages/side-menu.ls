@@ -9,8 +9,10 @@ require! {
     \../navigate.ls
     \../setup-pages.ls
     \../icons.ls
+    \./menu.ls
 }
 .menu
+    @import scheme
     width: 100%
     text-align: right
     padding: 20px 15px
@@ -19,7 +21,7 @@ require! {
     &.side-menu
         position: fixed
         left: 0
-        width: 60px
+        width: $menu
         height: 100vh
         padding: 0
         padding-top: 0px
@@ -334,6 +336,7 @@ module.exports = (store, web3t)->
     .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
             img.pug(src="#{info.branding.logo-sm}" style=logo-style on-click=goto-wallet)
+        #menu { store, web3t }
         if store.preference.lock-visible is yes
             .menu-item.bottom.pug(on-click=lock style=icon-style)
                 img.pug(src="#{icons.lock}" style=lock-icon)

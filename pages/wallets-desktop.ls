@@ -16,8 +16,14 @@ require! {
     \./icon.ls
     \localStorage
     \../icons.ls
+    \../components/header.ls
 }
 .wallets-container
+    .show-detail
+        background: var(--waves)
+        background-size: contain
+        background-repeat: no-repeat
+        background-position: top right
     .wallets
         @import scheme
         $real-height: 300px
@@ -200,6 +206,7 @@ mobile = ({ store, web3t })->
         overflow: "hidden"
     left-side =
         width: "35%"
+        background: "#{style.app.left-side}"
     right-side =
         width: "65%"
         border-left: "1px solid #{style.app.border}"
@@ -257,6 +264,7 @@ mobile = ({ store, web3t })->
             |> find (-> wallets.index-of(it) is store.current.wallet-index)
     return null if not wallet-detail?
     .wallets-container.pug(key="wallets")
+        header store, web3t
         .pug(style=row)
             .pug(style=left-side)
                 menu { store, web3t }

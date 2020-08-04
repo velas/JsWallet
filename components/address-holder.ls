@@ -72,7 +72,7 @@ require! {
             position: relative
             border-radius: $border
             border: 0
-            padding-left: 33px
+            padding-left: 31px
             background: transparent
             box-sizing: border-box
             vertical-align: top

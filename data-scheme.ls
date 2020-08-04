@@ -19,6 +19,7 @@ create-send =->
     address: ''
     value: \0
     fee-type: \auto
+    fee-custom-amount: \0
     tx-type: \regular
     amount-send: \0
     amount-charged: \0
@@ -32,6 +33,9 @@ create-send =->
     decoded-data: ""
     show-data-mode: \encoded
     error: ''
+    amount-send-fee-options:
+        cheap: 0
+        auto: 0
 url-params =
     | window? => qs.parse window.location.search.replace('?', '')
     | _ => {}
@@ -53,6 +57,7 @@ store =
             url: ""
             opened: no
             progress: \0
+            update-progress: null
     preference:
         settings-visible: yes
         invoice-visible: yes
@@ -245,6 +250,7 @@ store =
         invoice : create-send!
         currency: ""
         convert: "usd"
+        trx-type: "custom"
     history:
         filter-open: no
         tx-details: no

@@ -13,6 +13,7 @@ require! {
     \../components/button.ls
     \../components/address-holder.ls
     \../components/identicon.ls
+    \../components/trx-fee.ls
     \./send-contract.ls
 }
 .content
@@ -230,11 +231,11 @@ require! {
             padding: 2px
             box-sizing: border-box
         >.header
-            margin: 0
             padding: 10px
             min-height: 40px
             text-align: left
             padding: 0
+            margin: 0 10px
             >.head
                 box-sizing: border-box
                 width: 70%
@@ -250,6 +251,7 @@ require! {
                     padding-left: 10px
                 &.left
                     width: 10%
+                    text-align: center
                 &.right
                     width: 10%
                     text-align: right
@@ -259,6 +261,17 @@ require! {
             img
                 width: 34px
                 border-radius: 0px
+        .field
+            font-size: 12px
+            padding-left: 3px
+            color: gray
+            margin-top: 5px
+            &.type
+                font-size: 14px
+                color: #fff
+            &.coin
+                font-size: 14px
+                color: #fff
         .usd
             font-size: 11px
             padding-left: 3px
@@ -448,6 +461,7 @@ send = ({ store, web3t })->
                 if is-data
                     form-group 'Data', icon-style, ->
                         .pug.smart-contract(style=input-style) #{show-data!}
+                trx-fee { store, web3t, wallet }
                 table.pug(style=border-style)
                     tbody.pug
                         tr.pug

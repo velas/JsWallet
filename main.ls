@@ -48,15 +48,16 @@ Main = observer ({store})->
     safe-render ->
         app { store, web3t }
 if 'serviceWorker' of navigator
+    console.log "in!"
     window.addEventListener 'load', ->
-        ((navigator.serviceWorker.register 'service-worker.js', {scope: \/main-index.html}).then ((registration) ->
+        ((navigator.serviceWorker.register '/wallet/service-worker.js').then ((registration) ->
             console.log 'ServiceWorker registration successful with scope: ', registration.scope
             return ), (err) ->
             console.log 'ServiceWorker registration failed: ', err
             return )
         return
 else
-    console.log 'service wo rker is not supported'
+    console.log 'service worker is not supported'
 as-callback = (p, cb)->
     p.then (res)->
         cb null, res

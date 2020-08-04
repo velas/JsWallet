@@ -8,7 +8,7 @@ require! {
 module.exports = ({ store, address })->
     info = get-primary-info store
     return null if not address?
-    bgColor = \#000
     fgColor = \#FFF
+    bgColor = \#000
     .pug.qrcode
         QRCode.pug(value="#{address}" size=256 bgColor=bgColor fgColor=fgColor)

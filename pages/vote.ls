@@ -11,6 +11,7 @@ require! {
     \./epoch.ls
     \./alert-demo.ls
     \prelude-ls : { map }
+    \../math.ls : { minus }
     \../components/text-field.ls
     \../components/button.ls
 }
@@ -63,8 +64,7 @@ require! {
                 width: 100%
             .filter
                 height: 60px
-                margin: 20px 10px 20px 20px
-                background: blueviolet
+                margin: 20px 20px 10px 20px
                 position: relative
                 .view
                     position: absolute
@@ -102,8 +102,23 @@ require! {
                             width: 13px
             .main-content
                 height: 100vh
-                margin: 0px 10px 20px 20px
-                background: blueviolet
+                margin: 0px 20px 10px 20px
+                &.create-new-proposal
+                    height: auto
+                    input
+                        outline: none
+                        width: 100%
+                        box-sizing: border-box
+                        height: 36px
+                        line-height: 36px
+                        border-radius: 0
+                        padding: 0px 10px
+                        font-size: 14px
+                        margin: 5px 0
+                        border: 0px
+                        box-shadow: none
+                        ~ .keyboard-panel
+                            display: none
                 .item
                     padding: 15px
                     display: flex
@@ -235,6 +250,8 @@ require! {
 item = (store, web3t)-> (vote)->
     lang = get-lang store
     info = get-primary-info store
+    [description, url, progress, votesUpWeight, votesDownWeight] = vote
+    vote = votesUpWeight `minus` votesDownWeight
     border=border-bottom: "1px solid #{info.app.border}"
     background=background: "#{info.app.primary}"
     add-class = ->
@@ -245,23 +262,26 @@ item = (store, web3t)-> (vote)->
         if store.current.rate then \active else \ ""
     view =
         if store.current.view then \compact else \ ""
+    update-progress = ->
+        newp = store.development.new-proposal
+        newp.update-progress = progress
     .pug.item(style=border class="#{view}")
         span.pug.label(style=background) Sphere
         .pug.rate
             ul.pug
                 li.pug(class="#{raise}" on-click=add-class)
                     img.pug(src="#{icons.rate}")
-                li.pug 59
+                li.pug #{vote}
                 li.pug(class="#{lower}" on-click=add-class)
                     img.pug(src="#{icons.rate}")
         .pug.screen
             a.pug(href="#")
                 img.pug(src="https://res.cloudinary.com/dfbhd7liw/image/upload/v1586441544/velas/Bitmap.png")
         .pug.description
-            .pug.header Velas Storage Dapp
-            .pug.sub-header Keep your data on encrypted distributed servers with censorship resistance. Get access to them in a convenient and familiar way.
+            .pug.header #{description}
+            .pug.sub-header #{url}
             .pug.progress
-                progress.pug(value="30" max="100")
+                progress.pug(value="#{progress}" max="100")
                 span.pug Start
                 span.pug End
 urlR = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/
@@ -272,6 +292,11 @@ content = (store, web3t)->
         color: info.app.text
         border: "1px solid #{info.app.border}"
         background: info.app.header
+    border-style =
+        color: info.app.text
+        border: "1px solid #{info.app.border}"
+        padding: "15px"
+        margin-top: "-11px"
     add-class = ->
         store.current.view = not store.current.view
     view =
@@ -323,13 +348,15 @@ content = (store, web3t)->
                 li.pug(on-click=create-new-vote)
                     img.pug(src="#{icons.create}")
                     img.pug(src="#{icons.create}")
+        if newp.update-progress
+            .pug.create-new-proposal.main-content(style=border-style) Please make upgrade process here
         if newp.opened is yes
-            .pug.create-new-proposal
+            .pug.create-new-proposal.main-content(style=border-style)
                 text-field { store, value: newp.description , on-change: change-description , placeholder: "description" }
                 text-field { store, value: newp.url , on-change: change-url , placeholder: "url" }
-                text-field { store, value: newp.progress , on-change: change-progress , placeholder: "url" }
+                text-field { store, value: newp.progress , on-change: change-progress , placeholder: "progress" }
                 button { store, on-click: apply-new-vote , type: \primary , icon : \apply , text: \btnApply }
-                button { store, on-click: cancel-new-vote , type: \secondary , icon : \cancel , text: \cancel }
+                button { store, on-click: cancel-new-vote , icon : \close2 , text: \cancel }
         .pug.main-content(style=style)
             store.development.proposals |> map item store, web3t
 vote = ({ store, web3t })->
