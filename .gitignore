@@ -1,3 +1,5 @@
+
 .compiled
 .compiled-ssr
 langs/config.json
+.DS_Store
