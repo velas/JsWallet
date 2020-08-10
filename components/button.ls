@@ -21,7 +21,7 @@ require! {
     display: inline-block
     cursor: pointer
     box-sizing: border-box
-    transaction: all 0.5s
+    transition: all 0.5s
     &:hover
         background: rgba(#6CA7ED, 0.2)
         opacity: 0.9

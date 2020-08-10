@@ -1,6 +1,6 @@
 require! {
     \react
-    \../seed.ls : { get }
+    \../seed.ls : seedmem
     \../web3.ls
     \../get-lang.ls
     \../get-primary-info.ls
@@ -15,7 +15,8 @@ wallets.init = ({ store, web3t }, cb)->
     delete store.current.send?wallet
     store.current.send?tx-type = \regular
     return cb null if store.current.account?
-    store.current.seed = get!
+    #TODO: fix this seedmem.get! but before need to ask users to make backup wallets
+    seedmem.mnemonic = seedmem.get!
     err <- web3t.init
     #console.log err
     cb null

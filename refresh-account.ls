@@ -6,9 +6,10 @@ require! {
     \./mirror.ls
     \./apply-transactions.ls
     \./scam-warning.ls
+    \./seed.ls : seedmem
 }
 export set-account = (web3, store, cb)->
-    err, account <- new-account store, store.current.seed
+    err, account <- new-account store, seedmem.mnemonic
     return cb err if err?
     #vlx =
     #    account.wallets 

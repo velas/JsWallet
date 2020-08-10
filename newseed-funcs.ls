@@ -1,6 +1,6 @@
 require! {
     \./navigate.ls
-    \./seed.ls : { set }
+    \./seed.ls : seedmem
     \../web3t/providers/deps.ls : { bip39 }
     \./pages/confirmation.ls : { confirm }
     \prelude-ls : { words, map, filter, join }
@@ -28,25 +28,23 @@ module.exports = (store, web3t)->
         if empty.length is not 0
             store.current.alert = "Please fill all words"
             return cb "cancelled"
-        wrong = 
-            store.current.seed-words 
-                |> map (.part)
-                |> filter not-in-dictionary 
-        return cb null if wrong.length is 0
-        res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
-        return cb "cancelled" if res is no
-        cb null
+        # wrong = 
+        #     store.current.seed-words 
+        #         |> map (.part)
+        #         |> filter not-in-dictionary 
+        # return cb null if wrong.length is 0
+        # res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
+        try
+            bip39.mnemonic-to-entropy store.current.seed-words.map(-> it.part).join(" ")
+            cb null
+        catch
+            res <- confirm store, "Seed phrase checksum not match. Do you want to continue?"
+            return cb "cancelled" if res is no
     save = ->
         err <- verify-seed
         return if err?
-        store.current.seed = store.current.seed-words.map(-> it.part).join(' ')
+        seedmem.mnemonic = store.current.seed-words.map(-> it.part).join(' ')
         store.current.saved-seed = yes
-        set store.current.seed
+        seedmem.set seedmem.mnemonic
         next!
-    has-issue = ->
-        return no if store.current.seed.length is 0
-        not store.current.seed.match(/^([a-z]+[ ]){0,11}([a-z]+)$/)? and not store.current.seed.match(/^([a-z]+[ ]){0,23}([a-z]+)$/)? 
-    fix-issue = ->
-        store.current.seed = fix store.current.seed
-        store.current.seed-temp = store.current.seed
-    { save, generate-seed, has-issue, fix-issue, next }
+    { save, generate-seed, next }

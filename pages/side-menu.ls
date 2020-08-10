@@ -9,8 +9,10 @@ require! {
     \../navigate.ls
     \../setup-pages.ls
     \../icons.ls
+    \./menu.ls
 }
 .menu
+    @import scheme
     width: 100%
     text-align: right
     padding: 20px 15px
@@ -19,7 +21,7 @@ require! {
     &.side-menu
         position: fixed
         left: 0
-        width: 60px
+        width: $menu
         height: 100vh
         padding: 0
         padding-top: 0px
@@ -57,6 +59,7 @@ require! {
         img
             width: 25px
             vertical-align: bottom
+            cursor: pointer
     .menu-item
         span
             opacity: 0
@@ -221,7 +224,7 @@ require! {
                 font-size: 10px
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -250,7 +253,7 @@ module.exports = (store, web3t)->
     icon-color=
         filter: style.app.icon-filter
     icon-style =
-        color: style.app.icon
+        color: style.app.text
     icon-style2 =
         opacity: "0"
         bottom: "-280px"
@@ -328,9 +331,12 @@ module.exports = (store, web3t)->
         color: style.app.text
     goto-mainnet = ->
         web3t.use \mainnet
+    goto-wallet = ->
+        navigate store, web3t, \wallets
     .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
         .pug.logo
-            img.pug(src="#{info.branding.logo-sm}" style=logo-style)
+            img.pug(src="#{info.branding.logo-sm}" style=logo-style on-click=goto-wallet)
+        #menu { store, web3t }
         if store.preference.lock-visible is yes
             .menu-item.bottom.pug(on-click=lock style=icon-style)
                 img.pug(src="#{icons.lock}" style=lock-icon)

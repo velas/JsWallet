@@ -367,7 +367,7 @@ require! {
             .dragfile
                 position: absolute
                 height: 100vh
-                background: rgba(35, 16, 68, 0.85)
+                background: var(--drag-bg)
                 display: none
                 &.dragarea
                     display: block
@@ -715,7 +715,7 @@ require! {
                         transition: .5s
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
         .logo
             padding: 6px
@@ -767,11 +767,12 @@ menu = (store, web3t)->
         store.video.upload-link = yes
     .pug.menu(style=filter-body)
         .pug.middle
-            .pug.table-row-menu(on-click=open-upload-link)
-                .col.folder-menu.pug
-                    span.pug
-                        img.icon-svg.pug(src="#{icons.add-video}")
-                        | Upload link
+            if no
+                .pug.table-row-menu(on-click=open-upload-link)
+                    .col.folder-menu.pug
+                        span.pug
+                            img.icon-svg.pug(src="#{icons.add-video}")
+                            | Upload link
             .pug.table-row-menu(on-click=drag-file)
                 .col.folder-menu.pug
                     span.pug

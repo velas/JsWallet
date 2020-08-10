@@ -1,15 +1,11 @@
 require! {
     \react
-    \./wallet.ls
     \prelude-ls : { map, take, drop, filter }
     \../math.ls : { div, times, plus, minus }
     \./menu.ls
-    \../seed.ls : { get }
     \../web3.ls
     \../wallets-funcs.ls
     \./manage-account.ls
-    \./token-migration.ls
-    \./add-coin.ls : add-coin-page
     \../get-lang.ls
     \../get-primary-info.ls
     \./history.ls

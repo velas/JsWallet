@@ -17,7 +17,6 @@ require! {
     \./pending-tx.ls : { create-pending-tx }
     \./transactions.ls : { rebuild-history }
     \prelude-ls : { map }
-    \./address-link.ls : { get-address-link, get-address-title }
     \./web3.ls
     \./api.ls : { calc-fee }
     \./pages/confirmation.ls : { confirm }
@@ -30,7 +29,7 @@ module.exports = (store, web3t)->
     lang = get-lang store
     { send-to } = web3t.naming
     { send } = store.current
-    { wallet } = send
+    { wallet, fee-type } = send
     return null if not wallet?
     color = get-primary-info(store).color
     primary-button-style =
@@ -49,6 +48,7 @@ module.exports = (store, web3t)->
             data: data
             gas: gas
             gas-price: gas-price
+            fee-type: fee-type
         err, data <- create-transaction tx-obj
         return cb err if err?
         parts = get-tx-details store
@@ -162,8 +162,13 @@ module.exports = (store, web3t)->
     choose-cheap = ->
         send.fee-type = \cheap
         <- change-amount store, send.amount-send, no
+    choose-custom = (amount)->
+        send.fee-type = \custom
+        send.fee-custom-amount = amount
+        <- change-amount store, send.amount-send, no
     chosen-cheap =  if send.fee-type is \cheap then \chosen else ""
     chosen-auto  =  if send.fee-type is \auto then \chosen else ""
+    chosen-custom  =  if send.fee-type is \custom then \chosen else ""
     send-options = send.coin.tx-types ? []
     pending = wallet.pending-sent + ' ' + token
     calc-amount-and-fee = (amount-send, trials, cb)->
@@ -180,7 +185,8 @@ module.exports = (store, web3t)->
         next-trials = trials - 1
         calc-amount-and-fee next-amount, next-trials, cb 
     use-max = (cb)->
-        return cb "Fee is not calculated" if +(send.amount-send-fee ? 0) is 0
+        return cb "Fee is not calculated" if !send.amount-send-fee
+        return cb "Please enter recipient address first" if !send.to
         amount = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
         return cb "Amount is too small" if +amount <= 0
         #console.log { amount }
@@ -188,7 +194,7 @@ module.exports = (store, web3t)->
         #console.log { amount, wallet.balance, send.amount-send-fee }
         return cb "#{err}" if err?
         return cb "Amount is 0" if +info.amount-send is 0
-        send.amount-send = info.amount-send
+        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` info.amount-send-fee
         send.amount-send-fee = info.amount-send-fee
         <- change-amount store, send.amount-send, no
         cb null
@@ -218,10 +224,10 @@ module.exports = (store, web3t)->
     export send-anyway 
     export choose-auto 
     export choose-cheap 
+    export choose-custom 
     export chosen-auto 
     export chosen-cheap
-    export get-address-link 
-    export get-address-title
+    export chosen-custom
     export default-button-style
     export round5edit 
     export round5

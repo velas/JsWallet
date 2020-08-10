@@ -6,6 +6,8 @@ require! {
     \prelude-ls : { map, sort-by, filter }
     \../navigate.ls
     \../icons.ls
+    \../../web3t/providers/deps.ls : { bip39 }
+    \../components/typeahead.ls
 }
 .newseed
     @import scheme
@@ -102,7 +104,7 @@ require! {
         .word
             display: inline-block
             color: #fff
-            padding: 10px
+            padding: 0 3px
             margin: 5px
             font-size: 14px
             min-width: 25%
@@ -155,12 +157,14 @@ require! {
                         color: #fff
                         display: inline-block
                         padding: 4px
-                        float: left
                         border-radius: 50px
                         width: 11px
                         height: 10px
                         font-size: 10px
                         line-height: 11px
+                        vertical-align: middle
+                        margin-top: -25px
+                        margin-right: 7px
                         @media(max-width: 500px)
                             margin-right: 5px
     .about
@@ -169,7 +173,7 @@ require! {
         margin-bottom: 20px
         max-width: 250px
         font-style: italic
-restore-words = (store, web3t, item)-->
+restore-words = (store, web3t, next, item)-->
     lang = get-lang store
     style = get-primary-info store
     seed-style=
@@ -178,10 +182,13 @@ restore-words = (store, web3t, item)-->
     txt-style=
         color: style.app.text
     index = store.current.seed-words.index-of(item) + 1
+    list = bip39.wordlists.EN
     change-part = (it)->
         item.part = it.target.value    #.to-lower-case!.trim!.replace(/[^a-z]/, '')
+    on-key-down = ->
+        next! if it.key-code is 13
     .pug.word(style=seed-style)
-        input.pug(type='text' value="#{item.part}" placeholder="#{lang.word} ##{index}" on-change=change-part style=txt-style)
+        typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
         span.effect.pug #{index}
 restore-words-panel = (store, web3t)->
     lang = get-lang store
@@ -203,6 +210,9 @@ restore-words-panel = (store, web3t)->
         store.current.page = \newseedrestore
     next = ->
         max = store.current.seed-words.length - 1
+        word = (store.current.seed-words |> sort-by (.index))[store.current.verify-seed-index].part
+        if word not in bip39.wordlists.EN
+            return store.current.alert = lang.wordIncorrect
         return store.current.verify-seed-index += 1 if store.current.verify-seed-index < max
         save!
     current-word = (i, item)-->
@@ -213,7 +223,7 @@ restore-words-panel = (store, web3t)->
             store.current.seed-words 
                 |> sort-by (.index) 
                 |> filter current-word store.current.verify-seed-index
-                |> map restore-words store, web3t
+                |> map restore-words store, web3t, next
         .pug
             button.pug.right(on-click=back style=button-primary3-style )
                 img.icon-svg.pug(src="#{icons.close2}" style=btn-icon)

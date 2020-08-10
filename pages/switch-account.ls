@@ -3,7 +3,6 @@ require! {
     \./wallet.ls
     \prelude-ls : { map, take, drop, filter }
     \./menu.ls
-    \../seed.ls : { get }
     \../web3.ls
     \../wallets-funcs.ls
     \./manage-account.ls

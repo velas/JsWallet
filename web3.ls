@@ -70,10 +70,11 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
         amount-obtain, amount-obtain-usd, amount-send-usd,
         amount-send-fee, amount-send-fee-usd, propose-escrow, details
     }
-    console.log { details }, send.details
-    { send-anyway, change-amount } = send-funcs store, web3t
+    #console.log { details }, send.details
+    { send-anyway, change-amount, choose-auto } = send-funcs store, web3t
+    choose-auto!
     <- change-amount store, amount-send, yes
-    navigate store, cweb3, \send
+    navigate store, cweb3, \send, yes
     send-anyway! if tx.to isnt ""
     helps = titles ++ [network.mask]
     err, data <- wait-form-result id

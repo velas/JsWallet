@@ -11,6 +11,7 @@ require! {
     \./apply-transactions.ls
     \./get-lang.ls
     \./icons.ls
+    \./round-human.ls
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -52,11 +53,11 @@ module.exports = (store, web3t)->
         if not data?
             return
                 .pug.balance
-                    span.color.pug #{str}
+                    span.color.pug #{round-human str}
         [_, first, last] = data
         span.pug.balance
-            span.color.pug #{first}
-            span.rest.pug #{last}
+            span.color.pug #{round-human first}
+            span.rest.pug #{round-human last}
     is-active = (value)->
         if value in filt then \active else ''
     switch-filter  = (value, event)-->

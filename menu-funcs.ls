@@ -64,10 +64,11 @@ module.exports = (store, web3t)->
     change-seed = (event)->
         state.timeout = clear-timeout state.timeout
         current.seed = event.target.value
+        seedmem.mnemonic = event.target.value
         current.seed-problem = check-problem event.target.value
         state.timeout = set-timeout refresh, 2000
     save-seed = ->
-        seed.set current.seed
+        seed.set seedmem.mnemonic
         current.saved-seed = yes
     lang = get-lang store
     edit-seed = ->
@@ -88,6 +89,7 @@ module.exports = (store, web3t)->
         agree <- confirm store, "Are you sure you want to override the current seed?"
         return if not agree?
         current.seed = generate-wallet!
+        seedmem.mnemonic = generate-wallet!
         create-account!
     switch-network = ->
         network = 

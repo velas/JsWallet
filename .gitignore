@@ -2,4 +2,7 @@
 .compiled
 .compiled-ssr
 langs/config.json
+node_modules
 .DS_Store
+package-lock.json
+

@@ -18,12 +18,12 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
     \./switch-account.ls
     \../icons.ls
     \./placeholder.ls
     \./epoch.ls
     \./alert-demo.ls
+    \../seed.ls : seedmem
 }
 .staking-res
     @import scheme
@@ -337,8 +337,7 @@ get-pair = (wallet, path, index, password, with-keystore)->
         | _ => ""
     { address, keystore }
 to-keystore = (store, with-keystore)->
-    mnemonic = store.current.seed
-    seed = bip39.mnemonic-to-seed(mnemonic)
+    seed = bip39.mnemonic-to-seed(seedmem.mnemonic)
     wallet = hdkey.from-master-seed(seed)
     index = store.current.account-index
     password = md5 wallet.derive-path("m1").derive-child(index).get-wallet!.get-address!.to-string(\hex)

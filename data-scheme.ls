@@ -1,6 +1,6 @@
 require! {
     \prelude-ls : { map, pairs-to-obj }
-    \./seed.ls : { saved }
+    \./seed.ls : seedmem
     \./browser/location.ls
     \./langs/langs.json
     \./icons.ls
@@ -10,7 +10,7 @@ require! {
     \qs
     \localStorage
 }
-saved-seed = saved!
+saved-seed = seedmem.saved!
 create-send =->
     id: ""
     to: ""
@@ -19,6 +19,7 @@ create-send =->
     address: ''
     value: \0
     fee-type: \auto
+    fee-custom-amount: \0
     tx-type: \regular
     amount-send: \0
     amount-charged: \0
@@ -32,6 +33,9 @@ create-send =->
     decoded-data: ""
     show-data-mode: \encoded
     error: ''
+    amount-send-fee-options:
+        cheap: 0
+        auto: 0
 url-params =
     | window? => qs.parse window.location.search.replace('?', '')
     | _ => {}
@@ -46,6 +50,14 @@ store =
     terms: "Loading..."
     terms2: "Loading..."
     collapse: ""
+    development:
+        proposals: []
+        new-proposal: 
+            description: ""
+            url: ""
+            opened: no
+            progress: \0
+            update-progress: null
     preference:
         settings-visible: yes
         invoice-visible: yes
@@ -99,6 +111,8 @@ store =
             add-validator: ""
             add-validator-stake: ""
             result: ""
+            new-address: ""
+            move-stake: 0
         validators:
             pending: []
             active: []
@@ -158,6 +172,8 @@ store =
         applied: []
     releases: []
     current:
+        address-suffix: ''
+        page-pin: null
         try-copy: null
         hovered-address:
             address: null
@@ -174,6 +190,8 @@ store =
         verify-seed-indexes: []
         switch-account: no
         tor: no
+        rate: no
+        view: no
         hint: yes
         open-menu: no
         current-epoch: no
@@ -232,6 +250,7 @@ store =
         invoice : create-send!
         currency: ""
         convert: "usd"
+        trx-type: "custom"
     history:
         filter-open: no
         tx-details: no

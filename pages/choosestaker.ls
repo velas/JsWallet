@@ -33,6 +33,7 @@ require! {
     \./alert-txn.ls
     \../components/amount-field.ls
     \./move-stake.ls
+    \../seed.ls : seedmem
 }
 .staking
     @import scheme
@@ -113,6 +114,9 @@ require! {
                         text-align: left
                         @media(max-width:800px)
                             text-align: center
+                    span
+                        @media (max-width: 800px)
+                            font-size: 14px
                     .check
                         width: 15px
                         height: 15px
@@ -134,6 +138,7 @@ require! {
                     padding: 20px
                 &:last-child
                     border: 0
+                    padding-bottom: $ios-m-b
                 &.reward
                     background-image: $reward
                     background-repeat: no-repeat
@@ -307,6 +312,11 @@ require! {
                                 background: #37156d
                     .btn
                         margin: 10px 0
+                        @media (max-width: 800px)
+                            margin: 10px auto 0
+                    .step-content
+                        .btn
+                            margin: 10px auto 0
                     .code
                         overflow: scroll
                         background: #1b1b1b
@@ -530,7 +540,7 @@ get-pair = (wallet, path, index, password, with-keystore)->
         | _ => ""
     { address, keystore }
 to-keystore = (store, with-keystore)->
-    mnemonic = store.current.seed
+    mnemonic = seedmem.mnemonic
     seed = bip39.mnemonic-to-seed(mnemonic)
     wallet = hdkey.from-master-seed(seed)
     index = store.current.account-index
@@ -677,7 +687,7 @@ staking-content = (store, web3t)->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
-            store.staking.chosen-pool.new-address = ""
+            store.staking.add.new-address = ""
             claim-stake.calc-reward store, web3t
             staking-address = store.staking.keystore.staking.address
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
@@ -803,21 +813,21 @@ staking-content = (store, web3t)->
             if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
                 .pug.section
                     .title.pug
-                        h3.pug Staking
+                        h3.pug #{lang.staking}
                     .description.pug
                         .pug.left
                             .pug.balance
-                                span.pug Your staking: 
+                                span.pug #{lang.yourStaking}: 
                                 span.pug.color #{your-staking}
                                 span.pug.color #{vlx-token}
                             hr.pug
-                            label.pug Stake More
+                            label.pug #{lang.stakeMore}
                             amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
                                     button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug Your balance: 
+                                span.pug #{lang.balance}: 
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -863,8 +873,8 @@ staking = ({ store, web3t })->
             switch-account store, web3t
         staking-content store, web3t
 staking.init = ({ store, web3t }, cb)->
-    err <- web3t.refresh
-    return cb err if err?
+    # err <- web3t.refresh
+    # return cb err if err?
     store.staking.max-withdraw = 0
     random = ->
         Math.random!
@@ -931,6 +941,16 @@ fill-vote-power = ({ store, web3t }, cb)->
     fill-power = (it)->
         it.vote-power =  round5(it.stake `times` total-stake-percent)
     store.staking.pools |> each fill-power
+    cb null
+fill-pools-in-parallel = ({ store, web3t}, cb)->
+    create-promise = (pool)-> 
+        new Promise (resolve, reject)-> 
+            cb = (err, value)->
+                resolve value
+            fill-pools { store, web3t }, [pool], cb
+    promises =
+        store.staking.pools |> map create-promise 
+    values <- Promise.all promises .then
     cb null
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'

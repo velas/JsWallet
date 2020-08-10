@@ -55,7 +55,7 @@ require! {
                 display: inline-block
                 cursor: pointer
                 height: 36px
-                width: 110px
+                width: 120px
                 font-weight: bold
                 font-size: 10px
                 text-transform: uppercase
@@ -187,6 +187,8 @@ prompt-modal = (store)->
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
 export confirmation-control = (store)->
+    #for situation when we ask peen before action. this window should be hidden
+    return null if store.current.page-pin?
     .pug
         confirmation-modal store
         prompt-modal store

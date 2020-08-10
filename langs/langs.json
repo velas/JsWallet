@@ -316,7 +316,7 @@
             "Натисніть кнопку 'Друк' і роздрукувати інструкції паперу і запишіть свої 24 слова насіння вивчили. Хто має доступ до вашого відновлення фраза може заволодіти вашими активами, надійно зберігати його. Ми не зберігаємо резервних копій 24 слова, Якщо ви втратите всі монети у вашому гаманці буде назавжди!",
             "Cliquez sur 'Imprimer' et imprimer des instructions de papier et écrivez votre 24 mots de graines soigneusement. Toute personne ayant accès à votre rétablissement phrase pourrait prendre de vos biens, de les stocker de manière sécurisée. Nous n'avons pas de garder une copie de sauvegarde de votre 24 mots, si vous les perdez toutes les pièces de monnaie dans votre porte-monnaie sera à jamais disparu!",
             "Haga clic en 'Imprimir' y imprimir las instrucciones de papel y anote sus 24 palabras de semilla abundante. Cualquier persona con acceso a tu frase de recuperación podría tomar sus activos, almacenar de forma segura. No guardamos una copia de seguridad de su 24 palabras, si usted pierde todas las monedas en su monedero, se ha ido para siempre!",
-            "请点击“打印”按钮，打印出纸质说明，并写下您助记词的24个单词的种子。 知道您恢复助记词的人都可以占有您的钱包和资产，请保管好您助记词。 我们不会存储24个单词的备份，如果丢失了，钱包中的所有硬币将永远存在在中！",
+            "请点击“打印”按钮，打印出纸质说明，并写下您助记词的24个单词的种子。 知道您恢复助记词的人都可以占有您的钱包和资产，请保管好您助记词。 我们不会存储24个单词的备份，如果丢失了，钱包中的所有硬币将永远存在在钱包中！",
             "클릭하'인쇄 및 인쇄 종이 지침에 적 24 말 씨 carefuly. 대한 액세스 권한이 있는 모든 사람을 당신의 복구를 구할 수 없습을 귀하의 자산이,저장 이를 안전하게 보관합니다. 우리가 지키지 않는 백업하고 24 말,당신이 그것을 잃으면 모든 동전 지갑에 영원히 사라질 것입니다!",
             "انقر فوق طباعة و طباعة ورقة تعليمات كتابة 24 الكلمات البذور carefuly. أي شخص لديه إمكانية الوصول إلى الشفاء العبارة يمكن أن تأخذ الأصول الخاصة بك وتخزينها بشكل آمن. نحن لا نأخذ نسخة احتياطية من 24 الكلمات, إذا كنت تفقد كل القطع النقدية في المحفظة الخاصة بك سوف يكون قد انتهى إلى الأبد!"
         ],
@@ -660,6 +660,16 @@
             "단어가 일치하지 않습니다",
             "الكلمة التي يتم إدخالها بشكل غير صحيح"
         ],
+        "wordIncorrect": [
+            "This word is not correct. Please enter a valid bip39 word.",
+            "Слово содержит ошибку.",
+            "Це слово не є правильним.",
+            "This word is not correct. Please enter a valid bip39 word.",
+            "This word is not correct. Please enter a valid bip39 word.",
+            "This word is not correct. Please enter a valid bip39 word.",
+            "此单词无效, 请输入有效的bip39单词。",
+            "This word is not correct. Please enter a valid bip39 word.",
+        ],
         "back": [
             "Back",
             "Назад",
@@ -836,7 +846,7 @@
             "Генерувати",
             "Générer",
             "Generar",
-            "产生",
+            "生成",
             "성",
             "توليد"
         ],
@@ -921,7 +931,7 @@
             "تطبيق"
         ],
         "uRewards": [
-            "Awards",
+            "Rewards",
             "Ваши награды",
             "Ваші нагороди",
             "Vos récompenses",
@@ -972,7 +982,7 @@
         ],
         "checkNode": [
             "Check Your Node",
-            "Проверьте сво�� ноду",
+            "Проверьте свою ноду",
             "Виберіть свій вузол",
             "Vérifiez votre nœud",
             "Comprueba tu Nodo",
@@ -1053,7 +1063,7 @@
         "stakeMore": [
             "Stake More",
             "Больше Стейк",
-            "Більше",
+            "Більше Стейк",
             "Impliquer plus",
             "Aumentar Stake",
             "抵押更多",
@@ -1162,7 +1172,7 @@
         ],
         "images": [
             "Images",
-            "Изобр��жения",
+            "Изображения",
             "Зображення",
             "Images",
             "Imágenes",
@@ -1276,7 +1286,7 @@
             "Velas ДАПП Зберігання ",
             "Velas De Stockage Dapp",
             "Velas De Almacenamiento Dapp",
-            "维拉斯储存Dapp",
+            "维拉斯Dapp储存",
             "벨라 저장 Dapp",
             "فيلاس تخزين Dapp"
         ],
@@ -1336,7 +1346,7 @@
             "Мессенджер Velas ",
             "Velas Messenger",
             "Velas Messenger",
-            "维拉斯使者",
+            "维拉斯通讯应用",
             "벨라 메신저",
             "فيلاس رسول"
         ],
@@ -1372,8 +1382,8 @@
         ],
         "backupInfo": [
             "Do you have backup word phrase of the current account?",
-            "У вас есть резервная слово фразу текущего счета?",
-            "У вас є резервна слово фразу поточного рахунку?",
+            "У вас есть резервное словосочетание текущего аккаунта?",
+            "Чи є у вас резервні словосполучення поточного аккаунта?",
             "Vous avez de sauvegarde de mots de la phrase de compte courant?",
             "¿Tienes copia de seguridad de palabra frase de cuenta corriente?",
             "您有备份当前账号的助记词吗？",
@@ -1413,7 +1423,7 @@
         "noticeText": [
             "Try to restore you account from seed phrase in different browser or incognito window before you reset it",
             "Попробуйте восстановить ваш аккаунт из семян фразу в другом окне браузера или инкогнито, прежде чем сбросить его",
-            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні б��аузера або інкогніто, перш ніж скинути його",
+            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні браузера або інкогніто, перш ніж скинути його",
             "Essayez de restaurer votre compte à partir de la graine de la phrase dans différents navigateur ou d'une fenêtre de navigation privée avant de le réinitialiser",
             "Intente restaurar la cuenta desde la semilla frase en otro navegador o ventana de incógnito antes de reiniciarlo",
             "在重设账号之前，请尝试在其他浏览器或隐私窗口中使用种子短语恢复您的帐户",
@@ -1686,7 +1696,7 @@
             "У вас є незавершені транзакції vlx по. Деякі значення можуть бути неточними.",
             "Vous avez une attente de VLX transaction. Certains des chefs d'accusation peuvent être inexacts.",
             "Tiene pendiente un VLX transacción. Algunos de los recuentos pueden ser inexactos.",
-            "你有一个未决VLX交易。 一些计数可能不准确。",
+            "您有一个未决VLX交易。 一些计数可能不准确。",
             "당신이 보류 중인 VLX 트랜잭션이 있습니다. 의 일부를 계산이 정확하지 않을 수 있습니다.",
             "لديك ريثما VLX الصفقة. بعض التهم قد تكون غير دقيقة."
         ],
@@ -1696,9 +1706,19 @@
             "Дана дія заборонено.",
             "L'action est interdite.",
             "La acción está prohibida.",
-            "该行动是禁止的。",
+            "禁止执行此操作。",
             "행동이 금지됩니다.",
             "عمل محظور."
+        ],
+        "exitNotAllowed": [
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "Exit is not allowed until the end of the current epoch",
+            "在当前纪元结束之前不允许退出",
+            "Exit is not allowed until the end of the current epoch"
         ],
         "balanceLessStaking": [
             "You balance is less than minimum staking amount",
@@ -1706,7 +1726,7 @@
             "У вас баланс менше мінімальної суми ставок",
             "Vous l'équilibre est moins que le minimum de jalonnement montant",
             "El equilibrio es menor que el mínimo de estacando de cantidad",
-            "你的余额低于最小赌量",
+            "你的余额低于最小质押金额",
             "당신은 균형은 보다 적은 최소 양을 감시",
             "لك الرصيد إلى أقل من الحد الأدنى عمادا المبلغ"
         ],
@@ -1716,19 +1736,9 @@
             "Максимальна довжина епохи ^. Будь ласка, зніміть ^ епох",
             "La longueur maximale de l'époque est ^. Veuillez décocher ^ époques",
             "La longitud máxima de la época es ^. Por favor desmarque ^ épocas",
-            "在最长的时代是^. 请取消^时代",
+            "在最长的纪元时间为^. 请在^纪元操作",
             "최대 길이의 시대입니다^. 선택 해제하십시오^epochs",
             "الحد الأقصى لطول الحقبة هو ^. يرجى إلغاء ^ العهود"
-        ],
-        "comeBack": [
-            "Come back in later for a your staking amount",
-            "Вернуться в дальнейшем на вашу ставку сумму",
-            "Повернутися надалі на вашу ставку суму",
-            "Revenez plus tard pour votre jalonnement montant",
-            "Volver más tarde para su estaca cantidad",
-            "回来以后你赌量",
-            "돌아와서 나에 대한 귀하의 걸고 양",
-            "أعود لاحقا الخاص بك عمادا المبلغ"
         ],
         "requestExit": [
             "Request exit",
@@ -1736,7 +1746,7 @@
             "Запит на вихід",
             "Demande de sortie",
             "Solicitud de salida",
-            "请求退出",
+            "退出请求",
             "요청 종료",
             "طلب الخروج"
         ],
@@ -1746,7 +1756,7 @@
             "Зняти",
             "Retirer",
             "Retirar",
-            "撤出",
+            "提取",
             "을 철회",
             "سحب"
         ],
@@ -1766,7 +1776,7 @@
             "Підтвердив",
             "Confirmé",
             "Confirmado",
-            "证实了",
+            "已确认",
             "확인",
             "أكد"
         ],
@@ -1801,7 +1811,7 @@
             "اختبار الشبكة"
         ],
         "networkDescription": [
-            "The default network for all transactions is Mainnet.",
+            "The default network for all transactions is Mainnet",
             "Сеть по умолчанию для всех транзакций - Mainnet",
             "Мережа для всіх транзакцій за замовчуванням - Mainnet",
             "Le réseau par défaut pour toutes les transactions est Mainnet",
@@ -1810,14 +1820,24 @@
             "모든 거래의 기본 네트워크는 메인 넷입니다",
             "الشبكة الافتراضية لجميع المعاملات هي Mainnet"
         ],
+        "networkDescription2": [
+            "The default network for all transactions is Testnet",
+            "Сеть по умолчанию для всех операций в тестовом режиме",
+            "Мережа за замовчуванням для всіх операцій у тестовому режимі",
+            "Le réseau par défaut pour toutes les transactions est Testnet",
+            "La red por defecto para todas las transacciones se Testnet",
+            "默认的网络的所有交易是Testnet",
+            "기본 네트워크에 대한 모든 트랜잭션을 사용하여 bitcoins 를 보내고받을",
+            "الشبكة الافتراضية لجميع المعاملات Testnet"
+        ],
         "languageType": [
             "English",
             "Русский",
             "Українська",
             "Français",
             "Español",
+            "中文",
             "한국어",
-            "中文語言",
             "عرب"
         ],
         "themes": [
@@ -1842,11 +1862,11 @@
         ],
         "yourStaking": [
             "Your staking",
-            "Ваш ставку",
-            "Ваш ставку",
+            "Ваш стейкинг",
+            "Ваш стейкiнг",
             "Votre jalonnement",
             "Su estaca",
-            "你赌",
+            "您的质押",
             "귀하의 감시",
             "الخاص بك عمادا"
         ],
@@ -1859,6 +1879,67 @@
             "网络钱包的语言",
             "웹 지갑 언어",
             "ويب المحفظة اللغة"
+        ],
+        "comeBack": [
+            "Come back later for your staking amount",
+            "Вернись позже, чтобы узнать сумму ставки",
+            "Повертайтеся пізніше, щоб отримати ставку",
+            "Revenez plus tard pour votre montant de mise",
+            "Vuelve más tarde por tu cantidad de apuesta",
+            "稍后再回来查看质押金额",
+            "스테이 킹 금액을 위해 나중에 다시 오십시오",
+            "عد لاحقًا لمقدار التوقيع المساحي"
+            
+        ],
+        "award": [
+            "Reward",
+            "Награда",
+            "Нагорода",
+            "Prix",
+            "Premio",
+            "奖励",
+            "장학금",
+            "جائزة"
+        ],
+        "moveStake": [
+            "Move Stake",
+            "Движение Акций",
+            "Рух Акцій",
+            "Déplacer L'Enjeu",
+            "Mover La Estaca",
+            "变更质押",
+            "이 스테이크",
+            "نقل حصة"
+        ],
+        "moveAmount": [
+            "Move Amount",
+            "Количество Движения",
+            "Кількість Руху",
+            "Déplacer Montant",
+            "Mover Cantidad",
+            "变更金额",
+            "이동량",
+            "نقل كمية"
+        ],
+        "newPoolAddress": [
+            "New Pool Address",
+            "Новый Пул Адресов ",
+            "Новий Пул Адрес ",
+            "Nouvelle Adresse Du Pool",
+            "Nueva Dirección De La Reserva",
+            "新池的地址",
+            "새로운 수영장 주소",
+            "تجمع جديد العنوان"
+        ],
+        "inProgress": [
+            "in progress",
+            "в прогрессе",
+            "в прогресі",
+            "en cours",
+            "en progreso",
+            "在进行中",
+            "에서 진행",
+            "في التقدم"
         ]
     }
 }

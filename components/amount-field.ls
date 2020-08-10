@@ -9,7 +9,7 @@ require! {
 }
 .input-area
     position: relative
-    margin-top: 10px
+    margin: 10px 0
     width: 100%
     box-sizing: border-box
     height: 36px
@@ -44,8 +44,8 @@ require! {
             display: block
             position: absolute
             top: 36px
-            left: 0
-            width: 100%
+            right: 0
+            width: auto
             padding: 0
             color: white
             height: 90px

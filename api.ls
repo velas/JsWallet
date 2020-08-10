@@ -9,7 +9,10 @@ action = (func)-> (config, cb)->
     return cb "providr not found for #{config.network.api.provider}" if not provider?
     func provider, config, cb
 export calc-fee = action (provider, config, cb)->
-    provider.calc-fee config, cb
+    switch config.fee-type
+    case \auto then provider.calc-fee config, cb
+    case \cheap then provider.calc-fee config, cb
+    case \custom then cb null, config.fee-custom-amount
 export get-keys = action (provider, config, cb)->
     provider.get-keys config, cb
 export get-balance = action (provider, config, cb)->

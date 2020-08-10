@@ -43,11 +43,14 @@ require! {
             overflow: auto
             width: 100%
             box-sizing: border-box
-            height: 350px
+            height: 445px
             width: 300px
             border: 0
             border-radius: $border
             outline: none
+            font-family: inherit
+            @media(min-width: 600px)
+                width: 600px
 terms = ({ store, web3t })->
     lang = get-lang store
     info = get-primary-info store
@@ -64,10 +67,10 @@ terms = ({ store, web3t })->
             .pug.header Terms of Use
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
-                .pug #{lang.terms ? 'Please accept terms of use'}
+                .pug #{lang.terms}
                 button { store, text: \accept , on-click: accept, type: \primary }
 terms.init = ({ store }, cb)->
-    err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+    err, res <- get \https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md .end
     return cb err if err?
     store.terms = res.text
     cb null

@@ -6,7 +6,6 @@ require! {
     \react-copy-to-clipboard : { CopyToClipboard }
     \../copied-inform.ls
     \../copy.ls
-    \../address-link.ls : { get-address-link, get-address-title }
     \../web3.ls
     \../get-lang.ls
     \../history-funcs.ls

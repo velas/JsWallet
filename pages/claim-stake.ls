@@ -82,7 +82,6 @@ require! {
         border-radius: 0px
         color: white
         height: 36px
-        width: auto
         margin-top: 10px
         padding: 0 6px
         text-decoration: none
@@ -106,9 +105,9 @@ require! {
     &.reward
         background-image: $reward
         background-repeat: no-repeat
-        background-position: 16% 20%
+        background-position: 10% 20%
         background-size: auto
-        background-color: rgba(111, 50, 162, 0.15)
+        background-color: var(--bg-secondary)
         @media(max-width: 800px)
             background-image: none
         @media(max-width: 540px)
@@ -424,9 +423,9 @@ build-claim-reward = (store, web3t)-> (item)->
                 .number.pug
                     span.pug #{item.epoch}
                 .number.label.pug
-                    span.pug EPOCH
+                    span.pug #{lang.epoch}
             .header.pug(title="#{item.reward}") #{round-human item.reward}
-            .header.label.pug AWARD
+            .header.label.pug #{lang.award}
 module.exports = (store, web3t)->
     return null if not store.staking.chosen-pool? or +store.staking.stake-amount-total is 0
     check-uncheck = ->
@@ -449,7 +448,9 @@ module.exports = (store, web3t)->
         to = web3t.velas.Staking.address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
-    .pug.section-reward.reward
+    bg=
+        background-image: if store.staking.reward-loading is yes then 'none' else ' '
+    .pug.section-reward.reward(style=bg)
         .title.pug
             h3.pug #{lang.u-rewards} 
         .description.pug

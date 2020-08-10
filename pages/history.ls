@@ -89,10 +89,12 @@ require! {
         img
             height: 50px
             border-radius: 0
-            margin-bottom: 30px
+            margin-bottom: 15px
         .head
             font-weight: 600
             margin-bottom: 10px
+            font-size: 14px
+            opacity: .7
         .content
             font-size: 14px
             opacity: .7
@@ -305,7 +307,7 @@ require! {
             font-weight: 600
         .rest
             color: inherit
-            opacity: .75
+            opacity: .5
     .table
         width: 100%
         overflow-y: scroll
@@ -338,7 +340,7 @@ require! {
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 5%
+                    width: 6%
                     div
                         text-align: center
                 &.txhash
@@ -358,14 +360,14 @@ require! {
                         left: 3px
                         position: relative
                 &.amount
-                    width: 14%
+                    width: 16%
                     text-align: right
                     @media screen and (max-width: 1020px)
                         width: 19%
                 &.divider2
-                    width: 30%
+                    width: 29%
                 &.divider
-                    width: 5%
+                    width: 6%
                     .direction
                         text-align: center
                         line-height: 40px
@@ -376,7 +378,7 @@ require! {
                     opacity: .5
                     padding-left: 0
                 &.created
-                    width: 30%
+                    width: 28%
                     text-align: right
                     @media screen and (max-width: 1020px)
                         width: 25%
@@ -445,7 +447,7 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 45%
+                    width: 44%
                     text-align: left
                     height: 60px
                     div:last-child
@@ -765,7 +767,6 @@ module.exports = ({ store, web3t })->
         border-bottom: "1px solid #{style.app.border}"
         color: style.app.text
     header-style-light =
-        border-bottom: "1px solid #{style.app.border-light}"
         color: style.app.text
     button-style=
         color: style.app.text
@@ -856,4 +857,3 @@ module.exports = ({ store, web3t })->
                 .pug.nothin-to-show(style=menu-style)
                     img.pug(style=nothing-icon src="#{icons.search-history}"
                     .pug.head #{lang.nothing-to-show}
-                    .pug.content #{lang.make-tx}

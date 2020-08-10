@@ -239,7 +239,7 @@ require! {
                 display: none
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -319,6 +319,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \notification
     goto-wallets = ->
         navigate store, web3t, \offlinewallets
+    goto-vote = ->
+        navigate store, web3t, \vote
     .pug.panel-content
         p.results.pug 
             | #{lang.estimated-results}: 
@@ -373,6 +375,11 @@ dapps = (store, web3t)->
             .source.pug(on-click=goto-notice)
                 .pug.address #{lang.velas-sphere}
                 .pug.header #{lang.velas-messenger}
+            .pug.description
+        .pug.section
+            .source.pug(on-click=goto-vote)
+                .pug.address #{lang.velas-sphere}
+                .pug.header Vote
             .pug.description 
         .pug.section.developing
             .source.pug

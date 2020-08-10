@@ -12,6 +12,7 @@ require! {
     \./pages/invoice.ls
     \./pages/terms.ls
     \./pages/terms2.ls
+    \./pages/privacy.ls
     \./pages/filestorage.ls
     \./pages/settings.ls
     \./pages/chooseinit.ls
@@ -31,6 +32,7 @@ require! {
     \./pages/monitor.ls
     \./pages/notification.ls
     \./pages/offlinewallets.ls
+    \./pages/vote.ls
 }
 export offlinewallets
 export monitor
@@ -48,6 +50,7 @@ export sent
 export invoice
 export terms
 export terms2
+export privacy
 export filestorage
 export settings
 export chooseinit
@@ -64,3 +67,4 @@ export soundstorage
 export notification
 export restorewords
 export reviewwords
+export vote

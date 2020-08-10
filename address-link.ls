@@ -1,12 +1,20 @@
 get-address-label = (wallet)->
     | wallet.coin.token in <[ xem eos ]> => \account
     | _ => \address
-export get-address-link = (wallet)->
-    | not wallet.network? => \about:blank
-    | typeof! wallet?address is \String => "#{wallet.network.api.url}/#{get-address-label(wallet)}/#{wallet.address}"
-    | typeof! wallet?address is \Null and wallet.public-key? =>  wallet.network.register-account-link.replace(':public-key', wallet.public-key)
-    | _ => "#"
-export get-address-title = (wallet)->
-    | typeof! wallet?address is \String => wallet.address
-    | typeof! wallet?address is \Null => "..."
-    | _ => "n/a"
+get-address = (wallet, address-suffix="")->
+    wallet["address#{address-suffix}"]
+export get-address-link = (wallet, address-suffix)->
+    address = get-address(wallet, address-suffix)
+    res=
+        | not wallet.network? => \about:blank
+        | typeof! address is \String => "#{wallet.network.api.url}/#{get-address-label(wallet)}/#{address}"
+        | typeof! address is \Null and wallet.public-key? =>  wallet.network.register-account-link.replace(':public-key', wallet.public-key)
+        | _ => "#"
+    res 
+export get-address-title = (wallet, address-suffix)->
+    address = get-address(wallet, address-suffix)
+    res =
+        | typeof! address is \String => address
+        | typeof! address is \Null => "..."
+        | _ => "n/a"
+    res

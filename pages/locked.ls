@@ -6,7 +6,7 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \../send-form.ls : { notify-form-result }
-    \../seed.ls
+    \../seed.ls : seedmem
     \../menu-funcs.ls
     \./choose-language.ls
     \../icons.ls
@@ -23,14 +23,13 @@ require! {
     box-sizing: border-box
     text-align: center
     .notice
-        position: fixed
-        width: 230px
-        text-align: left
-        right: 10px
-        bottom: 10px
-        font-size: 13px
-        background: #43207c
+        max-width: 300px
+        text-align: center
+        color: red
+        margin: 10px auto
+        font-size: 15px
         padding: 10px
+        border: 1px solid rgba(255, 0, 0, 0.5)
     .icon-svg
         position: relative
         height: 12px
@@ -110,8 +109,10 @@ require! {
         max-width: 400px
         display: inline-block
         ~div .orange
-            color: #f0c16b
+            color: orange
             text-transform: uppercase
+            letter-spacing: 1px
+            display: block
     button
         width: 130px
         margin: 5px 0
@@ -143,7 +144,7 @@ require! {
         margin: 0 auto
     .iron
         -webkit-mask-image: linear-gradient(75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%)
-        -webkit-mask-size: 50%
+        -webkit-mask-size: 50% 100%
         animation: shine 2s infinite
     @keyframes shine
         0%
@@ -195,14 +196,17 @@ wrong-pin = (store)->
     left-trials = total-trials - store.current.pin-trial
     reset-wallet store if left-trials <= 0
 check-pin = (store, web3t)->
-    <- set-timeout _, 100
     return if not exists!
     return wrong-pin store if not check(store.current.pin)
     store.current.pin-trial = 0
     store.current.pin = ""
     store.current.loading = yes
-    navigate store, web3t, \:init
-    notify-form-result \unlock, null
+    if store.current.page-pin?
+        store.current.page = store.current.page-pin
+        store.current.page-pin = null
+    else
+        navigate store, web3t, \:init
+        notify-form-result \unlock, null
 version = (store, web3t)->
     .version.pug #{store.version}
 input = (store, web3t)->
@@ -226,7 +230,13 @@ input = (store, web3t)->
         background: style.app.wallet
         border: "0"
     enter = ->
-        check-pin store, web3t
+        if exists!
+            check-pin store, web3t
+        else
+            return alert(lang.wrong-pin-should) if store.current.pin.length < 4
+            set store.current.pin
+            check-pin store, web3t
+            store.current.pin = ""
     change = (e)->
         store.current.pin = e.target.value
     lang = get-lang store
@@ -253,8 +263,8 @@ input = (store, web3t)->
 reset-wallet = (store)->
     setbkp!
     del!
-    seed.setbkp!
-    seed.del!
+    seedmem.setbkp!
+    seedmem.del!
     store.current.pin = ""
     store.current.pin-trial = 0
     store.current.page = 'chooseinit'
@@ -293,6 +303,7 @@ setup-button = (store, web3t)->
         return alert(lang.wrong-pin-should) if store.current.pin.length < 4
         set store.current.pin
         check-pin store, web3t
+        store.current.pin = ""
     text-color=
         color: style.app.text
     button-style =
@@ -322,7 +333,7 @@ create-wallet = (store, web3t)->
         button.setup.pug(on-click=create style=button-primary2-style)
             span.pug
                 img.icon-svg.pug(src="#{icons.create-wallet}")
-                | #{lang.create-wallet ? 'Create Wallet'}
+                | #{lang.create-wallet}
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store

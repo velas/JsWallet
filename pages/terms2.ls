@@ -44,14 +44,18 @@ require! {
             overflow: auto
             width: 100%
             box-sizing: border-box
-            height: 350px
+            height: 445px
             width: 300px
             border: 0
             border-radius: $border
             outline: none
+            font-family: inherit
+            @media(min-width: 600px)
+                width: 600px
 terms = ({ store, web3t })->
     lang = get-lang store
-    { go-back } = history-funcs store, web3t
+    go-back = ->
+        navigate store, web3t, \settings
     info = get-primary-info store
     style=
         background: info.app.wallet
@@ -65,12 +69,12 @@ terms = ({ store, web3t })->
         <- web3t.refresh
     .pug.terms
         .pug.terms-body
-            .pug.header #{lang.terms-of-use ? 'Terms of Use'}
+            .pug.header #{lang.terms-of-use}
             textarea.pug(value="#{store.terms}" style=style)
             .pug.buttons
                 button { store, text: \back , on-click: go-back, icon: \arrowLeft, type: \primary }
 terms.init = ({ store }, cb)->
-    err, res <- get \https://raw.githubusercontent.com/velas/JsWallet/master/TERMS.md .end
+    err, res <- get \https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md .end
     return cb err if err?
     store.terms = res.text
     cb null

@@ -1,7 +1,7 @@
 require! {
     \./browser/window.ls
     \./pages.ls
-    \./seed.ls : { saved }
+    \./seed.ls : seedmem
     \mobx : { transaction }
     \./scroll-top.ls
 }
@@ -10,9 +10,9 @@ init-flow = (prev)->
     return \newseedrestore if prev is \chooseinit and store.current.seed-generated is no
     return \locked if prev is \chooseinit and store.current.seed-generated is yes
     return \locked if prev is \newseedrestore
-    return \reviewwords if prev in <[ locked newseedrestore ]> and not saved! and store.current.seed-generated is yes
+    return \reviewwords if prev in <[ locked newseedrestore ]> and not seedmem.saved! and store.current.seed-generated is yes
     return \verifyseed if prev is \reviewwords
-    return \restorewords if prev in <[ locked newseedrestore ]> and not saved! and store.current.seed-generated is no
+    return \restorewords if prev in <[ locked newseedrestore ]> and not seedmem.saved! and store.current.seed-generated is no
     return \terms if prev is \verifyseed
     #return \chooseinit if not saved!
     \wallets
@@ -29,7 +29,12 @@ focus-control = (scope, name, cb) !->
     control = pages[name] 
     return cb null if typeof! control?focus isnt \Function
     control.focus scope, cb
-module.exports = (store, web3t, page) !->
+perform-ask-pin = (store, page)->
+    scroll-top!
+    store.current.page = \locked
+    store.current.page-pin = page    
+module.exports = (store, web3t, page, ask-pin) !->
+    return perform-ask-pin store, page if ask-pin is yes
     return alert "store is required" if not store?
     return alert "web3t is required" if not web3t?
     scroll-top!
