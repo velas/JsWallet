@@ -466,7 +466,7 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary }
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error }
                     button { store, text: \cancel , on-click: cancel, icon: \close2 }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->

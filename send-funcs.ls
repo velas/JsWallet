@@ -52,8 +52,7 @@ module.exports = (store, web3t)->
         return cb err if err?
         parts = get-tx-details store
         agree <- confirm store, parts.0
-        #console.log 'after confirm', agree
-        return cb "Cancelled" if not agree
+        return cb null if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
         return cb err if err?
         err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee, send.to, from: wallet.address }
@@ -87,6 +86,8 @@ module.exports = (store, web3t)->
         err, data <- perform-send-safe
         send.sending = no
         return send.error = "#{err.message ? err}" if err?
+        # If cancel was pressed
+        return null if not data?
         notify-form-result send.id, null, data
         store.current.last-tx-url = "#{send.network.api.url}/tx/#{data}"
         navigate store, web3t, \sent
