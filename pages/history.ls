@@ -651,7 +651,7 @@ render-transaction = (store, web3t, tran)-->
     lightText=
         color: style.app.color3
     tooltip=
-        background: "#000"
+        background: '#000'
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
     coin = 
         coins |> find (.token is token)
@@ -743,7 +743,7 @@ render-transaction = (store, web3t, tran)-->
                     if no
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
-                    MiddleEllipsis.pug
+                    MiddleEllipsis
                         a.pug(href="#{url}" target="_blank") #{tx}
                     CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
