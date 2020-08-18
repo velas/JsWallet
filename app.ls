@@ -14,7 +14,6 @@ require! {
     \./get-primary-info.ls
     \./pages/confirmation.ls : { confirmation-control }
     \./pages/hovered-address.ls
-    \./services/connection-detector.ls
     \react-detect-offline : { Offline, Online }
 }
 .app

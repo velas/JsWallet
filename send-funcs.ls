@@ -58,7 +58,7 @@ module.exports = (store, web3t)->
         err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee, send.to, from: wallet.address }
         cb err, tx
     perform-send-safe = (cb)->
-        err, to <- resolve-address web3t, send.to, send.coin, send.network
+        err, to <- resolve-address { store, address: send.to, coin: send.coin, network: send.network }
         #send.propose-escrow = err is "Address not found" and send.coin.token is \eth
         #return cb err if err?
         resolved =
@@ -102,7 +102,12 @@ module.exports = (store, web3t)->
         navigate store, web3t, \wallets
         notify-form-result send.id, "Cancelled by user"
     recipient-change = (event)->
-        send.to = event.target.value ? ""
+        _to = event.target.value
+        _to = _to.trim!
+        err <- resolve-address { store, address: _to, coin: send.coin, network: send.network }
+        console.error "An error occured during address resolving:" err if err?
+        send.error = err ? ''
+        send.to = _to ? ""
     get-value = (event)->
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 = 
@@ -111,6 +116,7 @@ module.exports = (store, web3t)->
         value2
     amount-change = (event)->
         value = get-value event
+        value = value ? 0
         <- change-amount store, value, no
     perform-amount-eur-change = (value)->
         to-send = calc-crypto-from-eur store, value
@@ -125,6 +131,7 @@ module.exports = (store, web3t)->
         amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 500
     amount-usd-change = (event)->
         value = get-value event
+        value = value ? 0
         send.amount-send-usd = value
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500

@@ -23,6 +23,9 @@ export push-tx = action (provider, config, cb)->
 export get-transaction-info = action (provider, config, cb)->
     return cb "method is not supported" if typeof! provider.get-transaction-info isnt \Function
     provider.get-transaction-info config, cb
+export is-valid-address = action (provider, config, cb)->
+    return cb "method is not supported" if typeof! provider.is-valid-address isnt \Function
+    provider.is-valid-address config, cb
 #
 #
 #
