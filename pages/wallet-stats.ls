@@ -26,8 +26,9 @@ build-data = (store, items)-->
     in_ = 0
     out_ = 0
     items |> each (it)->
-        in_ += +it.amount if it.type is \IN
-        out_ += +it.amount if it.type is \OUT
+        amount = if it.from isnt it.to then +it.amount else -+it.fee
+        in_ += amount if it.type is \IN
+        out_ += amount if it.type is \OUT
     [
         {"id": "1", "label": "Received", "value": +in_, type: "IN"}
         {"id": "2", "label": "Sent", "value": +out_, type: "OUT"}
