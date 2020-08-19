@@ -156,14 +156,17 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.primary1
     color2 =
         color: style.app.primary2
-    get-total = (type)->
-        store.transactions.applied 
-            |> filter (.type is type)
-            |> map (.amount)
+    get-total = (type, address)->
+        transactions = ^^store.transactions.applied
+        transactions
+            |> filter (it)-> it.type is type and not it.pending?
+            |> map (it)->
+                return +it.amount if it.from isnt it.to
+                -+it.fee
             |> foldl plus, 0
             |> round-human
-    total-sent = get-total \OUT
-    total-received = get-total \IN
+    total-sent = get-total \OUT, wallet.address
+    total-received = get-total \IN, wallet.address
     wallet-style=
         color: style.app.text3
         background: style.app.wallet

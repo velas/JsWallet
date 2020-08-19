@@ -31,7 +31,7 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px) 
+    @media(max-width:800px)
         margin-left: 0
     >.title
         position: sticky
@@ -64,7 +64,8 @@ require! {
                 width: 100%
             .filter
                 height: 60px
-                margin: 20px 20px 10px 20px
+                margin: 20px 10px 20px 20px
+                background: blueviolet
                 position: relative
                 .view
                     position: absolute
@@ -102,23 +103,8 @@ require! {
                             width: 13px
             .main-content
                 height: 100vh
-                margin: 0px 20px 10px 20px
-                &.create-new-proposal
-                    height: auto
-                    input
-                        outline: none
-                        width: 100%
-                        box-sizing: border-box
-                        height: 36px
-                        line-height: 36px
-                        border-radius: 0
-                        padding: 0px 10px
-                        font-size: 14px
-                        margin: 5px 0
-                        border: 0px
-                        box-shadow: none
-                        ~ .keyboard-panel
-                            display: none
+                margin: 0px 10px 20px 20px
+                background: blueviolet
                 .item
                     padding: 15px
                     display: flex
@@ -311,7 +297,7 @@ content = (store, web3t)->
     change-progress = ->
         newp.progress = it.target.value
     apply-new-vote = ->
-        cb = alert 
+        cb = alert
         return cb "description should be longer" if newp.description.length < 10
         return cb "url must be defined" if not newp.url.match(urlR)?
         return cb "progress must be defined" if not newp.progress.match(/[0-9]+/)?

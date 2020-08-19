@@ -261,17 +261,6 @@ require! {
             img
                 width: 34px
                 border-radius: 0px
-        .field
-            font-size: 12px
-            padding-left: 3px
-            color: gray
-            margin-top: 5px
-            &.type
-                font-size: 14px
-                color: #fff
-            &.coin
-                font-size: 14px
-                color: #fff
         .usd
             font-size: 11px
             padding-left: 3px
@@ -382,7 +371,7 @@ send = ({ store, web3t })->
     open-invoice = ->
         invoice store, wallet
     activate = (convert)-> ->
-        store.current.convert = convert 
+        store.current.convert = convert
     activate-usd = activate \usd
     activate-eur = activate \eur
     active-class = (convert)->
@@ -416,7 +405,7 @@ send = ({ store, web3t })->
                                     span.pug.more-icon(style=icon-style)
                                         icon \Mail, 20
                                     span.pug.more-text(style=more-text) #{lang.invoice}
-                    if store.current.device is \mobile    
+                    if store.current.device is \mobile
                         a.pug.more.history(on-click=history)
                             .pug
                                 span.pug.more-icon(style=icon-style)
@@ -480,15 +469,15 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary }
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error }
                     button { store, text: \cancel , on-click: cancel, icon: \close2 }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
     { wallets } = wallets-funcs store, web3t
-    current-wallet = 
+    current-wallet =
         wallets |> find (-> it.coin.token is wallet.coin.token)
-    return cb null if current-wallet.address is wallet.address 
+    return cb null if current-wallet.address is wallet.address
     { wallet } = send-funcs store, web3t
     return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]

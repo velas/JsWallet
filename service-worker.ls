@@ -6,7 +6,7 @@ as-callback = (p, cb)->
         cb null, res
     p.catch (err)->
         cb err
-urlsToCache = 
+urlsToCache =
     * '../wallet'
     * '../main-bundle.css?alias=wallet'
     * '../main-bundle.js?alias=wallet'

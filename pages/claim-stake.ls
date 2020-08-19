@@ -357,9 +357,9 @@ require! {
             transform: translateY(-50%)
 get-checked-amount = (store)->
     store.staking.rewards
-        |> filter (.checked) 
+        |> filter (.checked)
         |> map (.reward)
-        |> foldl plus, 0 
+        |> foldl plus, 0
 calc-reward-epoch = (store, web3t, check, [item, ...items], cb)->
     mining-address =  store.staking.keystore.mining.address
     return cb null if not item?
@@ -380,9 +380,9 @@ calc-next-reward = (store, web3t, cb)->
     err <- calc-reward-epoch store, web3t , 15, unloaded
     return cb err if err?
     reward =
-        store.staking.rewards 
+        store.staking.rewards
             |> filter (.reward isnt '..')
-            |> map (.reward) 
+            |> map (.reward)
             |> foldl plus, 0
     store.staking.reward = round5 reward
     store.staking.reward-claim = round5 get-checked-amount store
@@ -395,7 +395,7 @@ calc-reward = (store, web3t)->
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
     return cb err if err?
-    store.staking.rewards = 
+    store.staking.rewards =
         epochs |> map -> { epoch: it, reward: '..', checked: no }
     err <- calc-next-reward store, web3t
     return cb err if err?
@@ -438,7 +438,7 @@ module.exports = (store, web3t)->
     claim = ->
         epochs =
             store.staking.rewards
-                |> filter (.checked) 
+                |> filter (.checked)
                 |> map (.epoch)
         max = 25
         rest = epochs.length - max
@@ -452,19 +452,19 @@ module.exports = (store, web3t)->
         background-image: if store.staking.reward-loading is yes then 'none' else ' '
     .pug.section-reward.reward(style=bg)
         .title.pug
-            h3.pug #{lang.u-rewards} 
+            h3.pug #{lang.u-rewards}
         .description.pug
             if store.staking.reward?
                 .pug
                     .pug.balance
-                        span.pug #{lang.available-reward}: 
+                        span.pug #{lang.available-reward}:
                         span.color.pug #{store.staking.reward}
                         img.label-coin.pug(src="#{icons.vlx-icon}")
                         span.color.pug  VLX2
                     .pug.staking-reward
                         store.staking.rewards |> map build-claim-reward store, web3t
                     .pug.balance
-                        span.pug #{lang.claim-reward}: 
+                        span.pug #{lang.claim-reward}:
                         span.color.pug #{store.staking.reward-claim}
                         img.label-coin.pug(src="#{icons.vlx-icon}")
                         span.color.pug  VLX2

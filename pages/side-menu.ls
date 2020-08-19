@@ -158,7 +158,7 @@ require! {
             @keyframes spin
                 from
                     transform: rotate(0deg)
-                to 
+                to
                     transform: rotate(360deg)
             animation-name: spin
             animation-duration: 4000ms
@@ -264,7 +264,7 @@ module.exports = (store, web3t)->
         left: "-57px"
     lang = get-lang store
     info = get-primary-info store
-    syncing = 
+    syncing =
         | store.current.refreshing => "syncing"
         | _ => ""
     border-style =
@@ -277,10 +277,10 @@ module.exports = (store, web3t)->
     langs-menu-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
-    lock-icon = 
+    lock-icon =
         width: "14px"
         filter: style.app.icon-filter
-    wallet-icon = 
+    wallet-icon =
         width: "18px"
         filter: style.app.icon-filter
     icon-node =

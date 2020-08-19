@@ -4,5 +4,9 @@
 langs/config.json
 node_modules
 .DS_Store
+<<<<<<< HEAD
 package-lock.json
 
+=======
+package-lock.json
+>>>>>>> origin/updates

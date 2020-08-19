@@ -57,13 +57,13 @@ module.exports = (store, web3t)->
         [_, first, last] = data
         span.pug.balance
             span.color.pug #{round-human first}
-            span.rest.pug #{round-human last}
+            span.rest.pug #{last}
     is-active = (value)->
         if value in filt then \active else ''
     switch-filter  = (value, event)-->
         if value not in filt
             filt.push value
-        else 
+        else
             filt.splice(filt.index-of(value), 1)
         apply-transactions store
     switch-type-in = switch-filter \IN

@@ -1,5 +1,5 @@
 module.exports =
-    velas: 
+    velas:
         background: "linear-gradient(100deg, #331462 4%, #15063C 100%)"
         menu: "linear-gradient(90deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)"
         background-image: "none"
@@ -26,8 +26,8 @@ module.exports =
         border-color: \#6b268e
         bg-btn: \#9d7fce4d
         border-light: "rgba(107, 38, 142, 0.40)"
-        text: \#fff     
-        text2: \#9d41eb     
+        text: \#fff
+        text2: \#9d41eb
         text3: \#fff
         text-primary: \#9c41eb
         color3: \#cccccc

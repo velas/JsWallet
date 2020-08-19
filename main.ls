@@ -39,7 +39,7 @@ export store
 safe-render = (func)->
     state =
         result: null
-    try 
+    try
         state.result = func!
     catch err
         state.result = render-error err
@@ -48,9 +48,8 @@ Main = observer ({store})->
     safe-render ->
         app { store, web3t }
 if 'serviceWorker' of navigator
-    console.log "in!"
     window.addEventListener 'load', ->
-        ((navigator.serviceWorker.register '/wallet/service-worker.js').then ((registration) ->
+        ((navigator.serviceWorker.register 'service-worker.js', {scope: \/main-index.html}).then ((registration) ->
             console.log 'ServiceWorker registration successful with scope: ', registration.scope
             return ), (err) ->
             console.log 'ServiceWorker registration failed: ', err
