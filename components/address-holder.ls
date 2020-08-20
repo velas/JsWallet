@@ -1,7 +1,7 @@
 require! {
     \react
     \../address-link.ls : { get-address-link, get-address-title }
-    \react-middle-ellipsis : { default: MiddleEllipsis }
+    \./middle-ellipsis : MiddleEllipsis
     \../get-primary-info.ls
     \../icons.ls
     \./identicon.ls
@@ -30,7 +30,7 @@ require! {
             position: relative
             margin: 0
             display: inline-block
-    img 
+    img
         margin-right: 10px
     img
         position: absolute
@@ -99,10 +99,10 @@ module.exports = ({ store, wallet, type })->
         | _ => address-input
     filter-icon=
         filter: style.app.filterIcon
-    address-link = 
+    address-link =
         | store.current.refreshing is no => get-address-link wallet, address-suffix
         | _ => "..."
-    address-title = 
+    address-title =
         | store.current.refreshing is no => get-address-title wallet, address-suffix
         | _ => "..."
     show-details = ->
@@ -124,6 +124,6 @@ module.exports = ({ store, wallet, type })->
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=filter-icon)
-            MiddleEllipsis
+            MiddleEllipsis.pug
                 a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
         copy { store, text: address-title }

@@ -39,7 +39,7 @@ export store
 safe-render = (func)->
     state =
         result: null
-    try 
+    try
         state.result = func!
     catch err
         state.result = render-error err

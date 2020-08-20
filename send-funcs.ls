@@ -38,7 +38,7 @@ module.exports = (store, web3t)->
     send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price }, cb)->
         { token } = send.coin
         tx-obj =
-            account: { wallet.address, wallet.private-key } 
+            account: { wallet.address, wallet.private-key }
             recipient: to
             network: network
             token: token
@@ -53,14 +53,13 @@ module.exports = (store, web3t)->
         return cb err if err?
         parts = get-tx-details store
         agree <- confirm store, parts.0
-        #console.log 'after confirm', agree
-        return cb "Cancelled" if not agree
+        return cb null if not agree
         err, tx <- push-tx { token, tx-type, network, ...data }
         return cb err if err?
         err <- create-pending-tx { store, token, network, tx, amount-send, amount-send-fee, send.to, from: wallet.address }
         cb err, tx
     perform-send-safe = (cb)->
-        err, to <- resolve-address web3t, send.to, send.coin, send.network
+        err, to <- resolve-address { store, address: send.to, coin: send.coin, network: send.network }
         #send.propose-escrow = err is "Address not found" and send.coin.token is \eth
         #return cb err if err?
         resolved =
@@ -73,7 +72,7 @@ module.exports = (store, web3t)->
     perform-send-unsafe = (cb)->
         send-tx { wallet, ...send }, cb
     check-enough = (cb)->
-        try 
+        try
             amount = wallet.balance `minus` send.amount-send `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
             return cb "Not Enough funds" if +amount < 0
             cb null
@@ -88,6 +87,8 @@ module.exports = (store, web3t)->
         err, data <- perform-send-safe
         send.sending = no
         return send.error = "#{err.message ? err}" if err?
+        # If cancel was pressed
+        return null if not data?
         notify-form-result send.id, null, data
         store.current.last-tx-url = "#{send.network.api.url}/tx/#{data}"
         navigate store, web3t, \sent
@@ -102,19 +103,25 @@ module.exports = (store, web3t)->
         navigate store, web3t, \wallets
         notify-form-result send.id, "Cancelled by user"
     recipient-change = (event)->
-        send.to = event.target.value ? ""
+        _to = event.target.value
+        _to = _to.trim!
+        err <- resolve-address { store, address: _to, coin: send.coin, network: send.network }
+        console.error "An error occured during address resolving:" err if err?
+        send.error = err ? ''
+        send.to = _to ? ""
     get-value = (event)->
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
-        value2 = 
+        value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
             | _ => value
         value2
     amount-change = (event)->
         value = get-value event
+        value = value ? 0
         <- change-amount store, value, no
     perform-amount-eur-change = (value)->
         to-send = calc-crypto-from-eur store, value
-        <- change-amount store, to-send , no       
+        <- change-amount store, to-send , no
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
         <- change-amount store, to-send, no
@@ -125,12 +132,13 @@ module.exports = (store, web3t)->
         amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 500
     amount-usd-change = (event)->
         value = get-value event
+        value = value ? 0
         send.amount-send-usd = value
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500
     encode-decode = ->
         send.show-data-mode =
-            | send.show-data-mode is \decoded => \encoded 
+            | send.show-data-mode is \decoded => \encoded
             | _ => \decoded
     show-data = ->
         | send.show-data-mode is \decoded => send.decoded-data
@@ -144,7 +152,7 @@ module.exports = (store, web3t)->
         store.current.filter = [\IN, \OUT, send.coin.token]
         apply-transactions store
         navigate store, web3t, \history
-    export network = 
+    export network =
         | store.current.network is \testnet => " (TESTNET) "
         | _ => ""
     export invoice = (wallet)->
@@ -183,7 +191,7 @@ module.exports = (store, web3t)->
         next = amount-send-fee ? ( 10 `div` (10 ^ send.network.decimals) )
         next-amount = amount-send `minus` next
         next-trials = trials - 1
-        calc-amount-and-fee next-amount, next-trials, cb 
+        calc-amount-and-fee next-amount, next-trials, cb
     use-max = (cb)->
         return cb "Fee is not calculated" if !send.amount-send-fee
         return cb "Please enter recipient address first" if !send.to
@@ -219,17 +227,17 @@ module.exports = (store, web3t)->
     export show-data
     export show-label
     export topup : topup(store)
-    export history 
+    export history
     export cancel
-    export send-anyway 
-    export choose-auto 
-    export choose-cheap 
-    export choose-custom 
-    export chosen-auto 
+    export send-anyway
+    export choose-auto
+    export choose-cheap
+    export choose-custom
+    export chosen-auto
     export chosen-cheap
     export chosen-custom
     export default-button-style
-    export round5edit 
+    export round5edit
     export round5
     export send-options
     export calc-amount-and-fee

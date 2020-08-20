@@ -52,40 +52,25 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.amount-send-usd = calc-usd store, amount-send
     send.amount-send-eur = calc-eur store, amount-send
     calc-fee-fun = if fast then calc-fee else calc-fee-proxy
-    get-tx-fee = (fee-type, cb) ->
-        err, calced-fee <- calc-fee-fun { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, fee-custom-amount, tx-type, account }
-        send.error = "#{err.message ? err}" if err?
-        return cb "Calc Fee Error: #{err.message ? err}", null if err?
-        tx-fee =
-            | calced-fee? => calced-fee
-            | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
-            | _ => send.network.tx-fee
-        cb null, tx-fee
-    err, tx-fee-cheap <- get-tx-fee \cheap
-    return err if err?
-    err, tx-fee-auto <- get-tx-fee \auto
-    return err if err?
-    calc-current = (cb) ->
-        switch fee-type
-        case \auto
-            return cb null, tx-fee-auto
-        case \cheap
-            return cb null, tx-fee-cheap
-        default
-            get-tx-fee fee-type, cb
-    err, tx-fee <- calc-current!
-    return err if err?
+    console.log \test
+    err, calced-fee <- calc-fee-fun { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, tx-type, account }
+    send.error = "Calc Fee Error: #{err.message ? err}" if err?
+    return cb "Calc Fee Error: #{err.message ? err}" if err?
+    tx-fee = 
+        | calced-fee? => calced-fee 
+        | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
+        | _ => send.network.tx-fee
     send.amount-send-fee = tx-fee
     send.amount-send-fee-options.auto = tx-fee-auto
     send.amount-send-fee-options.cheap = tx-fee-cheap
-    send.amount-charged = 
+    send.amount-charged =
         | (result-amount-send ? "").length is 0 => tx-fee
         | result-amount-send is \0 => tx-fee
         | result-amount-send is 0 => tx-fee
         | _ => result-amount-send `plus` tx-fee
     send.amount-charged-usd =  send.amount-charged `times` usd-rate
     send.amount-send-fee-usd = tx-fee `times` fee-usd-rate
-    send.error = 
+    send.error =
         | wallet.balance is \... => "Balance is not yet loaded"
         | parse-float(wallet.balance `minus` result-amount-send) < 0 => "Not Enough Funds"
         | _ => ""

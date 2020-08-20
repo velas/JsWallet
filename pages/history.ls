@@ -10,7 +10,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../icons.ls
-    \react-middle-ellipsis : { default: MiddleEllipsis }
+    \../components/middle-ellipsis : MiddleEllipsis
     \../components/address-holder.ls
 }
 .history
@@ -228,7 +228,7 @@ require! {
         .separator
             min-width: 2px
             display: inline-block
-        button 
+        button
             outline: none
             cursor: pointer
             border: 0
@@ -290,7 +290,7 @@ require! {
             @keyframes spin
                 from
                     transform: rotate(0deg)
-                to 
+                to
                     transform: rotate(360deg)
             animation-name: spin
             animation-duration: 4000ms
@@ -651,27 +651,27 @@ render-transaction = (store, web3t, tran)-->
     lightText=
         color: style.app.color3
     tooltip=
-        background: "#000"
+        background: '#000'
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
-    coin = 
+    coin =
         coins |> find (.token is token)
     return null if not coin?
     network = coin[store.current.network]
     request = { network, tx }
     tx-details = ->
-        store.history.tx-details = 
+        store.history.tx-details =
             | store.history.tx-details is tx => null
             | _ => tx
     icon-pending=
         filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else style.app.icon-filter
     amount-pending=
         color: if pending is yes then 'orange' else ''
-    about = 
+    about =
         | recipient-type is \contract => 'Smart'
         | description is \internal => 'Smart'
         | description is \external => 'User'
         | _ => 'Unknown'
-    about-icon = 
+    about-icon =
         | recipient-type is \contract => \ "#{icons.smart}"
         | description is \internal => \ "#{icons.smart}"
         | description is \external => \ "#{icons.user}"
@@ -689,7 +689,7 @@ render-transaction = (store, web3t, tran)-->
             .cell.pug.text-center.network
                 .pug
                     img.pug(src="#{coin.image}")
-                if no    
+                if no
                     .pug.direction #{arrow(type)}
                 .pug.direction
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
@@ -697,7 +697,7 @@ render-transaction = (store, web3t, tran)-->
                 .pug.gray(style=lightText)
                     span.action.pug
                         address-holder { store, wallet: wallet-from }
-                    span.from-to.pug 
+                    span.from-to.pug
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
@@ -743,12 +743,12 @@ render-transaction = (store, web3t, tran)-->
                     if no
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
-                    MiddleEllipsis.pug
+                    MiddleEllipsis
                         a.pug(href="#{url}" target="_blank") #{tx}
                     CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
                     .pug.gray(style=lightText)
-                        span.pug #{lang.created}: 
+                        span.pug #{lang.created}:
                             | #{ago time}
                         if pending is yes
                             span.pug

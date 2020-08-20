@@ -31,7 +31,7 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px) 
+    @media(max-width:800px)
         margin-left: 0
     >.title
         position: sticky
@@ -311,7 +311,7 @@ content = (store, web3t)->
     change-progress = ->
         newp.progress = it.target.value
     apply-new-vote = ->
-        cb = alert 
+        cb = alert
         return cb "description should be longer" if newp.description.length < 10
         return cb "url must be defined" if not newp.url.match(urlR)?
         return cb "progress must be defined" if not newp.progress.match(/[0-9]+/)?

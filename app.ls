@@ -89,7 +89,7 @@ require! {
             margin: 0
         &.alert
             padding: 2px
-            .header    
+            .header
                 line-height: 44px
             @media(max-width: 800px)
                 visibility: hidden
@@ -131,7 +131,7 @@ require! {
         width: 100%
         display: inline-block
         height: 16px
-    @keyframes fb 
+    @keyframes fb
         0%
             -webkit-mask-position: left
         100%
@@ -169,7 +169,7 @@ module.exports = ({ store, web3t })->
     style =
         background: theme.app.background
         color: theme.app.text
-    syncing = 
+    syncing =
         | store.current.refreshing => "syncing"
         | _ => ""
     open-menu = ->

@@ -22,8 +22,8 @@ require! {
     \localStorage
 }
 supported-themes =
-    themes 
-        |> obj-to-pairs 
+    themes
+        |> obj-to-pairs
         |> map (-> it.0)
 state =
     time: null
@@ -94,12 +94,12 @@ build-contract = (store, methods, coin)-> (abi)-> at: (address)->
 build-network-ethereum = (store, methods, coin)->
     { send-transaction, get-balance, get-address } = methods
     contract = build-contract store, methods, coin
-    { send-transaction, get-balance, get-address, contract } 
+    { send-transaction, get-balance, get-address, contract }
 build-other-networks = (store, methods, coin)->
     { send-transaction, get-balance, get-address, get-transaction-receipt } = methods
     contract = ->
         throw "Not Implemented For this network"
-    { send-transaction, get-balance, get-address, contract, get-transaction-receipt } 
+    { send-transaction, get-balance, get-address, contract, get-transaction-receipt }
 build-network-specific = (store, methods, coin)->
     builder =
         | coin.token in <[ eth ]> => build-network-ethereum
@@ -107,7 +107,7 @@ build-network-specific = (store, methods, coin)->
     builder store, methods, coin
 build-get-usd-amount = (store, coin)-> (amount, cb)->
     return cb "wallet isnt loaded" if typeof! store.current.account?wallets isnt \Array
-    wallet = 
+    wallet =
         store.current.account.wallets |> find (.coin.token is coin.token)
     return cb "wallet not found for #{token}" if not wallet?
     return cb "usd rate not found #{token}" if not wallet.usd-rate?
@@ -170,7 +170,7 @@ module.exports = (store, config)->
     refresh-timer = config?refresh-timer
     use = build-use cweb3, store
     install = build-install cweb3, store
-    install-quick = build-quick-install cweb3, store 
+    install-quick = build-quick-install cweb3, store
     uninstall = build-uninstall cweb3, store
     install-by-name = build-install-by-name cweb3, store
     naming = {}

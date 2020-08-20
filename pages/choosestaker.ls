@@ -151,7 +151,8 @@ require! {
                         background-image: none
                 .title
                     padding: 0px
-                    width: 20%
+                    width: 17%
+                    min-width: 150px
                     text-align: left
                     text-transform: uppercase
                     font-size: 14px
@@ -727,7 +728,6 @@ staking-content = (store, web3t)->
                 address-holder { store, wallet }
             td.pug(data-column='Amount') #{stake}
             td.pug #{vote-power}
-            td.pug(data-column="Filled" style=filled-color) #{filled}
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
             td.pug
@@ -780,7 +780,6 @@ staking-content = (store, web3t)->
                                     th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
                                     th.pug(width="25%" style=stats) #{lang.total-stake}
                                     th.pug(width="5%" style=stats) #{lang.vote-power}
-                                    th.pug(width="5%" style=stats) #{lang.filled}
                                     th.pug(width="25%" style=stats) #{lang.my-stake}
                                     th.pug(width="5%" style=stats) #{lang.stakers}
                                     th.pug(width="4%" style=stats) #{lang.selectPool}

@@ -63,7 +63,7 @@ module.exports = (store, web3t)->
     switch-filter  = (value, event)-->
         if value not in filt
             filt.push value
-        else 
+        else
             filt.splice(filt.index-of(value), 1)
         apply-transactions store
     switch-type-in = switch-filter \IN
