@@ -57,7 +57,7 @@ module.exports = (store, web3t)->
         [_, first, last] = data
         span.pug.balance
             span.color.pug #{round-human first}
-            span.rest.pug #{last}
+            span.rest.pug #{round-human last}
     is-active = (value)->
         if value in filt then \active else ''
     switch-filter  = (value, event)-->

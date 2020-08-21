@@ -261,6 +261,17 @@ require! {
             img
                 width: 34px
                 border-radius: 0px
+        .field
+            font-size: 12px
+            padding-left: 3px
+            color: gray
+            margin-top: 5px
+            &.type
+                font-size: 14px
+                color: #fff
+            &.coin
+                font-size: 14px
+                color: #fff
         .usd
             font-size: 11px
             padding-left: 3px

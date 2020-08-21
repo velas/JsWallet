@@ -64,8 +64,7 @@ require! {
                 width: 100%
             .filter
                 height: 60px
-                margin: 20px 10px 20px 20px
-                background: blueviolet
+                margin: 20px 20px 10px 20px
                 position: relative
                 .view
                     position: absolute
@@ -103,8 +102,23 @@ require! {
                             width: 13px
             .main-content
                 height: 100vh
-                margin: 0px 10px 20px 20px
-                background: blueviolet
+                margin: 0px 20px 10px 20px
+                &.create-new-proposal
+                    height: auto
+                    input
+                        outline: none
+                        width: 100%
+                        box-sizing: border-box
+                        height: 36px
+                        line-height: 36px
+                        border-radius: 0
+                        padding: 0px 10px
+                        font-size: 14px
+                        margin: 5px 0
+                        border: 0px
+                        box-shadow: none
+                        ~ .keyboard-panel
+                            display: none
                 .item
                     padding: 15px
                     display: flex
