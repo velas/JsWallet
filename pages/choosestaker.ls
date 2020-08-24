@@ -4,6 +4,7 @@ require! {
     \../navigate.ls
     \../get-primary-info.ls
     \../web3.ls
+    \bignumber.js
     \../get-lang.ls
     \../history-funcs.ls
     \./icon.ls
@@ -591,7 +592,12 @@ staking-content = (store, web3t)->
     change-address = ->
         store.staking.add.add-validator = it.target.value
     change-stake = ->
-        store.staking.add.add-validator-stake = it.target.value
+        value = 0
+        try
+            value = new bignumber(it.target.value).toFixed!
+            store.staking.add.add-validator-stake = value.to-string!
+        catch err
+            console.error "[Change-stake]: #{err}"
     velas-node-applied-template = 
         pairs
             |> velas-node-template 
@@ -761,7 +767,7 @@ staking-content = (store, web3t)->
         background: style.app.stats
     stats=
         background: style.app.stats
-    .pug.staking-content
+    .pug.staking-content.delegate
         .form-group.pug
             alert-txn { store }
             .pug.section
@@ -791,7 +797,7 @@ staking-content = (store, web3t)->
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
                         .buttons.pug
-                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: \ "#{lang.btn-select}" }
+                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: "#{lang.btn-select}" }
             if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
