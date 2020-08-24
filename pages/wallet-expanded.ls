@@ -178,7 +178,6 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.text
     stats-style=
         background: style.app.stats-style
-        border: "1px solid #{style.app.text}"
     color-label=
         background: style.app.primary1
     color-label2=
