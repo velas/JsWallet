@@ -566,7 +566,13 @@ staking-content = (store, web3t)->
     comming-soon =
         opacity: ".3"
     pairs = store.staking.keystore
+    i-stake-choosen-pool = ->
+        pool = store.staking.chosenPool
+        myStake = +pool.myStake
+        myStake >= 10000
     become-validator = ->
+        err, options <- get-options
+        return alert store, err, cb if err?
         err <- can-make-staking store, web3t
         return alert store, err, cb if err?
         return alert store, "please choose the pool", cb if not store.staking.chosen-pool?
@@ -647,6 +653,8 @@ staking-content = (store, web3t)->
                 |> find -> it.coin.token is \vlx2
         wallet.balance
     get-options = (cb)->
+        i-am-staker = i-stake-choosen-pool!
+        return cb null if i-am-staker
         #err, data <- web3t.velas.Staking.candidateMinStake
         #return cb err if err?
         #min = 
