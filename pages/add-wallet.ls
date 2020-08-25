@@ -19,11 +19,13 @@ module.exports = ({ store, web3t })->
         border-radius: "50px"
         border: "0"
         background: style.app.bg-btn
+        filter: style.app.icon2
         line-height: "25px"
         padding: "10px"
-        width: "40px"
+        width: "20%"
         height: "40px"
-        margin: "10px 5px 0"
+        margin: "10px 0 0"
+        position: "relative"
     lang = get-lang store
     syncing = 
         | store.current.refreshing => \syncing

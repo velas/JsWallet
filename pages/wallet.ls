@@ -34,7 +34,7 @@ require! {
         margin-top: 0
         box-shadow: none
     &:last-child
-        margin-bottom: 12px
+        margin-bottom: 0px
     .pending
         color: orange
     &.over
@@ -80,7 +80,6 @@ require! {
         span
             padding-left: 10px
         a
-            float: left
             text-align: left
     >.wallet-top
         padding: 0 12px
@@ -125,11 +124,11 @@ require! {
                 >.name
                     padding-left: 3px
                 >.price
-                    padding-left: 3px
                     font-size: 12px
                     font-weight: bold
                     overflow: hidden
                     text-overflow: ellipsis
+                    opacity: .5
         >.top-middle
             width: 30%
             text-align: center
@@ -152,6 +151,13 @@ require! {
         >.top-right
             width: 40%
             text-align: right
+            .icon
+                vertical-align: sub
+                .icon-svg-create
+                    height: 9px
+                    transform: rotate(-90deg)
+                    vertical-align: inherit
+                    opacity: .3
             @media screen and (max-width: 800px)
                 width: 35%
             >button
@@ -159,7 +165,7 @@ require! {
                 margin-bottom: 5px
                 margin-left: 5px
                 cursor: pointer
-                border: 1px solid
+                border: 0
                 $round: 36px
                 padding: 0
                 box-sizing: border-box
@@ -202,7 +208,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         border-top: "1px solid #{style.app.border}"
         border-right: "1px solid #{style.app.border}"
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     address-input=
@@ -210,10 +216,12 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.bg-primary-light
     btn-icon =
         filter: style.app.btn-icon
-    placeholder = 
+    icon-color=
+        filter: style.app.icon-filter
+    placeholder =
         | store.current.refreshing => "placeholder"
         | _ => ""
-    placeholder-coin = 
+    placeholder-coin =
         | store.current.refreshing => "placeholder-coin"
         | _ => ""
     name = wallet.coin.name ? wallet.coin.token
@@ -225,9 +233,9 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    cb null
     #migrate = (wallet)-> ->
     #    err <- load-terms
-    #    address = 
-    #        store.current.account.wallets 
-    #            |> find (-> it.coin.token is \vlx2) 
+    #    address =
+    #        store.current.account.wallets
+    #            |> find (-> it.coin.token is \vlx2)
     #            |> (.address)
     #    return alert store, "addres #{address} is wrong", cb if typeof! address isnt \String
     #    err, data <- get "https://mainnet-v2.velas.com/migration/topup-velas-address/#{address}" .end
@@ -243,23 +251,29 @@ module.exports = (store, web3t, wallets, wallet)-->
                 .img.pug(class="#{placeholder-coin}")
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
-                    .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
-                    .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd}
-            .top-middle.pug(style=wallet-style)
-                if +wallet.pending-sent is 0
                     .balance.pug.title(class="#{placeholder}") #{name}
-                .balance.pug(class="#{placeholder}")
-                    span.pug(title="#{wallet.balance}") #{ round-human wallet.balance }
-                        img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
-                        span.pug #{ wallet.coin.token.to-upper-case! }
-                    if +wallet.pending-sent >0
-                        .pug.pending 
-                            span.pug -#{ pending }
-                .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
+                    .price.pug(class="#{placeholder}" title="#{balance-usd}")
+                        span.pug #{ round-human balance-usd}
+                        span.pug USD
+            if store.current.device is \mobile
+                .top-middle.pug(style=wallet-style)
+                    if +wallet.pending-sent is 0
+                        .balance.pug.title(class="#{placeholder}") #{name}
+                    .balance.pug(class="#{placeholder}")
+                        span.pug(title="#{wallet.balance}") #{ round-human wallet.balance }
+                            img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
+                            span.pug #{ wallet.coin.token.to-upper-case! }
+                        if +wallet.pending-sent >0
+                            .pug.pending
+                                span.pug -#{ pending }
+                    .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
             .top-right.pug
                 if store.current.device is \desktop
-                    button.btn-open.pug(on-click=expand style=button-primary3-style)
-                        img.icon.pug(src="#{icons.open}" style=btn-icon)
+                    if no
+                        button.btn-open.pug(on-click=expand style=button-primary3-style)
+                            img.icon.pug(src="#{icons.open}" style=btn-icon)
+                    span.pug.icon(on-click=expand)
+                        img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
                 button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
         .wallet-middle.pug(style=border)

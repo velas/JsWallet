@@ -8,8 +8,9 @@ require! {
     \../navigate.ls
 }
 .wallets
+    @import scheme
     @media screen and (min-width: 800px)
-        margin-left: 60px
+        margin-left: $left-margin
     >.title
         position: sticky
         position: -webkit-sticky
@@ -42,6 +43,7 @@ require! {
             border: 1px solid white
             overflow: hidden
             margin: 10px 1%
+            border-radius: $border
             >.tag_name
                 margin-bottom: 10px
             .title-icons
@@ -71,14 +73,15 @@ require! {
                     overflow: hidden
                     white-space: nowrap
                     width: 80px
+                    border-radius: $border
 build-version = (store, release)-->
     style = get-primary-info store
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     button-primary2-style=

@@ -69,11 +69,12 @@ module.exports = (store, web3t)->
             linearGradientDef 'gradientNONE', [{
                 offset: 0
                 color: '#8374b7'
+                opacity: 0.15
             },
             {
                 offset: 100
                 color: '#8374b7'
-                opacity: 0.2
+                opacity: 0.15
             }]
         ]
     fill = [

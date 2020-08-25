@@ -145,7 +145,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.wallet
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     button-primary2-style=
@@ -153,7 +153,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.primary2
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     logo-style =
@@ -179,7 +179,7 @@ newseed = ({ store, web3t })->
         store.current.seed-words =
             [1 to count] |> map -> { part: "", index: 0 }
         store.current.seed-generated = no
-        sorted = 
+        sorted =
             store.current.seed-words |> sort-by random
         map-index = ->
             it.index = sorted.index-of(it)
@@ -191,7 +191,7 @@ newseed = ({ store, web3t })->
         store.current.page = 'chooseinit'
     .newseed-restore.pug
         .pug.logo
-            img.iron.pug(src="#{style.branding.logo}" style=logo-style)
+            img.pug(src="#{style.branding.logo}" style=logo-style)
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v

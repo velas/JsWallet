@@ -20,7 +20,7 @@ require! {
     display: block
     width: auto
     overflow: hidden
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: 100%
     min-height: 100vh
@@ -33,7 +33,7 @@ require! {
         background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         z-index: 1
         width: 100%
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .search-field
@@ -291,7 +291,7 @@ dapps = (store, web3t)->
         color: info.app.text
         background: info.app.primary1
     input-style=
-        background: info.app.wallet
+        background: info.app.input
         border: "0"
         color: info.app.text
     lightText=
@@ -322,9 +322,9 @@ dapps = (store, web3t)->
     goto-vote = ->
         navigate store, web3t, \vote
     .pug.panel-content
-        p.results.pug 
-            | #{lang.estimated-results}: 
-            | 2,000 
+        p.results.pug
+            | #{lang.estimated-results}:
+            | 2,000
             | (0.30
             | #{lang.sec}
             | )
@@ -342,7 +342,7 @@ dapps = (store, web3t)->
             .source.pug(on-click=goto-resources2)
                 .pug.address #{lang.velas-sphere}
                 .pug.header #{lang.velas-cpu-staking}
-            .pug.description 
+            .pug.description
             ul.pug.links
                 li.pug
                     span.pug About
@@ -380,7 +380,7 @@ dapps = (store, web3t)->
             .source.pug(on-click=goto-vote)
                 .pug.address #{lang.velas-sphere}
                 .pug.header Vote
-            .pug.description 
+            .pug.description
         .pug.section.developing
             .source.pug
                 .pug.address wallet.velas.com
@@ -457,7 +457,7 @@ search = ({ store, web3t })->
         color: info.app.text
         background: info.app.primary1
     input-style=
-        background: info.app.wallet
+        background: info.app.input
         border: "0"
         color: info.app.text
     lightText=

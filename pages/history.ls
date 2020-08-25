@@ -10,7 +10,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../icons.ls
-    \../components/middle-ellipsis : MiddleEllipsis
+    \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/address-holder.ls
 }
 .history
@@ -59,6 +59,9 @@ require! {
         border-radius: 0px
         height: 15px
         top: 2px
+        &.more
+            height: 8px
+            top: 0
     .icon-svg-arrow
         position: relative
         height: 12px
@@ -78,7 +81,6 @@ require! {
         margin-right: 5px
         font-size: 15px !important
         font-weight: 600
-        vertical-align: text-top
     .nothin-to-show
         color: rgba(white, 0.5)
         padding-top: 50px
@@ -116,18 +118,38 @@ require! {
                 text-align: left
             &.amount
                 width: 35%
-                text-align: right
+                text-align: left
     .header, .header-table
         text-align: left
-        height: 60px
+        height: 100px
         box-sizing: border-box
         left: 0
         top: 0
         width: 100%
+        .table-header
+            width: 100%
+            display: inline-flex
+            margin-top: 10px
+            span
+                font-size: 12px
+                opacity: .5
+                padding: 10px 0
+                line-height: 1.8
+                &.from-to
+                    width: 50%
+                &.created
+                    width: 12%
+                &.amount
+                    width: 16%
+                &.status
+                    width: 16%
+                &.details
+                    width: 6%
+                    text-align: center
         .head
             display: inline-block
             &.left
-                padding: 0px 0 10px 10px
+                padding: 0px 0 10px 0px
                 margin-top: 21px
             &.right
                 float: right
@@ -147,6 +169,7 @@ require! {
             right: 0
             display: inline-grid
             z-index: 1
+            border-radius: $border
             .bottom, .middle
                 padding: 10px
             .top
@@ -155,7 +178,6 @@ require! {
                 button
                     width: 50% !important
                     border: 0 !important
-                    border-radius: 0 !important
                     margin: 0 !important
                     height: 39px
                     text-transform: uppercase
@@ -183,7 +205,7 @@ require! {
                 button
                     outline: none
                     cursor: pointer
-                    border: 1px solid
+                    border: 0
                     padding: 0
                     box-sizing: border-box
                     border-radius: $border
@@ -205,26 +227,29 @@ require! {
                 border-radius: 50px
                 margin: 2px
                 border: 2px solid hsla(0, 0%, 79%, 0.15)
-                opacity: .85
+                opacity: .25
                 border-width: 3px
                 &.active
                     opacity: 1
                 img
-                    height: 33px
+                    height: 25px
                     &.icon-svg
-                        height: 10px
+                        height: 12px
                         padding: 0 0 3px 0
+                        margin: 0
                     &.icon-svg-btn
                         height: 12px
                         padding: 0px 5px 0 0px
                 &.OUT
+                    border-radius: $border 0 0 0
                     img
-                        filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
-                    color: #be6ed2
+                        filter: invert(105%)
+                    background: var(--primary1)
                 &.IN
+                    border-radius: 0 $border 0 0
                     img
-                        filter: invert(15%) sepia(14%) saturate(950%) hue-rotate(110deg) brightness(87%) contrast(85%)
-                    color: #71c5aa
+                        filter: invert(105%)
+                    background: var(--primary2)
         .separator
             min-width: 2px
             display: inline-block
@@ -274,13 +299,17 @@ require! {
             vertical-align: middle
         &.confirmed
             font-style: normal
-            font-size: 11px
+            font-size: 14px
             margin-left: 3px
-            color: rgb(60, 213, 175)
+            color: gray
             border-radius: $border
             width: auto
             letter-spacing: .5px
             padding: 0px 3px 1px 0px
+            &.done
+                background-image: linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)
+                -webkit-text-fill-color: transparent
+                -webkit-background-clip: text
     .syncing
         svg
             color: orange
@@ -312,7 +341,7 @@ require! {
         width: 100%
         overflow-y: scroll
         margin-top: -1px
-        height: calc(100vh - 260px)
+        height: calc(100vh - 270px)
         opacity: .8
         .head, .record
             &.record
@@ -326,7 +355,7 @@ require! {
                 &:last-child
                     margin-bottom: 0px
             .cell
-                padding: 10px 0 10px 10px
+                padding: 10px 0
                 display: inline-block
                 vertical-align: top
                 box-sizing: border-box
@@ -334,17 +363,20 @@ require! {
                 height: 59px
                 white-space: nowrap
                 overflow: hidden
-                &:last-child
+                .action
+                    margin-top: 7px
+                    display: block
+                &:first-child
                     padding-right: 10px
                 @media screen and (max-width: 800px)
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 6%
+                    width: 4%
                     div
                         text-align: center
                 &.txhash
-                    width: 65%
+                    width: 54%
                     div:first-child
                         display: inline
                     .loader-ios
@@ -356,18 +388,26 @@ require! {
                         border: none
                         margin-right: 0px
                         margin-left: 5px
-                        height: 12px
+                        height: 13px
+                        top: 3px
                         left: 3px
                         position: relative
                 &.amount
                     width: 16%
-                    text-align: right
+                    text-align: left
+                    line-height: 40px
+                    @media screen and (max-width: 1020px)
+                        width: 19%
+                &.status
+                    width: 16%
+                    text-align: left
+                    line-height: 40px
                     @media screen and (max-width: 1020px)
                         width: 19%
                 &.divider2
-                    width: 29%
+                    width: 38%
                 &.divider
-                    width: 6%
+                    width: 4%
                     .direction
                         text-align: center
                         line-height: 40px
@@ -378,10 +418,10 @@ require! {
                     opacity: .5
                     padding-left: 0
                 &.created
-                    width: 28%
-                    text-align: right
+                    width: 12%
+                    text-align: left
                     @media screen and (max-width: 1020px)
-                        width: 25%
+                        width: 23%
                     .syncing
                         svg
                             width: auto
@@ -406,6 +446,7 @@ require! {
                         font-size: 14px
                         line-height: 22px
                         text-decoration: none
+                        line-height: 40px
                 &.more
                     text-align: center
                     width: 6%
@@ -447,7 +488,7 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 44%
+                    width: 46%
                     text-align: left
                     height: 60px
                     div:last-child
@@ -464,8 +505,10 @@ require! {
                             >img
                                 margin: 5px
                                 &:first-child
-                                    top: -6px
+                                    top: 0px
                                     margin: 0 10px 0 0
+                                    height: 25px
+                                    border-radius: 6px
                             .browse
                                 right: 0px
                                 padding: 0
@@ -519,8 +562,16 @@ require! {
                             display: none
                 .direction
                     img
-                        filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
+                        filter: invert(105%)
+                        vertical-align: bottom
                     color: #be6ed2
+                    &.label-icon
+                        width: 25px
+                        height: 25px
+                        background: var(--primary1)
+                        border-radius: 6px
+                        text-align: center
+                        margin-top: 7px
                 .txhash a
                     color: #be6ed2
             &.IN
@@ -530,8 +581,16 @@ require! {
                             display: none
                 .direction
                     img
-                        filter: invert(15%) sepia(14%) saturate(950%) hue-rotate(110deg) brightness(87%) contrast(85%)
+                        filter: invert(105%)
+                        vertical-align: bottom
                     color: #71c5aa
+                    &.label-icon
+                        width: 25px
+                        height: 25px
+                        background: var(--primary2)
+                        border-radius: 6px
+                        text-align: center
+                        margin-top: 7px
                 .txhash a
                     color: #71c5aa
     .panel-footer
@@ -544,6 +603,8 @@ require! {
             border-radius: 0px
             height: 12px
             top: 2px
+            margin: 0
+            margin-top: 5px
     .hidden
         display: none !important
     .loader-ios
@@ -650,8 +711,10 @@ render-transaction = (store, web3t, tran)-->
         background: style.app.wallet-light
     lightText=
         color: style.app.color3
+    icon1=
+        filter: style.app.icon1
     tooltip=
-        background: '#000'
+        background: "#000"
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
     coin =
         coins |> find (.token is token)
@@ -684,58 +747,57 @@ render-transaction = (store, web3t, tran)-->
         address: to
         network: network
         coin: coin
+    cut-hash = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 15) + \.. + t.substr(t.length - 15, 15)
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
-                .pug
-                    img.pug(src="#{coin.image}")
-                if no
-                    .pug.direction #{arrow(type)}
-                .pug.direction
+                .pug.direction.label-icon
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
             .cell.pug.details-from
                 .pug.gray(style=lightText)
                     span.action.pug
                         address-holder { store, wallet: wallet-from }
-                    span.from-to.pug
-                        span.pug.smart-contract
-                            .pug.tooltip #{about}
-                            img.help.pug(src="#{about-icon}")
-                        span.pug #{lang.from}
-            if no
-                .cell.pug.arrow
-                    img.icon-svg1.pug(src="#{icons.arrow-right}")
+                    if no
+                        span.from-to.pug
+                            span.pug.smart-contract
+                                .pug.tooltip #{about}
+                                img.help.pug(src="#{about-icon}")
+                            span.pug #{lang.from}
             .cell.pug.details-to
                 .pug.gray(style=lightText)
                     span.action.pug
                         address-holder { store, wallet: wallet-to }
-                    span.from-to.pug
-                        span.pug.smart-contract
-                            .pug.tooltip #{about}
-                            img.help.pug(src="#{about-icon}")
-                        span.pug #{lang.to}
+                    if no
+                        span.from-to.pug
+                            span.pug.smart-contract
+                                .pug.tooltip #{about}
+                                img.help.pug(src="#{about-icon}")
+                            span.pug #{lang.to}
             .cell.pug.created
                 .time-ago.pug
                     |#{ago time}
-                .pug.gray(style=lightText)
-                    if pending is yes
-                        span.pug
-                            span.pug.bold
-                                loader store, web3t
-                    else
-                        span.pug
-                            span.pug.bold
-                                img.icon-check.pug(src='data:image/svg+xml;base64,\PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTA0LjUwMiw3NS40OTZjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5OC0zNi4yMDQsMEwxNjEuNTk0LDM4Mi4yMDNMNDMuNzAyLDI2NC4zMTFjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5Ny0zNi4yMDQsMCAgICBjLTkuOTk4LDkuOTk3LTkuOTk4LDI2LjIwNSwwLDM2LjIwM2wxMzUuOTk0LDEzNS45OTJjOS45OTQsOS45OTcsMjYuMjE0LDkuOTksMzYuMjA0LDBMNTA0LjUwMiwxMTEuNyAgICBDNTE0LjUsMTAxLjcwMyw1MTQuNDk5LDg1LjQ5NCw1MDQuNTAyLDc1LjQ5NnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzNDRDVBRiIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD4KCTwvZz4KPC9nPjwvZz4gPC9zdmc+')
-                    span.pug #{lang.created}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}
                     amount-beautify amount, 8
-                .pug.gray(style=lightText)
-                    span.pug.fee #{lang.fee}:
-                    amount-beautify fee, 10
+                if no
+                    .pug.gray(style=lightText)
+                        span.pug.fee #{lang.fee}:
+                        amount-beautify fee, 10
+            .cell.pug.status(style=menu-style)
+                if pending is yes
+                    span.pug
+                        span.pug.bold.confirmed #{lang.created}
+                        span.pug.bold
+                            loader store, web3t
+                else
+                    span.pug
+                        span.pug.bold.confirmed.done #{lang.confirmed}
             .cell.pug.divider.more(on-click=tx-details)
-                img.icon-svg1.pug(src="#{icons.more}" style=icon-pending)
+                img.icon-svg1.more.pug(src="#{icons.arrow-down}" style=icon1)
                 .arrow_box.pug(style=tooltip) #{lang.details}
         if store.history.tx-details is tx
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
@@ -744,7 +806,7 @@ render-transaction = (store, web3t, tran)-->
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
                     MiddleEllipsis
-                        a.pug(href="#{url}" target="_blank") #{tx}
+                        a.pug(href="#{url}" target="_blank") #{cut-hash tx}
                     CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
                     .pug.gray(style=lightText)
@@ -755,10 +817,15 @@ render-transaction = (store, web3t, tran)-->
                                 span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
                         else
                             span.pug
-                                span.pug.bold
-                                    img.icon-check.pug(src='data:image/svg+xml;base64,\PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGc+PGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTA0LjUwMiw3NS40OTZjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5OC0zNi4yMDQsMEwxNjEuNTk0LDM4Mi4yMDNMNDMuNzAyLDI2NC4zMTFjLTkuOTk3LTkuOTk4LTI2LjIwNS05Ljk5Ny0zNi4yMDQsMCAgICBjLTkuOTk4LDkuOTk3LTkuOTk4LDI2LjIwNSwwLDM2LjIwM2wxMzUuOTk0LDEzNS45OTJjOS45OTQsOS45OTcsMjYuMjE0LDkuOTksMzYuMjA0LDBMNTA0LjUwMiwxMTEuNyAgICBDNTE0LjUsMTAxLjcwMyw1MTQuNDk5LDg1LjQ5NCw1MDQuNTAyLDc1LjQ5NnoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzNDRDVBRiIgZGF0YS1vbGRfY29sb3I9IiMwMDAwMDAiPjwvcGF0aD4KCTwvZz4KPC9nPjwvZz4gPC9zdmc+')
-                                span.pug.bold.confirmed #{lang.confirmed}
+                                span.pug.bold.confirmed.done #{lang.confirmed}
+                        span.pug.smart-contract
+                            .pug.tooltip #{about}
+                            img.help.pug(src="#{about-icon}")
+                .cell.pug.divider
                 .cell.pug.divider2
+                    .pug.gray(style=lightText)
+                        span.pug.fee #{lang.fee}:
+                        amount-beautify fee, 10
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store
@@ -766,6 +833,8 @@ module.exports = ({ store, web3t })->
     header-style =
         border-bottom: "1px solid #{style.app.border}"
         color: style.app.text
+    icon2=
+        filter: style.app.icon2
     header-style-light =
         color: style.app.text
     button-style=
@@ -775,10 +844,8 @@ module.exports = ({ store, web3t })->
     filter-style=
         background: style.app.header
         font-weight: "600"
-    btn-style=
-        background: style.app.header
-        border-right: "1px solid #{style.app.border}"
-        font-weight: "600"
+    split=
+        border: "1px solid #{style.app.border}"
     menu-style=
         color: style.app.text
     border-b =
@@ -787,17 +854,17 @@ module.exports = ({ store, web3t })->
         border-top: "1px solid #{style.app.border}"
     filter-body =
         border: "1px solid #{style.app.border}"
-        background: style.app.filterBg
+        background: style.app.account-bg
     input-style=
         background: style.app.bg-primary-light
         border: "1px solid #{style.app.border}"
         color: style.app.text
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     lightText=
@@ -824,19 +891,24 @@ module.exports = ({ store, web3t })->
                     img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
             span.pug.head.left.h1 #{lang.your-transactions}
             span.pug.head.right(on-click=expand-collapse)
-                img.icon-svg1.pug(src="#{icons.filter}" style=icon-filter)
+                img.icon-svg1.pug(src="#{icons.filter}" style=icon2)
+            .pug.table-header
+                span.pug.from-to
+                    | #{lang.from}
+                    | /
+                    | #{lang.to}
+                span.pug.created #{lang.created}
+                span.pug.amount #{lang.amount}
+                span.pug.status #{lang.status}
+                span.pug.details #{lang.details}
             if store.history.filter-open
                 .pug.filter(style=filter-body)
                     .pug.top(style=border-b)
-                        button.IN.pug(class="#{is-active('IN')}" style=btn-style on-click=switch-type-in)
-                            img.icon-svg.pug(src="#{icons.get}")
-                            br.pug
-                            |#{lang.in}
-                        .pug(style=btn-style)
-                        button.OUT.pug(class="#{is-active('OUT')}" style=btn-style on-click=switch-type-out)
+                        button.OUT.pug(class="#{is-active('OUT')}" on-click=switch-type-out)
                             img.icon-svg.pug(src="#{icons.send}")
-                            br.pug
-                            |#{lang.out}
+                        .pug(style=split)
+                        button.IN.pug(class="#{is-active('IN')}" on-click=switch-type-in)
+                            img.icon-svg.pug(src="#{icons.get}")
                     .pug.middle(style=border-b)
                         .pug
                             input.pug(type='text' style=input-style placeholder="#{lang.from}")

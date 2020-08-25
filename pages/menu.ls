@@ -97,16 +97,17 @@ require! {
                     letter-spacing: 2px
                     line-height: 24px
                     opacity: .8
+                    margin-top: 20px
             >.amount
-                font-size: 40px
+                font-size: 25px
                 .symbol
-                    font-size: 20px
-                    vertical-align: super
+                    font-size: 15px
+                    vertical-align: unset
                 >*
                     display: inline-block
     .placeholder
         width: auto !important
-        height: 54px !important
+        height: 34px !important
         line-height: 34px !important
         -webkit-mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, #000000 50%, rgba(255, 255, 255, 0.6) 70%)
         -webkit-mask-size: 50%
@@ -117,7 +118,7 @@ require! {
         width: 100%
         display: inline-block
         height: 16px
-    @keyframes fb 
+    @keyframes fb
         0%
             -webkit-mask-position: left
         100%
@@ -150,29 +151,30 @@ module.exports = ({ store, web3t })->
         padding: "10px"
         width: "40px"
         height: "40px"
-        margin: "10px 5px 0"
+        margin: "0px 5px 0"
     lang = get-lang store
-    syncing = 
+    syncing =
         | store.current.refreshing => \syncing
         | _ => ""
-    placeholder = 
+    placeholder =
         | store.current.refreshing => "placeholder"
         | _ => ""
     .menu.wallet-main.pug(style=menu-style)
         .menu-body.pug
             .balance.pug
+                .currency.h1.pug #{lang.balance}
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
                     .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
-                .currency.h1.pug #{lang.balance}
                 .pug
                     if store.current.device is \desktop
                         if store.preference.refresh-visible is yes
                             button.pug.button.lock.mt-5(on-click=refresh style=button-syncing class="#{syncing}")
                                 icon \Sync, 20
-                    if store.current.device is \desktop
-                        button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-add)
-                            img.icon-svg-plus.pug(src="#{icons.create}")
+                    if no
+                        if store.current.device is \desktop
+                            button.pug.button.lock.mt-5(on-click=add-coin(store) style=button-add)
+                                img.icon-svg-plus.pug(src="#{icons.create}")
                     if store.current.device is \desktop
                         tor store, web3t
             if store.current.device is \mobile    

@@ -183,7 +183,7 @@ review-words-panel = (store, web3t)->
     { next } = newseed-funcs store, web3t
     style = get-primary-info store
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     button-primary2-style=
@@ -191,7 +191,7 @@ review-words-panel = (store, web3t)->
         color: style.app.text
         background: style.app.primary2
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     btn-icon =

@@ -27,7 +27,7 @@ require! {
     display: block
     width: auto
     overflow: hidden
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: 100%
     min-height: 100vh
@@ -35,7 +35,7 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     button
@@ -102,6 +102,7 @@ require! {
             >div
                 background: #3b1771
                 padding: 30px 20px
+                border-radius: $border
             &.col-4
                 -webkit-box-flex: 0
                 flex: 0 0 25%

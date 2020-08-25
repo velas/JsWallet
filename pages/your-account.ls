@@ -37,6 +37,7 @@ require! {
         display: inline-grid
         z-index: 3
         box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
+        border-radius: 0 0 $border $border
         .folder-menu
             width: 130px
             div
@@ -120,7 +121,7 @@ require! {
                 button
                     outline: none
                     cursor: pointer
-                    border: 1px solid
+                    border: 0
                     padding: 0
                     box-sizing: border-box
                     border-radius: $border
@@ -201,11 +202,11 @@ module.exports = (store, web3t)->
         <- web3t.refresh
     style = get-primary-info store
     button-style=
-        border: "1px solid #{style.app.border}"
+        border: "0"
         color: style.app.text
         background: style.app.input
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     button-primary4-style=
@@ -219,7 +220,7 @@ module.exports = (store, web3t)->
         height: "40px"
         margin: "20px 5px 0"
     button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
+        border: "0"
         color: style.app.text
         background: style.app.primary2
     button-primary0-style=
@@ -232,11 +233,11 @@ module.exports = (store, web3t)->
         background: style.app.primary3
     filter-body =
         border: "1px solid #{style.app.border}"
-        background: style.app.header
+        background: style.app.account-bg
     border-top=
         border-top: "1px solid #{style.app.border}"
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     icon-style =

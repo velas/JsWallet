@@ -9,37 +9,78 @@ require! {
     \../navigate.ls
     \../setup-pages.ls
     \../icons.ls
+    \./menu.ls
 }
 .menu
     @import scheme
     width: 100%
     text-align: right
-    padding: 20px 15px
     box-sizing: border-box
     $smooth: color .15s ease-in-out
     &.side-menu
         position: fixed
         left: 0
-        width: 60px
+        width: 250px
         height: 100vh
         padding: 0
         padding-top: 0px
         z-index: 11
+        background-image: $logo-op
+        background-repeat: no-repeat
+        background-position: 50% 120px
+        background-size: 130px
+        transition: all .5s
+        .closed
+            display: none
+            top: 2px
+            right: -22px
+            position: absolute
+            cursor: pointer
+            svg
+                transition: all .5s
+                &:hover
+                    transform: rotate(90deg)
+                    transition: all .5s
+            &.active
+                @media(max-width: $ipad)
+                    display: inline-block
+        &.active
+            @media(max-width: $ipad)
+                left: 0px
+                box-shadow: 10px 0px 40px 10px #090e33
+        @media(max-width: $ipad)
+            left: -250px
+            transition: all .5s
+        .menu
+            line-height: 14px
+            height: auto
         .menu-items
             margin: 0
             position: absolute
+            top: calc(4*60px)
+            width: 100%
         .logo
-            position: relative
-            width: auto
+            position: absolute
+            width: 100%
             text-align: center
             padding: 20px 0
-            left: 0
+            bottom: 0
+            .version
+                letter-spacing: 1px
+                font-size: 8px
+                padding: 6px
+                color: #89829d
+                border-radius: 8px
+                height: 5px
+                line-height: 5px
+                margin: 5px auto
             img
                 width: 25px
                 vertical-align: bottom
         .menu-item
-            padding: 20px
-            margin-left: 0
+            margin-bottom: 0px
+            height: 40px
+            padding-top: 20px
             &.bottom
                 position: absolute
                 bottom: 0
@@ -61,31 +102,39 @@ require! {
             cursor: pointer
     .menu-item
         span
-            opacity: 0
             position: absolute
-            left: 0
+            left: 100px
+            line-height: 1.6
+            font-size: 14px
+            letter-spacing: 2px
+        img
+            &.more
+                left: 220px
+                top: 25px
+                padding: 0
+                height: 9px
+                width: auto
+                transform: rotate(-90deg)
         svg, img
             transition: transform .5s
         .menu
             opacity: 0
             position: absolute
             left: -100px
+            display: none
         &.submenu
+            height: 170px
             .menu
-                padding: 15px !important
-                position: absolute
-                text-transform: uppercase
-                left: 59px
-                top: 17px
+                position: relative
+                left: 90px
+                display: block
+                top: 50px
                 z-index: 1
                 width: 140px
                 font-size: 10px
                 color: #fff
-                padding: 5px
-                background: rgb(51, 20, 99)
                 opacity: 1
                 transition: opacity .5s
-                box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
                 ul
                     list-style: none
                     padding: 0
@@ -99,7 +148,9 @@ require! {
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                                 transition: .5s
                         margin-bottom: 15px
-                        font-size: 12px
+                        line-height: 1.6
+                        font-size: 14px
+                        letter-spacing: 2px
                         &:last-child
                             margin-bottom: 0
                         &.active
@@ -108,51 +159,19 @@ require! {
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                         img
                             filter: none
-        &:hover
-            >svg, >img
-                transform: scale(1.2)
-                transition: transform .5s
-            span
-                position: absolute
-                text-transform: uppercase
-                left: 70px
-                top: 17px
-                font-size: 10px
-                font-weight: 600
-                color: #fff
-                padding: 5px
-                white-space: nowrap
-                background: #000
-                opacity: 1
-                transition: opacity .5s
-                &.arrow_box
-                    &:after, &:before
-                        right: 100%
-                        top: 21%
-                        border: solid transparent
-                        content: " "
-                        height: 0
-                        width: 0
-                        position: absolute
-                        pointer-events: none
-                    &:after
-                        border-color: rgba(136, 183, 213, 0)
-                        border-right-color: #000
-                        border-width: 6px
-                        margin-top: 2px
-                    &:before
-                        border-color: rgba(194, 225, 245, 0)
-                        border-width: 8px
-                        margin-top: 0px
         &.active
-            color: #9264b6 !important
+            color: #fff !important
+            background: var(--bg-primary-light)
             transition: $smooth
+            border-bottom: 1px solid var(--border)
+            opacity: 1
             -webkit-transition: $smooth
             -moz-transition: $smooth
             -ms-transition: $smooth
             -o-transition: $smooth
             img
-                filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
+                &.more
+                    transform: rotate(0deg)
         &.syncing
             @keyframes spin
                 from
@@ -164,17 +183,16 @@ require! {
             animation-iteration-count: infinite
             animation-timing-function: linear
         cursor: pointer
-        opacity: 1
+        opacity: .5
         &:hover
             opacity: 1
         vertical-align: bottom
         line-height: normal
-        display: inline-block
-        margin-left: 20px
+        display: block
         position: relative
         height: 20px
         line-height: 15px
-        width: 20px
+        width: 100%
         text-align: center
         z-index: 11
         @media screen and (max-width: 390px)
@@ -185,7 +203,7 @@ require! {
             width: 17px
             border-radius: 0px
             position: absolute
-            left: 20px
+            left: 60px
             padding: 2px
         &.class
             position: absolute
@@ -268,7 +286,7 @@ module.exports = (store, web3t)->
         | _ => ""
     border-style =
         border-right: "1px solid #{style.app.border}"
-        background: style.app.header
+        background-color: style.app.header
     logo-style =
         filter: style.app.filterLogo
     expand-collapse = ->
@@ -290,25 +308,28 @@ module.exports = (store, web3t)->
         filter: style.app.icon-filter
     text-style=
         color: style.app.text
-    background-menu=
-        background: style.app.header
-        border: "1px solid #{style.app.border}"
     wallet = ->
         navigate store, web3t, \wallets
+        store.menu.show = no
     goto-search = ->
         navigate store, web3t, \search
+        store.menu.show = no
     goto-settings = ->
         navigate store, web3t, \settings
+        store.menu.show = no
     goto-file-storage = ->
         navigate store, web3t, \filestorage
     goto-staking = ->
         navigate store, web3t, \staking
+        store.menu.show = no
     goto-resources = ->
         navigate store, web3t, \resources
     goto-choose-staker = ->
         navigate store, web3t, \choosestaker
+        store.menu.show = no
     goto-info = ->
         navigate store, web3t, \info
+        store.menu.show = no
     goto-faq = ->
         navigate store, web3t, \faq
     goto-notice = ->
@@ -318,34 +339,44 @@ module.exports = (store, web3t)->
     comming-soon =
         opacity: ".3"
     tooltip=
-        background: "#000"
+        background: \#000
     open-submenu = ->
         store.current.submenu = not store.current.submenu
     menu-staking =
         if store.current.submenu then \submenu else \ ''
+    staking = if store.current.submenu then \active else \not-active
     menu-out = ->
         store.current.submenu = no
-    staking = if store.current.submenu then \active else \not-active
     color =
         color: style.app.text
     goto-mainnet = ->
         web3t.use \mainnet
     goto-wallet = ->
         navigate store, web3t, \wallets
-    .menu.side-menu.pug(style=border-style on-mouse-leave=menu-out)
+    version = (store, web3t)->
+        .version.pug #{store.version}
+    show-mobile =
+        if store.menu.show then \active else \ ""
+    close = ->
+        store.menu.show = no
+    .menu.side-menu.pug(style=border-style class="#{show-mobile}")
+        .pug.closed(on-click=close class="#{show-mobile}")
+            icon \X, 20
         .pug.logo
             img.pug(src="#{info.branding.logo-sm}" style=logo-style on-click=goto-wallet)
-        if store.preference.lock-visible is yes
-            .menu-item.bottom.pug(on-click=lock style=icon-style)
-                img.pug(src="#{icons.lock}" style=lock-icon)
+            version store, web3t
+        menu { store, web3t }
         .pug.menu-items
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
-                    span.arrow_box.pug(style=tooltip) #{lang.your-wallets}
+                    span.arrow_box.pug #{lang.your-wallets}
                     img.pug(src="#{icons.wallet}" style=wallet-icon)
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking}")
-                    .menu.pug.arrow_box(style=background-menu)
+                .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking + ' ' + info-active + ' ' + staking-active + ' ' + delegate-active}" on-mouse-leave=menu-out)
+                    span.arrow_box.pug #{lang.staking}
+                    img.pug(src="#{icons.staking}"style=icon-color)
+                    img.more.pug(src="#{icons.arrow-down}")
+                    .menu.pug.arrow_box
                         ul.pug
                             li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
                                 img.pug(src="#{icons.node}" style=icon-node)
@@ -360,17 +391,15 @@ module.exports = (store, web3t)->
                             li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                 img.pug(src="#{icons.info}" style=icon-node)
                                 | #{lang.stats}
-                    span.arrow_box.pug(style=tooltip) #{lang.staking}
-                    img.pug(src="#{icons.staking}"style=icon-color)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
-                    span.arrow_box.pug(style=tooltip) #{lang.search}
+                    span.arrow_box.pug #{lang.search}
                     img.pug(src="#{icons.search}" style=icon-color)
             if store.preference.settings-visible is yes
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
-                    span.arrow_box.pug(style=tooltip) #{lang.settings}
+                    span.arrow_box.pug #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
             if store.current.network is \testnet
                 .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
-                    span.arrow_box.pug(style=tooltip) testnet
+                    span.arrow_box.pug Testnet
                     img.pug(src="#{icons.test}" style=icon-color)

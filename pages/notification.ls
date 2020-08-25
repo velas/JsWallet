@@ -20,7 +20,7 @@ require! {
     display: block
     width: auto
     overflow: hidden
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: 100%
     min-height: 100vh
@@ -453,7 +453,7 @@ require! {
                 margin: 0 auto
                 opacity: 1
                 margin-top: 10px
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .search-input
@@ -474,7 +474,7 @@ require! {
             img
                 height: 15px
                 width: 15px
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .search-field

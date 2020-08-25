@@ -5,7 +5,8 @@ require! {
     \./pages.ls
     \./pages/header.ls
     \./pages/mobilemenu.ls
-    \./pages/side-menu.ls
+    #\./pages/side-menu.ls
+    \./pages/left-menu.ls
     #\./pages/banner.ls
     \./description.ls
     \./browser/window.ls
@@ -98,12 +99,12 @@ require! {
                 margin-left: 60px
                 @media(max-width: 800px)
                     visibility: visible
-                    margin-top: 60px
+                    margin-top: 0px
                     margin-left: 0
                     display: block
     .manage-account
-        margin-left: -60px
-        @media (max-width: 800px)
+        margin-left: -250px
+        @media (max-width: $ipad)
             margin-left: 0
     .content
         max-width: 450px
@@ -131,6 +132,7 @@ require! {
         width: 100%
         display: inline-block
         height: 16px
+        border-radius: 15px
     @keyframes fb
         0%
             -webkit-mask-position: left
@@ -159,7 +161,7 @@ require! {
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
-    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves}}"
+    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves};--primary1: #{style.app.primary1};--primary2: #{style.app.primary2};--primary3: #{style.app.primary3};--input: #{style.app.input}}"
     style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?
@@ -188,7 +190,8 @@ module.exports = ({ store, web3t })->
             if store.current.device is \mobile
                 mobilemenu store, web3t
             if store.current.device is \desktop
-                side-menu store, web3t
+                # side-menu store, web3t
+                left-menu store, web3t
             current-page { store, web3t }
             hovered-address { store }
             Offline.pug

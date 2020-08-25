@@ -151,7 +151,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.primary2
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     logo-style =
@@ -180,7 +180,7 @@ newseed = ({ store, web3t })->
         #store.current.page = 'newseedrestore'
     .newseed.pug
         .pug.logo
-            img.iron.pug(src="#{style.branding.logo}" style=logo-style)
+            img.pug(src="#{style.branding.logo}" style=logo-style)
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.welcome-wallet}
         .pug.align-v

@@ -9,7 +9,7 @@ require! {
     overflow: hidden
     height: 100%
     $base-line-height: 34px
-    $white: rgb(157, 65, 235)
+    $white: #7153e8
     $off-white: rgba($white, 0.2)
     $spin-duration: 1s
     $pulse-duration: 750ms

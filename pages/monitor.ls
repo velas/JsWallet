@@ -10,7 +10,8 @@ require! {
     \../navigate.ls
 }
 .monitor
-    margin-left: 60px
+    @import scheme
+    margin-left: $left-margin
     box-sizing: border-box
     .table-scroll
         height: calc(100vh - 105px)

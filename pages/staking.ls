@@ -39,7 +39,7 @@ require! {
     position: relative
     display: block
     width: auto
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: auto
     min-height: 100vh
@@ -51,7 +51,7 @@ require! {
         padding: 0 5px
     .pad-bottom
         padding-bottom: 5px
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .staking-content
@@ -193,7 +193,7 @@ require! {
                             line-height: 36px
                             button.small
                                 outline: none
-                                border-radius: 0px
+                                border-radius: $border
                                 line-height: 10px
                                 text-align: center
                                 height: 16px
@@ -201,6 +201,7 @@ require! {
                                 font-weight: 600
                                 margin-top: 0
                                 width: auto
+                                border-radius: 5px
                                 margin-right: 10px
                                 padding: 2px 5px
                                 cursor: pointer
@@ -383,6 +384,7 @@ require! {
                 font-size: 14px
                 margin: 5px 0
                 border: 0px
+                border-radius: $border
                 box-shadow: none
                 &.change-index
                     margin: 0 !important
@@ -406,7 +408,7 @@ require! {
         margin: 0
         min-width: 100%
         max-width: 300px
-        li 
+        li
             list-style: none
             margin-left: 0
             font-size: 13px
@@ -871,11 +873,11 @@ staking-content = (store, web3t)->
         overflow-x: \auto
         margin-top: \10px
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     button-primary4-style=
-        border: "1px solid #{style.app.primary4}"
+        border: "0"
         color: style.app.text
         background: style.app.primary4
     filter-icon=

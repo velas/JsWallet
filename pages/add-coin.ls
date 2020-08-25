@@ -25,7 +25,8 @@ require! {
     padding-top: 5%
     box-sizing: border-box
     padding: 10px
-    background: rgba(black, 0.8)
+    background: rgba(black, 0.08)
+    backdrop-filter: blur(5px)
     height: 100vh
     >.account-body
         max-width: 600px
@@ -40,6 +41,7 @@ require! {
         position: relative
         height: 65vh
         overflow: hidden
+        box-shadow: 17px 10px 13px #0000001f, -6px 10px 13px #00000024
         >.title
             position: absolute
             z-index: 999
@@ -160,8 +162,8 @@ create-item = ({ store, web3t }, item)-->
     button-style =
         border: "1px solid #{style.app.text}"
         color: style.app.text
-    background = 
-        background: style.app.wallet
+    background =
+        background: style.app.input
     menu-style=
         color: style.app.text
     .item.pug(style=background)
@@ -176,7 +178,7 @@ add-by-address = (store, web3t)->
     coin-contract = (e)->
         store.contract-address = e.target.value
     not-found = ->
-        store.contract-address = "Not Found" 
+        store.contract-address = "Not Found"
         <- set-timeout _, 1000
         store.contract-address = ""
     add = ->
@@ -194,8 +196,8 @@ add-by-address = (store, web3t)->
         border: "0"
     erc-bg=
         background: style.app.bg-primary-light
-    background = 
-        background: style.app.wallet
+    background =
+        background: style.app.input
     .item.pug(style=background)
         img.pug(src="#{icons.erc20-token}" style=erc-bg)
         input.search.pug(placeholder="0x...." value="#{store.contract-address}" on-change=coin-contract style=input-style)
@@ -208,17 +210,19 @@ module.exports = ({ store, web3t } )->
     filter-registery = (event)->
         store.current.filter-plugins = event.target.value
     style = get-primary-info store
-    account-body-style = 
+    account-body-style =
         background: style.app.background
+        color: style.app.text
+    color =
         color: style.app.text
     lang = get-lang store
     input-style=
         color: style.app.text
-        background: style.app.wallet
+        background: style.app.input
         border: "0"
     .pug.manage-account
         .account-body.pug(style=account-body-style)
-            .pug.title(style=account-body-style)
+            .pug.title(style=color)
                 .pug
                     .pug #{lang.your-wallets}
                     .pug.closed(on-click=close)

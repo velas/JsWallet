@@ -12,6 +12,7 @@ require! {
     line-height: 36px
     height: 36px
     text-transform: uppercase
+    border: 0
     text-align: center
     font-weight: bold
     border: 0
@@ -25,11 +26,6 @@ require! {
     &:hover
         background: rgba(#6CA7ED, 0.2)
         opacity: 0.9
-    &:disabled
-        opacity: 0.4
-        cursor: not-allowed !important
-        &:hover
-            background: inherit
 button-loading = ({ store, text, loading, on-click, icon, type })->
     style = get-primary-info store
     lang = get-lang store
@@ -39,15 +35,15 @@ button-loading = ({ store, text, loading, on-click, icon, type })->
 get-button-style = (store, type)->
     style = get-primary-info store
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
     button-primary3-style=
-        border: "1px solid #{style.app.primary3}"
+        border: "0"
         color: style.app.text2
         background: style.app.primary3
     button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
+        border: "0"
         color: style.app.text
         background: style.app.primary2
     button-style =
@@ -55,13 +51,12 @@ get-button-style = (store, type)->
         | type is \secondary => button-primary2-style
         | _ => button-primary3-style
     button-style
-button-active = ({ store, text, loading, on-click, icon, type, error })->
+button-active = ({ store, text, loading, on-click, icon, type })->
     lang = get-lang store
     applied-text = lang[text] ? text ? ""
     applied-icon = icons[icon ? text] ? icons.more
     button-style = get-button-style store, type
-    has-error = error? and typeof error is \string and error.trim!.length > 0
-    button.pug.btn(on-click=on-click style=button-style disabled=has-error)
+    button.pug.btn(on-click=on-click style=button-style)
         if store.current.device is \mobile
             img.icon-svg.pug(src="#{applied-icon}" title="#{applied-text}")
         else

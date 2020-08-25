@@ -31,6 +31,7 @@ require! {
         width: calc(100% - 70px)
         padding: 0 10px
         left: 0
+        top: 2px
         &.typeahead
             z-index: 1
         &.userinput

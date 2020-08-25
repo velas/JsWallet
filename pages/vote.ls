@@ -23,7 +23,7 @@ require! {
     display: block
     width: auto
     overflow: hidden
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: 100%
     min-height: 100vh

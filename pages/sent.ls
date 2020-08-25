@@ -11,6 +11,7 @@ require! {
     \moment
 }
 .sent
+    $tablet: 800px
     .animation
         height: 75px
     .limited-history
@@ -33,6 +34,9 @@ require! {
     max-width: 540px
     min-width: 320px
     display: inline-block
+    @media(min-width: $tablet)
+        position: relative
+        margin-left: 250px
     .icon
         text-align: center
         fill: white

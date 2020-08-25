@@ -17,14 +17,19 @@ require! {
     $border-radius: $border
     $label-padding: 3px
     $label-font: 13px
+    margin-left: $left-margin
     .address-holder
+        width: 320px
         >.identicon
-            width: 20px
-            height: 20px
-            margin: 7px 0px 0 30px
+            width: 25px
+            height: 25px
+            margin: 2px 0px 0 2px
         div
             >a
                 padding-right: 30px
+        span
+            width: 320px
+            background: var(--bg-primary-light)
     .pending
         color: orange
     >*

@@ -16,7 +16,8 @@ require! {
         height: 100vh
         position: fixed
         z-index: 11
-        background: rgba(black, 0.4)
+        background: rgba(0, 0, 0, 0.08)
+        backdrop-filter: blur(5px)
         top: 0
         right: 0
         z-index: 12
@@ -78,7 +79,7 @@ require! {
                 @keyframes spin
                     from
                         transform: rotate(0deg)
-                    to 
+                    to
                         transform: rotate(360deg)
                 animation-name: spin
                 animation-duration: 4000ms
@@ -264,7 +265,7 @@ require! {
                 @keyframes spin
                     from
                         transform: rotate(0deg)
-                    to 
+                    to
                         transform: rotate(360deg)
                 animation-name: spin
                 animation-duration: 4000ms
@@ -293,6 +294,7 @@ require! {
                 opacity: .8
                 margin-left: 30px
                 cursor: pointer
+                white-space: nowrap
             &.menu-btn, &.locked
                 display: inline-block
             &.class
@@ -324,7 +326,7 @@ module.exports = (store, web3)->
         position: "absolute"
     lang = get-lang store
     info = get-primary-info store
-    syncing = 
+    syncing =
         | store.current.refreshing => "syncing"
         | _ => ""
     border-style =
@@ -336,7 +338,7 @@ module.exports = (store, web3)->
     langs-menu-body =
         border: "1px solid #{style.app.border}"
         background: style.app.header
-    wallet-icon = 
+    wallet-icon =
         width: "18px"
     comming-soon =
         opacity: ".3"
@@ -347,7 +349,7 @@ module.exports = (store, web3)->
         width: "12px"
         height: "12px"
         padding-right: "10px"
-    lock-icon = 
+    lock-icon =
         width: "14px"
     text-style=
         color: style.app.text
@@ -391,37 +393,37 @@ module.exports = (store, web3)->
                 if store.current.device is \mobile
                     .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
                         img.pug(src="#{icons.wallet}" style=wallet-icon)
-                        label.pug Wallets
+                        label.pug #{lang.your-wallets}
             if store.preference.settings-visible is yes
                 if store.current.device is \mobile
-                    .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking}")
+                    .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking + ' ' + info-active + ' ' + staking-active + ' ' + delegate-active}")
                         .pug.plus
                             icon \X, 20
                         .pug.dash
                             icon \Dash, 20
                         img.pug(src="#{icons.staking}")
-                        label.pug Staking
+                        label.pug #{lang.staking}
                         .menu.pug.arrow_box
                             ul.pug
                                 li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
                                     img.pug(src="#{icons.node}" style=icon-node)
-                                    | Node
+                                    | #{lang.install-node}
                                 li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
                                     img.pug(src="#{icons.delegate}" style=icon-node)
-                                    | Delegate
+                                    | #{lang.delegate-stake}
                                 li.pug(on-click=goto-info style=icon-style class="#{info-active}")
                                     img.pug(src="#{icons.info}" style=icon-node)
-                                    | Stats
+                                    | #{lang.stats}
             if store.preference.settings-visible is yes
                 if store.current.device is \mobile
                     .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
                         img.pug(src="#{icons.search}")
-                        label.pug Search
+                        label.pug #{lang.search}
             if store.preference.settings-visible is yes
                 if store.current.device is \mobile
                     .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                         img.pug(src="#{icons.setting}")
-                        label.pug Settings
+                        label.pug #{lang.settings}
             if store.preference.lock-visible is yes
                 if store.current.device is \mobile    
                     .menu-item.pug(on-click=lock style=lock-style)

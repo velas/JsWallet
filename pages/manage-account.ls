@@ -142,7 +142,7 @@ require! {
             &.last
                 border-bottom: 0
             &:first-child
-                background: $logo-opacity
+                background: $logo-op
                 background-repeat: no-repeat
                 background-position: left 10px
             padding: 20px

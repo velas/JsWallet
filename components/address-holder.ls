@@ -1,7 +1,7 @@
 require! {
     \react
     \../address-link.ls : { get-address-link, get-address-title }
-    \./middle-ellipsis : MiddleEllipsis
+    \react-middle-ellipsis : { default: MiddleEllipsis }
     \../get-primary-info.ls
     \../icons.ls
     \./identicon.ls
@@ -41,15 +41,17 @@ require! {
     >img.identicon
         position: absolute
         right: auto
-        left: 0
-        margin: 0
+        left: 4px
+        top: 3px
+        height: 30px
+        border-radius: 5px
+        margin: 0px
         z-index: 2
     >span
         width: 100%
         z-index: 1
         position: relative
         border-radius: $border
-        border: 0
         box-sizing: border-box
         vertical-align: top
         text-align: center
@@ -72,7 +74,7 @@ require! {
             position: relative
             border-radius: $border
             border: 0
-            padding-left: 31px
+            padding-left: 0px
             background: transparent
             box-sizing: border-box
             vertical-align: top
@@ -88,17 +90,23 @@ require! {
                 color: orange
 module.exports = ({ store, wallet, type })->
     style = get-primary-info store
+    cut-tx = (tx)->
+        return \none if not tx?
+        t = tx.to-string!
+        r = t.substr(0, 6) + \.. + t.substr(t.length - 6, 6)
     address-suffix = store.current.address-suffix
     address-input=
         color: style.app.color3
     address-input-bg=
         color: style.app.color3
-        background: style.app.bg-primary-light
+        background: style.app.input
     input=
         | type is \bg => address-input-bg
         | _ => address-input
     filter-icon=
         filter: style.app.filterIcon
+    icon1=
+        filter: style.app.icon1
     address-link =
         | store.current.refreshing is no => get-address-link wallet, address-suffix
         | _ => "..."
@@ -123,7 +131,7 @@ module.exports = ({ store, wallet, type })->
                     img.pug(src="#{icons.choose}" style=filter-icon)
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
-                    img.pug(src="#{icons.browse-open}" style=filter-icon)
-            MiddleEllipsis.pug
-                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
+                    img.pug(src="#{icons.browse-open}" style=icon1)
+            MiddleEllipsis
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{cut-tx address-title}
         copy { store, text: address-title }

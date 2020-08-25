@@ -17,6 +17,10 @@ require! {
     text-align: center
     border-radius: 0px 0px 5px 5px
     box-shadow: 0px 0px 0px 0px #aee7f3
+    margin: 10px
+    border-radius: 10px
+    width: calc(100% - 20px)
+    box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
     @keyframes top
         0%
             top: -80px
@@ -40,9 +44,8 @@ module.exports = (store)->
         r = t.substr(0, 10) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 10, 10)
         #r.to-upper-case!
     copy-style=
-        background: style.app.background
+        background: style.app.bg-primary-light
         color: style.app.text
-        border-bottom: "1px solid #{style.app.border}"
     .copied.pug(class="#{copied-class}" key="copy-message" style=copy-style)
         .pug.mb-5 #{lang.copied}
         .pug.contents #{cut copied}

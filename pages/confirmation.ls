@@ -32,6 +32,10 @@ require! {
         text-align: center
         position: fixed
         width: 100%
+        margin: 10px
+        border-radius: 10px
+        width: calc(100% - 20px)
+        box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
         input
             border-radius: $border
             height: 36px
@@ -45,6 +49,7 @@ require! {
             font-size: 17px
             font-weight: bold
             margin-bottom: 10px
+            border-radius: 10px 10px 0 0
         >.text
             padding: 10px
             input

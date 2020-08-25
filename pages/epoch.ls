@@ -35,7 +35,7 @@ require! {
         height: 9px
     .switch-menu
         right: -20px !important
-        top: 39px !important
+        top: 40px !important
     .epoch
         position: absolute
         right: 180px
@@ -44,6 +44,7 @@ require! {
         display: inline-grid
         z-index: 3
         box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
+        border-radius: 0 0 $border $border
         .folder-menu
             width: 100%
             span
@@ -108,7 +109,7 @@ require! {
                         height: 12px
                         top: 2px
                         padding-right: 5px
-    .header 
+    .header
         &:after
             position: absolute
             font-weight: bold
@@ -241,7 +242,7 @@ module.exports = (store, web3t)->
         margin-left: "10px"
     filter-body =
         border: "1px solid #{style.app.border}"
-        background: style.app.header
+        background: style.app.account-bg
     border-right=
         border-right: "1px solid #{style.app.border}"
     under-dev=

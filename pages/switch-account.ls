@@ -35,8 +35,8 @@ require! {
         height: 9px
     .switch-menu
         right: 0px !important
-        top: 39px !important
-    .header 
+        top: 40px !important
+    .header
         &:after
             position: absolute
             font-weight: bold
@@ -57,6 +57,7 @@ require! {
         text-align: right
         display: block
         z-index: 2
+        border-radius: 0 0 $border $border
         @media(max-width: 620px)
             .name, .icon
                 visibility: hidden
@@ -80,7 +81,7 @@ require! {
             vertical-align: middle
         input
             outline: none
-            width: 100px
+            width: 70px
             margin-top: -10px
             height: 36px
             line-height: 36px
@@ -171,6 +172,10 @@ module.exports = (store, web3t)->
         color: style.app.text
     icon-color=
         filter: style.app.icon-filter
+    icon2=
+        filter: style.app.icon2
+    icon3=
+        filter: style.app.icon3
     header-left =
         margin-left: "10px"
     border-right=
@@ -201,9 +206,9 @@ module.exports = (store, web3t)->
         .pug.switch-account.h1(class="#{show-class}")
             span.name.pug(on-click=open-account) #{account-name}
             span.pug.icon(on-click=edit-account-name)
-                img.icon-svg-edit.pug(src="#{icons.create}" style=icon-color)
+                img.icon-svg-edit.pug(src="#{icons.create}" style=icon2)
             span.pug.icon(on-click=open-account class="#{rotate-class}")
-                img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
+                img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon3)
             span.pug.icon.menus(on-click=open-menu class="#{show-class}")
                 img.icon-svg-create.pug(src="#{icons.menu}" style=icon-color)
     edit-account-template = ->

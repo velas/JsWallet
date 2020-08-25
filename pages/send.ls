@@ -101,7 +101,7 @@ require! {
         >form
             >table
                 background: transparent
-                border-radius: $border
+                border-radius: 0 0 $border $border
                 width: 100%
                 border-spacing: 0
                 tr
@@ -125,11 +125,20 @@ require! {
             text-align: left
             margin: auto 10px
             >.form-group
+                .identicon
+                    ~ span
+                        background: var(--input)
                 &:nth-child(2)
                     div
                         position: relative
                         img
                             position: absolute
+                            right: auto
+                            left: 4px
+                            top: 3px
+                            height: 30px
+                            border-radius: 5px
+                            margin: 0px
                         input
                             text-align: center
                 >.control-label
@@ -224,7 +233,7 @@ require! {
                                 border-left: 0
                             &.amount-usd
                                 background: #f1eeee
-                                border-radius: 0
+                                border-radius: 0 $border-radius $border-radius 0
                                 padding-left: 20px
         .smart-contract
             overflow: hidden
@@ -269,6 +278,7 @@ require! {
             &.type
                 font-size: 14px
                 color: #fff
+                text-transform: capitalize
             &.coin
                 font-size: 14px
                 color: #fff
@@ -279,9 +289,8 @@ require! {
             margin-top: 5px
             .switch-currency
                 float: right
-                background: transparent !important
                 &.active
-                    background: rgb(67, 32, 124) !important
+                    background: var(--primary3)
                 &:last-child
                     margin-right: 2px
             .label-coin
@@ -293,7 +302,7 @@ require! {
         .balance
             color: #5E72E4
         .send-all
-            background: #3a63e4
+            background: transparent
             outline: none
             border: 0
             border-radius: $border
@@ -357,7 +366,7 @@ send = ({ store, web3t })->
         background: style.app.background
         border: "1px solid #{style.app.border}"
     input-style=
-        background: style.app.wallet
+        background: style.app.input
         border: "1px solid #{style.app.border}"
         color: style.app.text
     border-style=
@@ -367,8 +376,11 @@ send = ({ store, web3t })->
     icon-style =
         color: style.app.icon
     use-max-style =
-        background: style.app.wallet
-        color: style.app.text
+        color: style.app.text2
+    button-primary3-style=
+        border: "0"
+        color: style.app.text2
+        background: style.app.primary3
     crypto-background =
         background: style.app.wallet
     more-text=
@@ -447,7 +459,7 @@ send = ({ store, web3t })->
                                     .label.lusd.pug €
                                     input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
                         .pug.usd
-                            button.pug.send-all(on-click=use-max-amount style=use-max-style type="button") #{lang.use-max}
+                            button.pug.send-all(on-click=use-max-amount style=button-primary3-style type="button") #{lang.use-max}
                             span.pug #{lang.balance}
                             span.pug.balance
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}

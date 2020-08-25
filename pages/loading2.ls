@@ -12,7 +12,7 @@ require! {
         width: 100%
         margin-bottom: 10px
         display: inline-block
-        border-radius: 0px
+        border-radius: $border
         padding: 10px
         height: 60px
         text-align: left

@@ -19,17 +19,24 @@ require! {
     \../components/header.ls
 }
 .wallets-container
+    @import scheme
+    >.left-side
+        margin-left: $menu
+        @media(max-width: $ipad)
+            margin-left: 0
     .show-detail
         background: var(--waves)
-        background-size: contain
+        background-size: cover
         background-repeat: no-repeat
         background-position: top right
+        padding: 30px
+        box-sizing: border-box
     .wallets
         @import scheme
         $real-height: 300px
         $cards-height: 296px
         $pad: 20px
-        $radius: 15px    
+        $radius: 15px
         height: auto
         box-sizing: border-box
         position: relative
@@ -59,14 +66,14 @@ require! {
                     background: #9c41eb !important
                     border-color: #9c41eb !important
             .top-right
-                width: 33% !important
+                width: 20% !important
                 button
                     &.btn-open
                         display: block
                         float: right !important
                     display: none
             .top-left
-                width: 35% !important
+                width: 80% !important
             .top-middle
                 width: 32% !important
                 text-align: center !important
@@ -74,7 +81,7 @@ require! {
                     display: none
             .title-balance
                 display: none
-        .header 
+        .header
             &:after
                 position: absolute
                 font-weight: bold
@@ -160,14 +167,15 @@ require! {
         >.wallet-container
             overflow: hidden
             overflow-y: auto
-            height: calc(100vh - 261px)
+            height: calc(100vh - 60px)
             width: 100%
-            border-top: 1px solid #213040
             display: inline-block
             .wallet
                 background: var(--bg-secondary)
                 &.big
                     background: var(--bg-primary-light)
+                    .icon-svg-create
+                        opacity: 1
         .history-area
             max-height: 54vh
             overflow: auto
@@ -197,18 +205,16 @@ mobile = ({ store, web3t })->
     { wallets, go-up, can-up, go-down, can-down } = wallets-funcs store, web3t
     style = get-primary-info store
     lang = get-lang store
-    border-style =
-        border-top: "1px solid #{style.app.border}"
     row =
         display: "flex"
-        height: "100vh"
-        margin-left: "60px"
+        height: "calc( 100vh - 60px )"
         overflow: "hidden"
     left-side =
-        width: "35%"
+        min-width: "200px"
+        width: "25%"
         background: "#{style.app.left-side}"
     right-side =
-        width: "65%"
+        width: "75%"
         border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
@@ -258,25 +264,28 @@ mobile = ({ store, web3t })->
             span.cancel.pug.icon(on-click=cancel-edit-account-name)
                 icon "X", 20
     chosen-account-template =
-        if store.current.edit-account-name is "" then view-account-template! else edit-account-template! 
+        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!
     wallet-detail =
         wallets
             |> find (-> wallets.index-of(it) is store.current.wallet-index)
     return null if not wallet-detail?
     .wallets-container.pug(key="wallets")
         header store, web3t
-        .pug(style=row)
+        .pug.left-side(style=row)
             .pug(style=left-side)
-                menu { store, web3t }
-                manage-account { store, web3t }
-                token-migration { store, web3t }
+                if no
+                    menu { store, web3t }
+                if no
+                    manage-account { store, web3t }
+                    token-migration { store, web3t }
                 add-coin-page { store, web3t }
                 .wallets.hide-detail.pug(key="wallets-body")
-                    .header.pug(style=header-style)
-                        span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
-                        chosen-account-template
-                        your-account store, web3t
-                    .wallet-container.pug(key="wallets-viewport" style=border-style)
+                    if no
+                        .header.pug(style=header-style)
+                            span.pug.head.left.h1.hidden(style=header-left) #{lang.your-wallets}
+                            chosen-account-template
+                            your-account store, web3t
+                    .wallet-container.pug(key="wallets-viewport")
                         wallets
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)

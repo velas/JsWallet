@@ -8,6 +8,7 @@ require! {
     \./keyboard.ls
 }
 .input-area
+    @import scheme
     position: relative
     margin: 10px 0
     width: 100%
@@ -16,7 +17,7 @@ require! {
     line-height: 36px
     >*
         display: inline-block
-        box-sizing: border-box  
+        box-sizing: border-box
         margin: 0 !important
         height: inherit
         line-height: inherit
@@ -26,11 +27,13 @@ require! {
         display: inline-block
         width: calc(100% - 70px) !important
         padding: 0 10px
+        border-radius: $border 0 0 $border !important
     >.suffix
         $color: rgba(#ccc, 0.3)
         width: 70px
         border-left: 1px solid $color
         text-align: center
+        border-radius: 0 $border $border 0
         >*
             display: inline-block
         >.icon
@@ -61,7 +64,7 @@ require! {
 module.exports = ({ store, value, on-change, placeholder })->
     style = get-primary-info store
     input-style =
-        background: style.app.wallet
+        background: style.app.input
         color: style.app.text
         overflow-x: \auto
     current=

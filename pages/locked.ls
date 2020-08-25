@@ -212,7 +212,7 @@ version = (store, web3t)->
 input = (store, web3t)->
     style = get-primary-info store
     button-primary1-style=
-        border: "1px solid #{style.app.primary1}"
+        border: "0"
         color: style.app.text
         background: style.app.primary1
         width: "130px"
@@ -291,7 +291,7 @@ wrong-trials = (store)->
     .pug
         .pug.wrong(key="wrong-trial") #{wrong-pin-text}
         .pug.notice(style=notice)
-            span.orange.pug #{lang.notice}! 
+            span.orange.pug #{lang.notice}!
             span.pug #{lang.notice-text}
         .pug
             button.reset.setup.text-primary.pug(style=button-primary0-style on-click=reset-account) #{lang.reset-account}
@@ -337,8 +337,8 @@ create-wallet = (store, web3t)->
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
-    title = 
-        | not exists! => lang.enter-pin 
+    title =
+        | not exists! => lang.enter-pin
         | _ => lang.enter-pin
     footer =
         | not exists! => setup-button
@@ -354,7 +354,7 @@ locked = ({ store, web3t })->
         filter: info.app.filterLogo
     .pug.locked(key="locked" style=locked-style)
         .pug.logo
-            img.iron.pug(style=logo-style src="#{info.branding.logo}")
+            img.pug(style=logo-style src="#{info.branding.logo}")
             .title.pug(style=txt-style) #{info.branding.title}
             version store, web3t
         .pug.title(key="locked-title") #{title}

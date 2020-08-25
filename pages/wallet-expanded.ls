@@ -26,34 +26,38 @@ require! {
         box-sizing: border-box
         vertical-align: top
         width: 50%
-        padding: 20px
         @media screen and (max-width: $tablet)
-            padding: 10px 20px
+            padding: 0
         &.left
             text-align: left
+            @media screen and (max-width: $tablet)
+                width: 80%
             >.buttons
-                margin-top: 10px
+                margin-top: 15px
                 .btn
                     margin: 0
+                    width: 130px
                     &:last-child
                         margin-left: 10px
             >.details
                 display: none
             .uninstall
-                position: absolute
-                top: 20px
-                right: 20px
+                position: relative
                 text-transform: uppercase
                 font-size: 10px
-                padding: 7px 10px
+                padding: 1px 5px 1px 2px
+                margin-left: 5px
+                letter-spacing: 2px
                 cursor: pointer
-                @media screen and (max-width: $tablet)
-                    top: 10px
+                border-radius: 5px
             >.address-holder
                 margin-top: 10px
+                width: calc((130px * 2) + 10px)
                 @media screen and (max-width: $tablet)
                     margin-top: 20px
         &.right
+            @media screen and (max-width: $tablet)
+                width: 20%
         >.wallet-header
             &.chart
                 text-align: right
@@ -64,6 +68,8 @@ require! {
                     >.wallet-header-part
                         width: 100%
                         text-align: center
+                        &.left
+                            display: none
                         >.stats
                             margin: 0 auto
             >.wallet-header-part
@@ -71,7 +77,6 @@ require! {
                 box-sizing: border-box
                 vertical-align: top
                 .stats-style
-                    background: #1c2048
                     height: 90%
                     width: 90%
                     top: 4%
@@ -92,15 +97,18 @@ require! {
                 &.right
                     text-align: left
                     padding: 0
-                    >.title
-                        color: var(--color3)
-                        font-size: 12px
+                    .title
+                        font-size: 10px
                         text-transform: uppercase
                         letter-spacing: 2px
                     .token-balance
                         font-size: 24px
                     .usd-balance
                         font-size: 14px
+                        opacity: .5
+                    .pending
+                        font-size: 14px
+                        color: orange
                 .counts
                     margin-bottom: 5px
                     .label
@@ -113,6 +121,8 @@ require! {
                         border-radius: 6px
                         text-align: center
                         margin-bottom: 6px
+                        .icon-svg
+                            filter: invert(105%)
         .stats
             $size: 150px
             $size-tablet: 100px
@@ -141,21 +151,23 @@ module.exports = (store, web3t, wallets, wallet)-->
         | _ => "#{lang.hide}"
     wallet-style=
         color: style.app.text3
-    placeholder = 
+    placeholder =
         | store.current.refreshing => "placeholder"
         | _ => ""
-    placeholder-coin = 
+    placeholder-coin =
         | store.current.refreshing => "placeholder-coin"
         | _ => ""
     name = wallet.coin.name ? wallet.coin.token
     receive-click = receive(wallet)
     send-click = send(wallet)
     token = wallet.coin.token.to-upper-case!
-    style = get-primary-info store 
+    style = get-primary-info store
     color1 =
-        color: style.app.primary1
+        color: style.app.text
+        opacity: ".5"
     color2 =
-        color: style.app.primary2
+        color: style.app.text
+        opacity: ".5"
     get-total = (type, address)->
         transactions = ^^store.transactions.applied
         transactions
@@ -170,14 +182,12 @@ module.exports = (store, web3t, wallets, wallet)-->
     wallet-style=
         color: style.app.text3
         background: style.app.wallet
-        border-bottom: "1px solid #{style.app.border}"
+        border-bottom: "0"
         border-color: "#{style.app.border-color}"
     uninstall=
-        background: style.app.bg-primary-light
+        background: style.app.menu
     text=
         color: style.app.text
-    stats-style=
-        background: style.app.stats-style
     color-label=
         background: style.app.primary1
     color-label2=
@@ -189,16 +199,19 @@ module.exports = (store, web3t, wallets, wallet)-->
                     .wallet-header-part.left.pug
                         img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
                 .wallet-header-part.right.pug
-                    .title.pug(class="#{placeholder}") #{name}
+                    .pug
+                        span.title.pug(class="#{placeholder}") #{name}
+                        if wallet.coin.token not in <[ btc vlx2 ]>
+                            span.pug.uninstall(on-click=uninstall style=uninstall) #{label-uninstall}
                     .balance.pug(class="#{placeholder}")
                         .pug.token-balance(title="#{wallet.balance}")
                             span.pug #{ round-human wallet.balance }
                             span.pug #{ token }
                         .pug.usd-balance(class="#{placeholder}" title="#{balance-usd}")
                             span.pug #{ round-human balance-usd }
-                            span.pug $
+                            span.pug USD
                         if +wallet.pending-sent >0
-                            .pug.pending 
+                            .pug.pending
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }
             .buttons.pug
@@ -207,17 +220,14 @@ module.exports = (store, web3t, wallets, wallet)-->
             .details.pug
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
-            .pug
-                if wallet.coin.token not in <[ btc vlx2 ]>
-                    .pug.uninstall(on-click=uninstall style=uninstall) #{label-uninstall}
         .wallet-part.right.pug
             .wallet-header.pug.chart
                 .wallet-header-part.left.pug
                     .stats.pug
-                        span.stats-style.pug(style=stats-style)
+                        span.stats-style.pug
                             .pug.coin(style=text)
                                 img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
-                                span.pug #{ token }
+                                span.pug(class="#{placeholder}") #{ token }
                                 span.pug.course(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
                         wallet-stats store, web3t
                 .wallet-header-part.right.pug(style=text)

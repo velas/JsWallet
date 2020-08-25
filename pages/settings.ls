@@ -17,7 +17,7 @@ require! {
     position: relative
     display: block
     width: auto
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: 100%
     min-height: 100vh
@@ -25,7 +25,7 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     >.title
@@ -256,7 +256,7 @@ require! {
             &.last
                 border-bottom: 0
             &:first-child
-                background: $logo-opacity
+                background: $logo-op
                 background-repeat: no-repeat
                 background-position: left 10px
             padding: 30px 20px

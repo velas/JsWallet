@@ -41,7 +41,7 @@ require! {
     position: relative
     display: block
     width: auto
-    margin-left: 60px
+    margin-left: $left-margin
     top: 0
     height: auto
     min-height: 100vh
@@ -250,7 +250,7 @@ require! {
                             line-height: 36px
                             button.small
                                 outline: none
-                                border-radius: 0px
+                                border-radius: $border
                                 line-height: 10px
                                 text-align: center
                                 height: 16px
