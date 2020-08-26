@@ -6,6 +6,7 @@ require! {
 }
 #monochrome dark_mojave
 .choose-theme
+    @import scheme
     >.theme
         margin-bottom: 40px
         display: inline-block
@@ -17,6 +18,12 @@ require! {
                 height: 40px
                 text-align: top
                 box-sizing: border-box
+                &:first-child
+                    border-top-left-radius: $border
+                    border-bottom-left-radius: $border
+                &:last-child
+                    border-top-right-radius: $border
+                    border-bottom-right-radius: $border
 create-button = (store, web3t)-> (text)->
     use = ->
         web3t.set-theme text
