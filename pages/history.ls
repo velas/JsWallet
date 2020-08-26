@@ -10,7 +10,6 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../icons.ls
-    \react-middle-ellipsis : { default: MiddleEllipsis }
     \../components/address-holder.ls
 }
 .history
@@ -805,8 +804,7 @@ render-transaction = (store, web3t, tran)-->
                     if no
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
-                    MiddleEllipsis
-                        a.pug(href="#{url}" target="_blank") #{cut-hash tx}
+                    a.pug(href="#{url}" target="_blank") #{cut-hash tx}
                     CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
                     .pug.gray(style=lightText)
