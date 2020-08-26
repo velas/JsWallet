@@ -711,10 +711,6 @@ staking-content = (store, web3t)->
             return cb err if err?
         to-eth = ->
             item.eth = not item.eth
-        cut-tx = (tx)->
-            return \none if not tx?
-            t = tx.to-string!
-            r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 0) + \.. + t.substr(t.length - 4, 4)
         reward = 
             | item.validator-reward-percent is ".." => ".." 
             | _ => (100 - +item.validator-reward-percent) * 1.4285714286

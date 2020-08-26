@@ -10,6 +10,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../icons.ls
+    \../components/middle-ellipsis : MiddleEllipsis
     \../components/address-holder.ls
 }
 .history
@@ -695,7 +696,7 @@ loader = ({ store, web3t })->
             path.pug(d='M10.3866667,9.16777778 C10.54,8.90111111 10.8794444,8.80888889 11.145,8.96388889 L13.7922222,10.4905556 C14.0583333,10.6455556 14.1477778,10.9844444 13.9944444,11.2505556 C13.8416667,11.5166667 13.5011111,11.6061111 13.2333333,11.4538889 L10.5894444,9.92666667 C10.3238889,9.77222222 10.2338889,9.43277778 10.3866667,9.16777778 Z')
             path.pug(d='M14.4433333,6.94388889 L11.3872222,6.94388889 C11.0805556,6.94388889 10.8311111,7.19277778 10.8311111,7.5 C10.8311111,7.80666667 11.0794444,8.05555556 11.3872222,8.05555556 L14.4433333,8.05555556 C14.7511111,8.05555556 15,7.80666667 15,7.5 C15,7.19222222 14.7511111,6.94388889 14.4433333,6.94388889 Z')
 render-transaction = (store, web3t, tran)-->
-    { transaction-info, coins, checked, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
+    { transaction-info, coins, checked, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
     filter-icon=
         filter: style.app.filterIcon
@@ -804,7 +805,8 @@ render-transaction = (store, web3t, tran)-->
                     if no
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
-                    a.pug(href="#{url}" target="_blank") #{cut-hash tx}
+                    MiddleEllipsis.pug
+                        a.pug(href="#{url}" target="_blank") #{tx}
                     CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
                         copy store
                     .pug.gray(style=lightText)

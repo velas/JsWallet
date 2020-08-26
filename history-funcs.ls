@@ -15,11 +15,6 @@ require! {
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        r = t.substr(0, 4) + \.. + t.substr(tx.length - 25, 10) + \.. + t.substr(t.length - 4, 4)
-        r.to-upper-case!
     ago = (time)->
         moment(time * 1000).from-now!
     date = (time)->
@@ -76,4 +71,4 @@ module.exports = (store, web3t)->
     transaction-info = (config)-> (event)->
         err, info <- get-transaction-info config
         console.log err, info
-    { go-back, switch-type-in, transaction-info, switch-type-out, store.coins, is-active, switch-filter, cut-tx, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }
+    { go-back, switch-type-in, transaction-info, switch-type-out, store.coins, is-active, switch-filter, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago }

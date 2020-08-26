@@ -1,6 +1,7 @@
 require! {
     \react
     \../address-link.ls : { get-address-link, get-address-title }
+    \./middle-ellipsis : MiddleEllipsis
     \../get-primary-info.ls
     \../icons.ls
     \./identicon.ls
@@ -89,10 +90,6 @@ require! {
                 color: orange
 module.exports = ({ store, wallet, type })->
     style = get-primary-info store
-    cut-tx = (tx)->
-        return \none if not tx?
-        t = tx.to-string!
-        r = t.substr(0, 6) + \.. + t.substr(t.length - 6, 6)
     address-suffix = store.current.address-suffix
     address-input=
         color: style.app.color3
@@ -131,5 +128,6 @@ module.exports = ({ store, wallet, type })->
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
-            a.pug(target="_blank" href="#{address-link}" class="#{active}") #{cut-tx address-title}
+            MiddleEllipsis.pug
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
         copy { store, text: address-title }
