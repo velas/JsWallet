@@ -597,13 +597,12 @@ staking-content = (store, web3t)->
         <- staking.init { store, web3t }
     change-address = ->
         store.staking.add.add-validator = it.target.value
-    change-stake = ->
-        value = 0
+    change-stake = !->
         try
-            value = new bignumber(it.target.value).toFixed!
-            store.staking.add.add-validator-stake = value.to-string!
+            value = new bignumber(it.target.value).toFixed!.to-string!
+            store.staking.add.add-validator-stake = value
         catch err
-            console.error "[Change-stake]: #{err}"
+            console.log "[Change-stake]: #{err}"
     velas-node-applied-template = 
         pairs
             |> velas-node-template 
