@@ -90,12 +90,9 @@ require! {
 module.exports = ({ store, wallet, type })->
     style = get-primary-info store
     cut-tx = (tx)->
-        sizes = get-window-size!
         return \none if not tx?
         t = tx.to-string!
         r = t.substr(0, 6) + \.. + t.substr(t.length - 6, 6)
-    get-window-size = ->
-        { width: window.innerWidth, height: window.innerHeight }
     address-suffix = store.current.address-suffix
     address-input=
         color: style.app.color3
@@ -134,5 +131,5 @@ module.exports = ({ store, wallet, type })->
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
-            a.pug(target="_blank" href="#{address-link}" class="#{active}" ref="id") #{cut-tx address-title}
+            a.pug(target="_blank" href="#{address-link}" class="#{active}") #{cut-tx address-title}
         copy { store, text: address-title }
