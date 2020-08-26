@@ -184,7 +184,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.wallet
         border-bottom: "0"
         border-color: "#{style.app.border-color}"
-    uninstall=
+    uninstall-style=
         background: style.app.menu
     text=
         color: style.app.text
@@ -202,7 +202,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                     .pug
                         span.title.pug(class="#{placeholder}") #{name}
                         if wallet.coin.token not in <[ btc vlx2 ]>
-                            span.pug.uninstall(on-click=uninstall style=uninstall) #{label-uninstall}
+                            span.pug.uninstall(on-click=uninstall style=uninstall-style) #{label-uninstall}
                     .balance.pug(class="#{placeholder}")
                         .pug.token-balance(title="#{wallet.balance}")
                             span.pug #{ round-human wallet.balance }
