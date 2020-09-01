@@ -4,7 +4,11 @@ require! {
 }
 math = ($)-> (x, y)->
     return '..' if x is '..' or y is '..'
-    try 
+    try
+        if typeof x is \number
+            debugger
+        if typeof y is \number
+            debugger
         new bignumber(x)[$](y).to-fixed!
     catch err
         throw "#{x} #{$} #{y} = #{err}"

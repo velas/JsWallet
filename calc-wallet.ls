@@ -20,6 +20,8 @@ calc-wallet = (store, cb)->
         #wallet.balance-usd = 0
         token = wallet.coin.token.to-lower-case!
         usd-rate = rates[token] ? \..
+        # convert usd-rate to string because bigint does not like number type and can throw exception
+        usd-rate = usd-rate + ''
         #coin =
         #    coins |> find (.token is wallet.coin.token)
         #return cb "Coin Not Found" if not coin?
@@ -27,8 +29,8 @@ calc-wallet = (store, cb)->
         wallet.usd-rate =
             | usd-rate is \.. => 0
             | _ => round5 usd-rate
-        eur-rate = 0.893191
-        btc-rate = 0
+        eur-rate = \0.893191
+        btc-rate = \0
         wallet.eur-rate =
             | usd-rate is \.. => \..
             | _ => round5 (usd-rate `times` eur-rate)
@@ -38,7 +40,7 @@ calc-wallet = (store, cb)->
         err, balance <- get-balance { wallet.address, wallet.network, token, account: { wallet.address, wallet.private-key } }
         return cb err if err?
         pending-sent =
-            store.transactions.all 
+            store.transactions.all
                 |> filter (.token is token)
                 |> filter (.pending is yes)
                 |> map (.amount)
@@ -54,6 +56,8 @@ calc-wallet = (store, cb)->
             | wallet.balance-usd is \.. => 0
             | _ => wallet.balance-usd
         state-before = state.balance-usd
+        #convert state.balance-usd to string as bignumber can throw exception for numbers
+        state.balance-usd = state.balance-usd + ''
         state.balance-usd =
             | usd-rate is \.. => 0
             | _ => state.balance-usd `plus` balance-usd-current
@@ -62,7 +66,7 @@ calc-wallet = (store, cb)->
     loaders =
         wallets |> map build-loader
     tasks =
-        loaders 
+        loaders
             |> map -> [loaders.index-of(it).to-string!, it]
             |> pairs-to-obj
     <- run [tasks] .then

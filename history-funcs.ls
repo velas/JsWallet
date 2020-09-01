@@ -45,6 +45,9 @@ module.exports = (store, web3t)->
     amount-beautify = (amount, max)->
         str = cut-amount amount, max
         data = str.match(/(.+[^0])(0+)$/)
+        return
+            .pug.balance
+                span.color.pug #{round-human str}
         if not data?
             return
                 .pug.balance
