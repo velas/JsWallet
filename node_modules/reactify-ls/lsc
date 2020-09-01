@@ -1,0 +1,494 @@
+
+
+  Basic
+require! {
+  \react
+  \./head.ls
+  \./foot.ls
+}
+module.exports = ->
+  head!
+  react.create-element 'body', { className: 'fixed-navbar sidebar-scroll' }, children = 
+    react.create-element 'div', { className: 'splash' }, children = 
+      react.create-element 'div', { className: 'color-line' }
+      react.create-element 'div', { className: 'splash-title' }, children = 
+        react.create-element 'h1', {}, ' Homer - Responsive Admin Theme'
+        react.create-element 'p', {}, children = 
+          react.create-element 'span', {}, ' Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel.'
+        react.create-element 'div', { className: 'spinner' }, children = 
+          react.create-element 'div', { className: 'rect1' }
+          react.create-element 'div', { className: 'rect2' }
+          react.create-element 'div', { className: 'rect3' }
+          react.create-element 'div', { className: 'rect4' }
+          react.create-element 'div', { className: 'rect5' }
+      react.create-element 'p', { className: 'alert alert-danger' }, children = 
+        react.create-element 'span', {}, ' You are using an '
+        react.create-element 'strong', {}, ' outdated'
+        react.create-element 'span', {}, '  browser. Please '
+        react.create-element 'a', { ref: 'http://browsehappy.com/ }, ' upgrade your browser'
+        react.create-element 'span', {}, '  to improve your experience.'
+    react.create-element 'div', { id: 'header' }, children = 
+      react.create-element 'div', { className: 'color-line' }
+      react.create-element 'div', { className: 'light-version', id: 'logo' }, children = 
+        react.create-element 'span', {}, children = 
+          react.create-element 'span', {}, ' Homer Theme'
+      react.create-element 'nav', { ole: 'navigation }, children = 
+        react.create-element 'div', { className: 'header-link hide-menu' }, children = 
+          react.create-element 'i', { className: 'fa fa-bars' }
+        react.create-element 'div', { className: 'small-logo' }, children = 
+          react.create-element 'span', { className: 'text-primary' }, ' HOMER APP'
+        react.create-element 'form', { ole: 'search', method: 'post', action: '#, className: 'navbar-form-custom' }, children = 
+          react.create-element 'div', { className: 'form-group' }, children = 
+            react.create-element 'input', { ype: 'text', placeholder: 'Search something special', name: 'search, className: 'form-control' }
+        react.create-element 'div', { className: 'mobile-menu' }, children = 
+          react.create-element 'button', { ype: 'button', data-toggle: 'collapse', data-target: '#mobile-collapse, className: 'navbar-toggle mobile-menu-toggle' }, children = 
+            react.create-element 'i', { className: 'fa fa-chevron-down' }
+          react.create-element 'div', { className: 'collapse mobile-navbar', id: 'mobile-collapse' }, children = 
+            react.create-element 'ul', { className: 'nav navbar-nav' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'login.html }, ' Login'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'login.html }, ' Logout'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'profile.html }, ' Profile'
+        react.create-element 'div', { className: 'navbar-right' }, children = 
+          react.create-element 'ul', { className: 'nav navbar-nav no-borders' }, children = 
+            react.create-element 'li', { className: 'dropdown' }, children = 
+              react.create-element 'a', { ref: '#', data-toggle: 'dropdown, className: 'dropdown-toggle' }, children = 
+                react.create-element 'i', { className: 'pe-7s-speaker' }
+              react.create-element 'ul', { className: 'dropdown-menu hdropdown notification animated flipInX' }, children = 
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', { className: 'label label-success' }, ' NEW'
+                    react.create-element 'span', {}, '  It is a long established.'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', { className: 'label label-warning' }, ' WAR'
+                    react.create-element 'span', {}, '  There are many variations.'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', { className: 'label label-danger' }, ' ERR'
+                    react.create-element 'span', {}, '  Contrary to popular belief.'
+                react.create-element 'li', { className: 'summary' }, children = 
+                  react.create-element 'a', { ref: '# }, ' See all notifications'
+            react.create-element 'li', { className: 'dropdown' }, children = 
+              react.create-element 'a', { ref: '#', data-toggle: 'dropdown, className: 'dropdown-toggle' }, children = 
+                react.create-element 'i', { className: 'pe-7s-keypad' }
+              react.create-element 'div', { className: 'dropdown-menu hdropdown bigmenu animated flipInX' }, children = 
+                react.create-element 'table', {}, children = 
+                  react.create-element 'tbody', {}, children = 
+                    react.create-element 'tr', {}, children = 
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'projects.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-portfolio text-info' }
+                          react.create-element 'h5', {}, ' Projects'
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'mailbox.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-mail text-warning' }
+                          react.create-element 'h5', {}, ' Email'
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'contacts.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-users text-success' }
+                          react.create-element 'h5', {}, ' Contacts'
+                    react.create-element 'tr', {}, children = 
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'forum.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-comment text-info' }
+                          react.create-element 'h5', {}, ' Forum'
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'analytics.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-graph1 text-danger' }
+                          react.create-element 'h5', {}, ' Analytics'
+                      react.create-element 'td', {}, children = 
+                        react.create-element 'a', { ref: 'file_manager.html }, children = 
+                          react.create-element 'i', { className: 'pe pe-7s-box1 text-success' }
+                          react.create-element 'h5', {}, ' Files'
+            react.create-element 'li', { className: 'dropdown' }, children = 
+              react.create-element 'a', { ref: '#', data-toggle: 'dropdown, className: 'dropdown-toggle label-menu-corner' }, children = 
+                react.create-element 'i', { className: 'pe-7s-mail' }
+                react.create-element 'span', { className: 'label label-success' }, ' 4'
+              react.create-element 'ul', { className: 'dropdown-menu hdropdown animated flipInX' }, children = 
+                react.create-element 'div', { className: 'title' }, children = 
+                  react.create-element 'span', {}, ' You have 4 new messages'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', {}, ' It is a long established.'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', {}, ' There are many variations.'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', {}, ' Lorem Ipsum is simply dummy.'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', {}, children = 
+                    react.create-element 'span', {}, ' Contrary to popular belief.'
+                react.create-element 'li', { className: 'summary' }, children = 
+                  react.create-element 'a', { ref: '# }, ' See All Messages'
+            react.create-element 'li', {}, children = 
+              react.create-element 'a', { ref: '#, className: 'right-sidebar-toggle', id: 'sidebar' }, children = 
+                react.create-element 'i', { className: 'pe-7s-upload pe-7s-news-paper' }
+            react.create-element 'li', { className: 'dropdown' }, children = 
+              react.create-element 'a', { ref: 'login.html }, children = 
+                react.create-element 'i', { className: 'pe-7s-upload pe-rotate-90' }
+    react.create-element 'aside', { id: 'menu' }, children = 
+      react.create-element 'div', { id: 'navigation' }, children = 
+        react.create-element 'div', { className: 'profile-picture' }, children = 
+          react.create-element 'a', { ref: 'index.html }, children = 
+            react.create-element 'img', { rc: 'images/profile.jpg', alt: 'logo, className: 'img-circle m-b' }
+          react.create-element 'div', { className: 'stats-label text-color' }, children = 
+            react.create-element 'span', { className: 'font-extra-bold font-uppercase' }, ' Robert Razer'
+            react.create-element 'div', { className: 'dropdown' }, children = 
+              react.create-element 'a', { ref: '#', data-toggle: 'dropdown, className: 'dropdown-toggle' }, children = 
+                react.create-element 'small', { className: 'text-muted' }, children = 
+                  react.create-element 'span', {}, ' Founder of App '
+                  react.create-element 'b', { className: 'caret' }
+              react.create-element 'ul', { className: 'dropdown-menu animated flipInX m-t-xs' }, children = 
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', { ref: 'contacts.html }, ' Contacts'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', { ref: 'profile.html }, ' Profile'
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', { ref: 'analytics.html }, ' Analytics'
+                react.create-element 'li', { className: 'divider' }
+                react.create-element 'li', {}, children = 
+                  react.create-element 'a', { ref: 'login.html }, ' Logout'
+            react.create-element 'div', { className: 'small-chart m-t-sm', id: 'sparkline1' }
+            react.create-element 'div', {}, children = 
+              react.create-element 'h4', { className: 'font-extra-bold m-b-xs' }, children = 
+                react.create-element 'span', {}, ' $260 104,200'
+              react.create-element 'small', { className: 'text-muted' }, ' Your income from the last year in sales product X.'
+        react.create-element 'ul', { className: 'nav', id: 'side-menu' }, children = 
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'index.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Dashboard'
+              react.create-element 'span', { className: 'label label-success pull-right' }, ' v.1'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'analytics.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Analytics'
+              react.create-element 'span', { className: 'label label-warning pull-right' }, ' NEW'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Interface'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'panels.html }, ' Panels design'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'typography.html }, ' Typography'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'buttons.html }, ' Colors &amp; Buttons'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'components.html }, ' Components'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'alerts.html }, ' Alerts'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'modals.html }, ' Modals'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'loading_buttons.html }, ' Loading buttons'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'draggable.html }, ' Draggable panels'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'code_editor.html }, ' Code editor'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'email_template.html }, ' Email template'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'nestable_list.html }, ' List'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'tour.html }, ' Tour'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'icons.html }, ' Icons library'
+          react.create-element 'li', { className: 'active' }, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' App views'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'contacts.html }, ' Contacts'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'projects.html }, ' Projects'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'project.html }, ' Project detail'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'app_plans.html }, ' App plans'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'social_board.html }, ' Social board'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'faq.html }, ' FAQ'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'timeline.html }, ' Timeline'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'notes.html }, ' Notes'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'profile.html }, ' Profile'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'mailbox.html }, ' Mailbox'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'mailbox_compose.html }, ' Email compose'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'mailbox_view.html }, ' Email view'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'blog.html }, ' Blog'
+              react.create-element 'li', { className: 'active' }, children = 
+                react.create-element 'a', { ref: 'blog_details.html }, ' Blog article'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'forum.html }, ' Forum'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'forum_details.html }, ' Forum details'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'gallery.html }, ' Gallery'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'calendar.html }, ' Calendar'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'invoice.html }, ' Invoice'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'file_manager.html }, ' File manager'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'chat_view.html }, ' Chat view'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'search.html }, ' Search view'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Charts'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'chartjs.html }, ' ChartJs'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'flot.html }, ' Flot charts'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'inline.html }, ' Inline graphs'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'chartist.html }, ' Chartist'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'c3.html }, ' C3 Charts'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Box transitions'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'overview.html }, children = 
+                  react.create-element 'span', { className: 'label label-success pull-right' }, ' Start'
+                  react.create-element 'span', {}, '  Overview'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'transition_two.html }, ' Columns from up'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'transition_one.html }, ' Columns custom'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'transition_three.html }, ' Panels zoom'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'transition_four.html }, ' Rows from down'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'transition_five.html }, ' Rows from right'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Common views'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'login.html }, ' Login'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'register.html }, ' Register'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'error_one.html }, ' Error 404'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'error_two.html }, ' Error 505'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'lock.html }, ' Lock screen'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'password_recovery.html }, ' Passwor recovery'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Tables'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'tables_design.html }, ' Tables design'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'datatables.html }, ' Data tables'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'footable.html }, ' Foo Table'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'widgets.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Widgets'
+              react.create-element 'span', { className: 'label label-success pull-right' }, ' Special'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: '# }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Forms'
+              react.create-element 'span', { className: 'fa arrow' }
+            react.create-element 'ul', { className: 'nav nav-second-level' }, children = 
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'forms_elements.html }, ' Forms elements'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'forms_extended.html }, ' Forms extended'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'text_editor.html }, ' Text editor'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'wizard.html }, ' Wizard'
+              react.create-element 'li', {}, children = 
+                react.create-element 'a', { ref: 'validation.html }, ' Validation'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'options.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Layout options'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'grid_system.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Grid system'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'landing_page.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Landing page'
+          react.create-element 'li', {}, children = 
+            react.create-element 'a', { ref: 'package.html }, children = 
+              react.create-element 'span', { className: 'nav-label' }, ' Package'
+    react.create-element 'div', { id: 'wrapper' }, children = 
+      react.create-element 'div', { className: 'content content-boxed' }, children = 
+        react.create-element 'div', { className: 'row' }, children = 
+          react.create-element 'div', { className: 'col-lg-12' }, children = 
+            react.create-element 'div', { className: 'hpanel blog-article-box' }, children = 
+              react.create-element 'div', { className: 'panel-heading' }, children = 
+                react.create-element 'h4', {}, ' Maecenas placerat facilisis '
+                react.create-element 'small', {}, ' There are many variations of passages of Lorem Ipsum available'
+                react.create-element 'div', { className: 'text-muted small' }, children = 
+                  react.create-element 'span', {}, ' Created by: '
+                  react.create-element 'span', { className: 'font-bold' }, ' Mike Smith'
+                  react.create-element 'span', {}, '                             21.03.2015, 06:45 pm'
+              react.create-element 'div', { className: 'panel-body' }, children = 
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' Maecenas placerat facilisis interdum. Mauris eu dolor nisi. Suspendisse ullamcorper purus nec nibh maximus, ut sollicitudin enim venenatis.'
+                  react.create-element 'span', {}, ' Nullam interdum, odio sit amet dapibus mollis, ligula diam pretium sapien, eget suscipit felis ipsum sed lorem. '
+                  react.create-element 'br', {}
+                  react.create-element 'br', {}
+                  react.create-element 'span', {}, '  Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur ultrices aliquam nisi, vel semper augue auctor eu. Pellentesque a'
+                  react.create-element 'span', {}, '                             sollicitudin tellus. Aenean posuere pharetra ipsum, ornare pretium lorem convallis non. Vivamus ac sodales sem. Nunc congue dolor ut dui maximus, imperdiet sollicitudin'
+                  react.create-element 'span', {}, '                             velit auctor. Integer tincidunt iaculis vehicula. Nunc faucibus orci non imperdiet ultricies. Nunc pellentesque dui nisi, vel convallis quam malesuada ornare. Nunc ac purus'
+                  react.create-element 'span', {}, '                             velit. Cras aliquet porta sodales. Proin blandit ornare bibendum.'
+                react.create-element 'br', {}
+                react.create-element 'blockquote', { tyle: 'max-width: 250px, className: 'pull-left' }, children = 
+                  react.create-element 'p', {}, ' Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in'
+                  react.create-element 'span', {}, ' some form, by injected humour, or randomised words which don&apos;t look even slightly believable. If you are going to use a passage of Lorem Ipsum...'
+                react.create-element 'br', {}
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' Duis rutrum felis at lorem scelerisque, vel iaculis risus viverra. Integer sed gravida libero. Maecenas sit amet lacus et erat rhoncus sodales quis non nunc. Morbi in'
+                  react.create-element 'span', {}, ' mattis massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus bibendum posuere sapien eget vehicula. Nulla sit amet'
+                  react.create-element 'span', {}, ' laoreet ante, sed ornare mauris. In interdum ex et leo suscipit sagittis. Pellentesque ac eleifend quam. Nam eu lacinia lacus. Vestibulum lacinia nisl lectus, fringilla'
+                  react.create-element 'span', {}, ' molestie diam imperdiet dignissim.'
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' In scelerisque urna ut neque imperdiet, sit amet pretium eros suscipit. Cras efficitur ante sit amet mi porta, varius volutpat nulla hendrerit. Pellentesque nec risus'
+                  react.create-element 'span', {}, ' malesuada, scelerisque libero at, lacinia magna. Aliquam tellus nunc, viverra in ipsum sed, tristique finibus nibh. Proin gravida lobortis erat, nec aliquam lorem eleifend'
+                  react.create-element 'span', {}, ' eget. Integer quis augue id felis ultricies finibus. Curabitur et ligula mauris. Suspendisse vel fringilla quam. Quisque quis metus rhoncus, eleifend leo in, sagittis'
+                  react.create-element 'span', {}, ' libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce ullamcorper nisl risus, a scelerisque dui hendrerit nec.'
+                react.create-element 'br', {}
+                react.create-element 'blockquote', { tyle: 'max-width: 250px, className: 'pull-right' }, children = 
+                  react.create-element 'p', {}, ' Fusce ac tellus eu nisl lobortis maximus'
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' Praesent eget euismod nibh. Fusce ac tellus eu nisl lobortis maximus ac eget sapien. Nulla malesuada mauris non nulla imperdiet ullamcorper.'
+                react.create-element 'br', {}
+                react.create-element 'p', {}, children = 
+                  react.create-element 'span', {}, ' Sed porta libero metus, nec feugiat enim pharetra vel. Sed vel sagittis augue. Donec hendrerit nibh ac dolor lobortis, eu varius odio sollicitudin. Proin non condimentum'
+                  react.create-element 'span', {}, ' nulla, quis dictum leo. Vestibulum lobortis urna eu mauris viverra porttitor. Cras consequat leo condimentum lacus viverra sollicitudin. Donec dignissim ornare est, nec'
+                  react.create-element 'span', {}, ' scelerisque purus mollis eu. Phasellus dictum suscipit ligula. Donec malesuada gravida velit. Nulla egestas diam in ligula mollis, nec tincidunt diam porta. Proin eleifend'
+                  react.create-element 'span', {}, ' lacinia diam quis pretium. Sed lacinia varius nisi et euismod. Ut ac arcu vulputate, porta nibh non, ultricies erat. Nulla facilisi.'
+              react.create-element 'div', { className: 'panel-footer' }, children = 
+                react.create-element 'span', { className: 'pull-right' }, children = 
+                  react.create-element 'i', { className: 'fa fa-comments-o' }, '  '
+                  react.create-element 'span', {}, '  22 comments'
+                react.create-element 'i', { className: 'fa fa-eye' }, '  '
+                react.create-element 'span', {}, '  142 views'
+      react.create-element 'div', { className: 'animated fadeInRight', id: 'right-sidebar' }, children = 
+        react.create-element 'div', { className: 'p-m' }, children = 
+          react.create-element 'button', { className: 'right-sidebar-toggle sidebar-button btn btn-default m-b-md', id: 'sidebar-close' }, children = 
+            react.create-element 'i', { className: 'pe pe-7s-close' }
+          react.create-element 'div', {}, children = 
+            react.create-element 'span', { className: 'font-bold no-margins' }, '  Analytics '
+            react.create-element 'br', {}
+            react.create-element 'small', {}, '  Lorem Ipsum is simply dummy text of the printing simply all dummy text.'
+          react.create-element 'div', { className: 'row m-t-sm m-b-sm' }, children = 
+            react.create-element 'div', { className: 'col-lg-6' }, children = 
+              react.create-element 'h3', { className: 'no-margins font-extra-bold text-success' }, ' 300,102'
+              react.create-element 'div', { className: 'font-bold' }, children = 
+                react.create-element 'span', {}, ' 98% '
+                react.create-element 'i', { className: 'fa fa-level-up text-success' }
+            react.create-element 'div', { className: 'col-lg-6' }, children = 
+              react.create-element 'h3', { className: 'no-margins font-extra-bold text-success' }, ' 280,200'
+              react.create-element 'div', { className: 'font-bold' }, children = 
+                react.create-element 'span', {}, ' 98% '
+                react.create-element 'i', { className: 'fa fa-level-up text-success' }
+          react.create-element 'div', { className: 'progress m-t-xs full progress-small' }, children = 
+            react.create-element 'div', { tyle: 'width: 25%', aria-valuemax: '100', aria-valuemin: '0', aria-valuenow: '25', role: 'progressbar, className: 'progress-bar progress-bar-success' }, children = 
+              react.create-element 'span', { className: 'sr-only' }, ' 35% Complete (success)'
+        react.create-element 'div', { className: 'p-m bg-light border-bottom border-top' }, children = 
+          react.create-element 'span', { className: 'font-bold no-margins' }, '  Social talks '
+          react.create-element 'br', {}
+          react.create-element 'small', {}, '  Lorem Ipsum is simply dummy text of the printing simply all dummy text.'
+          react.create-element 'div', { className: 'm-t-md' }, children = 
+            react.create-element 'div', { className: 'social-talk' }, children = 
+              react.create-element 'div', { className: 'media social-profile clearfix' }, children = 
+                react.create-element 'a', { className: 'pull-left' }, children = 
+                  react.create-element 'img', { rc: 'images/a1.jpg', alt: 'profile-picture }
+                react.create-element 'div', { className: 'media-body' }, children = 
+                  react.create-element 'span', { className: 'font-bold' }, ' John Novak'
+                  react.create-element 'small', { className: 'text-muted' }, ' 21.03.2015'
+                  react.create-element 'div', { className: 'social-content small' }, children = 
+                    react.create-element 'span', {}, ' Injected humour, or randomised words which don&apos;t look even slightly believable.'
+            react.create-element 'div', { className: 'social-talk' }, children = 
+              react.create-element 'div', { className: 'media social-profile clearfix' }, children = 
+                react.create-element 'a', { className: 'pull-left' }, children = 
+                  react.create-element 'img', { rc: 'images/a3.jpg', alt: 'profile-picture }
+                react.create-element 'div', { className: 'media-body' }, children = 
+                  react.create-element 'span', { className: 'font-bold' }, ' Mark Smith'
+                  react.create-element 'small', { className: 'text-muted' }, ' 14.04.2015'
+                  react.create-element 'div', { className: 'social-content' }, children = 
+                    react.create-element 'span', {}, ' Many desktop publishing packages and web page editors.'
+            react.create-element 'div', { className: 'social-talk' }, children = 
+              react.create-element 'div', { className: 'media social-profile clearfix' }, children = 
+                react.create-element 'a', { className: 'pull-left' }, children = 
+                  react.create-element 'img', { rc: 'images/a4.jpg', alt: 'profile-picture }
+                react.create-element 'div', { className: 'media-body' }, children = 
+                  react.create-element 'span', { className: 'font-bold' }, ' Marica Morgan'
+                  react.create-element 'small', { className: 'text-muted' }, ' 21.03.2015'
+                  react.create-element 'div', { className: 'social-content' }, children = 
+                    react.create-element 'span', {}, ' There are many variations of passages of Lorem Ipsum available, but the majority have'
+        react.create-element 'div', { className: 'p-m' }, children = 
+          react.create-element 'span', { className: 'font-bold no-margins' }, '  Sales in last week '
+          react.create-element 'div', { className: 'm-t-xs' }, children = 
+            react.create-element 'div', { className: 'row' }, children = 
+              react.create-element 'div', { className: 'col-xs-6' }, children = 
+                react.create-element 'small', {}, ' Today'
+                react.create-element 'h4', { className: 'm-t-xs' }, children = 
+                  react.create-element 'span', {}, ' $170,20 '
+                  react.create-element 'i', { className: 'fa fa-level-up text-success' }
+              react.create-element 'div', { className: 'col-xs-6' }, children = 
+                react.create-element 'small', {}, ' Last week'
+                react.create-element 'h4', { className: 'm-t-xs' }, children = 
+                  react.create-element 'span', {}, ' $580,90 '
+                  react.create-element 'i', { className: 'fa fa-level-up text-success' }
+            react.create-element 'div', { className: 'row' }, children = 
+              react.create-element 'div', { className: 'col-xs-6' }, children = 
+                react.create-element 'small', {}, ' Today'
+                react.create-element 'h4', { className: 'm-t-xs' }, children = 
+                  react.create-element 'span', {}, ' $620,20 '
+                  react.create-element 'i', { className: 'fa fa-level-up text-success' }
+              react.create-element 'div', { className: 'col-xs-6' }, children = 
+                react.create-element 'small', {}, ' Last week'
+                react.create-element 'h4', { className: 'm-t-xs' }, children = 
+                  react.create-element 'span', {}, ' $140,70 '
+                  react.create-element 'i', { className: 'fa fa-level-up text-success' }
+          react.create-element 'small', {}, children = 
+            react.create-element 'span', {}, ' Lorem Ipsum is simply dummy text of the printing simply all dummy text.'
+            react.create-element 'span', {}, ' Many desktop publishing packages and web page editors.'
+      react.create-element 'footer', { className: 'footer' }, children = 
+        react.create-element 'span', { className: 'pull-right' }, children = 
+          react.create-element 'span', {}, ' Example text'
+        react.create-element 'span', {}, '         Company 2015-2020'
+    foot!
+  
+  
+  
+  
+
+    ✓ load (55ms)
+
+
+  1 passing (62ms)
+

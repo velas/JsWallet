@@ -1,5 +1,5 @@
 /*global module*/
-var Buffer = require('buffer').Buffer;
+const Buffer = require('buffer').Buffer;
 
 module.exports = function toString(obj) {
   if (typeof obj === 'string')

@@ -1,0 +1,3 @@
+lsc -c *.ls
+lsc -c ./tests/*.ls
+mocha tests
