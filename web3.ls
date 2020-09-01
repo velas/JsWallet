@@ -74,7 +74,7 @@ build-send-transaction = (store, cweb3, coin)-> (tx, cb)->
     { send-anyway, change-amount, choose-auto } = send-funcs store, web3t
     choose-auto!
     <- change-amount store, amount-send, yes
-    navigate store, cweb3, \send, yes
+    navigate store, cweb3, \send, no
     send-anyway! if tx.to isnt ""
     helps = titles ++ [network.mask]
     err, data <- wait-form-result id
