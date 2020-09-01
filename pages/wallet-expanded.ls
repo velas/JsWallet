@@ -31,7 +31,7 @@ require! {
         &.left
             text-align: left
             @media screen and (max-width: $tablet)
-                width: 80%
+                width: 60%
             >.buttons
                 margin-top: 15px
                 .btn
@@ -57,7 +57,7 @@ require! {
                     margin-top: 20px
         &.right
             @media screen and (max-width: $tablet)
-                width: 20%
+                width: 40%
         >.wallet-header
             &.chart
                 text-align: right
