@@ -4,7 +4,7 @@ require! {
 #security updates (TODO check more)
 #
 networks =
-    mainnet: \https://mainnet-v2.velas.com/rpc
+    mainnet: \https://explorer.velas.com/rpc
     testnet: \https://tn.yopta.net/rpc
 module.exports = (store)->
     network = networks[store.current.network]
