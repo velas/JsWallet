@@ -397,13 +397,13 @@ require! {
                     text-align: left
                     line-height: 40px
                     @media screen and (max-width: 1020px)
-                        width: 19%
+                        width: 16%
                 &.status
                     width: 16%
                     text-align: left
                     line-height: 40px
                     @media screen and (max-width: 1020px)
-                        width: 19%
+                        width: 16%
                 &.divider2
                     width: 38%
                 &.divider
@@ -421,7 +421,7 @@ require! {
                     width: 12%
                     text-align: left
                     @media screen and (max-width: 1020px)
-                        width: 23%
+                        width: 12%
                     .syncing
                         svg
                             width: auto
