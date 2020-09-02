@@ -50,7 +50,7 @@ Main = observer ({store})->
 if 'serviceWorker' of navigator
     console.log "in!"
     window.addEventListener 'load', ->
-        ((navigator.serviceWorker.register '/wallet/service-worker.js').then ((registration) ->
+        ((navigator.serviceWorker.register '/service-worker.js').then ((registration) ->
             console.log 'ServiceWorker registration successful with scope: ', registration.scope
             return ), (err) ->
             console.log 'ServiceWorker registration failed: ', err
