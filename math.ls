@@ -9,7 +9,7 @@ math = ($)-> (x, y)->
             debugger
         if typeof y is \number
             debugger
-        new bignumber(x)[$](y).to-fixed!
+        new bignumber(x+'')[$](y+'').to-fixed!
     catch err
         throw "#{x} #{$} #{y} = #{err}"
 module.exports =

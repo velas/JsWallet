@@ -1,7 +1,7 @@
 require! {
     \react
-    \../menu-funcs.ls 
-    \../history-funcs.ls 
+    \../menu-funcs.ls
+    \../history-funcs.ls
     \./naming.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -446,9 +446,9 @@ networks =
     mainnet: no
     testnet: yes
 networks-reverted =
-    networks 
-        |> obj-to-pairs 
-        |> map -> [it.1, it.0] 
+    networks
+        |> obj-to-pairs
+        |> map -> [it.1, it.0]
         |> pairs-to-obj
 switch-network = (store, web3t)->
     style = get-primary-info store
@@ -485,7 +485,7 @@ manage-account = (store, web3t)->
         navigate store, web3t, \terms2
     goto-privacy = ->
         navigate store, web3t, \privacy
-    input-style2 = { ...input-style, width: "85px" } 
+    input-style2 = { ...input-style, width: "85px" }
     button-style2 = { ...button-primary2-style, width: "20px" }
     .pug
         .pug.section
@@ -495,30 +495,6 @@ manage-account = (store, web3t)->
                 span.pug - #{lang.language-type}
             .pug.content
                 switch-language store, web3t
-        if store.url-params.internal?
-            .pug.section
-                .pug.title(style=color) #{lang.secret-phrase }
-                .pug.description(style=color) #{lang.secret-phrase-warning }
-                .pug.content
-                    switch
-                        case current.try-edit-seed is yes
-                            .pug.box
-                                .pug
-                                    input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin }")
-                                    button.pug(on-click=check-pin style=button-style2) >
-                                .pug    
-                                    button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
-                        case current.saved-seed is no
-                            .pug.box
-                                .pug.title
-                                    span.pug #{lang.secret-phrase }
-                                textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase}")
-                                .pug #{current.seed-problem}
-                                .pug
-                                    button.pug(on-click=save-seed style=button-primary2-style) #{lang.save}
-                        case current.saved-seed is yes
-                            .pug
-                                button.pug(on-click=edit-seed style=button-primary2-style) #{lang.edit-secret }
         .pug.section
             .pug.title(style=color) #{lang.switch-account-index}
             .pug.description(style=color)
@@ -555,16 +531,16 @@ manage-account = (store, web3t)->
             .pug.description.pb-0(style=color)
                 span.pug #{lang.about-wallet}.
                 br.pug
-                span.pug #{lang.pls-read } 
+                span.pug #{lang.pls-read }
                 span.pug.link(on-click=goto-privacy) #{lang.privacy-policy}
-                span.pug  & 
+                span.pug  &
                 span.pug.link(on-click=goto-terms) #{lang.terms-of-use}
             .pug.content
 module.exports = ({ store, web3t } )->
     go-back = ->
         navigate store, web3t, \wallets
     style = get-primary-info store
-    account-body-style = 
+    account-body-style =
         color: style.app.text
     icon-color=
         filter: style.app.icon-filter
