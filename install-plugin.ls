@@ -49,7 +49,7 @@ add-to-registry = (name, cb)->
 remove-from-registry = (name, cb)->
     err, registry <- get-registry
     return cb err if err?
-    index = registry.index-of(name) is -1
+    index = registry.index-of(name)
     return cb null if index is -1
     registry.splice index, 1
     save-registry registry
