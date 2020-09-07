@@ -4,8 +4,8 @@ require! {
 }
 math = ($)-> (x, y)->
     return '..' if x is '..' or y is '..'
-    try 
-        new bignumber(x)[$](y).to-fixed!
+    try
+        new bignumber(x+'')[$](y+'').to-fixed!
     catch err
         throw "#{x} #{$} #{y} = #{err}"
 module.exports =
