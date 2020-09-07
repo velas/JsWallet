@@ -13,10 +13,6 @@ require! {
     \./icons.ls
     \./round-human.ls
 }
-history-stake = []
-class Page
-    (page)->
-        @prev = page
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
     ago = (time)->
