@@ -15,6 +15,7 @@ require! {
     \../components/identicon.ls
     \../components/trx-fee.ls
     \./send-contract.ls
+    \../history-funcs.ls
 }
 .content
     position: relative
@@ -359,6 +360,7 @@ form-group = (title, style, content)->
 send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
+    { go-back } = history-funcs store, web3t
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
     style = get-primary-info store
@@ -406,7 +408,7 @@ send = ({ store, web3t })->
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
-            .pug.close(on-click=cancel)
+            .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t
