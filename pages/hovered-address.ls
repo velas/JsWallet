@@ -19,7 +19,7 @@ require! {
         font-size: 11px
         padding: 10px 0px
 module.exports = ({ store })->
-    return null if not store.current.try-copy?
+    return null if not store.current.try-copy? or store.current.page is \locked
     .pug.hovered-address
         .pug.text #{store.current.try-copy}
-        qrcode { store, address: store.current.try-copy } 
+        qrcode { store, address: store.current.try-copy }
