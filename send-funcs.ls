@@ -205,6 +205,7 @@ module.exports = (store, web3t)->
         send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` info.amount-send-fee
         send.amount-send-fee = info.amount-send-fee
         <- change-amount store, send.amount-send, no
+        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
         cb null
     use-max-try-catch = (cb)->
         try
