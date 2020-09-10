@@ -29,7 +29,7 @@ require! {
         $real-height: 300px
         $cards-height: 296px
         $pad: 20px
-        $radius: 15px    
+        $radius: 15px
         height: auto
         box-sizing: border-box
         position: relative
@@ -74,7 +74,7 @@ require! {
                     display: none
             .title-balance
                 display: none
-        .header 
+        .header
             &:after
                 position: absolute
                 font-weight: bold
@@ -96,7 +96,7 @@ require! {
                 text-overflow: ellipsis
                 white-space: nowrap
                 overflow: hidden
-                width: 90px
+                width: 180px
                 text-align: right
                 cursor: default
             input
@@ -258,7 +258,7 @@ mobile = ({ store, web3t })->
             span.cancel.pug.icon(on-click=cancel-edit-account-name)
                 icon "X", 20
     chosen-account-template =
-        if store.current.edit-account-name is "" then view-account-template! else edit-account-template! 
+        if store.current.edit-account-name is "" then view-account-template! else edit-account-template!
     wallet-detail =
         wallets
             |> find (-> wallets.index-of(it) is store.current.wallet-index)

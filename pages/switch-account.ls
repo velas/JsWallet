@@ -21,7 +21,7 @@ require! {
     $real-height: 300px
     $cards-height: 296px
     $pad: 20px
-    $radius: 15px    
+    $radius: 15px
     height: auto
     box-sizing: border-box
     position: relative
@@ -36,7 +36,7 @@ require! {
     .switch-menu
         right: 0px !important
         top: 39px !important
-    .header 
+    .header
         &:after
             position: absolute
             font-weight: bold
@@ -73,7 +73,7 @@ require! {
             text-overflow: ellipsis
             white-space: nowrap
             overflow: hidden
-            width: 90px
+            width: 180px
             text-align: right
             cursor: default
             display: inline-block

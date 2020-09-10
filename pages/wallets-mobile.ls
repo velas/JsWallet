@@ -45,7 +45,7 @@ require! {
         $real-height: 300px
         $cards-height: 296px
         $pad: 20px
-        $radius: 15px    
+        $radius: 15px
         height: 395px
         box-sizing: border-box
         position: relative
@@ -114,7 +114,7 @@ require! {
                 text-overflow: ellipsis
                 white-space: nowrap
                 overflow: hidden
-                width: 90px
+                width: 180px
                 text-align: right
                 cursor: default
             input
