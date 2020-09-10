@@ -13,7 +13,7 @@ require! {
     background: transparent
     background: #31335f
     border-radius: 10px
-    padding: 10px 10px 20px
+    padding: 10px 10px 15px
     box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
     canvas
         height: 300px
