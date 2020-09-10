@@ -50,14 +50,8 @@ module.exports = (store, web3t)->
     amount-beautify = (amount, max)->
         str = cut-amount amount, max
         data = str.match(/(.+[^0])(0+)$/)
-        if not data?
-            return
-                .pug.balance
-                    span.color.pug #{round-human str}
-        [_, first, last] = data
-        span.pug.balance
-            span.color.pug #{round-human first}
-            span.rest.pug #{round-human last}
+        .pug.balance
+            span.color.pug #{round-human str}
     is-active = (value)->
         if value in filt then \active else ''
     switch-filter  = (value, event)-->
