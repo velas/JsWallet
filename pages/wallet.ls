@@ -18,7 +18,7 @@ require! {
     @import scheme
     $cards-height: 324px
     $pad: 20px
-    $radius: 15px 
+    $radius: 15px
     position: relative
     cursor: pointer
     $card-height: 60px
@@ -283,5 +283,5 @@ module.exports = (store, web3t, wallets, wallet)-->
         .wallet-middle.title-balance.pug(style=border)
             .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human(usd-rate)}
             .name.per.pug(class="#{placeholder}")
-                span.pug #{lang.per} 
+                span.pug #{lang.per}
                 | #{ wallet.coin.token.to-upper-case! }
