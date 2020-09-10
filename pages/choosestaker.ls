@@ -555,6 +555,7 @@ to-keystore = (store, with-keystore)->
 show-validator = (store, web3t)-> (validator)->
     li.pug #{validator}
 staking-content = (store, web3t)->
+    { go-back } = history-funcs store, web3t
     style = get-primary-info store
     lang = get-lang store
     button-primary3-style=
@@ -694,7 +695,9 @@ staking-content = (store, web3t)->
             | +item.my-stake is 0 => round-human item.withdraw-amount
             | _ => round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
-        choose-pull = ->
+        choose-pull = ->    
+            page = \choosestaker-pool              
+            store.pages.push(page) if store.pages.length > 0 and page isnt store.pages[store.pages.length - 1]            
             cb = (err, data)->
                 alert store, err, console~log if err?
             #store.staking.data-generation += 1
@@ -742,6 +745,7 @@ staking-content = (store, web3t)->
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
+        go-back!
         store.staking.chosen-pool = null
     activate = (step)-> ->
         store.current.step = step 
@@ -875,7 +879,7 @@ staking = ({ store, web3t })->
     .pug.staking
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.delegateStake}
-            .pug.close(on-click=goto-search)
+            .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
             epoch store, web3t
             switch-account store, web3t

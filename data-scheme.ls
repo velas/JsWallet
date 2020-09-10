@@ -254,6 +254,7 @@ store =
     history:
         filter-open: no
         tx-details: no
+    pages: [\wallets]
     seed:
         no-copy: no
         about: no

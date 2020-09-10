@@ -31,7 +31,11 @@ module.exports = (store, web3t)->
         | type is \IN => \+
         | _ => \-
     go-back = ->
-        navigate store, web3t, \wallets
+        return null if store.pages.length <= 1
+        store.pages.splice(-1, 1)
+        prev = store.pages[store.pages.length - 1]
+        page = prev ? \wallets
+        navigate store, web3t, page
     extended = (str)->
         | str.index-of('.') > -1 => "#{str}0"
         | _ => "#{str}.0"

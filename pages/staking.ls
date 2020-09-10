@@ -1189,7 +1189,7 @@ staking = ({ store, web3t })->
     .pug.staking
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") #{lang.staking}
-            .pug.close(on-click=goto-search)
+            .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
             epoch store, web3t
             switch-account store, web3t

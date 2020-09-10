@@ -395,6 +395,7 @@ calc-reward = (store, web3t)->
     staking-address = store.staking.keystore.staking.address
     err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(store.staking.chosen-pool.address, staking-address)
     return cb err if err?
+    epochs = epochs.sort((a,b) -> a.compared-to b)
     store.staking.rewards =
         epochs |> map -> { epoch: it, reward: '..', checked: no }
     err <- calc-next-reward store, web3t

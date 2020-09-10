@@ -14,6 +14,7 @@ init-flow = (prev)->
     return \verifyseed if prev is \reviewwords
     return \restorewords if prev in <[ locked newseedrestore ]> and not seedmem.saved! and store.current.seed-generated is no
     return \terms if prev is \verifyseed
+    return \choosestaker if prev is \choosestaker-pool
     #return \chooseinit if not saved!
     \wallets
 get-page = (store, page, prev) ->
@@ -39,7 +40,10 @@ module.exports = (store, web3t, page, ask-pin) !->
     return alert "web3t is required" if not web3t?
     scroll-top!
     <- set-timeout _, 1
-    prev = store.current.page
+    if page? and page isnt \loading and page isnt \:init   
+        store.pages.push(page) if store.pages.length > 0 and (store.pages.index-of(page) < 0)  
+    store.pages = [\wallets] if page is \wallets
+    prev = store.current.page 
     store.current.page = \loading
     store.current.loading = yes
     name = get-page store, page, prev

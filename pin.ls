@@ -3,7 +3,7 @@ require! {
     \crypto-js/md5 : md5
     \./seed-encrypt.ls
 }
-mem = 
+mem =
     encrypt: null
 get-key = (value)->
     value + 'cb562eb3-c442-4866-a1a9-70a9'

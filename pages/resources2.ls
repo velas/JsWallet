@@ -626,7 +626,7 @@ staking = ({ store, web3t })->
         alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Resource Staking
-            .pug.close(on-click=goto-search)
+            .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             epoch store, web3t
             switch-account store, web3t

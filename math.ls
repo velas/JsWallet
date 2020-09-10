@@ -6,10 +6,10 @@ math = ($)-> (x, y)->
     return '..' if x is '..' or y is '..'
     try
         if typeof x is \number
-            debugger
+            console.warn "Bignumber operation with number argument. It is dangerous as number->bignumber convertion causes exception sometimes"
         if typeof y is \number
-            debugger
-        new bignumber(x)[$](y).to-fixed!
+            console.warn "Bignumber operation with number argument. It is dangerous as number->bignumber convertion causes exception sometimes"
+        new bignumber(x+'')[$](y+'').to-fixed!
     catch err
         throw "#{x} #{$} #{y} = #{err}"
 module.exports =
