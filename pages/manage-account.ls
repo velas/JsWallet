@@ -1,6 +1,6 @@
 require! {
     \react
-    \../menu-funcs.ls 
+    \../menu-funcs.ls
     \./naming.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -232,9 +232,9 @@ manage-account = (store, web3t)->
             .pug.description.pb-0(style=color)
                 span.pug #{lang.about-wallet}.
                 br.pug
-                span.pug #{lang.pls-read} 
+                span.pug #{lang.pls-read}
                 span.pug.link(on-click=goto-privacy) #{lang.privacy-policy}
-                span.pug  & 
+                span.pug  &
                 span.pug.link(on-click=goto-terms) #{lang.terms-of-use}
         .pug.section
             .pug.title(style=color) #{lang.secret-phrase}
@@ -245,11 +245,11 @@ manage-account = (store, web3t)->
                         .pug.box
                             .pug
                                 input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style placeholder="#{lang.enter-pin}")
-                            .pug    
+                            .pug
                                 button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
                     case current.saved-seed is no
                         .pug.box
-                            .pug.title 
+                            .pug.title
                                 span.pug #{lang.secret-phrase}
                                 a.pug.generate(on-click=generate) (generate)
                             textarea.pug(on-change=change-seed value="#{current.seed}" style=input-style placeholder="#{lang.secret-phrase}")
@@ -276,7 +276,7 @@ module.exports = ({ store, web3t } )->
     return null if store.current.manage-account isnt yes
     { close-account } = menu-funcs store, web3t
     style = get-primary-info store
-    account-body-style = 
+    account-body-style =
         background: style.app.background
         color: style.app.text
     border-style =

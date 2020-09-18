@@ -146,14 +146,15 @@ prompt-modal = (store)->
         store.current.prompt = yes
         callback = state.callback
         state.callback = null
-        callback store.current.prompt-answer if typeof! callback is \Function
+        prompt-answer = store.current.prompt-answer
         store.current.prompt-answer = ""
+        callback prompt-answer if typeof! callback is \Function
     cancel = ->
         store.current.prompt = no
         callback = state.callback
         state.callback = null
-        callback null if typeof! callback is \Function
         store.current.prompt-answer = ""
+        callback null if typeof! callback is \Function
     change-input = (e)->
         store.current.prompt-answer = e.target.value
     style = get-primary-info store
@@ -198,7 +199,11 @@ state=
 export confirm = (store, text, cb)->
     store.current.confirmation = text
     state.callback = cb
-export prompt = (store, text, cb)->
+export prompt = (store, text, default-value, cb)->
+    if typeof default-value is \function
+        cb = default-value
+    if typeof default-value is \string
+        store.current.prompt-answer = default-value
     store.current.prompt = text
     state.callback = cb
 export alert = (store, text, cb)->

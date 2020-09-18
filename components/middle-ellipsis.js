@@ -17,6 +17,9 @@ const MiddleEllipsisComponent = props => {
 
   const prepEllipse = node => {
     const parent = node.parentNode;
+    if (!parent) {
+      return;
+    }
     const child = parent.querySelector(".constrainedChild")
     /* Legacy. */
     || node.childNodes[0];

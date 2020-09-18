@@ -1,7 +1,7 @@
 require! {
     \react
-    \../menu-funcs.ls 
-    \../history-funcs.ls 
+    \../menu-funcs.ls
+    \../history-funcs.ls
     \./naming.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -446,9 +446,9 @@ networks =
     mainnet: no
     testnet: yes
 networks-reverted =
-    networks 
-        |> obj-to-pairs 
-        |> map -> [it.1, it.0] 
+    networks
+        |> obj-to-pairs
+        |> map -> [it.1, it.0]
         |> pairs-to-obj
 switch-network = (store, web3t)->
     style = get-primary-info store
@@ -470,6 +470,8 @@ manage-account = (store, web3t)->
     { current, generate, enter-pin, check-pin, cancel-try, edit-seed, save-seed, change-seed, export-private-key } = menu-funcs store, web3t
     style = get-primary-info store
     lang = get-lang store
+    vlx2-wallet = store.current.account.wallets.find (wallet) -> wallet.coin.token is \vlx2
+    ethereum-address = vlx2-wallet?address2
     input-style =
         background: style.app.wallet
         color: style.app.text
@@ -481,13 +483,20 @@ manage-account = (store, web3t)->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+    input-style2 = { ...input-style, width: "85px" }
+    input-style3 = { ...input-style, width: "100%" }
+    eth-address-markup =
+        .pug.section
+            .pug.title(style=color) Your ethereum-style address
+            .pug.description(style=color)
+                input.pug(value="#{ethereum-address}" style=input-style3)
     goto-terms = ->
         navigate store, web3t, \terms2
     goto-privacy = ->
         navigate store, web3t, \privacy
-    input-style2 = { ...input-style, width: "85px" } 
     button-style2 = { ...button-primary2-style, width: "20px" }
     .pug
+        eth-address-markup
         .pug.section
             .pug.title(style=color) #{lang.language}
             .pug.description(style=color)
@@ -506,7 +515,7 @@ manage-account = (store, web3t)->
                                 .pug
                                     input.pug(on-change=enter-pin value="#{current.pin}" type="password" style=input-style2 placeholder="#{lang.enter-pin }")
                                     button.pug(on-click=check-pin style=button-style2) >
-                                .pug    
+                                .pug
                                     button.pug(on-click=cancel-try style=button-primary2-style) #{lang.cancel}
                         case current.saved-seed is no
                             .pug.box
@@ -555,16 +564,16 @@ manage-account = (store, web3t)->
             .pug.description.pb-0(style=color)
                 span.pug #{lang.about-wallet}.
                 br.pug
-                span.pug #{lang.pls-read } 
+                span.pug #{lang.pls-read }
                 span.pug.link(on-click=goto-privacy) #{lang.privacy-policy}
-                span.pug  & 
+                span.pug  &
                 span.pug.link(on-click=goto-terms) #{lang.terms-of-use}
             .pug.content
 module.exports = ({ store, web3t } )->
     go-back = ->
         navigate store, web3t, \wallets
     style = get-primary-info store
-    account-body-style = 
+    account-body-style =
         color: style.app.text
     icon-color=
         filter: style.app.icon-filter

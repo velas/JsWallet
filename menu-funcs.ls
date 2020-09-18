@@ -92,7 +92,7 @@ module.exports = (store, web3t)->
         seedmem.mnemonic = generate-wallet!
         create-account!
     switch-network = ->
-        network = 
+        network =
             | store.current.network is \mainnet => \testnet
             | _ => \mainnet
         <- use-network web3t, store, network
@@ -140,7 +140,7 @@ module.exports = (store, web3t)->
         pin <- prompt store, lang.private-key-enter-pin
         return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
-        token-input <- prompt store, lang.private-key-enter-coin
+        token-input <- prompt store, lang.private-key-enter-coin, \VLX2
         return alert store, "token is empty", cb if not token-input?
         token = (token-input ? "").to-lower-case!
         wallets = current.account?wallets ? []
