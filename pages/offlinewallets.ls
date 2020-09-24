@@ -9,8 +9,10 @@ require! {
 }
 .wallets
     @import scheme
-    @media screen and (min-width: 800px)
-        margin-left: $left-margin
+    @media(max-width:$ipad)
+        width: 100%
+        margin: 0
+    margin-left: $left-margin
     >.title
         position: sticky
         position: -webkit-sticky

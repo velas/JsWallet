@@ -61,7 +61,7 @@ require! {
         padding: 0 5px
     .pad-bottom
         padding-bottom: 5px
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .staking-content

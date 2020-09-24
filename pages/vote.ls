@@ -31,8 +31,9 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px)
-        margin-left: 0
+    @media(max-width:$ipad)
+        width: 100%
+        margin: 0
     >.title
         position: sticky
         position: -webkit-sticky
