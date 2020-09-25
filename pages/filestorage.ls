@@ -11,6 +11,7 @@ require! {
     \../icons.ls
     \./epoch.ls
     \./alert-demo.ls
+    \../components/burger.ls
 }
 .filestore
     @import scheme
@@ -484,6 +485,7 @@ filestorage = ({ store, web3t })->
             .pug.header(class="#{show-class}") File Storage
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.toolbar(style=border-style)

@@ -52,7 +52,7 @@ require! {
                     visibility: hidden
             @media(max-width: 820px)
                 text-align: left !important
-                margin-left: 70px !important
+                margin-left: 120px !important
                 font-size: 12px !important
         &.alert
             .header
@@ -61,19 +61,24 @@ require! {
                     margin-left: 0px !important
                     font-size: 12px !important
         .close
+            position: absolute
+            font-size: 20px
+            left: 20px
+            top: 13px
+            cursor: pointer
             @media(max-width: 820px)
                 position: absolute
                 font-size: 20px
-                left: 0
-                top: 0
+                left: 50px !important
+                top: 0 !important
                 height: 60px
                 width: 60px
                 cursor: pointer
                 border-right: 1px solid var(--border)
-            @media(min-width: 821px)
+            @media(max-width: 992px)
                 position: absolute
                 font-size: 20px
-                left: 20px
+                left: 80px
                 top: 13px
                 cursor: pointer
             img

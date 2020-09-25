@@ -35,6 +35,7 @@ require! {
     \../components/amount-field.ls
     \./move-stake.ls
     \../seed.ls : seedmem
+    \../components/burger.ls
 }
 .staking
     @import scheme
@@ -925,6 +926,7 @@ staking = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.delegateStake}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t

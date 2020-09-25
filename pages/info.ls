@@ -18,6 +18,7 @@ require! {
     \../round-human.ls
     \./epoch.ls
     \./alert-txn.ls
+    \../components/burger.ls
 }
 .stats
     @import scheme
@@ -252,6 +253,7 @@ info = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.statistics}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.wrapper

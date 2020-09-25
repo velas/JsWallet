@@ -6,6 +6,7 @@ require! {
     \../get-primary-info.ls
     \../icons.ls
     \../navigate.ls
+    \../components/burger.ls
 }
 .wallets
     @import scheme
@@ -143,6 +144,7 @@ header = (store, web3t)->
         .pug.header(class="#{show-class}") Download Wallets
         .pug.close(on-click=goto-search)
             img.icon-svg.pug(src="#{icons.arrow-left}")
+        burger store, web3t
 module.exports = ({ store, web3t })->
     .pug.wallets
         header store, web3t

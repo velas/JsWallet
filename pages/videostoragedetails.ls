@@ -11,6 +11,7 @@ require! {
     \../icons.ls
     \./epoch.ls
     \./alert-demo.ls
+    \../components/burger.ls
 }
 .videodetails
     @import scheme
@@ -1034,6 +1035,7 @@ videodetails = ({ store, web3t })->
             .pug.header(class="#{show-class}") Video storage
             .pug.close(on-click=go-back)
                 img.icon-svg-arrow.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.search-input

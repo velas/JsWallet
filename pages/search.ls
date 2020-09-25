@@ -11,6 +11,7 @@ require! {
     \./epoch.ls
     \../icons.ls
     \./alert-demo.ls
+    \../components/burger.ls
 }
 .search
     @import scheme
@@ -486,6 +487,7 @@ search = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.search}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.search-input

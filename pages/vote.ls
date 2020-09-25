@@ -14,6 +14,7 @@ require! {
     \../math.ls : { minus }
     \../components/text-field.ls
     \../components/button.ls
+    \../components/burger.ls
 }
 .vote
     @import scheme
@@ -377,6 +378,7 @@ vote = ({ store, web3t })->
             .pug.header(class="#{show-class}") Vote
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.wrapper

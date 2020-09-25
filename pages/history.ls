@@ -446,7 +446,8 @@ require! {
                         font-size: 14px
                         line-height: 22px
                         text-decoration: none
-                        line-height: 40px
+                        line-height: 22px
+                        white-space: break-spaces
                 &.more
                     text-align: center
                     width: 6%

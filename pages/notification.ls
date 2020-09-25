@@ -11,6 +11,7 @@ require! {
     \../icons.ls
     \./epoch.ls
     \./alert-demo.ls
+    \../components/burger.ls
 }
 .notice
     @import scheme
@@ -1516,6 +1517,7 @@ notice = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.velas-messenger}
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         if no    

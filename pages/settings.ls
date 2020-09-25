@@ -9,6 +9,7 @@ require! {
     \../navigate.ls
     \../icons.ls
     \../components/button.ls
+    \../components/burger.ls
     \./choose-themes.ls
     \prelude-ls : { obj-to-pairs, pairs-to-obj, map }
 }
@@ -554,6 +555,7 @@ module.exports = ({ store, web3t } )->
             .pug.header #{lang.manage-account}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
         .account-body.pug(style=account-body-style)
             .pug.settings
                 manage-account store, web3t
