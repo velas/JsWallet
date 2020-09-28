@@ -6,11 +6,13 @@ require! {
     \../get-primary-info.ls
     \./wallets-desktop.ls : desktop
     \./wallets-mobile.ls : mobile
+    \../components/sign-transaction.ls
 }
 wallets = ({ store, web3t })->
+#    debugger
     func = choise[store.current.device]
     return null if typeof! func isnt \Function
-    func { store, web3t }
+    return (sign-transaction { store, web3t }) || (func { store, web3t })
 wallets.init = ({ store, web3t }, cb)->
     delete store.current.send?wallet
     store.current.send?tx-type = \regular
