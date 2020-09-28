@@ -16,6 +16,11 @@ require! {
     \./scam-warning.ls
     \./service-worker.ls
 }
+is-allowed-context = ->
+    return yes if window == window.parent
+    return yes if document.location.origin is \https://app.symblox.io
+    return yes if document.location.origin is \http://localhost:8080
+    return no
 state =
     timeout: null
 store = observable data-scheme
@@ -50,7 +55,7 @@ Main = observer ({store})->
 if 'serviceWorker' of navigator
     console.log "in!"
     window.addEventListener 'load', ->
-        ((navigator.serviceWorker.register '/wallet/service-worker.js').then ((registration) ->
+        ((navigator.serviceWorker.register './service-worker.js').then ((registration) ->
             console.log 'ServiceWorker registration successful with scope: ', registration.scope
             return ), (err) ->
             console.log 'ServiceWorker registration failed: ', err

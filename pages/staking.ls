@@ -406,7 +406,7 @@ require! {
         margin: 0
         min-width: 100%
         max-width: 300px
-        li 
+        li
             list-style: none
             margin-left: 0
             font-size: 13px
@@ -886,9 +886,11 @@ staking-content = (store, web3t)->
     become-or-extend-validator = (stake, pairs, cb)->
         err, pool <- web3t.velas.Staking.getStakerPools(pairs.staking.address)
         return cb err if err?
-        console.log pool
-        return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address) if pool.length is 0
-        cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
+        console.log \pools, pool
+        #return
+        cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
+        #if pool.length is 0
+        #cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
         err <- can-make-staking store, web3t
         return alert err if err?
@@ -909,11 +911,11 @@ staking-content = (store, web3t)->
         store.staking.add.add-validator = it.target.value
     change-stake = ->
         store.staking.add.add-validator-stake = it.target.value
-    velas-node-applied-template = 
+    velas-node-applied-template =
         pairs
-            |> velas-node-template 
+            |> velas-node-template
             |> split "\n"
-    velas-node-applied-template-line = 
+    velas-node-applied-template-line =
         pairs
             |> velas-node-template
             |> btoa
@@ -934,19 +936,19 @@ staking-content = (store, web3t)->
     build-template-line = ->
         index = velas-node-applied-template.index-of(it)
         line-style =
-            padding: "10px" 
+            padding: "10px"
             width: \100%
             margin-bottom: \2px
             background: if index % 2 then 'rgba(255, 255, 255, 0.04)' else ''
         .pug(style=line-style) #{it}
     line-style =
-        padding: "10px" 
+        padding: "10px"
         width: \100%
     activate = (tab)-> ->
-        store.staking.tab = tab 
+        store.staking.tab = tab
     activate-line = activate \line
     activate-string = activate \string
-    activate-ssh = activate \ssh 
+    activate-ssh = activate \ssh
     activate-do = activate \do
     active-class = (tab)->
         if store.staking.tab is tab then 'active' else ''
@@ -956,13 +958,13 @@ staking-content = (store, web3t)->
     active-do = active-class \do
     get-balance = ->
         wallet =
-            store.current.account.wallets 
+            store.current.account.wallets
                 |> find -> it.coin.token is \vlx2
         wallet.balance
     get-options = (cb)->
         err, data <- web3t.velas.Staking.candidateMinStake
         return cb err if err?
-        min = 
+        min =
             | +store.staking.stake-amount-total >= 1000000 => 1
             | _ => data `div` (10^18)
         max = get-balance! `minus` 0.1
@@ -1008,15 +1010,15 @@ staking-content = (store, web3t)->
                     .pug.right-node
                         .pug #{lang.txt-install-node}
                         br.pug
-                        .pug 
-                            span.important.pug #{lang.important}: 
+                        .pug
+                            span.important.pug #{lang.important}:
                             | #{lang.important-dont}
                         if pairs.mining.keystore.length is 0
                             .pug
                                 .pug.btn
                                     button { store, type : \secondary , on-click: show-script , icon : \generate , text: "generateScript" }
                                 .pug #{lang.pls-allow}
-                        else 
+                        else
                             .pug
                                 .pug.btn
                                     button { store, on-click: hide-script , icon: \close2 }
@@ -1087,7 +1089,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
                                     button.small.pug(style=button-primary3-style on-click=use-max) Max
-                                span.pug #{lang.balance}: 
+                                span.pug #{lang.balance}:
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -1141,7 +1143,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
                                     button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug Your balance: 
+                                span.pug Your balance:
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -1208,7 +1210,7 @@ staking.init = ({ store, web3t }, cb)->
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)
     store.staking.stake-amount-total = amount.to-fixed!
     err, is-active <- web3t.velas.Staking.isPoolActive(staking-address)
-    return cb err if err? 
+    return cb err if err?
     store.staking.is-active-staker = is-active
     err, delegators <- web3t.velas.Staking.poolDelegators(staking-address)
     return cb err if err?

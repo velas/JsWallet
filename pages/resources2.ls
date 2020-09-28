@@ -268,7 +268,7 @@ require! {
         margin: 0
         min-width: 100%
         max-width: 300px
-        li 
+        li
             list-style: none
             margin-left: 0
             font-size: 13px
@@ -385,11 +385,11 @@ staking-content = (store, web3t)->
         store.staking.add.add-validator = it.target.value
     change-stake = ->
         store.staking.add.add-validator-stake = it.target.value
-    velas-node-applied-template = 
+    velas-node-applied-template =
         pairs
-            |> velas-node-template 
+            |> velas-node-template
             |> split "\n"
-    velas-node-applied-template-line = 
+    velas-node-applied-template-line =
         pairs
             |> velas-node-template
             |> btoa
@@ -408,19 +408,19 @@ staking-content = (store, web3t)->
     build-template-line = ->
         index = velas-node-applied-template.index-of(it)
         line-style =
-            padding: "10px" 
+            padding: "10px"
             width: \100%
             margin-bottom: \2px
             background: if index % 2 then 'rgba(255, 255, 255, 0.04)' else ''
         .pug(style=line-style) #{it}
     line-style =
-        padding: "10px" 
+        padding: "10px"
         width: \100%
     activate = (tab)-> ->
-        store.staking.tab = tab 
+        store.staking.tab = tab
     activate-line = activate \line
     activate-string = activate \string
-    activate-ssh = activate \ssh 
+    activate-ssh = activate \ssh
     activate-do = activate \do
     active-class = (tab)->
         if store.staking.tab is tab then 'active' else ''
@@ -443,6 +443,7 @@ staking-content = (store, web3t)->
         staking-address = store.staking.keystore.staking.address
         err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(staking-address, mining-address)
         return cb err if err?
+        epochs = epochs.sort((a,b) -> a.compared-to b)
         err, reward <- calc-reward-epoch epochs
         return cb err if err?
         store.staking.reward = reward
@@ -454,6 +455,7 @@ staking-content = (store, web3t)->
         err, epochs <- web3t.velas.BlockReward.epochsToClaimRewardFrom(staking-address, mining-address)
         #console.log { epochs }
         return alert err if err?
+        epochs = epochs.sort((a,b) -> a.compared-to b)
         data = web3t.velas.Staking.claimReward.get-data(epochs, staking-address)
         to = web3t.velas.Staking.address
         amount = 0
@@ -476,8 +478,8 @@ staking-content = (store, web3t)->
                     .pug.right-node
                         .pug This script automatically deploys your node through the terminal. Also, it uses addresses associated with your current account to manage the node in the wallet.
                         br.pug
-                        .pug 
-                            span.important.pug Important: 
+                        .pug
+                            span.important.pug Important:
                             | Do not transfer this script to anyone, as it is generated in your wallet, using personal wallet data.
                         if pairs.mining.keystore.length is 0
                             .pug
@@ -560,7 +562,7 @@ staking-content = (store, web3t)->
                         store.staking.validators.active |> map show-validator store, web3t
             .pug.section
                 .title.pug
-                    h3.pug Your Rewards 
+                    h3.pug Your Rewards
                 .description.pug
                     if store.staking.reward?
                         .pug

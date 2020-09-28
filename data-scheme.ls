@@ -39,8 +39,12 @@ create-send =->
 url-params =
     | window? => qs.parse window.location.search.replace('?', '')
     | _ => {}
+url-hash-params =
+    | window? => qs.parse window.location.hash.replace('#', '')
+    | _ => {}
 store =
     url-params: url-params
+    url-hash-params: url-hash-params
     root: null
     theme: localStorage.get-item('theme') ? \velas
     lang: \en
