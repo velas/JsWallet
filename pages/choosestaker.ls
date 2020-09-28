@@ -189,6 +189,11 @@ require! {
                         -moz-transition: breathe 3s ease-in infinite
                         -web-kit-transition: breathe 3s ease-in infinite
                         height: calc(100vh - 105px)
+                        .address-holder
+                            a
+                                padding-left: 30px !important
+                            .browse
+                                right: 30px !important
                         thead
                             th
                                 @media(min-width:800px) and (max-width: 900px)
@@ -209,6 +214,8 @@ require! {
                                 height: 20px
                                 display: inline-block
                                 color: white
+                                line-height: 1.6
+                                border-radius: 4px
                                 background: gray
                                 &.active
                                     background: rgb(38, 219, 85)
@@ -235,7 +242,7 @@ require! {
                         &:nth-child(1), &:nth-child(6)
                             text-align: center
                         img.copy
-                            height: 12px
+                            height: 16px
                             margin-right: 5px
                     td, th
                         padding: 8px

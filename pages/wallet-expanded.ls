@@ -53,6 +53,8 @@ require! {
             >.address-holder
                 margin-top: 10px
                 width: calc((130px * 2) + 10px)
+                a
+                    padding-left: 10px
                 @media screen and (max-width: $tablet)
                     margin-top: 20px
         &.right

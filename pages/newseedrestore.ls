@@ -191,7 +191,7 @@ newseed = ({ store, web3t })->
         store.current.page = 'chooseinit'
     .newseed-restore.pug
         .pug.logo
-            img.pug(src="#{style.branding.logo}" style=logo-style)
+            img.pug(src="#{style.branding.logo}")
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v

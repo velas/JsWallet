@@ -7,8 +7,7 @@ require! {
 .title
     &.alert
         color: rgb(255, 255, 255)
-        border-bottom: 1px solid rgb(107, 38, 142)
-        background: #757c34
+        background: #ffa500
         height: auto
         &.txn
             visibility: visible

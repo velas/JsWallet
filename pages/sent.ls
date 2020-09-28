@@ -11,7 +11,6 @@ require! {
     \moment
 }
 .sent
-    $tablet: 800px
     .animation
         height: 75px
     .limited-history
@@ -28,15 +27,16 @@ require! {
         margin: 0
     @import scheme
     text-align: center
-    color: #5bb03e
+    color: inherit
     padding-top: 100px
     width: 100%
-    max-width: 540px
+    max-width: 600px
     min-width: 320px
     display: inline-block
-    @media(min-width: $tablet)
+    margin-left: 250px
+    @media(max-width: $ipad)
         position: relative
-        margin-left: 250px
+        margin-left: 0px
     .icon
         text-align: center
         fill: white
