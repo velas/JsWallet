@@ -18,6 +18,8 @@ require! {
     $label-padding: 3px
     $label-font: 13px
     margin-left: $left-margin
+    @media(max-width: 992px)
+        margin: 60px 0 0
     .address-holder
         width: 320px
         >.identicon
@@ -27,6 +29,7 @@ require! {
         div
             >a
                 padding-right: 30px
+                padding-left: 10px
         span
             width: 320px
             background: var(--bg-primary-light)
