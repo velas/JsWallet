@@ -71,6 +71,7 @@ require! {
             > div
                 background: #3b1771
                 padding: 15px
+                border-radius: $border
     .claim-table
         margin: 0
         table
@@ -79,7 +80,7 @@ require! {
         float: left
         background-color: #6595F5
         border: 1px solid #6595F5
-        border-radius: 0px
+        border-radius: $border
         color: white
         height: 36px
         margin-top: 10px
