@@ -42,8 +42,8 @@ module.exports =
         filterLogo: "drop-shadow(0 0 23px rgb(6 206 241 / 60%))"
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) hue-rotate(75deg)"
         th: \#292b55
-        tr-odd: \#2c3741
-        tr-even: \#172431
+        tr-odd: \#080d3d
+        tr-even: \#141946
         icon-filter: "none"
         placeholder: \#202552
         placeholder-menu: \#202552

@@ -96,6 +96,7 @@ require! {
             text-transform: uppercase
             font-weight: 600
             margin: 0
+            border-radius: $border $border 0 0
             &:first-letter
                 color: orange
         .price
@@ -125,7 +126,7 @@ require! {
             list-style: none
             text-align: center
         li
-            border-bottom: 1px solid #5c3f89
+            border-bottom: 1px solid var(--border)
             padding: 10px 0
             &:last-child
                 border: none
@@ -138,6 +139,7 @@ require! {
         width: 100%
         margin-top: 5px
         padding: 0 6px
+        border: 0
         text-decoration: none
         text-transform: uppercase
         font-size: 10px
@@ -310,9 +312,10 @@ resources = ({ store, web3t })->
         color: info.app.text
         border: "1px solid #{info.app.border}"
         background: info.app.header
+        border-radius: \6px
     resource-header =
         color: info.app.text
-        background: info.app.demo
+        background: info.app.th
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
