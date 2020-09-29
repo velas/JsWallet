@@ -373,7 +373,7 @@ require! {
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 4%
+                    width: 5%
                     div
                         text-align: center
                 &.txhash
@@ -492,7 +492,7 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 46%
+                    width: 45%
                     text-align: left
                     height: 60px
                     div:last-child

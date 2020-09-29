@@ -11,6 +11,7 @@ require! {
     \moment
 }
 .sent
+    $mobile: 500px
     .animation
         height: 75px
     .limited-history
@@ -23,8 +24,33 @@ require! {
             top: 10%
         button.back
             display: none
+        .network, .created, .status
+            @media(max-width: $mobile)
+                display: none !important
+        .details-to, .details-from, .from-to
+            @media(max-width: $mobile)
+                width: 55% !important
+        .amount
+            @media(max-width: $mobile)
+                width: 30% !important
+        .details, .divider.more
+            @media(max-width: $mobile)
+                width: 15% !important
+        .tx-middle
+            padding: 0 10px
+            .txhash
+                @media(max-width: $mobile)
+                    width: 75% !important
+        .tx-middle .divider
+            @media(max-width: $mobile)
+                display: none !important
+        .tx-middle .divider2
+            @media(max-width: $mobile)
+                width: 25% !important
     .history
         margin: 0
+        padding: 0 15px
+        box-sizing: border-box
     @import scheme
     text-align: center
     color: inherit
