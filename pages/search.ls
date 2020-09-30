@@ -322,6 +322,8 @@ dapps = (store, web3t)->
         navigate store, web3t, \offlinewallets
     goto-vote = ->
         navigate store, web3t, \vote
+    goto-util = ->
+        navigate store, web3t, \util
     .pug.panel-content
         p.results.pug
             | #{lang.estimated-results}:
@@ -381,6 +383,11 @@ dapps = (store, web3t)->
             .source.pug(on-click=goto-vote)
                 .pug.address #{lang.velas-sphere}
                 .pug.header Vote
+            .pug.description
+        .pug.section
+            .source.pug(on-click=goto-util)
+                .pug.address #{lang.velas-sphere}
+                .pug.header Convert VLX2ETH
             .pug.description
         .pug.section.developing
             .source.pug
