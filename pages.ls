@@ -33,6 +33,7 @@ require! {
     \./pages/notification.ls
     \./pages/offlinewallets.ls
     \./pages/vote.ls
+    \./pages/util.ls
 }
 export offlinewallets
 export monitor
@@ -40,7 +41,7 @@ export resources
 export staking
 export verifyseed
 export loading
-export loading2 
+export loading2
 export wallets
 export history
 export send
@@ -68,3 +69,4 @@ export notification
 export restorewords
 export reviewwords
 export vote
+export util

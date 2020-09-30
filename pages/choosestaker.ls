@@ -572,45 +572,6 @@ staking-content = (store, web3t)->
         pool = store.staking.chosenPool
         myStake = +pool.myStake
         myStake >= 10000
-    enable-autoclaim = (cb) ->
-        store.current.allow-mining-claim-call = null
-        staking-address = store.staking.keystore.staking.address
-        data = web3t.velas.Staking.allowMiningClaimCall.get-data staking-address
-        to = web3t.velas.Staking.address
-        amount = 0
-        err <- web3t.vlx2.send-transaction { to, amount, data, gas: 4600000, gas-price: 1000000 }
-        if err?
-            store.current.allow-mining-claim-call = false
-            console.err err
-            cb err
-            return
-        store.current.allow-mining-claim-call = true
-        console.log \allowMiningClaimCall: , err
-        cb!
-    disable-autoclaim = (cb) ->
-        store.current.allow-mining-claim-call = null
-        staking-address = store.staking.keystore.staking.address
-        data = web3t.velas.Staking.disallowMiningClaimCall.get-data staking-address
-        to = web3t.velas.Staking.address
-        amount = 0
-        err <- web3t.vlx2.send-transaction { to, amount, data, gas: 4600000, gas-price: 1000000 }
-        if err?
-            store.current.allow-mining-claim-call = false
-            console.err err
-            cb err
-            return
-        store.current.allow-mining-claim-call = true
-        console.log \allowMiningClaimCall: , err
-        cb!
-    change-allow-mining-claim-call = ->
-        if store.current.allow-mining-claim-call is null
-            return
-        if !store.current.allow-mining-claim-call
-            <- enable-autoclaim!
-            return
-        if  store.current.allow-mining-claim-call
-            <- disable-autoclaim!
-            return
     become-validator = ->
         err, options <- get-options
         return alert store, err, cb if err?
@@ -814,13 +775,8 @@ staking-content = (store, web3t)->
         background: style.app.stats
     stats=
         background: style.app.stats
-    is-autoclaim-disabled = store.current.allow-mining-claim-call is null
     .pug.staking-content.delegate
         .form-group.pug
-            label.active-network.pug
-                \Autoclaim
-                input.pug(type=\checkbox on-change=change-allow-mining-claim-call checked=!!store.current.allow-mining-claim-call disabled=is-autoclaim-disabled)
-                .track.thumb.pug
             alert-txn { store }
             .pug.section
                 .title.pug
@@ -1010,14 +966,8 @@ fill-pools-in-parallel = ({ store, web3t}, cb)->
         store.staking.pools |> map create-promise
     values <- Promise.all promises .then
     cb null
-query-is-mining-claim-call-allowed = ->
-    store.current.allow-mining-claim-call = null
-    staking-address = store.staking.keystore.staking.address
-    err, result <- web3t.velas.Staking.isMiningClaimCallAllowed staking-address
-    store.current.allow-mining-claim-call = result
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'
-    <- query-is-mining-claim-call-allowed!
     console.log \Filling
     err <- fill-pools { store, web3t }, store.staking.pools
     return cb err if err?

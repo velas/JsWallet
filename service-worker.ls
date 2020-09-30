@@ -30,7 +30,7 @@ self.addEventListener 'install', (event) ->
     return
 #
 self.addEventListener 'fetch', (event) ->
-    console.log event.request.url
+    #console.log event.request.url
     if doCache
         event.respondWith (caches.match event.request).then ((response) -> response || fetch event.request)
     return
