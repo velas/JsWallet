@@ -1478,7 +1478,7 @@ notice = ({ store, web3t })->
     search-bg =
         border-bottom: "1px solid #{info.app.border}"
         border-right: "1px solid #{info.app.border}"
-        background: info.app.demo
+        background: info.app.header
     button-primary1-style=
         border: "1px solid #{info.app.primary1}"
         color: info.app.text

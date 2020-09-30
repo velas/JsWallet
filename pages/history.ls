@@ -78,7 +78,8 @@ require! {
         @media(max-width: 800px)
             margin: 60px 0 0
     .sign
-        margin-right: 5px
+        margin-right: 3px
+        margin-left: 5px
         font-size: 15px !important
         font-weight: 600
     .nothin-to-show
@@ -372,7 +373,7 @@ require! {
                     overflow-x: scroll
                     overflow-y: hidden
                 &.network
-                    width: 4%
+                    width: 5%
                     div
                         text-align: center
                 &.txhash
@@ -439,15 +440,17 @@ require! {
                             width: 15px
                             height: 13px !important
                     .time-ago
-                        display: block
+                        display: inline-block
                         text-overflow: ellipsis
                         overflow: hidden
                         width: 100%
-                        font-size: 14px
+                        font-size: 13px
                         line-height: 22px
                         text-decoration: none
-                        line-height: 22px
+                        line-height: 1.1
+                        margin-top: 7px
                         white-space: break-spaces
+                        vertical-align: -webkit-baseline-middle
                 &.more
                     text-align: center
                     width: 6%
@@ -489,7 +492,7 @@ require! {
                             border-width: 8px
                             margin-top: 0px
                 &.details-from, &.details-to
-                    width: 46%
+                    width: 45%
                     text-align: left
                     height: 60px
                     div:last-child
@@ -584,7 +587,7 @@ require! {
                     img
                         filter: invert(105%)
                         vertical-align: bottom
-                    color: #71c5aa
+                    color: #3465d2
                     &.label-icon
                         width: 25px
                         height: 25px

@@ -288,6 +288,7 @@ require! {
         color: white
         height: 36px
         width: 130px
+        border: 0
         margin-top: 10px
         padding: 0 6px
         text-decoration: none

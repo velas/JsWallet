@@ -244,29 +244,36 @@ require! {
                         .tab
                             width: 25%
                             display: inline-block
-                            opacity: 0.5;
+                            opacity: 0.6;
                             text-align: center
-                            border-bottom: 1px solid
+                            border-right: 1px solid
                             line-height: 37px
                             text-transform: uppercase
                             font-size: 10px
                             font-weight: bold
                             cursor: pointer
                             height: 36px
-                            background: #2c0d5f
-                            border-color: #6b258e
+                            background: var(--dark-theme)
+                            border-color: #ffffff21
+                            box-sizing: border-box
+                            &:first-child
+                                border-radius: $border 0 0 $border
+                            &:last-child
+                                border-radius: 0 $border $border 0
+                                border-right: 0
                             @media (max-width: 800px)
                                 width: 50%
                             &.active
                                 opacity: 1
-                                border-bottom: 1px solid #6e1d96
-                                background: #37156d
+                                border-bottom: 0
+                                background: var(--dark-theme)
                     .btn
                         margin: 10px 0
                     .code
                         overflow: scroll
                         background: #1b1b1b
                         text-align: left
+                        border-radius: $border
                         .copy
                             float: right
                             margin-top: 11px
@@ -747,7 +754,7 @@ require! {
                     &.active
                         opacity: 1
                         border-bottom: 1px solid #6e1d96
-                        background: #37156d
+                        background: var(--bg-secondary)
             .btn
                 margin: 10px 0
             .code

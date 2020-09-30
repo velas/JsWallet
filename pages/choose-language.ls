@@ -226,7 +226,7 @@ language = (store, web3t)->
     .pug
         .pug.section
             .pug.logo
-                img.pug(src="#{style.branding.logo}" style=logo-style)
+                img.pug(src="#{style.branding.logo}")
                 .title.pug(style=text-style) #{style.branding.title}
             .welcome.pug(style=text-style) #{lang.language}
             .pug.langs
