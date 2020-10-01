@@ -110,7 +110,8 @@ require! {
                     padding: 20px
                 &:last-child
                     border: 0
-                    padding-bottom: $ios-m-b
+                    @media (max-width: 800px)
+                        padding-bottom: $ios-m-b
                 &.reward
                     background-image: $reward
                     background-repeat: no-repeat

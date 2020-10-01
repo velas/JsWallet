@@ -98,8 +98,9 @@ require! {
             box-sizing: border-box
             padding: 0 10px
             margin-bottom: 20px
-            &:last-child    
-                padding-bottom: $ios-m-b
+            &:last-child   
+                @media (max-width: 800px)
+                    padding-bottom: $ios-m-b
             >div
                 background: #3b1771
                 padding: 30px 20px
