@@ -18,6 +18,6 @@ module.exports = ({store, web3t})->
     )
     is-in-iframe = window != window.parent
     return null if !have-transaction-to-sign or !is-in-iframe
-    return set-timeout click-sign, 0
-    debugger
-    .pug(on-click=click-sign) Click to sign the transaction
+    set-timeout click-sign, 0
+    return null
+    #.pug(on-click=click-sign) Click to sign the transaction

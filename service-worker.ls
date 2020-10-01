@@ -7,9 +7,10 @@ as-callback = (p, cb)->
     p.catch (err)->
         cb err
 urlsToCache =
-    * './main-index.html'
-    * './main-bundle.css?alias=wallet'
-    * './main-bundle.js?alias=wallet'
+    * './'
+    * './frame.html'
+    * './main-bundle.css'
+    * './main-bundle.js'
 self.addEventListener 'activate', (event) ->
     console.log \activate event.waitUntil
     cacheWhitelist = [CACHE_NAME]

@@ -48,7 +48,7 @@
           font-weight: 300;
           font-style: normal;
       }
-      
+
       /* Open Sans Regular */
       @font-face {
           font-family: 'Open Sans';
@@ -56,7 +56,7 @@
           font-weight: normal;
           font-style: normal;
       }
-      
+
 
       /* Open Sans Bold */
       @font-face {
@@ -65,7 +65,7 @@
           font-weight: bold;
           font-style: normal;
       }
-      
+
       /* Roboto 400 */
       @font-face {
         font-family: 'Roboto';
@@ -84,7 +84,7 @@
 
     </style>
     <style>body { margin: 0; padding: 0; font-family: 'Nunito', sans-serif;font-weight: 300;line-height: 1.4; color: #fff; overflow: hidden  }</style>
-    <script type="text/javascript"> 
+    <script type="text/javascript">
       function setCookie(name,value,days) {var expires = "";if (days) {var date = new Date();date.setTime(date.getTime() + (days*24*60*60*1000));expires = "; expires=" + date.toUTCString();}document.cookie = name + "=" + (value || "")  + expires + "; path=/";}
       setCookie("load", "wallet", 1);
     </script>
@@ -96,15 +96,15 @@
     
     <script type="text/javascript">
           window.onload = function() { window.bootstrap(document.getElementById("app")); }
-    
+
   	      function log(message, data) {
         			console.log(message, data)
   	      }
-  	
+
         	window.onerror = function(err) {
         		log('window.onerror: ' + err)
         	}
-        
+
           function setupWebViewJavascriptBridge(callback) {
                 if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
                 if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
@@ -115,34 +115,34 @@
                 document.documentElement.appendChild(WVJBIframe);
                 setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
           }
-        
+
           function walletRPC(data, cb) {
               if (window.web3t == null)
         		      return cb("Wallet's API is not available or not ready yet");
-              
+
               const localCallback = function (err, data)  {
         		      if (err) return cb({ err: err });
         		      cb(data);
         		  }
-              
+
               const obj = window.web3t[data.token] ?  window.web3t[data.token] : window.web3t;
-              
+
         		  if (obj[data.method] == null)
         		      return cb("Method " + data.method + " not found " + (data.token ? "for token " + data.token : ""));
-        		  
+
         		  const method = obj[data.method]
-        		  
+
         		  data.args.push(localCallback)
-        		  
+
         		  method.apply(method, data.args)
-            
+
           }
 
           setupWebViewJavascriptBridge(function(bridge) {
-        		
+
         		bridge.registerHandler('walletRPC', walletRPC)
-        		      
-        
+
+
         		//const callHandler = function() {
         		//	log('JS calling handler "testObjcCallback"')
         		//	bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
@@ -151,6 +151,6 @@
         		//}
           })
 	</script>
-    
+
   </body>
 </html>

@@ -939,8 +939,9 @@ staking-content = (store, web3t)->
         err, pool <- web3t.velas.Staking.getStakerPools(pairs.staking.address)
         return cb err if err?
         console.log \pools, pool
-        #return
-        cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
+        if +store.staking.stake-amount-total is 0
+            return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
+        return cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
         #if pool.length is 0
         #cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
