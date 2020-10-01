@@ -163,6 +163,7 @@ require! {
         bottom: 0
         left: 0
         right: 0
+        z-index: 11
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
