@@ -207,7 +207,7 @@ mobile = ({ store, web3t })->
     lang = get-lang store
     row =
         display: "flex"
-        height: "calc( 100vh - 60px )"
+        height: "calc( 100vh - 61px )"
         overflow: "hidden"
     left-side =
         min-width: "200px"
