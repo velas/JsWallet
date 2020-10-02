@@ -1,4 +1,4 @@
-doCache = yes
+doCache = no
 CACHE_NAME = 'velas-pwa-cache-v1'
 cb = console.log
 as-callback = (p, cb)->
@@ -8,7 +8,6 @@ as-callback = (p, cb)->
         cb err
 urlsToCache =
     * './'
-    * './frame.html'
     * './main-bundle.css'
     * './main-bundle.js'
 self.addEventListener 'activate', (event) ->
