@@ -28,6 +28,28 @@ require! {
         outline: none
     ::-webkit-scrollbar
         display: none
+    .table-scroll
+        scrollbar-width: thin
+        display: block !important
+        -ms-overflow-style: block !important
+        scrollbar-width: thin !important
+        outline: block !important
+        scrollbar-color: var(--ligh-text) #f8f5f60d
+    .table-scroll::-webkit-scrollbar
+        width: 4px
+        height: 4px
+        display: block
+    .table-scroll::-webkit-scrollbar-track
+        background: #f8f5f60d
+        border-radius: 10px
+    .table-scroll::-webkit-scrollbar-thumb
+        border-radius: 10px
+        background: #71748f 
+    .table-scroll::-webkit-scrollbar-thumb:hover
+        background: #ffffff
+        border-radius: 10px
+    .table-scroll::-webkit-scrollbar-corner
+        background: #f8f5f60d
     user-select: none
     overflow-y: scroll
     @import scheme
