@@ -34,7 +34,7 @@ require! {
         -ms-overflow-style: block !important
         scrollbar-width: thin !important
         outline: block !important
-        scrollbar-color: #71748f #f8f5f60d
+        scrollbar-color: var(--ligh-text) #f8f5f60d
     .table-scroll::-webkit-scrollbar
         width: 4px
         height: 4px
