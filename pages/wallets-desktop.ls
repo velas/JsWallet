@@ -287,6 +287,7 @@ mobile = ({ store, web3t })->
                             your-account store, web3t
                     .wallet-container.pug(key="wallets-viewport")
                         wallets
+                            |> filter ({coin}) -> ((coin.name + coin.token).to-lower-case!.index-of store.current.search.to-lower-case!) != -1
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)
                 wallet-expanded store, web3t, wallets, wallet-detail

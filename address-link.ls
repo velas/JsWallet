@@ -7,10 +7,11 @@ export get-address-link = (wallet, address-suffix)->
     address = get-address(wallet, address-suffix)
     res=
         | not wallet.network? => \about:blank
+        | wallet.coin.token is \btc => "https://bitpay.com/insight/#/BTC/mainnet/address/#{address}"
         | typeof! address is \String => "#{wallet.network.api.url}/#{get-address-label(wallet)}/#{address}"
         | typeof! address is \Null and wallet.public-key? =>  wallet.network.register-account-link.replace(':public-key', wallet.public-key)
         | _ => "#"
-    res 
+    res
 export get-address-title = (wallet, address-suffix)->
     address = get-address(wallet, address-suffix)
     res =

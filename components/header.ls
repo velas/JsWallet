@@ -124,12 +124,14 @@ module.exports = (store, web3t)->
         if store.menu.show then \show else \ ""
     show = ->
         store.menu.show = not store.menu.show
+    search-on-change = (event) ->
+        store.current.search = event.target.value
     .pug.header(style=header)
         .left-side.pug
             button.pug.button.menu(style=button-add on-click=show class="#{show-class}")
                 img.icon-svg-plus.pug(src="#{icons.menu}")
             .search-area.pug
-                input.pug(type='text' style=input-style placeholder="Search")
+                input.pug(type='text' style=input-style placeholder="Search" value=store.current.search on-change=search-on-change)
                 img.pug(src="#{icons.search}" style=icon-color)
             add-wallet { store, web3t }
         .right-side.pug(style=right-side)

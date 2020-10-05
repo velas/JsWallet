@@ -256,6 +256,7 @@ store =
         convert: "usd"
         trx-type: "custom"
         allow-mining-claim-call: undefined
+        search: ""
     history:
         filter-open: no
         tx-details: no

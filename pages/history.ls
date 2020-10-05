@@ -755,6 +755,9 @@ render-transaction = (store, web3t, tran)-->
         return \none if not tx?
         t = tx.to-string!
         r = t.substr(0, 15) + \.. + t.substr(t.length - 15, 15)
+    time-ago =
+        | time => ago time
+        | _ => ""
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
@@ -781,8 +784,7 @@ render-transaction = (store, web3t, tran)-->
                                 img.help.pug(src="#{about-icon}")
                             span.pug #{lang.to}
             .cell.pug.created
-                .time-ago.pug
-                    |#{ago time}
+                .time-ago.pug #{time-ago}
             .cell.pug.amount(style=menu-style)
                 .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}
