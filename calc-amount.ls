@@ -52,12 +52,11 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.amount-send-usd = calc-usd store, amount-send
     send.amount-send-eur = calc-eur store, amount-send
     calc-fee-fun = if fast then calc-fee else calc-fee-proxy
-    console.log \test
     err, calced-fee <- calc-fee-fun { token, send.to, send.data, send.network, amount: result-amount-send, fee-type, tx-type, account }
     send.error = "Calc Fee Error: #{err.message ? err}" if err?
     return cb "Calc Fee Error: #{err.message ? err}" if err?
-    tx-fee = 
-        | calced-fee? => calced-fee 
+    tx-fee =
+        | calced-fee? => calced-fee
         | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
         | _ => send.network.tx-fee
     send.amount-send-fee = tx-fee

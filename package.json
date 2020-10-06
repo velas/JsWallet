@@ -1,6 +1,6 @@
 {
   "name": "ethnamed",
-  "version": "0.13.00",
+  "version": "0.13.01",
   "description": "This dapp helps register names in Ethnamed Registry",
   "main": "ethnamed.js",
   "dependencies": {
