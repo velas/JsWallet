@@ -33,6 +33,7 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     { wallet } = send
     { token } = send.coin
     { wallets } = store.current.account
+    return cb null if !send.to
     fee-token = wallet.network.tx-fee-in ? send.coin.token ? \unknown
     fee-wallet =
         wallets |> find (-> it.coin?token is fee-token)

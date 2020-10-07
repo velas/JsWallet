@@ -141,7 +141,6 @@ module.exports = (store, web3t)->
         return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
         store.current.prompt-answer = "VLX2"
-        debugger
         token-input <- prompt store, lang.private-key-enter-coin
         return alert store, "token is empty", cb if not token-input?
         token = (token-input ? "").to-lower-case!
