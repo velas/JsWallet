@@ -189,7 +189,7 @@ restore-words = (store, web3t, next, item)-->
         next! if it.key-code is 13
     .pug.word(style=seed-style)
         if store.current.seed-words.length is 1
-            textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances." on-change=change-part)
+            textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances before use." on-change=change-part)
         else
             [
                 typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
