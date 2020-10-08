@@ -151,7 +151,7 @@ require! {
                     line-height: 11px
                     @media(max-width: 500px)
                         margin-right: 5px
-                &.effect    
+                &.effect
                     &:last-child
                         background: #7651ae
                         color: #fff
@@ -188,8 +188,11 @@ restore-words = (store, web3t, next, item)-->
     on-key-down = ->
         next! if it.key-code is 13
     .pug.word(style=seed-style)
-        typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
-        span.effect.pug #{index}
+        if store.current.seed-words.length is 1
+            textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances." on-change=change-part)
+        else
+            typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
+            span.effect.pug #{index}
 restore-words-panel = (store, web3t)->
     lang = get-lang store
     { save } = newseed-funcs store, web3t
@@ -211,7 +214,7 @@ restore-words-panel = (store, web3t)->
     next = ->
         max = store.current.seed-words.length - 1
         word = (store.current.seed-words |> sort-by (.index))[store.current.verify-seed-index].part
-        if word not in bip39.wordlists.EN
+        if word not in bip39.wordlists.EN and store.current.seed-words.length isnt 1
             return store.current.alert = lang.wordIncorrect
         return store.current.verify-seed-index += 1 if store.current.verify-seed-index < max
         save!
@@ -220,8 +223,8 @@ restore-words-panel = (store, web3t)->
         no
     .pug
         .pug.words
-            store.current.seed-words 
-                |> sort-by (.index) 
+            store.current.seed-words
+                |> sort-by (.index)
                 |> filter current-word store.current.verify-seed-index
                 |> map restore-words store, web3t, next
         .pug
