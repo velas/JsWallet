@@ -191,8 +191,10 @@ restore-words = (store, web3t, next, item)-->
         if store.current.seed-words.length is 1
             textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances." on-change=change-part)
         else
-            typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
-            span.effect.pug #{index}
+            [
+                typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
+                span.effect.pug #{index}
+            ]
 restore-words-panel = (store, web3t)->
     lang = get-lang store
     { save } = newseed-funcs store, web3t
