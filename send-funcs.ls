@@ -90,7 +90,8 @@ module.exports = (store, web3t)->
         # If cancel was pressed
         return null if not data?
         notify-form-result send.id, null, data
-        store.current.last-tx-url = "#{send.network.api.url}/tx/#{data}"
+        store.current.last-tx-url = | send.network.api.linktx => send.network.api.linktx.replace \:hash, data
+            | send.network.api.url => "#{send.network.api.url}/tx/#{data}"
         navigate store, web3t, \sent
         <- web3t.refresh
     send-escrow = ->

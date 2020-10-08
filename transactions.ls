@@ -9,7 +9,7 @@ require! {
 same = (x, y)->
     x?toUpperCase?! is y?toUpperCase?!
 extend = ({ address, coin, pending, network }, tx)-->
-    type = 
+    type =
         | tx.to `same` address => \IN
         | _ => \OUT
     tx.type = type if not tx.type?
@@ -17,8 +17,9 @@ extend = ({ address, coin, pending, network }, tx)-->
     tx.pending = pending ? tx.pending
     tx.network = network ? tx.network
 transform-ptx = (config, [tx, amount, fee, time, from, to2])-->
-    { url } = config.network?api ? {}
-    url = "#{url}/tx/#{tx}"
+    { url, linktx } = config.network?api ? {}
+    url = | linktx => linktx.replace \:hash, data
+        | url => "#{url}/tx/#{data}"
     { tx, amount, url, fee: fee, time, from, to: to2 }
 make-not-pending = (store, tx)->
     console.log \make-not-pending, tx
@@ -56,14 +57,14 @@ export rebuild-history = (store, web3, wallet, cb)->
     err, data <- get-transactions { address, network, coin.token, account: { address, private-key } }
     #console.log \rebuild-history, coin.token, err, data
     return cb err if err?
-    ids = 
+    ids =
         data |> map (.tx.to-upper-case!)
     dummy = (err, data)->
         console.log err, data
     err, ptxs <- get-pending-txs { network, store, coin.token }
     #console.log \ptxs, { err, ptxs, network, coin.token }
     return cb err if err?
-    ptxs 
+    ptxs
         |> filter -> ids.index-of(it.0.to-upper-case!) isnt -1
         |> each -> remove-tx { store, coin.token, network, tx: it.0 }, dummy
     err, ptxs <- get-pending-txs { network, store, coin.token }
@@ -75,17 +76,17 @@ export rebuild-history = (store, web3, wallet, cb)->
     txs
         |> filter (.token is coin.token)
         |> each -> txs.splice txs.index-of(it), 1
-    data 
+    data
         |> each extend { address, coin, network }
         |> each txs~push
-    ptxs 
+    ptxs
         |> map transform-ptx { address, coin, network }
         |> each extend { address, coin, network, pending: yes, checked: 0 }
         |> each txs~push
     cb!
 build-loader = (store, web3)-> (wallet)-> task (cb)->
     err <- rebuild-history store, web3, wallet
-    return cb! if err? 
+    return cb! if err?
     cb null
 export load-all-transactions = (store, web3, cb)->
     { wallets } = store.current.account

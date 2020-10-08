@@ -821,7 +821,7 @@ render-transaction = (store, web3t, tran)-->
                         copy store
                     .pug.gray(style=lightText)
                         span.pug #{lang.created}:
-                            | #{ago time}
+                            | #{time-ago}
                         if pending is yes
                             span.pug
                                 span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
