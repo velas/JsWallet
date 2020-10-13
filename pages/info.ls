@@ -18,6 +18,7 @@ require! {
     \../round-human.ls
     \./epoch.ls
     \./alert-txn.ls
+    \../components/burger.ls
 }
 .stats
     @import scheme
@@ -97,8 +98,9 @@ require! {
             box-sizing: border-box
             padding: 0 10px
             margin-bottom: 20px
-            &:last-child    
-                padding-bottom: $ios-m-b
+            &:last-child   
+                @media (max-width: 800px)
+                    padding-bottom: $ios-m-b
             >div
                 background: #3b1771
                 padding: 30px 20px
@@ -252,6 +254,7 @@ info = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.statistics}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.wrapper

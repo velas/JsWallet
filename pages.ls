@@ -33,38 +33,58 @@ require! {
     \./pages/notification.ls
     \./pages/offlinewallets.ls
     \./pages/vote.ls
+    \./pages/util.ls
 }
-export offlinewallets
-export monitor
-export resources
-export staking
-export verifyseed
-export loading
-export loading2 
-export wallets
-export history
-export send
-export receive
-export locked
-export sent
-export invoice
-export terms
-export terms2
-export privacy
-export filestorage
-export settings
-export chooseinit
-export newseedrestore
-export search
-export resources2
-export choosestaker
-export videostorage
-export videostoragedetails
-export info
-export faq
-export claim
-export soundstorage
-export notification
-export restorewords
-export reviewwords
-export vote
+is-in-iframe = window != window.parent
+if is-in-iframe
+    export verifyseed
+    export loading
+    export loading2
+    export wallets
+    export history
+    export send
+    export locked
+    export sent
+    export terms
+    export terms2
+    export privacy
+    export chooseinit
+    export newseedrestore
+    export restorewords
+    export reviewwords
+else
+    export offlinewallets
+    export monitor
+    export resources
+    export staking
+    export verifyseed
+    export loading
+    export loading2
+    export wallets
+    export history
+    export send
+    export receive
+    export locked
+    export sent
+    export invoice
+    export terms
+    export terms2
+    export privacy
+    export filestorage
+    export settings
+    export chooseinit
+    export newseedrestore
+    export search
+    export resources2
+    export choosestaker
+    export videostorage
+    export videostoragedetails
+    export info
+    export faq
+    export claim
+    export soundstorage
+    export notification
+    export restorewords
+    export reviewwords
+    export vote
+    export util

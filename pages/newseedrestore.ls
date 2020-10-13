@@ -14,7 +14,7 @@ require! {
     height: $height
     box-sizing: border-box
     height: 100%
-    >.logo 
+    >.logo
         margin: 3rem 0
         >img
             height: 80px
@@ -187,11 +187,12 @@ newseed = ({ store, web3t })->
         next!
     restore12 = restore-wallet 12
     restore24 = restore-wallet 24
+    restorecustom = restore-wallet 1
     back = ->
         store.current.page = 'chooseinit'
     .newseed-restore.pug
         .pug.logo
-            img.pug(src="#{style.branding.logo}" style=logo-style)
+            img.pug(src="#{style.branding.logo}")
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v
@@ -203,6 +204,10 @@ newseed = ({ store, web3t })->
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
                     | 24 #{lang.restore-words24}
+            button.pug.right(style=button-primary1-style on-click=restorecustom)
+                span.pug
+                    img.icon-svg.pug(src="#{icons.restore}")
+                    | Custom
             button.pug.right(on-click=back style=button-primary3-style )
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
                 | #{lang.back}

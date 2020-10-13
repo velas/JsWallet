@@ -15,6 +15,7 @@ require! {
     \../components/upload-video.ls
     \../components/upload-video-progress.ls
     \../components/video-list.ls
+    \../components/burger.ls
 }
 .videostorage
     @import scheme
@@ -1300,6 +1301,7 @@ videostorage = ({ store, web3t })->
             .pug.header(class="#{show-class}") Video storage
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         if store.video.menu-open

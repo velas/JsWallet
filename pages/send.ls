@@ -16,6 +16,7 @@ require! {
     \../components/trx-fee.ls
     \./send-contract.ls
     \../history-funcs.ls
+    \../components/burger.ls
 }
 .content
     position: relative
@@ -410,6 +411,7 @@ send = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.send}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.content-body(style=more-text)

@@ -35,6 +35,7 @@ require! {
     \../components/amount-field.ls
     \./move-stake.ls
     \../seed.ls : seedmem
+    \../components/burger.ls
 }
 .staking
     @import scheme
@@ -61,7 +62,7 @@ require! {
         padding: 0 5px
     .pad-bottom
         padding-bottom: 5px
-    @media(max-width:800px)
+    @media(max-width:$ipad)
         width: 100%
         margin: 0
     .staking-content
@@ -139,7 +140,8 @@ require! {
                     padding: 20px
                 &:last-child
                     border: 0
-                    padding-bottom: $ios-m-b
+                    @media (max-width: 800px)
+                        padding-bottom: $ios-m-b
                 &.reward
                     background-image: $reward
                     background-repeat: no-repeat
@@ -188,6 +190,11 @@ require! {
                         -moz-transition: breathe 3s ease-in infinite
                         -web-kit-transition: breathe 3s ease-in infinite
                         height: calc(100vh - 105px)
+                        .address-holder
+                            a
+                                padding-left: 30px !important
+                            .browse
+                                right: 30px !important
                         thead
                             th
                                 @media(min-width:800px) and (max-width: 900px)
@@ -208,6 +215,8 @@ require! {
                                 height: 20px
                                 display: inline-block
                                 color: white
+                                line-height: 1.6
+                                border-radius: 4px
                                 background: gray
                                 &.active
                                     background: rgb(38, 219, 85)
@@ -234,7 +243,7 @@ require! {
                         &:nth-child(1), &:nth-child(6)
                             text-align: center
                         img.copy
-                            height: 12px
+                            height: 16px
                             margin-right: 5px
                     td, th
                         padding: 8px
@@ -455,7 +464,7 @@ require! {
         margin: 0
         min-width: 100%
         max-width: 300px
-        li 
+        li
             list-style: none
             margin-left: 0
             font-size: 13px
@@ -547,8 +556,8 @@ to-keystore = (store, with-keystore)->
     wallet = hdkey.from-master-seed(seed)
     index = store.current.account-index
     password = md5 wallet.derive-path("m1").derive-child(index).get-wallet!.get-address!.to-string(\hex)
-    staking = 
-        | store.url-params.anotheracc? => { address: window.toEthAddress(store.url-params.anotheracc) } 
+    staking =
+        | store.url-params.anotheracc? => { address: window.toEthAddress(store.url-params.anotheracc) }
         | _ => get-pair wallet, \m0 , index, password, no
     mining  = get-pair wallet, \m0/2 , index, password, with-keystore
     { staking, mining, password }
@@ -604,11 +613,11 @@ staking-content = (store, web3t)->
             store.staking.add.add-validator-stake = value
         catch err
             console.log "[Change-stake]: #{err}"
-    velas-node-applied-template = 
+    velas-node-applied-template =
         pairs
-            |> velas-node-template 
+            |> velas-node-template
             |> split "\n"
-    velas-node-applied-template-line = 
+    velas-node-applied-template-line =
         pairs
             |> velas-node-template
             |> btoa
@@ -627,19 +636,19 @@ staking-content = (store, web3t)->
     build-template-line = ->
         index = velas-node-applied-template.index-of(it)
         line-style =
-            padding: "10px" 
+            padding: "10px"
             width: \100%
             margin-bottom: \2px
             background: if index % 2 then 'rgba(255, 255, 255, 0.04)' else ''
         .pug(style=line-style) #{it}
     line-style =
-        padding: "10px" 
+        padding: "10px"
         width: \100%
     activate = (tab)-> ->
-        store.staking.tab = tab 
+        store.staking.tab = tab
     activate-line = activate \line
     activate-string = activate \string
-    activate-ssh = activate \ssh 
+    activate-ssh = activate \ssh
     activate-do = activate \do
     active-class = (tab)->
         if store.staking.tab is tab then 'active' else ''
@@ -649,7 +658,7 @@ staking-content = (store, web3t)->
     active-do = active-class \do
     get-balance = ->
         wallet =
-            store.current.account.wallets 
+            store.current.account.wallets
                 |> find -> it.coin.token is \vlx2
         wallet.balance
     get-options = (cb)->
@@ -657,7 +666,7 @@ staking-content = (store, web3t)->
         return cb null if i-am-staker
         #err, data <- web3t.velas.Staking.candidateMinStake
         #return cb err if err?
-        #min = 
+        #min =
         #    | +store.staking.stake-amount-total >= 1000000 => 1
         #    | _ => data `div` (10^18)
         min = 10000
@@ -691,13 +700,13 @@ staking-content = (store, web3t)->
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
         stake = round-human item.stake
-        my-stake = 
+        my-stake =
             | +item.my-stake is 0 => round-human item.withdraw-amount
             | _ => round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
-        choose-pull = ->    
-            page = \choosestaker-pool              
-            store.pages.push(page) if store.pages.length > 0 and page isnt store.pages[store.pages.length - 1]            
+        choose-pull = ->
+            page = \choosestaker-pool
+            store.pages.push(page) if store.pages.length > 0 and page isnt store.pages[store.pages.length - 1]
             cb = (err, data)->
                 alert store, err, console~log if err?
             #store.staking.data-generation += 1
@@ -714,12 +723,12 @@ staking-content = (store, web3t)->
             return cb err if err?
         to-eth = ->
             item.eth = not item.eth
-        reward = 
-            | item.validator-reward-percent is ".." => ".." 
+        reward =
+            | item.validator-reward-percent is ".." => ".."
             | _ => (100 - +item.validator-reward-percent) * 1.4285714286
         filled = "#{round-human reward}%"
         filled-color =
-            color: 
+            color:
                 | reward > 95 => \red
                 | reward > 75 => \orange
                 | reward > 40 => "rgb(165, 174, 81)"
@@ -730,11 +739,11 @@ staking-content = (store, web3t)->
             address: ethToVlx item.address
             network: vlx2.network
             coin: vlx2.coin
-        vote-power = 
+        vote-power =
             | item.vote-power? => "#{item.vote-power}%"
             | _ => "..."
         tr.pug(class="#{item.status}")
-            td.pug 
+            td.pug
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
@@ -748,7 +757,7 @@ staking-content = (store, web3t)->
         go-back!
         store.staking.chosen-pool = null
     activate = (step)-> ->
-        store.current.step = step 
+        store.current.step = step
     activate-first = activate \first
     activate-second = activate \second
     activate-third = activate \third
@@ -780,7 +789,7 @@ staking-content = (store, web3t)->
             .pug.section
                 .title.pug
                     h3.pug #{lang.select-pool}
-                    if not store.staking.chosen-pool?    
+                    if not store.staking.chosen-pool?
                         .pug
                             .loader.pug(on-click=refresh style=icon-style title="refresh")
                                 icon \Sync, 25
@@ -817,7 +826,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
                                     button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug #{lang.balance}: 
+                                span.pug #{lang.balance}:
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -829,7 +838,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             .pug.balance
-                                span.pug #{lang.yourStaking}: 
+                                span.pug #{lang.yourStaking}:
                                 span.pug.color #{your-staking}
                                 span.pug.color #{vlx-token}
                             hr.pug
@@ -839,7 +848,7 @@ staking-content = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
                                     button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug #{lang.balance}: 
+                                span.pug #{lang.balance}:
                                 span.pug.color #{your-balance}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
@@ -881,6 +890,7 @@ staking = ({ store, web3t })->
             .pug.header(class="#{show-class}") #{lang.delegateStake}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
@@ -946,7 +956,7 @@ fill-pools = ({ store, web3t }, [item, ...rest], cb)->
     fill-pools { store, web3t }, rest, cb
 fill-vote-power = ({ store, web3t }, cb)->
     total-stake =
-        store.staking.pools 
+        store.staking.pools
             |> map (.stake)
             |> foldl plus, 0
     total-stake-percent = 100 `div` total-stake
@@ -955,17 +965,18 @@ fill-vote-power = ({ store, web3t }, cb)->
     store.staking.pools |> each fill-power
     cb null
 fill-pools-in-parallel = ({ store, web3t}, cb)->
-    create-promise = (pool)-> 
-        new Promise (resolve, reject)-> 
+    create-promise = (pool)->
+        new Promise (resolve, reject)->
             cb = (err, value)->
                 resolve value
             fill-pools { store, web3t }, [pool], cb
     promises =
-        store.staking.pools |> map create-promise 
+        store.staking.pools |> map create-promise
     values <- Promise.all promises .then
     cb null
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'
+    console.log \Filling
     err <- fill-pools { store, web3t }, store.staking.pools
     return cb err if err?
     err <- fill-vote-power { store, web3t }

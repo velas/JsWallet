@@ -354,7 +354,7 @@ locked = ({ store, web3t })->
         filter: info.app.filterLogo
     .pug.locked(key="locked" style=locked-style)
         .pug.logo
-            img.pug(style=logo-style src="#{info.branding.logo}")
+            img.pug(src="#{info.branding.logo}")
             .title.pug(style=txt-style) #{info.branding.title}
             version store, web3t
         .pug.title(key="locked-title") #{title}

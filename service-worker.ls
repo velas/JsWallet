@@ -1,4 +1,4 @@
-doCache = yes
+doCache = no
 CACHE_NAME = 'velas-pwa-cache-v1'
 cb = console.log
 as-callback = (p, cb)->
@@ -7,9 +7,9 @@ as-callback = (p, cb)->
     p.catch (err)->
         cb err
 urlsToCache =
-    * './main-index.html'
-    * './main-bundle.css?alias=wallet'
-    * './main-bundle.js?alias=wallet'
+    * './'
+    * './main-bundle.css'
+    * './main-bundle.js'
 self.addEventListener 'activate', (event) ->
     console.log \activate event.waitUntil
     cacheWhitelist = [CACHE_NAME]
@@ -30,7 +30,7 @@ self.addEventListener 'install', (event) ->
     return
 #
 self.addEventListener 'fetch', (event) ->
-    console.log event.request.url
+    #console.log event.request.url
     if doCache
         event.respondWith (caches.match event.request).then ((response) -> response || fetch event.request)
     return

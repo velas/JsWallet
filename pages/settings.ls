@@ -9,6 +9,7 @@ require! {
     \../navigate.ls
     \../icons.ls
     \../components/button.ls
+    \../components/burger.ls
     \./choose-themes.ls
     \prelude-ls : { obj-to-pairs, pairs-to-obj, map }
 }
@@ -194,7 +195,8 @@ require! {
             border-bottom: 1px solid rgba(240, 237, 237, 0.16)
             &:last-child
                 border-bottom: 0
-                padding-bottom: $ios-m-b
+                @media (max-width: 800px)
+                    padding-bottom: $ios-m-b
             .langs-drop
                 position: absolute
                 right: 0
@@ -554,6 +556,7 @@ module.exports = ({ store, web3t } )->
             .pug.header #{lang.manage-account}
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=icon-color)
+            burger store, web3t
         .account-body.pug(style=account-body-style)
             .pug.settings
                 manage-account store, web3t

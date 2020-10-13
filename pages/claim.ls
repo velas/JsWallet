@@ -6,6 +6,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./claim-stake.ls
+    \../components/burger.ls
 }
 .claim
     @import scheme
@@ -467,6 +468,7 @@ module.exports = ({store, web3t})->
             .pug.header Claim Reward
             .pug.close(on-click=go-back)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             switch-account store, web3t
         .pug.claim-content
             .form-group.pug

@@ -82,7 +82,7 @@ require! {
         >.wallet-container
             overflow: hidden
             overflow-y: auto
-            border-radius: $border
+            border-radius: 0 0 $border $border
             max-height: 268px
             height: 100%
             max-width: 450px
@@ -95,7 +95,7 @@ require! {
             .wallet
                 background: var(--bg-secondary)
                 &:last-child
-                    margin-bottom: 0px
+                    margin-bottom: -1px
                 &.big
                     background: var(--bg-secondary)
             @media(max-width: $mobile)

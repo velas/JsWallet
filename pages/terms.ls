@@ -71,7 +71,7 @@ terms = ({ store, web3t })->
                 button { store, text: \accept , on-click: accept, type: \primary }
 terms.init = ({ store }, cb)->
     err, res <- get \https://raw.githubusercontent.com/askucher/expo-web3/dev/TERMS.md .end
-    return cb err if err?
+    return cb err if not res?text
     store.terms = res.text
     cb null
 module.exports = terms

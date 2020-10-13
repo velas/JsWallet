@@ -14,6 +14,7 @@ require! {
     \../math.ls : { minus }
     \../components/text-field.ls
     \../components/button.ls
+    \../components/burger.ls
 }
 .vote
     @import scheme
@@ -31,8 +32,9 @@ require! {
     box-sizing: border-box
     padding: 0px
     background: transparent
-    @media(max-width:800px)
-        margin-left: 0
+    @media(max-width:$ipad)
+        width: 100%
+        margin: 0
     >.title
         position: sticky
         position: -webkit-sticky
@@ -376,6 +378,7 @@ vote = ({ store, web3t })->
             .pug.header(class="#{show-class}") Vote
             .pug.close(on-click=goto-search)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
+            burger store, web3t
             epoch store, web3t
             switch-account store, web3t
         .pug.wrapper

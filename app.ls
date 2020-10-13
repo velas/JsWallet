@@ -28,6 +28,28 @@ require! {
         outline: none
     ::-webkit-scrollbar
         display: none
+    .table-scroll
+        scrollbar-width: thin
+        display: block !important
+        -ms-overflow-style: block !important
+        scrollbar-width: thin !important
+        outline: block !important
+        scrollbar-color: var(--ligh-text) #f8f5f60d
+    .table-scroll::-webkit-scrollbar
+        width: 4px
+        height: 4px
+        display: block
+    .table-scroll::-webkit-scrollbar-track
+        background: #f8f5f60d
+        border-radius: 10px
+    .table-scroll::-webkit-scrollbar-thumb
+        border-radius: 10px
+        background: #71748f 
+    .table-scroll::-webkit-scrollbar-thumb:hover
+        background: #ffffff
+        border-radius: 10px
+    .table-scroll::-webkit-scrollbar-corner
+        background: #f8f5f60d
     user-select: none
     overflow-y: scroll
     @import scheme
@@ -52,7 +74,7 @@ require! {
                     visibility: hidden
             @media(max-width: 820px)
                 text-align: left !important
-                margin-left: 70px !important
+                margin-left: 120px !important
                 font-size: 12px !important
         &.alert
             .header
@@ -61,19 +83,24 @@ require! {
                     margin-left: 0px !important
                     font-size: 12px !important
         .close
+            position: absolute
+            font-size: 20px
+            left: 20px
+            top: 13px
+            cursor: pointer
             @media(max-width: 820px)
                 position: absolute
                 font-size: 20px
-                left: 0
-                top: 0
+                left: 50px !important
+                top: 0 !important
                 height: 60px
                 width: 60px
                 cursor: pointer
                 border-right: 1px solid var(--border)
-            @media(min-width: 821px)
+            @media(max-width: 992px)
                 position: absolute
                 font-size: 20px
-                left: 20px
+                left: 80px
                 top: 13px
                 cursor: pointer
             img
@@ -158,10 +185,11 @@ require! {
         bottom: 0
         left: 0
         right: 0
+        z-index: 11
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
-    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves};--primary1: #{style.app.primary1};--primary2: #{style.app.primary2};--primary3: #{style.app.primary3};--input: #{style.app.input}}"
+    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves};--primary1: #{style.app.primary1};--primary2: #{style.app.primary2};--primary3: #{style.app.primary3};--input: #{style.app.input};--dark-theme: #{style.app.menu};--border: #{style.app.border};--ligh-text: #{style.app.icon}}"
     style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?

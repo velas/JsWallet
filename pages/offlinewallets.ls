@@ -6,11 +6,14 @@ require! {
     \../get-primary-info.ls
     \../icons.ls
     \../navigate.ls
+    \../components/burger.ls
 }
 .wallets
     @import scheme
-    @media screen and (min-width: 800px)
-        margin-left: $left-margin
+    @media(max-width:$ipad)
+        width: 100%
+        margin: 0
+    margin-left: $left-margin
     >.title
         position: sticky
         position: -webkit-sticky
@@ -141,6 +144,7 @@ header = (store, web3t)->
         .pug.header(class="#{show-class}") Download Wallets
         .pug.close(on-click=goto-search)
             img.icon-svg.pug(src="#{icons.arrow-left}")
+        burger store, web3t
 module.exports = ({ store, web3t })->
     .pug.wallets
         header store, web3t

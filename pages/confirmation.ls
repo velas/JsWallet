@@ -151,8 +151,9 @@ prompt-modal = (store)->
         store.current.prompt = yes
         callback = state.callback
         state.callback = null
-        callback store.current.prompt-answer if typeof! callback is \Function
+        prompt-answer = store.current.prompt-answer
         store.current.prompt-answer = ""
+        callback prompt-answer if typeof! callback is \Function
     cancel = ->
         store.current.prompt = no
         callback = state.callback

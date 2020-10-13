@@ -35,7 +35,7 @@ module.exports = (store, web3t)->
         # return cb null if wrong.length is 0
         # res <- confirm store, "Some words do not match the dictionary. Do you want to continue?"
         try
-            for i from 0 to store.current.seed-words.length-1 by 12
+            for i from 0 to store.current.seed-words.length-11 by 12
                 bip39.mnemonic-to-entropy store.current.seed-words.slice(i, i+12).map(-> it.part).join(" ")
             cb null
         catch
