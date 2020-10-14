@@ -38,6 +38,7 @@
     "wallet": "lsxc wallet -t index.html -wsfkibh -c main.ls",
     "wallet-fast": "lsxc wallet -t index.html -wsfkibh -c main.ls",
     "wallet-start": "lsxc wallet -t index.html -wsfkibnh -c main.ls",
+    "wallet-build": "lsxc wallet -t index.html -sfkibh -c main.ls",
     "sync-languages": "lsc langs/index.ls --sync"
   }
 }
