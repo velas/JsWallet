@@ -7,7 +7,7 @@ RUN apk add --no-cache --update \
       git
 WORKDIR /app
 
-RUN git clone https://github.com/kpogromskiy/web3t.git web3t
+RUN git clone https://github.com/velas/web3t.git web3t
 COPY . wallet
 
 WORKDIR /app/web3t
