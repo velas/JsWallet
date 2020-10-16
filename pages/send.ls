@@ -362,6 +362,7 @@ send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
     { go-back } = history-funcs store, web3t
+    return go-back! if not wallet?
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
     style = get-primary-info store
@@ -501,11 +502,13 @@ send = ({ store, web3t })->
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
+    return cb null if not wallet?
     { wallets } = wallets-funcs store, web3t
     current-wallet =
         wallets |> find (-> it.coin.token is wallet.coin.token)
     return cb null if current-wallet.address is wallet.address
     { wallet } = send-funcs store, web3t
+    return cb null if not wallet?
     return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]
     err <- send-transaction { to: "", value: 0 }

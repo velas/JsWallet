@@ -18,8 +18,8 @@ extend = ({ address, coin, pending, network }, tx)-->
     tx.network = network ? tx.network
 transform-ptx = (config, [tx, amount, fee, time, from, to2])-->
     { url, linktx } = config.network?api ? {}
-    url = | linktx => linktx.replace \:hash, data
-        | url => "#{url}/tx/#{data}"
+    url = | linktx => linktx.replace \:hash, tx
+        | url => "#{url}/tx/#{tx}"
     { tx, amount, url, fee: fee, time, from, to: to2 }
 make-not-pending = (store, tx)->
     console.log \make-not-pending, tx

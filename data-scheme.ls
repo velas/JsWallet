@@ -104,6 +104,9 @@ store =
         epoch: '..'
     peerinfo:
         peers: []
+    interop:
+        is-address-queried: no
+        origin: no
     staking:
         reward-info: []
         exit-tab: ''

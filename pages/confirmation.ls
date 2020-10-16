@@ -210,3 +210,4 @@ export prompt = (store, text, cb)->
 export alert = (store, text, cb)->
     store.current.alert = text
     state.callback = cb
+window.confirm-state = state

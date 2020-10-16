@@ -19,6 +19,8 @@ export get-balance = action (provider, config, cb)->
     provider.get-balance config, cb
 export get-transactions = action (provider, config, cb)->
     provider.get-transactions config, cb
+export get-reward-history = action (provider, config, cb)->
+    provider.get-reward-history config, cb
 export create-transaction = action (provider, config, cb)->
     provider.create-transaction config, cb
 export push-tx = action (provider, config, cb)->
