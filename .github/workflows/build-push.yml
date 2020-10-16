@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: velas/velas-inrfa
-          token: ${{ secrets.INFRA_TOKEN }}
+          ssh-key: ${{ secrets.INFRA_SSH_KEY }}
       - name: Deploy via helmfile
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
