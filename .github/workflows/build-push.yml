@@ -1,4 +1,4 @@
-name: CI to docker hub
+name: CI to ECR
 on: 
   push:
     branches: [feature/ci]
@@ -9,7 +9,7 @@ jobs:
     name: Build and push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@v2
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
