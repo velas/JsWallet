@@ -4,9 +4,9 @@ on:
     branches: [feature/ci]
 
 jobs:
-  docker-build:
+  docker-build-push-deploy:
     # Name the Job
-    name: Build and push
+    name: Build and push and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,13 +31,17 @@ jobs:
         uses: mamezou-tech/setup-helmfile@v0.6.0
         with:
           helmfile-version: "v0.131.0"
+      - name: Check out my other private repo
+        uses: actions/checkout@master
+        with:
+          repository: velas/velas-inrfa
+          token: ${{ secrets.INFRA_TOKEN }}
       - name: Deploy via helmfile
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: velas-wallet
           IMAGE_TAG: ${{github.sha}}
         run: |
-          git clone git@github.com:velas/velas-infra.git
           cd velas-infra/deploy
           helmfile -e nodes -l namespace=testnet,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
 
