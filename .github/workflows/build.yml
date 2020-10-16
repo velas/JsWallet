@@ -23,9 +23,35 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: velas-wallet
-          IMAGE_TAG: ${GITHUB_SHA::8}
+          IMAGE_TAG: ${GITHUB_SHA}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}
+  
+  deploy-testnet:
+    name: Deploy via Helmfile
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${GITHUB_SHA}
+    steps:
+    - name: Setup helmfile
+      uses: mamezou-tech/setup-helmfile@v0.6.0
+      with:
+        helmfile-version: "v0.131.0"
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    - name: Deploy via helmfile
+      env:
+        ECR_REGISTRY: ${{ jobs.docker-build.steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: velas-wallet
+        IMAGE_TAG: ${GITHUB_SHA}
+      run: |
+        git clone git@github.com:velas/velas-infra.git
+        cd velas-infra/deploy
+        helmfile -e nodes -l namespace=testnet,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
 
