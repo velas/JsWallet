@@ -25,6 +25,7 @@ jobs:
           ECR_REPOSITORY: velas-wallet
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          env
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_HEAD_REF  .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_HEAD_REF
