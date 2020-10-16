@@ -23,7 +23,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: velas-wallet
-          IMAGE_TAG: ${{GITHUB_SHA::8}}
+          IMAGE_TAG: ${{GITHUB_SHA}}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -35,7 +35,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: velas-wallet
-          IMAGE_TAG: ${{GITHUB_SHA::8}}
+          IMAGE_TAG: ${{GITHUB_SHA}}
         run: |
           git clone git@github.com:velas/velas-infra.git
           cd velas-infra/deploy
