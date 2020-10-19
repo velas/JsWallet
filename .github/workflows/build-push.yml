@@ -41,10 +41,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: velas-wallet
           IMAGE_TAG: ${{github.sha}}
-          KUBECONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         run: |
           if [ `helm plugin list|grep diff|wc -l` -eq '0' ]; then helm plugin install https://github.com/databus23/helm-diff ; fi
-          mkdir -p ~/.kube && echo $KUBECONFIG > ~/.kube/config
+          mkdir -p ~/.kube && echo $KUBE_CONFIG_DATA|base64 --decode > ~/.kube/config
           cd deploy
           helmfile -e nodes -l namespace=testnet,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
 
