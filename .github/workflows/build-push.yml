@@ -47,6 +47,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
       - name: Setup helmfile
         uses: mamezou-tech/setup-helmfile@v0.6.0
         with:
@@ -61,7 +64,7 @@ jobs:
       - name: Deploy via helmfile
         id: deploy
         env:
-          ECR_REGISTRY: ${{ needs.docker-build-push.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ needs.docker-build-push.outputs.repository }}
           IMAGE_TAG: ${{ needs.docker-build-push.outputs.image_tag }}
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
