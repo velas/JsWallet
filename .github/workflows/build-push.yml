@@ -12,13 +12,6 @@ jobs:
       registry: ${{ steps.build.outputs.registry }}
       image_tag: ${{ steps.build.outputs.image_tag }}
     steps:
-      - name: test
-        env:
-          NAMESPACE: testnet
-        run: |
-          if [ ${GITHUB_REF##*/} = 'master' ]; then NAMESPACE=default2; fi
-          if [ ${GITHUB_REF##*/} = 'ci' ]; then NAMESPACE=default1 ; fi
-          echo $NAMESPACE
       - uses: actions/checkout@v2
       - name: Configure AWS credentials
         id: checkout 
@@ -58,6 +51,7 @@ jobs:
       - name: add aws-iam-authenticator
         uses: prepor/action-aws-iam-authenticator@master
       - name: Deploy via helmfile
+        id: deploy
         env:
           ECR_REGISTRY: ${{ needs.docker-build-push.outputs.registry }}
           IMAGE_TAG: ${{ needs.docker-build-push.outputs.image_tag }}
@@ -65,8 +59,8 @@ jobs:
           NAMESPACE: testnet
         run: |
           if [ `helm plugin list|grep diff|wc -l` -eq '0' ]; then helm plugin install https://github.com/databus23/helm-diff ; fi
-          if [ ${GITHUB_REF##*/} -eq 'master' ]; then NAMESPACE=default; fi
+          if [ ${GITHUB_REF##*/} = 'master' ]; then NAMESPACE=default; fi
           mkdir -p ~/.kube && echo $KUBE_CONFIG_DATA|base64 --decode > ~/.kube/config
           cd deploy
-          helmfile -e nodes -l namespace=testnet,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
+          helmfile -e nodes -l namespace=${NAMESPACE},name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
 
