@@ -105,57 +105,6 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(51, 20, 97, 0.78)"
         left-side: "transparent"
-    light:
-        background: \#F0EFF5
-        menu: \#F0EFF5
-        background-image: "none"
-        waves: "none"
-        demo: \#e3e1e8
-        input: \#e4e4e4
-        input-light: \#e4e4e4
-        dragarea: \#00000057
-        primary1: \#9d41eb
-        primaryOpct: \#FFF
-        primary2: \#3cd5af
-        primary3: \#ffffff
-        primary4: \#FFF
-        wallet: "transparent"
-        input-bg: \#FFF
-        stats-style: \#FFF
-        wallet-light: \#FFF
-        alert: \#FFF
-        header: \#FFF
-        account-bg: \#FFF
-        tooltip: \#fff
-        icon: \gray
-        btn-icon: "grayscale(100%) brightness(60%) sepia(100%) hue-rotate(-150deg) saturate(0%) contrast(0.5)"
-        loader: \gray
-        border: \#CCCCCC
-        border-color: "transparent"
-        bg-btn: "transparent"
-        border-light: \#CCCCCC
-        text: \black
-        text2: \black
-        text3: \#677897
-        text-primary: \black
-        color3: \#000000
-        bg-primary-light: \#e7e5ed
-        stats: \#E7E5ED
-        filterIcon: "brightness(.5)"
-        filterLogo: "brightness(1)"
-        nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1)) hue-rotate(0deg)"
-        th: \#E7E5ED
-        tr-odd: \#dad9de
-        tr-even: \#f0eff5
-        icon-filter: "grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-150deg) saturate(0%) contrast(0.5)"
-        placeholder: \#eeeeee
-        placeholder-menu: \#e9e9ea
-        filterBg: \#f0eff5
-        color1: \#ffffff
-        color2: \#e2e1e6
-        color-td: \#52b59d
-        drag-bg: "rgba(255, 255, 255, 0.71)"
-        left-side: "transparent"
     dark:
         background: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"
         menu: "linear-gradient(100deg, rgb(33, 48, 64) 4%, rgb(23, 35, 49) 100%)"

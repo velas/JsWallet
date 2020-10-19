@@ -96,23 +96,29 @@ require! {
             vertical-align: top
             padding-top: 12px
             height: $card-top-height
+            line-height: 16px
         >.top-left
             width: 30%
             text-align: left
             overflow: hidden
             text-overflow: ellipsis
+            @media screen and (min-width: 801px)
+                padding-top: 5px
             >*
                 display: inline-block
             >.img
                 line-height: $card-top-height
                 vertical-align: top
-                margin-right: 5px
+                margin-right: 10px
+                width: 40px
                 >img
                     vertical-align: top
                     max-width: 50px
                     $s: 35px
                     border-radius: 0
                     height: $s
+                    @media screen and (min-width: 801px)
+                        padding-top: 4px
             >.info
                 text-align: left
                 margin-left: 0px
@@ -124,11 +130,16 @@ require! {
                 >.name
                     padding-left: 3px
                 >.price
-                    font-size: 12px
+                    font-size: 11px
                     font-weight: bold
                     overflow: hidden
                     text-overflow: ellipsis
                     opacity: .5
+                    padding: 0
+                    letter-spacing: .4px
+                    &.token
+                        opacity: 1
+                        font-size: 12px
         >.top-middle
             width: 30%
             text-align: center
@@ -252,6 +263,10 @@ module.exports = (store, web3t, wallets, wallet)-->
                     img.pug(src="#{wallet.coin.image}")
                 .info.pug
                     .balance.pug.title(class="#{placeholder}") #{name}
+                    if store.current.device is \desktop
+                        .price.token.pug(class="#{placeholder}" title="#{wallet.balance}")
+                            span.pug #{ round-human wallet.balance }
+                            span.pug #{ wallet.coin.token.to-upper-case! }
                     .price.pug(class="#{placeholder}" title="#{balance-usd}")
                         span.pug #{ round-human balance-usd}
                         span.pug USD
@@ -266,7 +281,6 @@ module.exports = (store, web3t, wallets, wallet)-->
                         if +wallet.pending-sent >0
                             .pug.pending
                                 span.pug -#{ pending }
-                    .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
             .top-right.pug
                 if store.current.device is \desktop
                     if no
