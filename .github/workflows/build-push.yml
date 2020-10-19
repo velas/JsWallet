@@ -17,7 +17,7 @@ jobs:
           NAMESPACE: testnet
         run: |
           if [ ${GITHUB_REF##*/} = 'master' ]; then NAMESPACE=default; fi
-          if [ ${GITHUB_REF##*/} = 'ci' ]; then NAMESPACE=default 1; fi
+          if [ ${GITHUB_REF##*/} = 'ci' ]; then NAMESPACE=default ; fi
           echo $NAMESPACE
       - uses: actions/checkout@v2
       - name: Configure AWS credentials
