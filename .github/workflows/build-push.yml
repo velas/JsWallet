@@ -9,7 +9,6 @@ jobs:
     name: Build and push
     runs-on: build
     outputs:
-      registry: ${{ steps.login-ecr.outputs.registry }}
       repository: ${{ steps.build.outputs.repository }}
       image_tag: ${{ steps.build.outputs.image_tag }}
     steps:
