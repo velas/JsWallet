@@ -42,6 +42,7 @@ jobs:
           ECR_REPOSITORY: velas-wallet
           IMAGE_TAG: ${{github.sha}}
         run: |
+          helm plugin install https://github.com/databus23/helm-diff
           cd deploy
           helmfile -e nodes -l namespace=testnet,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY
 
