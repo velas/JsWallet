@@ -7,7 +7,7 @@ jobs:
   docker-build-push-deploy:
     # Name the Job
     name: Build and push and Deploy
-    runs-on: test
+    runs-on: build
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS credentials
