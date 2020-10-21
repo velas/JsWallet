@@ -167,6 +167,7 @@ store =
         active: 's2'
         mobile: no
         show: no
+        support: 'https://support.velas.com/'
     ask:
         text: ''
         enabled: no

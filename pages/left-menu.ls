@@ -317,6 +317,9 @@ module.exports = (store, web3t)->
     goto-settings = ->
         navigate store, web3t, \settings
         store.menu.show = no
+    goto-support = ->
+        store.menu.show = no
+        window.open(store.menu.support)
     goto-file-storage = ->
         navigate store, web3t, \filestorage
     goto-staking = ->
@@ -399,6 +402,10 @@ module.exports = (store, web3t)->
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     span.arrow_box.pug #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
+            if store.preference.settings-visible is yes
+                .menu-item.pug(on-click=goto-support style=icon-style)
+                    span.arrow_box.pug #{lang.support}
+                    img.pug(src="#{icons.support}" style=icon-color)
             if store.current.network is \testnet
                 .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
                     span.arrow_box.pug Testnet
