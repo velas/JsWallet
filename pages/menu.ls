@@ -61,7 +61,7 @@ require! {
         width: 100%
         max-width: 450px
         >.branding
-            margin-top: 25px
+            margin-top: 35px
             text-align: center
             img
                 width: 35px
