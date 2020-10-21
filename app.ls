@@ -158,7 +158,7 @@ require! {
         color: transparent !important
         width: 100%
         display: inline-block
-        height: 16px
+        height: 10px
         border-radius: 15px
     @keyframes fb
         0%
