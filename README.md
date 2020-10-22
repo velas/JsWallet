@@ -7,7 +7,7 @@
 1. mkdir wallet-area
 2. cd wallet-area
 1. git clone https://github.com/velas/JsWallet wallet
-2. git clone http://github.com/web3space/web3t
+2. git clone http://github.com/velas/web3t
 3. cd web3t
 4. npm i 
 5. cd ../wallet
