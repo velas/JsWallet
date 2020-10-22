@@ -9,6 +9,7 @@ require! {
     \./icon.ls
     \../icons.ls
     \./header.ls
+    \../navigate.ls
     \../round-human.ls
     \../add-coin.ls
     \./tor.ls
@@ -59,6 +60,12 @@ require! {
         vertical-align: -webkit-baseline-middle
         width: 100%
         max-width: 450px
+        >.branding
+            margin-top: 35px
+            text-align: center
+            img
+                width: 35px
+                cursor: pointer
         >.balance
             position: relative
             button
@@ -97,12 +104,14 @@ require! {
                     letter-spacing: 2px
                     line-height: 24px
                     opacity: .8
-                    margin-top: 20px
+                    margin-top: 5px
             >.amount
                 font-size: 25px
                 .symbol
                     font-size: 15px
                     vertical-align: unset
+                    opacity: .5
+                    margin-right: 2px
                 >*
                     display: inline-block
     .placeholder
@@ -132,6 +141,8 @@ module.exports = ({ store, web3t })->
     icon-style =
         color: style.app.loader
         margin-top: "10px"
+    goto-wallet = ->
+        navigate store, web3t, \wallets
     button-add=
         color: style.app.text
         border-radius: "50px"
@@ -152,6 +163,8 @@ module.exports = ({ store, web3t })->
         width: "40px"
         height: "40px"
         margin: "0px 5px 0"
+    logo-style =
+        filter: style.app.filterLogo
     lang = get-lang store
     syncing =
         | store.current.refreshing => \syncing
@@ -161,6 +174,8 @@ module.exports = ({ store, web3t })->
         | _ => ""
     .menu.wallet-main.pug(style=menu-style)
         .menu-body.pug
+            .pug.branding
+                img.pug(src="#{info.branding.logo-sm}" on-click=goto-wallet)
             .balance.pug
                 .currency.h1.pug #{lang.balance}
                 .amount.pug(class="#{placeholder}")

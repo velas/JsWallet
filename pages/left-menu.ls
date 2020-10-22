@@ -25,10 +25,6 @@ require! {
         padding: 0
         padding-top: 0px
         z-index: 11
-        background-image: $logo-op
-        background-repeat: no-repeat
-        background-position: 50% 120px
-        background-size: 130px
         transition: all .5s
         .closed
             display: none
@@ -59,7 +55,7 @@ require! {
             position: absolute
             top: calc(4*60px)
             width: 100%
-        .logo
+        .info
             position: absolute
             width: 100%
             text-align: center
@@ -317,6 +313,9 @@ module.exports = (store, web3t)->
     goto-settings = ->
         navigate store, web3t, \settings
         store.menu.show = no
+    goto-support = ->
+        store.menu.show = no
+        window.open(store.menu.support)
     goto-file-storage = ->
         navigate store, web3t, \filestorage
     goto-staking = ->
@@ -362,8 +361,7 @@ module.exports = (store, web3t)->
     .menu.side-menu.pug(style=border-style class="#{show-mobile}")
         .pug.closed(on-click=close class="#{show-mobile}")
             icon \X, 20
-        .pug.logo
-            img.pug(src="#{info.branding.logo-sm}" style=logo-style on-click=goto-wallet)
+        .pug.info
             version store, web3t
         menu { store, web3t }
         .pug.menu-items
@@ -399,6 +397,10 @@ module.exports = (store, web3t)->
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     span.arrow_box.pug #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
+            if store.preference.settings-visible is yes
+                .menu-item.pug(on-click=goto-support style=icon-style)
+                    span.arrow_box.pug #{lang.support}
+                    img.pug(src="#{icons.support}" style=icon-color)
             if store.current.network is \testnet
                 .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
                     span.arrow_box.pug Testnet
