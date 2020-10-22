@@ -11,5 +11,5 @@ require! {
     \../web3t/plugins/usdt-coin.js : usdt
 }
 module.exports = (cb) ->
-    def = [ usdt, symblox ]
+    def = [ eth, usdt, symblox ]
     cb null, def

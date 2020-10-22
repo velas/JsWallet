@@ -29,10 +29,11 @@ module.exports = (store, mnemonic="", cb)->
             wallet-or-null.pending-sent = \..
             wallet-or-null.balance = \..
         err, wallets <- generate-coin-wallets rest
-        return cb err if err?
+        console.log err if err?
         current-wallets =
             | wallet-or-null? => [wallet-or-null]
             | _ => []
+        return cb null, current-wallets if err?
         all = current-wallets ++ wallets
         cb null, all
     err, wallets <- generate-coin-wallets store.coins
