@@ -1,8 +1,8 @@
 {
-  "name": "ethnamed",
-  "version": "0.13.01",
-  "description": "This dapp helps register names in Ethnamed Registry",
-  "main": "ethnamed.js",
+  "name": "velas-wallet",
+  "version": "0.13.02",
+  "description": "",
+  "main": "",
   "dependencies": {
     "@primer/octicons-react": "9.1.1",
     "atob": "2.1.2",
