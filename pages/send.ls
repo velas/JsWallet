@@ -41,7 +41,7 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -368,6 +368,7 @@ send = ({ store, web3t })->
     style = get-primary-info store
     menu-style=
         background: style.app.background
+        background-color: style.app.bgspare
         border: "1px solid #{style.app.border}"
     input-style=
         background: style.app.input
@@ -385,6 +386,7 @@ send = ({ store, web3t })->
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     crypto-background =
         background: style.app.wallet
     more-text=
@@ -393,6 +395,7 @@ send = ({ store, web3t })->
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.background
+        background-color: style.app.bgspare
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->

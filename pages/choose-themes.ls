@@ -29,8 +29,10 @@ create-button = (store, web3t)-> (text)->
         web3t.set-theme text
     background-style=
         background: themes[text].background
+        background-color: themes[text].bgspare
     button-style=
         background: themes[text].primary1
+        background-color: themes[text].primary1-spare
     control-style=
         background: themes[text].bg-primary-light
     .pug.theme

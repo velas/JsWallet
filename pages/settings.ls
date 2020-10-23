@@ -33,7 +33,7 @@ require! {
         position: sticky
         position: -webkit-sticky
         z-index: 1
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -436,6 +436,7 @@ switch-account = (store, web3t)->
         border: "1px solid #{style.app.wallet}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     .pug.switch-account(style=color)
         .pug.mb-12 #{lang.account-index}:
         span.pug.button.left(on-click=account-left style=button-primary2-style)
@@ -483,6 +484,7 @@ manage-account = (store, web3t)->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     goto-terms = ->
         navigate store, web3t, \terms2
     goto-privacy = ->
@@ -550,6 +552,7 @@ module.exports = ({ store, web3t } )->
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.background
+        background-color: style.app.bgspare
     lang = get-lang store
     .pug.settings-menu
         .pug.title(style=border-style)

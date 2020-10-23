@@ -455,7 +455,7 @@ require! {
         margin: 0
     .search-input
         position: fixed
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         z-index: 1
         width: 100%
         .add
@@ -586,7 +586,7 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -1012,6 +1012,7 @@ item = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1028,6 +1029,7 @@ item = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -1272,6 +1274,7 @@ item2 = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1288,6 +1291,7 @@ item2 = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -1397,6 +1401,7 @@ item3 = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1413,6 +1418,7 @@ item3 = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -1481,6 +1487,7 @@ item4 = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1497,6 +1504,7 @@ item4 = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -1578,6 +1586,7 @@ faq = ({ store, web3t })->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1594,6 +1603,7 @@ faq = ({ store, web3t })->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"

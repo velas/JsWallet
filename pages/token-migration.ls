@@ -376,10 +376,12 @@ token-migration = (store, web3t)->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     button-primary3-style=
         border: "1px solid #{style.app.border}"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     button-primary4-style=
         border: "1px solid #{style.app.border}"
         color: style.app.text
@@ -502,6 +504,7 @@ module.exports = ({ store, web3t } )->
     style = get-primary-info store
     account-body-style = 
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     border-style =
         background: style.app.header

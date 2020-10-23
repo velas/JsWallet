@@ -203,10 +203,12 @@ restore-words-panel = (store, web3t)->
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     button-primary3-style=
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     btn-icon =
         filter: style.app.btn-icon
     text-style =

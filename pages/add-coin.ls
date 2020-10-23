@@ -241,6 +241,7 @@ module.exports = ({ store, web3t } )->
     style = get-primary-info store
     account-body-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     color =
         color: style.app.text

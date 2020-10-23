@@ -29,7 +29,6 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -122,6 +121,7 @@ convert = ({ store, web3t })->
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.background
+        background-color: style.app.bgspare
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.convert

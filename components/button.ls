@@ -38,14 +38,17 @@ get-button-style = (store, type)->
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     button-primary3-style=
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     button-primary2-style=
         border: "0"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     button-style =
         | type is \primary => button-primary1-style
         | type is \secondary => button-primary2-style

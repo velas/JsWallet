@@ -199,7 +199,7 @@ require! {
         position: sticky
         position: -webkit-sticky
         z-index: 1
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -220,7 +220,7 @@ require! {
             height: 60px
             z-index: 11
             width: 100%
-            background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+            background: var(--background)
         ul.path
             @media (max-width: 800px)
                 display: none
@@ -441,6 +441,7 @@ filestorage = ({ store, web3t })->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+        background-color: info.app.bgspare
     border-right =
         color: info.app.text
         border-right: "1px solid #{info.app.border}"
@@ -448,6 +449,7 @@ filestorage = ({ store, web3t })->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -464,6 +466,7 @@ filestorage = ({ store, web3t })->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     lightText=
         color: info.app.color3
     icon-style=

@@ -18,7 +18,7 @@ require! {
         position: sticky
         position: -webkit-sticky
         z-index: 1
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -83,14 +83,17 @@ build-version = (store, release)-->
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     button-primary3-style=
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     button-primary2-style=
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     button-link=
         border: "0"
         color: style.app.text2
@@ -136,6 +139,7 @@ header = (store, web3t)->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+        background-color: info.app.bgspare
     goto-search = ->
         navigate store, web3t, \search
     show-class =

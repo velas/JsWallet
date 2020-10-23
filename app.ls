@@ -54,6 +54,7 @@ require! {
     overflow-y: scroll
     @import scheme
     background: $primary
+    background-color: var(--bgspare)
     scrollbar-width: none
     height: 100vh
     position: relative
@@ -189,7 +190,7 @@ require! {
 # use var(--background);
 define-root = (store)->
     style = get-primary-info store
-    text = ":root { --background: #{style.app.background};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves};--primary1: #{style.app.primary1};--primary2: #{style.app.primary2};--primary3: #{style.app.primary3};--input: #{style.app.input};--dark-theme: #{style.app.menu};--border: #{style.app.border};--ligh-text: #{style.app.icon}}"
+    text = ":root { --background: #{style.app.background};--bgspare: #{style.app.bgspare};--bg-secondary: #{style.app.wallet};--bg-primary-light: #{style.app.bg-primary-light};--placeholder: #{style.app.placeholder};--placeholder-menu: #{style.app.placeholder-menu};--color3: #{style.app.color3};--border: #{style.app.border}; --color1: #{style.app.color1}; --color2: #{style.app.color2}; --color-td: #{style.app.color-td};--drag-bg: #{style.app.drag-bg};--td-hover: #{style.app.th};--border-color: #{style.app.border-color};--waves: #{style.app.waves};--primary1: #{style.app.primary1};--primary2: #{style.app.primary2};--primary3: #{style.app.primary3};--primary1-spare: #{style.app.primary1-spare};--primary2-spare: #{style.app.primary2-spare};--primary3-spare: #{style.app.primary3-spare};--input: #{style.app.input};--dark-theme: #{style.app.menu};--border: #{style.app.border};--ligh-text: #{style.app.icon};--alert-spare: #{style.app.alert-spare}}"
     style.pug #{text}
 module.exports = ({ store, web3t })->
     return null if not store?
@@ -199,6 +200,7 @@ module.exports = ({ store, web3t })->
     style =
         background: theme.app.background
         color: theme.app.text
+        background-color: theme.app.bgspare
     syncing =
         | store.current.refreshing => "syncing"
         | _ => ""

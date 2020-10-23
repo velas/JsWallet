@@ -192,8 +192,10 @@ module.exports = (store, web3t, wallets, wallet)-->
         color: style.app.text
     color-label=
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     color-label2=
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     .wallet-detailed.pug(key="#{token}" style=wallet-style)
         .wallet-part.left.pug(style=text)
             .wallet-header.pug

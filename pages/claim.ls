@@ -422,7 +422,7 @@ require! {
     >.title
         position: sticky
         z-index: 1
-        background: linear-gradient(100deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -458,6 +458,7 @@ module.exports = ({store, web3t})->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
