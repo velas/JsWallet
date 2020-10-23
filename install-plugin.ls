@@ -13,7 +13,7 @@ require! {
     \../web3t/plugins/ltc-coin.js : ltc
     \../web3t/plugins/usdt-coin.js : usdt
 }
-current-configs = {dash, eth, etc, symblox, ltc, usdt}
+current-configs = {dash, eth, symblox, usdt}
 required-fields = <[ type token enabled ]>
 not-in = (arr, arr2)->
     arr |> any -> arr2.index-of(it) is -1
@@ -30,7 +30,7 @@ get-plugin = (name, cb)->
     if current-configs[coin-name]
         item = JSON.stringify current-configs[coin-name]
     else
-        item = local-storage.get-item name
+        return cb null
     return cb null if typeof! item isnt \String
     json-parse item, cb
 get-plugin-one-by-one = ([item, ...rest], cb)->
@@ -39,7 +39,7 @@ get-plugin-one-by-one = ([item, ...rest], cb)->
     return cb err if err?
     err, other <- get-plugin-one-by-one rest
     return cb err if err?
-    all = [plugin] ++ other
+    all = all = if plugin then ([plugin] ++ other) else other
     cb null, all
 export get-install-list = (cb)->
     err, data <- get-registry
