@@ -291,6 +291,6 @@ mobile = ({ store, web3t })->
                             |> map wallet store, web3t, wallets
             .pug.show-detail(style=right-side)
                 wallet-expanded store, web3t, wallets, wallet-detail
-                .history-area.pug
+                .history-area.pug(key="#{store.current.wallet-index}")
                     history { store, web3t }
 module.exports = mobile
