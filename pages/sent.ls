@@ -195,6 +195,7 @@ module.exports = ({ store, web3t })->
         border: "1px solid #{style.app.border}"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     link-style=
         color: style.app.text2
     sent-icon=

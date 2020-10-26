@@ -5,7 +5,7 @@ require! {
 #
 networks =
     mainnet: \https://explorer.velas.com/rpc
-    testnet: \https://tn.yopta.net/rpc
+    testnet: \https://explorer.testnet.veladev.net/rpc
 module.exports = (store)->
     network = networks[store.current.network]
     web3 = new Web3(new Web3.providers.HttpProvider(network))

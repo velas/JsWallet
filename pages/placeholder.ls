@@ -8,7 +8,7 @@ require! {
 .form-group
     position: absolute
     width: 100%
-    background: linear-gradient(100deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)
+    background: var(--background)
     z-index: 1
     height: 100%
     .section

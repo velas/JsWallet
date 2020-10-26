@@ -7,6 +7,7 @@ require! {
     &.alert
         color: rgb(255, 255, 255)
         border-bottom: 1px solid rgb(107, 38, 142)
+        background-color: var(--alert-spare)
 module.exports = (store, web3t)->
     lang = get-lang store
     style = get-primary-info store

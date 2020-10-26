@@ -88,6 +88,7 @@ alert-modal = (store)->
     style = get-primary-info store
     confirmation-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     confirmation-style2 =
         color: style.app.text
@@ -95,6 +96,7 @@ alert-modal = (store)->
         color: style.app.text
     confirmation=
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
@@ -122,6 +124,7 @@ confirmation-modal = (store)->
     style = get-primary-info store
     confirmation-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     confirmation-style2 =
         color: style.app.text
@@ -129,6 +132,7 @@ confirmation-modal = (store)->
         color: style.app.text
     confirmation=
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
@@ -165,6 +169,7 @@ prompt-modal = (store)->
     style = get-primary-info store
     confirmation-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     input-style =
         background: style.app.wallet
@@ -174,6 +179,7 @@ prompt-modal = (store)->
         color: style.app.text
     confirmation=
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
     lang = get-lang store
@@ -210,3 +216,4 @@ export prompt = (store, text, cb)->
 export alert = (store, text, cb)->
     store.current.alert = text
     state.callback = cb
+window.confirm-state = state

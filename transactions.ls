@@ -40,8 +40,8 @@ check-transaction-task = (bg-store, web3, network, token, ptx)-> (store, cb)->
     tx.checked = tx.checked ? 0
     tx.checked += 1
     return cb null if not tx?
-    make-not-pending store, tx if data.status is \confirmed
-    return cb null if data.status is \confirmed
+    make-not-pending store, tx if data?.status is \confirmed
+    return cb null if data?.status is \confirmed
     cb \pending
 check-ptx-in-background = (store, web3, network, token, ptx, cb)->
     add-task ptx.0, check-transaction-task(store, web3, network, token, ptx)

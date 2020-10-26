@@ -41,7 +41,7 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -362,11 +362,13 @@ send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
     { go-back } = history-funcs store, web3t
+    return go-back! if not wallet?
     round-money = (val)->
         +val |> (-> it * 100) |> Math.round |> (-> it / 100)
     style = get-primary-info store
     menu-style=
         background: style.app.background
+        background-color: style.app.bgspare
         border: "1px solid #{style.app.border}"
     input-style=
         background: style.app.input
@@ -384,6 +386,7 @@ send = ({ store, web3t })->
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     crypto-background =
         background: style.app.wallet
     more-text=
@@ -392,6 +395,7 @@ send = ({ store, web3t })->
         color: style.app.text
         border-bottom: "1px solid #{style.app.border}"
         background: style.app.background
+        background-color: style.app.bgspare
     lang = get-lang store
     wallet-title = "#{name + network} #{lang.wallet ? 'wallet'}"
     open-invoice = ->
@@ -501,11 +505,13 @@ send = ({ store, web3t })->
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
+    return cb null if not wallet?
     { wallets } = wallets-funcs store, web3t
     current-wallet =
         wallets |> find (-> it.coin.token is wallet.coin.token)
     return cb null if current-wallet.address is wallet.address
     { wallet } = send-funcs store, web3t
+    return cb null if not wallet?
     return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]
     err <- send-transaction { to: "", value: 0 }

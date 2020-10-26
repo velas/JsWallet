@@ -6,9 +6,16 @@ require! {
     \../web3t/providers/superagent.ls : { get }
     \./json-parse.ls
     \./providers.ls
+    \../web3t/plugins/dash-coin.js : dash
+    \../web3t/plugins/eth-coin.js : eth
+    \../web3t/plugins/etc-coin.js : etc
+    \../web3t/plugins/symblox.js : syx
+    \../web3t/plugins/ltc-coin.js : ltc
+    \../web3t/plugins/usdt-coin.js : usdt
 }
+current-configs = {dash, eth, syx, usdt}
 required-fields = <[ type token enabled ]>
-not-in = (arr, arr2)-> 
+not-in = (arr, arr2)->
     arr |> any -> arr2.index-of(it) is -1
 verify-plugin = (plugin, cb)->
     return cb "Expected Object" if typeof! plugin isnt \Object
@@ -19,7 +26,11 @@ get-registry = (cb)->
     #console.log registry-string
     json-parse registry-string, cb
 get-plugin = (name, cb)->
-    item = local-storage.get-item name
+    coin-name = name.substr("plugin-".length)
+    if current-configs[coin-name]
+        item = JSON.stringify current-configs[coin-name]
+    else
+        return cb null
     return cb null if typeof! item isnt \String
     json-parse item, cb
 get-plugin-one-by-one = ([item, ...rest], cb)->
@@ -28,7 +39,7 @@ get-plugin-one-by-one = ([item, ...rest], cb)->
     return cb err if err?
     err, other <- get-plugin-one-by-one rest
     return cb err if err?
-    all = [plugin] ++ other
+    all = all = if plugin then ([plugin] ++ other) else other
     cb null, all
 export get-install-list = (cb)->
     err, data <- get-registry

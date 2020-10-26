@@ -29,7 +29,7 @@ require! {
     height: 100%
     min-height: 100vh
     box-sizing: border-box
-    background: rgba(black, 0.5)
+    background-color: var(--bgspare)
     @media(max-width: 430px)
         padding-top: 0px
     .title
@@ -194,10 +194,12 @@ language = (store, web3t)->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     button-primary3-style=
         border: "1px solid #{style.app.border}"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     filter-icon=
         filter: style.app.filterIcon
     text-style =
@@ -273,6 +275,7 @@ module.exports = ({ store, web3t } )->
     account-body-style = 
         background: style.app.background
         color: style.app.text
+        background-color: style.app.bgspare
     body-style = 
         background: "transparent"
         color: style.app.text

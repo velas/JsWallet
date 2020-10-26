@@ -38,7 +38,7 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -370,6 +370,7 @@ vote = ({ store, web3t })->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+        background-color: info.app.bgspare
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.vote

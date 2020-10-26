@@ -36,7 +36,7 @@ require! {
         top: 2px
     .search-input
         position: fixed
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         z-index: 1
         width: 100%
         .close
@@ -157,7 +157,7 @@ require! {
     >.title
         position: sticky
         position: -webkit-sticky
-        background: linear-gradient(100deg, #331462 4%, #15063c 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -730,6 +730,7 @@ video = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -746,6 +747,7 @@ video = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -773,6 +775,7 @@ add-comments = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     .pug.add-comments
         span.pug
             img.pug.account(src="#{info.branding.logo}")
@@ -834,6 +837,7 @@ next = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -850,6 +854,7 @@ next = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -911,6 +916,7 @@ similarvideo = (store, web3t)->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -927,6 +933,7 @@ similarvideo = (store, web3t)->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"
@@ -988,6 +995,7 @@ videodetails = ({ store, web3t })->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+        background-color: info.app.bgspare
     border-style3 =
         color: info.app.text
         border-bottom: "0"
@@ -998,6 +1006,7 @@ videodetails = ({ store, web3t })->
         border: "1px solid #{info.app.primary2}"
         color: info.app.text
         background: info.app.primary2
+        background-color: info.app.primary2-spare
     header-table-style=
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.wallet-light
@@ -1014,6 +1023,7 @@ videodetails = ({ store, web3t })->
         border: "1px solid #{info.app.primary1}"
         color: info.app.text
         background: info.app.primary1
+        background-color: info.app.primary1-spare
     input-style=
         background: info.app.wallet
         border: "0"

@@ -374,6 +374,9 @@ module.exports = (store, web3)->
     lock = ->
         navigate store, web3t, \locked
         store.menu.show = no
+    goto-support = ->
+        store.menu.show = no
+        window.open(store.menu.support)
     open-submenu = ->
         store.current.submenu = not store.current.submenu
     menu-staking =
@@ -424,6 +427,11 @@ module.exports = (store, web3)->
                     .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                         img.pug(src="#{icons.setting}")
                         label.pug #{lang.settings}
+            if store.preference.settings-visible is yes
+                if store.current.device is \mobile
+                    .menu-item.pug(on-click=goto-support style=icon-style)
+                        img.pug(src="#{icons.support}")
+                        label.pug #{lang.support}
             if store.preference.lock-visible is yes
                 if store.current.device is \mobile    
                     .menu-item.pug(on-click=lock style=lock-style)

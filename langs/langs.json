@@ -312,8 +312,8 @@
         ],
         "newSeedWarning": [
             "Click 'Print' and print out paper instructions and write down your 24 words seed carefuly. Anyone with access to your recovery phrase could take your assets, store it securely. We do not keep a backup of your 24 words, if you lose it all coins in your wallet will be gone forever!",
-            "Нажмите кнопку 'Печать' и распечатать инструкции бумаги и запишите свои 24 слова семян изучили. Кто имеет доступ к вашему восстановления фраза может завладеть вашими активами, надежно хранить его. Мы не храним резервных копий 24 слова, Если вы его потеряете все монеты в вашем кошельке будет навсегда!",
-            "Натисніть кнопку 'Друк' і роздрукувати інструкції паперу і запишіть свої 24 слова насіння вивчили. Хто має доступ до вашого відновлення фраза може заволодіти вашими активами, надійно зберігати його. Ми не зберігаємо резервних копій 24 слова, Якщо ви втратите всі монети у вашому гаманці буде назавжди!",
+            "Нажмите кнопку 'Печать' и распечатайте бумажный бланк в который запишите внимательно свои 24 слова. Любой человек, имеющий доступ к вашей фразе восстановления может забрать ваши активы, поэтому храните запись надежно. Мы не храним резервную копию ваших 24 слов, если вы потеряете ее, все монеты в вашем кошельке исчезнут навсегда!",
+            "Натисніть кнопку 'Друк' і роздрукуйте паперовий бланк в який запишіть уважно свої 24 слова. Кожний хто має доступ до вашої фрази відновлення може заволодіти вашими активами, тому надійно зберігайте вашу фразу. Ми не зберігаємо резервних копій зі 24 слів, якщо ви втратите фразу, всі монети у вашому гаманці зникнуть назавжди!",
             "Cliquez sur 'Imprimer' et imprimer des instructions de papier et écrivez votre 24 mots de graines soigneusement. Toute personne ayant accès à votre rétablissement phrase pourrait prendre de vos biens, de les stocker de manière sécurisée. Nous n'avons pas de garder une copie de sauvegarde de votre 24 mots, si vous les perdez toutes les pièces de monnaie dans votre porte-monnaie sera à jamais disparu!",
             "Haga clic en 'Imprimir' y imprimir las instrucciones de papel y anote sus 24 palabras de semilla abundante. Cualquier persona con acceso a tu frase de recuperación podría tomar sus activos, almacenar de forma segura. No guardamos una copia de seguridad de su 24 palabras, si usted pierde todas las monedas en su monedero, se ha ido para siempre!",
             "请点击“打印”按钮，打印出纸质说明，并写下您助记词的24个单词的种子。 知道您恢复助记词的人都可以占有您的钱包和资产，请保管好您助记词。 我们不会存储24个单词的备份，如果丢失了，钱包中的所有硬币将永远存在在钱包中！",
@@ -1422,8 +1422,8 @@
         ],
         "noticeText": [
             "Try to restore you account from seed phrase in different browser or incognito window before you reset it",
-            "Попробуйте восстановить ваш аккаунт из семян фразу в другом окне браузера или инкогнито, прежде чем сбросить его",
-            "Спробуйте відновити ваш аккаунт з насіння фразу в іншому вікні браузера або інкогніто, перш ніж скинути його",
+            "Попробуйте восстановить учетную запись из исходной (сид) фразы в другом браузере или окне инкогнито, прежде чем сбрасывать ее",
+            "Спробуйте відновити обліковий запис з вихідної (сiд) фрази в іншому браузері або вікні інкогніто, перш ніж скидати її",
             "Essayez de restaurer votre compte à partir de la graine de la phrase dans différents navigateur ou d'une fenêtre de navigation privée avant de le réinitialiser",
             "Intente restaurar la cuenta desde la semilla frase en otro navegador o ventana de incógnito antes de reiniciarlo",
             "在重设账号之前，请尝试在其他浏览器或隐私窗口中使用种子短语恢复您的帐户",
@@ -1960,6 +1960,16 @@
             "custom",
             "custom",
             "custom"
+        ],
+        "support": [
+            "Support",
+            "Поддержка",
+            "Підтримка",
+            "Soutien",
+            "Apoyo",
+            "支持",
+            "지원하다",
+            "الدعم"
         ]
     }
 }

@@ -203,6 +203,35 @@ add-by-address = (store, web3t)->
         input.search.pug(placeholder="0x...." value="#{store.contract-address}" on-change=coin-contract style=input-style)
         button.pug(on-click=add style=button-style)
             icon \Plus, 20
+add-by-vlxaddress = (store, web3t)->
+    coin-contract = (e)->
+        store.contract-vlxaddress = e.target.value
+    not-found = ->
+        store.contract-vlxaddress = "Not Found"
+        <- set-timeout _, 1000
+        store.contract-vlxaddress = ""
+    add = ->
+        err, data <- get "https://registry.web3.space/token/#{store.contract-vlxaddress}" .end
+        return not-found! if err? or not data.body?token?
+        <- web3t.install-quick data.body
+        store.current.add-vlxcoin = no
+    style = get-primary-info store
+    button-style =
+        border: "1px solid #{style.app.text}"
+        color: style.app.text
+    input-style=
+        color: style.app.text
+        background: style.app.bg-primary-light
+        border: "0"
+    erc-bg=
+        background: style.app.bg-primary-light
+    background =
+        background: style.app.input
+    .item.pug(style=background)
+        img.pug(src="#{icons.vlx-icon}" style=erc-bg)
+        input.search.pug(placeholder="V...." value="#{store.contract-vlxaddress}" on-change=coin-contract style=input-style)
+        button.pug(on-click=add style=button-style)
+            icon \Plus, 20
 module.exports = ({ store, web3t } )->
     return null if store.current.add-coin isnt yes
     close = ->
@@ -212,6 +241,7 @@ module.exports = ({ store, web3t } )->
     style = get-primary-info store
     account-body-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     color =
         color: style.app.text
@@ -220,6 +250,8 @@ module.exports = ({ store, web3t } )->
         color: style.app.text
         background: style.app.input
         border: "0"
+#    add-by-address store, web3t
+#    add-by-vlxaddress store, web3t
     .pug.manage-account
         .account-body.pug(style=account-body-style)
             .pug.title(style=color)
@@ -234,9 +266,8 @@ module.exports = ({ store, web3t } )->
             .pug.settings
                 .pug.section
                     .list.pug
-                        add-by-address store, web3t
-                        if store.registry.length > 0
-                            store.registry 
+                        if store.registry.length > -1
+                            store.registry
                                 |> filter filter-item store
                                 |> map create-item { store, web3t }
                         else

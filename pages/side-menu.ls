@@ -315,6 +315,9 @@ module.exports = (store, web3t)->
         navigate store, web3t, \notification
     goto-claim = ->
         navigate store, web3t, \claim
+    goto-support = ->
+        store.menu.show = no
+        window.open(store.menu.support)
     comming-soon =
         opacity: ".3"
     tooltip=
@@ -370,6 +373,10 @@ module.exports = (store, web3t)->
                 .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
                     span.arrow_box.pug(style=tooltip) #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
+            if store.preference.settings-visible is yes
+                .menu-item.pug(on-click=goto-support style=icon-style)
+                    span.arrow_box.pug(style=tooltip) #{lang.support}
+                    img.pug(src="#{icons.support}" style=icon-color)
             if store.current.network is \testnet
                 .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
                     span.arrow_box.pug(style=tooltip) testnet

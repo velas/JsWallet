@@ -873,10 +873,12 @@ module.exports = ({ store, web3t })->
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     button-primary1-style=
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     lightText=
         color: style.app.color3
     nothing-icon=

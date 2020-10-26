@@ -252,6 +252,7 @@ module.exports = (store, web3t)->
         border: "1px solid #{style.app.primary2}"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
         margin: "0"
         width: "100%"
     icon-color=

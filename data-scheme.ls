@@ -104,6 +104,9 @@ store =
         epoch: '..'
     peerinfo:
         peers: []
+    interop:
+        is-address-queried: no
+        origin: no
     staking:
         reward-info: []
         exit-tab: ''
@@ -164,6 +167,7 @@ store =
         active: 's2'
         mobile: no
         show: no
+        support: 'https://support.velas.com/'
     ask:
         text: ''
         enabled: no
@@ -171,6 +175,7 @@ store =
         image: ""
         type: ''
     contract-address: ''
+    contract-vlxaddress: ''
     transactions:
         all: []
         applied: []
@@ -205,6 +210,7 @@ store =
         langs-open-side: no
         langs-open-start: no
         add-coin: no
+        add-vlxcoin: no
         token-migration: null
         choose-language: yes
         banner: no
