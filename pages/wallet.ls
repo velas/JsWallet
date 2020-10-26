@@ -222,6 +222,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         border: "0"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     address-input=
         color: style.app.color3
         background: style.app.bg-primary-light

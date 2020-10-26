@@ -38,6 +38,7 @@ build-key = (store, value, on-change)-> (key)->
         on-change { target }
     button-style =
         background: style.app.background
+        background-color: style.app.bgspare
         color: style.app.text
     .pug.key(on-click=change style=button-style) #{key}
 numpad = (store, value, on-change)->

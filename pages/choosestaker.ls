@@ -520,7 +520,7 @@ require! {
         position: sticky
         position: -webkit-sticky
         z-index: 1
-        background: linear-gradient(100deg, rgb(51, 20, 98) 4%, rgb(21, 6, 60) 100%)
+        background: var(--background)
         box-sizing: border-box
         top: 0
         width: 100%
@@ -571,6 +571,7 @@ staking-content = (store, web3t)->
         border: "1px solid #{style.app.primary3}"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     filter-icon=
         filter: style.app.filterIcon
     comming-soon =
@@ -869,6 +870,7 @@ staking = ({ store, web3t })->
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
+        background-color: info.app.bgspare
     border-style2 =
         color: info.app.text
         border-bottom: "1px solid #{info.app.border}"

@@ -209,6 +209,7 @@ module.exports = (store, web3t)->
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     button-primary4-style=
         color: style.app.text
         border-radius: "50px"
@@ -223,6 +224,7 @@ module.exports = (store, web3t)->
         border: "0"
         color: style.app.text
         background: style.app.primary2
+        background-color: style.app.primary2-spare
     button-primary0-style=
         border: "0"
         color: style.app.text
@@ -231,6 +233,7 @@ module.exports = (store, web3t)->
         border: "0px"
         color: style.app.text2
         background: style.app.primary3
+        background-color: style.app.primary3-spare
     filter-body =
         border: "1px solid #{style.app.border}"
         background: style.app.account-bg
@@ -240,6 +243,7 @@ module.exports = (store, web3t)->
         border: "0"
         color: style.app.text
         background: style.app.primary1
+        background-color: style.app.primary1-spare
     icon-style =
         color: style.app.loader
         border-radius: "50px"
