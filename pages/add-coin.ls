@@ -266,7 +266,7 @@ module.exports = ({ store, web3t } )->
             .pug.settings
                 .pug.section
                     .list.pug
-                        if store.registry.length > 0
+                        if store.registry.length > -1
                             store.registry
                                 |> filter filter-item store
                                 |> map create-item { store, web3t }
