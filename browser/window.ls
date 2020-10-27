@@ -1,5 +1,5 @@
 require! {
-    \./location.ls
+    \./location
 }
 document = {}
 scroll-to = ->

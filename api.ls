@@ -1,5 +1,5 @@
 require! {
-    \./providers.ls
+    \./providers
     \mobx : { toJS }
     \prelude-ls : { pairs-to-obj, obj-to-pairs }
 }

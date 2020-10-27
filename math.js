@@ -10,7 +10,7 @@
         return '..';
       }
       try {
-        return new bignumber(x)[$](y).toFixed();
+        return new bignumber(x + '')[$](y + '').toFixed();
       } catch (e$) {
         err = e$;
         throw x + " " + $ + " " + y + " = " + err;

@@ -1,5 +1,5 @@
 require! {
-    \./window.ls
+    \./window
 }
 push-state = (state, title, page)->
     #window.onpopstate? { state }

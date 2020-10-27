@@ -1,11 +1,11 @@
 require! {
-    \./api.ls : { get-balance }
-    \./math.ls : { times, plus }
+    \./api : { get-balance }
+    \./math : { times, plus }
     \prelude-ls : { find, map, pairs-to-obj, foldl, filter }
-    \./workflow.ls : { run, task }
-    \./round5.ls
-    \./round-human.ls
-    #\./pending-tx.ls : { get-pending-amount }
+    \./workflow : { run, task }
+    \./round5
+    \./round-human
+    #\./pending-tx : { get-pending-amount }
 }
 calc-wallet = (store, cb)->
     return cb "Store is required" if not store?

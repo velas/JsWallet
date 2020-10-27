@@ -1,9 +1,9 @@
 require! {
-    \./math.ls : { times, minus, plus, div }
+    \./math : { times, minus, plus, div }
     \mobx : { toJS, transaction }
-    \./api.ls : { calc-fee }
+    \./api : { calc-fee }
     \prelude-ls : { find }
-    \./round5.ls
+    \./round5
 }
 calc-crypto-generic = (name)-> (store, val)->
     return \0 if not val?

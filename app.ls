@@ -44,7 +44,7 @@ require! {
         border-radius: 10px
     .table-scroll::-webkit-scrollbar-thumb
         border-radius: 10px
-        background: #71748f 
+        background: #71748f
     .table-scroll::-webkit-scrollbar-thumb:hover
         background: #ffffff
         border-radius: 10px
