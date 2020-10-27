@@ -1,13 +1,13 @@
 name: CI to ECR
 on:
   push:
-    branches: [testnet]
+    branches: [test_ci]
 
 jobs:
   docker-build-push:
     # Name the Job
     name: Build and push
-    runs-on: build
+    runs-on: k8s
     outputs:
       repository: ${{ steps.build.outputs.repository }}
       image_tag: ${{ steps.build.outputs.image_tag }}
