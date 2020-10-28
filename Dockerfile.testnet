@@ -1,4 +1,4 @@
-FROM node:12.16.2-alpine as build-stage
+FROM node:10.16-alpine as build-stage
 RUN apk add --no-cache --update \
       python \
       python-dev \
