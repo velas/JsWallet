@@ -9,7 +9,8 @@ require! {
     \../web3t/plugins/symblox.js : syx
     \../web3t/plugins/ltc-coin.js : ltc
     \../web3t/plugins/usdt-coin.js : usdt
+    \../web3t/plugins/usdt_erc20.json : usdt_erc20
 }
 module.exports = (cb) ->
-    def = [ eth, usdt, syx ]
+    def = [ eth, usdt, syx, usdt_erc20 ]
     cb null, def
