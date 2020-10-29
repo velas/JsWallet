@@ -20,7 +20,8 @@ RUN mkdir -p /app/wallet/.compiled-ssr/web3t/providers /app/wallet/.compiled-ssr
 RUN npm install --ignore-scripts
 RUN npm install -g --unsafe-perm node-sass lsxc livescript
 RUN mkdir -p /app/wallet/.compiled-ssr/web3t/node_modules_embed/scryptsy/lib
-RUN npm run wallet-build
+RUN npm rebuild node-sass
+RUN npm -g run wallet-build
 
 FROM nginx:stable-alpine as production-stage
 ADD nginx_config/default.conf /etc/nginx/conf.d/default.conf
