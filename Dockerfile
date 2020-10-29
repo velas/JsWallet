@@ -4,7 +4,8 @@ RUN apk add --no-cache --update \
       python-dev \
       py-pip \
       build-base \
-      git
+      git \
+      sudo
 WORKDIR /app
 
 RUN git clone https://github.com/velas/web3t.git web3t
@@ -17,7 +18,7 @@ RUN npm install
 WORKDIR /app/wallet
 RUN mkdir -p /app/wallet/.compiled-ssr/web3t/providers /app/wallet/.compiled-ssr/web3t/node_modules_embed/ethereumjs-tx
 RUN npm install --ignore-scripts
-RUN npm install node-sass lsxc livescript
+RUN npm install -g --unsafe-perm node-sass lsxc livescript
 RUN mkdir -p /app/wallet/.compiled-ssr/web3t/node_modules_embed/scryptsy/lib
 RUN npm run wallet-build
 
