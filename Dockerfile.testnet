@@ -16,6 +16,7 @@ COPY . wallet
 WORKDIR /app/web3t
 RUN npm install
 
+WORKDIR /app/wallet
 RUN mkdir -p /app/wallet/.compiled-ssr/web3t/providers /app/wallet/.compiled-ssr/web3t/node_modules_embed/ethereumjs-tx
 RUN npm install --ignore-scripts
 RUN npm install -g --unsafe-perm node-sass lsxc livescript

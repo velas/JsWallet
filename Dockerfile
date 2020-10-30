@@ -9,6 +9,7 @@ RUN apk add --no-cache --update \
 WORKDIR /app
 
 RUN git clone https://github.com/velas/web3t.git web3t
+RUN cd web3t
 
 COPY . wallet
 
