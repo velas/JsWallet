@@ -23,12 +23,3 @@ RUN npm install -g --unsafe-perm node-sass lsxc livescript
 RUN mkdir -p /app/wallet/.compiled-ssr/web3t/node_modules_embed/scryptsy/lib
 RUN npm rebuild node-sass
 RUN npm run wallet-build
-
-FROM nginx:stable-alpine as production-stage
-ADD nginx_config/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/wallet/.compiled/main-bundle.js /usr/share/nginx/html
-COPY --from=build-stage /app/wallet/.compiled/main-bundle.css /usr/share/nginx/html
-COPY --from=build-stage /app/wallet/.compiled/service-worker.js /usr/share/nginx/html
-COPY --from=build-stage /app/wallet/.compiled/main-index.html /usr/share/nginx/html/index.html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
