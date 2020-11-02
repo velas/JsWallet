@@ -173,7 +173,7 @@ module.exports = (store, web3t)->
         <- change-amount store, send.amount-send, no
     choose-custom = (amount)->
         send.fee-type = \custom
-        send.fee-custom-amount = amount
+        send.amount-send-fee = send.fee-custom-amount = amount
         <- change-amount store, send.amount-send, no
     chosen-cheap =  if send.fee-type is \cheap then \chosen else ""
     chosen-auto  =  if send.fee-type is \auto then \chosen else ""

@@ -57,6 +57,7 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.error = "Calc Fee Error: #{err.message ? err}" if err?
     return cb "Calc Fee Error: #{err.message ? err}" if err?
     tx-fee =
+        | fee-type is \custom => send.amount-send-fee
         | calced-fee? => calced-fee
         | send.network?tx-fee-options? => send.network.tx-fee-options[fee-type] ? send.network.tx-fee
         | _ => send.network.tx-fee

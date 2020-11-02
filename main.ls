@@ -52,7 +52,8 @@ safe-render = (func)->
 Main = observer ({store})->
     safe-render ->
         app { store, web3t }
-if 'serviceWorker' of navigator
+#Disabled service worker as Chrome often hangs and I suspect worker
+if no and 'serviceWorker' of navigator
     console.log "in!"
     window.addEventListener 'load', ->
         ((navigator.serviceWorker.register './service-worker.js').then ((registration) ->
