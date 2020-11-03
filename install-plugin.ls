@@ -12,8 +12,9 @@ require! {
     \../web3t/plugins/symblox.js : syx
     \../web3t/plugins/ltc-coin.js : ltc
     \../web3t/plugins/usdt-coin.js : usdt
+    \../web3t/plugins/usdt_erc20.json : usdt_erc20
 }
-current-configs = {dash, eth, syx, usdt}
+current-configs = {dash, eth, syx, usdt, usdt_erc20}
 required-fields = <[ type token enabled ]>
 not-in = (arr, arr2)->
     arr |> any -> arr2.index-of(it) is -1
