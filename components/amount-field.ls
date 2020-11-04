@@ -73,11 +73,11 @@ module.exports = ({ store, value, on-change, placeholder })->
     wallet =
         wallets |> find (-> it.coin.token is \vlx2)
     value-vlx = value ? 0
-    usd = 
-        | wallet.usd-rate? => value-vlx `times` wallet.usd-rate
+    usd =
+        | wallet.usd-rate? => (value-vlx || "0") `times` wallet.usd-rate
         | _ => ".."
-    eur = 
-        | wallet.eur-rate? => value-vlx `times` wallet.eur-rate
+    eur =
+        | wallet.eur-rate? => (value-vlx || "0") `times` wallet.eur-rate
         | _ => ".."
     actual-placeholder = placeholder ? ""
     normalize = ->
