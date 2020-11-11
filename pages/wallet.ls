@@ -257,6 +257,8 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
+    token = wallet.coin.token.to-upper-case!
+    token-display = if token == \VLX2 then \VLX else token
     .wallet.pug(class="#{big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
@@ -267,7 +269,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                     if store.current.device is \desktop
                         .price.token.pug(class="#{placeholder}" title="#{wallet.balance}")
                             span.pug #{ round-human wallet.balance }
-                            span.pug #{ wallet.coin.token.to-upper-case! }
+                            span.pug #{ token-display }
                     .price.pug(class="#{placeholder}" title="#{balance-usd}")
                         span.pug #{ round-human balance-usd}
                         span.pug USD

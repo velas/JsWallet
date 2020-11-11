@@ -695,7 +695,7 @@ staking-content = (store, web3t)->
     your-balance = " #{round-human get-balance!} "
     your-staking-amount = store.staking.stake-amount-total `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
-    vlx-token = "VLX2"
+    vlx-token = "VLX"
     #calc-reward-click = ->
     #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->

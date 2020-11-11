@@ -90,6 +90,7 @@ trx-fee = ({ store, web3t, wallet })->
             value = "0" + value
         choose-custom value
     fee-currency = wallet.network.tx-fee-in ? send.coin.token
+    token-display = if fee-currency == \vlx2 then \vlx else fee-currency
     border-style = border: "1px solid #{style.app.border}"
     text = color: "#{style.app.icon}"
     input-style=
@@ -105,15 +106,15 @@ trx-fee = ({ store, web3t, wallet })->
         return null if send.amount-send-fee-options.cheap > send.amount-send-fee-options.auto
         td.pug(on-click=choose-cheap class="#{active-class \cheap}")
             .pug.field.type #{lang.cheap}
-            .pug.field.coin #{if send.amount-send-fee-options.cheap then send.amount-send-fee-options.cheap + " " + fee-currency else ""}
+            .pug.field.coin #{if send.amount-send-fee-options.cheap then send.amount-send-fee-options.cheap + " " + token-display else ""}
     custom-option = ->
         td.pug(on-click=select-custom class="#{active-class \custom}")
             .pug.field.type #{lang.custom}
-            .pug.field.coin #{custom-fee-value! + " " + fee-currency}
+            .pug.field.coin #{custom-fee-value! + " " + token-display}
     auto-option = ->
         td.pug(on-click=choose-auto class="#{active-class \auto}")
             .pug.field.type #{lang.auto}
-            .pug.field.coin #{if send.amount-send-fee-options.auto then send.amount-send-fee-options.auto + " " + fee-currency else ""}
+            .pug.field.coin #{if send.amount-send-fee-options.auto then send.amount-send-fee-options.auto + " " + token-display else ""}
     .pug.trx-fee
         label.pug(style=text) Transaction Fee
         table.pug.fee(style=border-style)

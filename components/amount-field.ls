@@ -97,7 +97,7 @@ module.exports = ({ store, value, on-change, placeholder })->
         input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change-internal placeholder=actual-placeholder)
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
-            span.pug VLX2
+            span.pug VLX
         .show-details.pug
             .panel.pug
                 .pug USD: #{round usd}

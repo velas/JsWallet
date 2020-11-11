@@ -1003,7 +1003,7 @@ staking-content = (store, web3t)->
     your-balance = " #{round-human get-balance!} "
     your-staking-amount = store.staking.stake-amount-total `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
-    vlx-token = "VLX2"
+    vlx-token = "VLX"
     staker-status = if store.staking.is-active-staker then \Active else \Inactive
     check-uncheck = ->
         change = not store.staking.rewards.0.checked
@@ -1225,6 +1225,7 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.add.add-validator-stake = 0
     store.staking.epoch = staking-epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)
+    debugger
     store.staking.stake-amount-total = amount.to-fixed!
     err, is-active <- web3t.velas.Staking.isPoolActive(staking-address)
     return cb err if err?

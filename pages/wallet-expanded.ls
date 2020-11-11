@@ -196,6 +196,7 @@ module.exports = (store, web3t, wallets, wallet)-->
     color-label2=
         background: style.app.primary2
         background-color: style.app.primary2-spare
+    token-display = if token == \VLX2 then \VLX else token
     .wallet-detailed.pug(key="#{token}" style=wallet-style)
         .wallet-part.left.pug(style=text)
             .wallet-header.pug
@@ -210,7 +211,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                     .balance.pug(class="#{placeholder}")
                         .pug.token-balance(title="#{wallet.balance}")
                             span.pug #{ round-human wallet.balance }
-                            span.pug #{ token }
+                            span.pug #{ token-display }
                         .pug.usd-balance(class="#{placeholder}" title="#{balance-usd}")
                             span.pug #{ round-human balance-usd }
                             span.pug USD
@@ -231,17 +232,17 @@ module.exports = (store, web3t, wallets, wallet)-->
                         span.stats-style.pug
                             .pug.coin(style=text)
                                 img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
-                                span.pug(class="#{placeholder}") #{ token }
+                                span.pug(class="#{placeholder}") #{ token-display }
                                 span.pug.course(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
                         wallet-stats store, web3t
                 .wallet-header-part.right.pug(style=text)
                     .pug.counts
                         .pug.label-icon(style=color-label)
                             img.icon-svg.pug(src="#{icons.send}")
-                        .pug(class="#{placeholder}") #{ total-sent + ' ' token }
+                        .pug(class="#{placeholder}") #{ total-sent + ' ' token-display }
                         .pug.label(style=color1) #{lang.totalSent}
                     .pug.counts
                         .pug.label-icon(style=color-label2)
                             img.icon-svg.pug(src="#{icons.get}")
-                        .pug(class="#{placeholder}") #{ total-received + ' ' token }
+                        .pug(class="#{placeholder}") #{ total-received + ' ' token-display }
                         .pug.label(style=color2) #{lang.totalReceived}

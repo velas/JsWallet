@@ -63,7 +63,7 @@ get-vlx-private-address = ({ store }, cb)->
     wallets = store?current?account?wallets ? []
     wallet =
         wallets |> find (.coin?token is \vlx2)
-    return cb "wallet vlx2 not found" if not wallet?
+    return cb "wallet vlx not found" if not wallet?
     cb null, wallet.private-key
 upload-video-files-recursive = ({ store, web3t }, [file, ...files], cb)->
     return cb null if not file?
@@ -131,7 +131,7 @@ drop-zone = ({ store, web3t }) ->
         color: info.app.color3
     icon-style=
         filter: info.app.nothing-icon
-    input-file-style= 
+    input-file-style=
         {visibility: \hidden, width: 0, height: 0}
     drag-file-close = ->
         store.video.drag = not store.video.drag

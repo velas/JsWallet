@@ -410,6 +410,8 @@ send = ({ store, web3t })->
     active-eur = active-class \eur
     show-class =
         if store.current.open-menu then \hide else \ ""
+    token-display = if token == \VLX2 then \VLX else token
+    fee-token-display = if fee-token == \VLX2 then \VLX else fee-token
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
@@ -456,7 +458,7 @@ send = ({ store, web3t })->
                             .input-wrapper.pug
                                 .label.crypto.pug(style=crypto-background)
                                     img.label-coin.pug(src="#{send.coin.image}")
-                                    | #{token}
+                                    | #{token-display}
                                 input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}")
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
@@ -472,7 +474,7 @@ send = ({ store, web3t })->
                             span.pug.balance
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
                                     img.label-coin.pug(src="#{send.coin.image}")
-                                    span.pug #{token}
+                                    span.pug #{token-display}
                                 if +wallet.pending-sent >0
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
                             button.pug.send-all.switch-currency(on-click=activate-eur class="#{active-eur}" style=use-max-style type="button") eur
@@ -489,14 +491,14 @@ send = ({ store, web3t })->
                             td.pug
                                 span.pug(title="#{send.amount-charged}") #{round5(send.amount-charged)}
                                     img.label-coin.pug(src="#{send.coin.image}")
-                                    span.pug(title="#{send.amount-charged}") #{token}
+                                    span.pug(title="#{send.amount-charged}") #{token-display}
                                 .pug.usd $ #{round5 send.amount-charged-usd}
                         tr.pug.orange
                             td.pug #{lang.fee}
                             td.pug
                                 span.pug(title="#{send.amount-send-fee}") #{round5 send.amount-send-fee}
                                     img.label-coin.pug(src="#{send.coin.image}")
-                                    span.pug(title="#{send.amount-send-fee}") #{fee-token}
+                                    span.pug(title="#{send.amount-send-fee}") #{fee-token-display}
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
