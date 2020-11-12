@@ -13,7 +13,7 @@
   usdt = require('../web3t/plugins/usdt-coin.js');
   module.exports = function(cb){
     var def;
-    def = [eth, usdt, syx];
+    def = [eth, usdt, syx, ltc];
     return cb(null, def);
   };
 }).call(this);

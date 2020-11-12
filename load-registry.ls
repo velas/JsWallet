@@ -12,5 +12,5 @@ require! {
     \../web3t/plugins/usdt_erc20.json : usdt_erc20
 }
 module.exports = (cb) ->
-    def = [ eth, usdt, syx, usdt_erc20 ]
+    def = [ eth, usdt, syx, usdt_erc20, ltc ]
     cb null, def
