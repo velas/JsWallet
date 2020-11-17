@@ -215,7 +215,7 @@ module.exports = (store, web3t, wallets, wallet)-->
                         .pug.usd-balance(class="#{placeholder}" title="#{balance-usd}")
                             span.pug #{ round-human balance-usd }
                             span.pug USD
-                        if +wallet.pending-sent >0
+                        if +wallet.pending-sent >0 and no
                             .pug.pending
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }

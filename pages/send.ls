@@ -475,7 +475,7 @@ send = ({ store, web3t })->
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug #{token-display}
-                                if +wallet.pending-sent >0
+                                if +wallet.pending-sent >0 and no
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
                             button.pug.send-all.switch-currency(on-click=activate-eur class="#{active-eur}" style=use-max-style type="button") eur
                             button.pug.send-all.switch-currency(on-click=activate-usd class="#{active-usd}" style=use-max-style type="button") usd

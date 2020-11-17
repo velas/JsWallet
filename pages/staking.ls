@@ -896,14 +896,11 @@ staking-content = (store, web3t)->
         opacity: ".3"
     pairs = store.staking.keystore
     become-or-extend-validator = (stake, pairs, cb)->
-        err, pool <- web3t.velas.Staking.getStakerPools(pairs.staking.address)
+        err, miningAddress <- web3t.velas.ValidatorSet.miningByStakingAddress(pairs.staking.address)
         return cb err if err?
-        console.log \pools, pool
-        if +store.staking.stake-amount-total is 0
+        if miningAddress isnt \0x0000000000000000000000000000000000000000
             return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
         return cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
-        #if pool.length is 0
-        #cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
         err <- can-make-staking store, web3t
         return alert err if err?
@@ -1225,7 +1222,6 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.add.add-validator-stake = 0
     store.staking.epoch = staking-epoch.to-fixed!
     err, amount <- web3t.velas.Staking.stakeAmount(staking-address, staking-address)
-    debugger
     store.staking.stake-amount-total = amount.to-fixed!
     err, is-active <- web3t.velas.Staking.isPoolActive(staking-address)
     return cb err if err?

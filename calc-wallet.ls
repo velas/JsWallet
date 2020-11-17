@@ -39,12 +39,12 @@ calc-wallet = (store, cb)->
             | _ => round5 (usd-rate `times` btc-rate)
         err, balance <- get-balance { wallet.address, wallet.network, token, account: { wallet.address, wallet.private-key } }
         return cb err if err?
-        pending-sent =
-            store.transactions.all
-                |> filter (.token is token)
-                |> filter (.pending is yes)
-                |> map (.amount)
-                |> foldl plus, 0
+        pending-sent = 0
+        #    store.transactions.all
+        #        |> filter (.token is token)
+        #        |> filter (.pending is yes)
+        #        |> map (.amount)
+        #        |> foldl plus, 0
         #err, pending-sent <- get-pending-amount { store, token, wallet.network }
         #console.log { err, pending-sent }
         wallet.pending-sent = pending-sent

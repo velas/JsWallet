@@ -17,8 +17,8 @@ module.exports = (store, web3t)->
     text-parts-contract =
         * funtype
         * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{send.coin.token}."
-    token-display = if send.coin.token == \vlx2 then \vlx else send.coin.token 
+    token-display = if send.coin.token == \vlx2 then \vlx else send.coin.token
     text-parts-regular =
-        * "Send #{round-human send.amount-send} #{send.coin.token} to #{send.to}"
+        * "Send #{round-human send.amount-send} #{token-display} to #{send.to}"
         * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{send.coin.token}."
     if is-data then text-parts-contract else text-parts-regular
