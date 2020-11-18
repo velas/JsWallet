@@ -58,8 +58,6 @@ jobs:
         with:
           repository: velas/velas-infra
           ssh-key: ${{ secrets.INFRA_SSH_KEY }}
-      - name: add aws-iam-authenticator
-        uses: prepor/action-aws-iam-authenticator@master
       - name: Deploy via helmfile
         id: deploy
         env:

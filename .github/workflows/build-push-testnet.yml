@@ -1,7 +1,7 @@
 name: CI to ECR
 on:
   push:
-    branches: [testnet]
+    branches: [testnet,feature/fix_ci_add_path]
 
 jobs:
   docker-build-push:
@@ -58,8 +58,6 @@ jobs:
         with:
           repository: velas/velas-infra
           ssh-key: ${{ secrets.INFRA_SSH_KEY }}
-      - name: add aws-iam-authenticator
-        uses: prepor/action-aws-iam-authenticator@master
       - name: Deploy via helmfile
         id: deploy
         env:
