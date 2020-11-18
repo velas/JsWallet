@@ -1,7 +1,7 @@
 name: CI to ECR
 on:
   push:
-    branches: [testnet,feature/fix_ci_add_path]
+    branches: [testnet]
 
 jobs:
   docker-build-push:
