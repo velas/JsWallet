@@ -26,6 +26,8 @@ RUN npm -g run wallet-build
 
 FROM nginx:stable-alpine as production-stage
 ADD nginx_config/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx_config/error.html /usr/share/nginx/html/
+
 COPY --from=build-stage /app/wallet/.compiled/main-bundle.js /usr/share/nginx/html
 COPY --from=build-stage /app/wallet/.compiled/main-bundle.css /usr/share/nginx/html
 COPY --from=build-stage /app/wallet/.compiled/service-worker.js /usr/share/nginx/html
