@@ -898,7 +898,7 @@ staking-content = (store, web3t)->
     become-or-extend-validator = (stake, pairs, cb)->
         err, miningAddress <- web3t.velas.ValidatorSet.miningByStakingAddress(pairs.staking.address)
         return cb err if err?
-        if miningAddress isnt \0x0000000000000000000000000000000000000000
+        if miningAddress is \0x0000000000000000000000000000000000000000
             return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
         return cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
