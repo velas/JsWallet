@@ -88,7 +88,7 @@ require! {
                     position: absolute
                     border-radius: 100px
                     .coin
-                        margin: 20% 28%
+                        margin: 20% auto
                         text-align: center
                         .course
                             font-size: 12px
@@ -232,8 +232,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                         span.stats-style.pug
                             .pug.coin(style=text)
                                 img.label-coin.pug(class="#{placeholder-coin}" src="#{wallet.coin.image}")
-                                span.pug(class="#{placeholder}") #{ token-display }
-                                span.pug.course(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
+                                .pug(class="#{placeholder}") #{ token-display }
+                                .pug.course(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
                         wallet-stats store, web3t
                 .wallet-header-part.right.pug(style=text)
                     .pug.counts

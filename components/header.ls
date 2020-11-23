@@ -17,7 +17,7 @@ require! {
     >.left-side, >.right-side
         position: relative
     >.left-side
-        width: 25%
+        width: 30%
         min-width: 200px
         .search-area
             width: 80%
@@ -76,7 +76,7 @@ require! {
                 cursor: pointer
                 vertical-align: top
     >.right-side
-        width: 75%
+        width: 70%
         .choose-account
             top: 20px
             margin-right: 60px
