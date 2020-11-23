@@ -211,10 +211,10 @@ mobile = ({ store, web3t })->
         overflow: "hidden"
     left-side =
         min-width: "200px"
-        width: "25%"
+        width: "30%"
         background: "#{style.app.left-side}"
     right-side =
-        width: "75%"
+        width: "70%"
         border-left: "1px solid #{style.app.border}"
     header-style =
         border-top: "1px solid #{style.app.border}"
