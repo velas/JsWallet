@@ -23,7 +23,7 @@ transform-ptx = (config, [tx, amount, fee, time, from, to2])-->
     { tx, amount, url, fee: fee, time, from, to: to2 }
 make-not-pending = (store, tx)->
     #console.log \make-not-pending, tx
-    #tx.pending = no
+    tx.pending = no
     #store.transactions.all |> each (.pending = no)
     #store.transactions.applied |> each (.pending = no)
     #apply-transactions store
@@ -53,8 +53,11 @@ check-ptx-in-background = (store, web3, network, token, ptx, cb)->
 check-ptxs-in-background = (store, web3, network, token, [ptx, ...rest], cb)->
     return cb null if not ptx?
     err <- check-ptx-in-background store, web3, network, token, ptx
-    return cb err if err?
+    #return cb err if err?
+    console.log \err, err
     <- set-timeout _, 1000
+    if err
+        rest.push ptx
     check-ptxs-in-background store, web3, network, token, rest, cb
 export rebuild-history = (store, web3, wallet, cb)->
     { address, network, coin, private-key } = wallet
