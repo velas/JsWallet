@@ -1,6 +1,6 @@
 require! {
     \react
-    \../address-link.ls : { get-address-link, get-address-title }
+    \../address-link.ls : { get-address-link, get-address-title, get-address-display }
     \./middle-ellipsis : MiddleEllipsis
     \../get-primary-info.ls
     \../icons.ls
@@ -109,6 +109,9 @@ module.exports = ({ store, wallet, type })->
     address-title =
         | store.current.refreshing is no => get-address-title wallet, address-suffix
         | _ => "..."
+    address-display =
+        | store.current.refreshing is no => get-address-display wallet, address-suffix
+        | _ => "..."
     show-details = ->
         store.current.hovered-address.address = wallet.address
     hide-details = ->
@@ -129,5 +132,5 @@ module.exports = ({ store, wallet, type })->
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
             MiddleEllipsis.pug(key=address-title)
-                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-title}
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
         copy { store, text: address-title }
