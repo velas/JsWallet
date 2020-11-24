@@ -22,12 +22,14 @@ transform-ptx = (config, [tx, amount, fee, time, from, to2])-->
         | url => "#{url}/tx/#{tx}"
     { tx, amount, url, fee: fee, time, from, to: to2 }
 make-not-pending = (store, tx)->
-    console.log \make-not-pending, tx
+    #console.log \make-not-pending, tx
     tx.pending = no
-    store.transactions.all |> each (.pending = no)
-    store.transactions.applied |> each (.pending = no)
+    #store.transactions.all |> each (.pending = no)
+    #store.transactions.applied |> each (.pending = no)
+    #apply-transactions store
+    #console.log store.transactions
+    err, result <- remove-tx { store, tx.token, tx.network, tx: tx.tx }
     apply-transactions store
-    console.log store.transactions
 check-transaction-task = (bg-store, web3, network, token, ptx)-> (store, cb)->
     check = web3[token]?get-transaction-receipt
     return cb null if not check?
@@ -41,7 +43,9 @@ check-transaction-task = (bg-store, web3, network, token, ptx)-> (store, cb)->
     tx.checked += 1
     return cb null if not tx?
     make-not-pending store, tx if data?.status is \confirmed
+    make-not-pending store, tx if data?.status is \reverted
     return cb null if data?.status is \confirmed
+    return cb null if data?.status is \reverted
     cb \pending
 check-ptx-in-background = (store, web3, network, token, ptx, cb)->
     add-task ptx.0, check-transaction-task(store, web3, network, token, ptx)
@@ -49,8 +53,11 @@ check-ptx-in-background = (store, web3, network, token, ptx, cb)->
 check-ptxs-in-background = (store, web3, network, token, [ptx, ...rest], cb)->
     return cb null if not ptx?
     err <- check-ptx-in-background store, web3, network, token, ptx
-    return cb err if err?
-    <- set-immediate
+    #return cb err if err?
+    console.log \err, err
+    <- set-timeout _, 1000
+    if err
+        rest.push ptx
     check-ptxs-in-background store, web3, network, token, rest, cb
 export rebuild-history = (store, web3, wallet, cb)->
     { address, network, coin, private-key } = wallet
