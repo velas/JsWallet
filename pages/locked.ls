@@ -1,7 +1,7 @@
 require! {
     \react
     \prelude-ls : { map }
-    \../pin.ls : { set, check, exists, del, setbkp } 
+    \../pin.ls : { set, check, exists, del, setbkp }
     \../navigate.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -43,7 +43,7 @@ require! {
         &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
             -webkit-appearance: none
         -moz-appearance: textfield
-    >.logo 
+    >.logo
         margin: 4rem 0
         >img
             height: 80px
@@ -250,7 +250,7 @@ input = (store, web3t)->
     drag =
         if store.current.pin-trial is 0 then \ "" else \drag
     .pug
-        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key }
+        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key, id="locked-password" }
         if exists!
             .pug
                 button { store, on-click: enter, type: \primary , text: \enter }
@@ -315,7 +315,7 @@ setup-button = (store, web3t)->
     btn-icon =
         filter: style.app.btn-icon
     .pug(key="setup-button")
-        button.setup.pug(on-click=setup style=button-style)
+        button.setup.pug(on-click=setup style=button-style id="locked-continue")
             span.pug
                 img.icon-svg.pug(src="#{icons.key}" style=btn-icon)
                 | #{lang.setup}

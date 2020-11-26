@@ -54,12 +54,12 @@ get-button-style = (store, type)->
         | type is \secondary => button-primary2-style
         | _ => button-primary3-style
     button-style
-button-active = ({ store, text, loading, on-click, icon, type })->
+button-active = ({ store, text, loading, on-click, icon, type, id })->
     lang = get-lang store
     applied-text = lang[text] ? text ? ""
     applied-icon = icons[icon ? text] ? icons.more
     button-style = get-button-style store, type
-    button.pug.btn(on-click=on-click style=button-style)
+    button.pug.btn(on-click=on-click style=button-style id=id)
         if store.current.device is \mobile
             img.icon-svg.pug(src="#{applied-icon}" title="#{applied-text}")
         else

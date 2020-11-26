@@ -14,9 +14,9 @@ const {
 
 const MiddleEllipsisComponent = props => {
   var onResize = null;
-
   const prepEllipse = node => {
     const parent = node.parentNode;
+    debugger
     if (!parent) {
       window.removeEventListener("resize", onResize);
       return;

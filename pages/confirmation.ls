@@ -105,7 +105,7 @@ alert-modal = (store)->
             .pug.header(style=confirmation-style) Alert
             .pug.text(style=confirmation-style2) #{store.current.alert}
             .pug.buttons
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="alert-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
@@ -141,11 +141,11 @@ confirmation-modal = (store)->
             .pug.header(style=confirmation-style) #{lang.confirmation}
             .pug.text(style=confirmation-style2) #{store.current.confirmation}
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style)
+                button.pug.button(on-click=confirm style=button-style id="confirmation-confirm")
                     span.apply.pug
                         img.icon-svg-apply.pug(src="#{icons.apply}")
                         | #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="confirmation-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
@@ -188,13 +188,13 @@ prompt-modal = (store)->
             .pug.header(style=style=confirmation-style) #{lang.confirmation}
             .pug.text(style=style=confirmation-style) #{store.current.prompt}
             .pug
-                input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style)
+                input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style id="prompt-input")
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style)
+                button.pug.button(on-click=confirm style=button-style id="prompt-confirm")
                     span.apply.pug
                         img.icon-svg-apply.pug(src="#{icons.apply}")
                         | #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="prompt-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}

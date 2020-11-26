@@ -17,7 +17,7 @@ require! {
     line-height: 36px
     >*
         display: inline-block
-        box-sizing: border-box  
+        box-sizing: border-box
         margin: 0 !important
         height: inherit
         line-height: inherit
@@ -41,7 +41,7 @@ require! {
             position: absolute
             right: 8px
             top: 13px
-module.exports = ({ store, value, on-change, placeholder, type, on-key-down })->
+module.exports = ({ store, value, on-change, placeholder, type, on-key-down, id })->
     style = get-primary-info store
     input-style =
         background: style.app.input
@@ -52,11 +52,11 @@ module.exports = ({ store, value, on-change, placeholder, type, on-key-down })->
     btn-icon =
         filter: style.app.btn-icon
     actual-placeholder = placeholder ? ""
-    chosen-type = 
+    chosen-type =
         | type is \password => \password
         | _ => \text
     .pug.input-area
-        input.pug(type="#{chosen-type}" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder auto-complete="off" on-key-down=on-key-down)
+        input.pug(type="#{chosen-type}" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder auto-complete="off" on-key-down=on-key-down id=id)
         if store.current.device isnt \mobile
             span.keyboard-panel.pug
                 img.icon-svg.pug(src="#{icons.keyboard}" style=btn-icon)
