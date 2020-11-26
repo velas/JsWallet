@@ -220,8 +220,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }
             .buttons.pug
-                button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
-                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
+                button { store, on-click=send-click, text: \send , icon: \send , type: \primary, id: "wallets-send" }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary, id: "wallets-receive" }
             .details.pug
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}

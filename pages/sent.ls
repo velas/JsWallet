@@ -166,7 +166,7 @@ require! {
             position: relative
 success-icon = (store)->
     style = get-primary-info store
-    icon-style = 
+    icon-style =
         fill: style.app.icon
     svg.pug(version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewbox='0 0 52 52' style=icon-style)
         g.pug
@@ -203,8 +203,8 @@ module.exports = ({ store, web3t })->
     btn-icon =
         filter: style.app.btn-icon
     has-pending =
-        store.transactions.applied 
-            |> filter (.pending) 
+        store.transactions.applied
+            |> filter (.pending)
             |> (.length > 0)
     now = moment!.unix!
     no-recent =
@@ -239,6 +239,6 @@ module.exports = ({ store, web3t })->
                 span.pug  #{lang.inProgress}..
             else
                 span.pug  #{lang.has-been-sent}
-        button { store, on-click : go-home , type : \secondary , text: \home }
+        button { store, on-click : go-home , type : \secondary , text: \home, id="sent-home" }
         .limited-history.pug
             history { store, web3t }
