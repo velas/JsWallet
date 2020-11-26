@@ -200,19 +200,19 @@ newseed = ({ store, web3t })->
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.restore-from}
         .pug.align-v
-            button.pug.left(style=button-primary1-style on-click=restore12)
+            button.pug.left(style=button-primary1-style on-click=restore12 id="restore-12")
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
                     | 12 #{lang.restore-words12}
-            button.pug.right(style=button-primary1-style on-click=restore24)
+            button.pug.right(style=button-primary1-style on-click=restore24 id="restore-24")
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
                     | 24 #{lang.restore-words24}
-            button.pug.right(style=button-primary1-style on-click=restorecustom)
+            button.pug.right(style=button-primary1-style on-click=restorecustom id="restore-custom")
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}")
                     | Custom
-            button.pug.right(on-click=back style=button-primary3-style )
+            button.pug.right(on-click=back style=button-primary3-style id="restore-back")
                 img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
                 | #{lang.back}
 focus = ({ store }, cb)->

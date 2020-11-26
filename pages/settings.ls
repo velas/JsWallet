@@ -461,7 +461,7 @@ switch-network = (store, web3t)->
         web3t.use networks-reverted[not value]
     value= networks[store.current.network]
     label.active-network.pug
-        input.pug(type='checkbox' on-change=change-network value=value)
+        input.pug(type='checkbox' on-change=change-network value=value id="settings-testnet")
         .track.thumb.pug
 naming-part = ({ store, web3t })->
     .pug.section

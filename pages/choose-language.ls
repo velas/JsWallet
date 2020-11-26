@@ -1,6 +1,6 @@
 require! {
     \react
-    \../menu-funcs.ls 
+    \../menu-funcs.ls
     \./naming.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -209,7 +209,7 @@ language = (store, web3t)->
         store.lang = lang
         store.current.choose-language = no
     change-lang-en = ->
-        return set-lang \en 
+        return set-lang \en
     change-lang-ru = ->
         return set-lang \ru
     change-lang-ua = ->
@@ -233,50 +233,50 @@ language = (store, web3t)->
             .welcome.pug(style=text-style) #{lang.language}
             .pug.langs
                 ul.pug
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(style=comming-soon id="lang-gr")
                         img.pug(src="#{icons.langs-gr}")
                         .pug Deutsch
-                    li.pug.lang-item(on-click=change-lang-fr style=color)
+                    li.pug.lang-item(on-click=change-lang-fr style=color id="lang-fr")
                         img.pug(src="#{icons.langs-fr}")
                         .pug Français
-                    li.pug.lang-item(on-click=change-lang-en style=color)
+                    li.pug.lang-item(on-click=change-lang-en style=color id="lang-en")
                         img.pug(src="#{icons.langs-en}")
                         .pug English
-                    li.pug.lang-item(on-click=change-lang-kr style=color)
+                    li.pug.lang-item(on-click=change-lang-kr style=color id="lang-kr")
                         img.pug(src="#{icons.langs-cn}")
                         .pug 한국어
                 ul.pug
-                    li.pug.lang-item(on-click=change-lang-cn style=color)
+                    li.pug.lang-item(on-click=change-lang-cn style=color id="lang-cn")
                         img.pug(src="#{icons.langs-kr}")
                         .pug 中文語言
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(style=comming-soon id="lang-jp")
                         img.pug(src="#{icons.langs-jp}")
                         .pug 日本語
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(style=comming-soon id="lang-hn")
                         img.pug(src="#{icons.langs-hn}")
                         .pug हिंदी
-                    li.pug.lang-item(on-click=change-lang-es style=color)
+                    li.pug.lang-item(on-click=change-lang-es style=color id="lang-sp")
                         img.pug(src="#{icons.langs-sp}")
                         .pug Español
                 ul.pug
-                    li.pug.lang-item(on-click=change-lang-ua style=color)
+                    li.pug.lang-item(on-click=change-lang-ua style=color id="lang-ua")
                         img.pug(src="#{icons.langs-ua}")
                         .pug Українська
-                    li.pug.lang-item(on-click=change-lang-ru style=color)
+                    li.pug.lang-item(on-click=change-lang-ru style=color id="lang-ru")
                         img.pug(src="#{icons.langs-ru}")
                         .pug Русский
-                    li.pug.lang-item(style=comming-soon)
+                    li.pug.lang-item(style=comming-soon id="lang-kz")
                         img.pug(src="#{icons.langs-kz}")
                         .pug Қазақ
 module.exports = ({ store, web3t } )->
     return null if store.current.choose-language isnt yes
     { close-language } = menu-funcs store, web3t
     style = get-primary-info store
-    account-body-style = 
+    account-body-style =
         background: style.app.background
         color: style.app.text
         background-color: style.app.bgspare
-    body-style = 
+    body-style =
         background: "transparent"
         color: style.app.text
     border-style =
@@ -288,7 +288,7 @@ module.exports = ({ store, web3t } )->
             if no
                 .pug.title(style=border-style)
                     .pug.header #{lang.choose-language}
-                    if no    
+                    if no
                         .pug.close(on-click=close-language)
                             icon \X, 20
             .pug.settings
