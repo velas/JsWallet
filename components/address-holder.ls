@@ -131,6 +131,9 @@ module.exports = ({ store, wallet, type })->
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
-            MiddleEllipsis.pug(key=address-title)
+            if address-display.length < 12
                 a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
+            else
+                MiddleEllipsis.pug(key=address-title)
+                    a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
         copy { store, text: address-title }
