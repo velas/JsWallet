@@ -427,7 +427,7 @@ switch-account = (store, web3t)->
     style = get-primary-info store
     lang = get-lang store
     input-style =
-        background: style.app.wallet
+        background: style.app.input
         color: style.app.text
         border: "0"
     color =

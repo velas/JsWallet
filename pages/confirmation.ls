@@ -172,7 +172,7 @@ prompt-modal = (store)->
         background-color: style.app.bgspare
         color: style.app.text
     input-style =
-        background: style.app.wallet
+        background: style.app.input
         color: style.app.text
         border: "0"
     button-style=
