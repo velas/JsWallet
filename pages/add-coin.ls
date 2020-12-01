@@ -129,7 +129,7 @@ require! {
                             font-size: 15px
                         img
                             width: 40px
-                            border-radius: 100px
+                            border-radius: 0px
                         .title
                             margin-left: 10px
                             color: gray
