@@ -815,23 +815,22 @@ render-transaction = (store, web3t, tran)-->
                     if no
                         .pug.direction #{arrow(type)}
                 .cell.pug.txhash
-                    a.pug(href="#{url}" target="_blank")
-                        MiddleEllipsis.pug
-                            span.pug #{tx}
-                        CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
-                            copy store
-                        .pug.gray(style=lightText)
-                            span.pug #{lang.created}:
-                                | #{time-ago}
-                            if pending is yes
-                                span.pug
-                                    span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
-                            else
-                                span.pug
-                                    span.pug.bold.confirmed.done #{lang.confirmed}
-                            span.pug.smart-contract
-                                .pug.tooltip #{about}
-                                img.help.pug(src="#{about-icon}")
+                    MiddleEllipsis.pug
+                        a.pug(href="#{url}" target="_blank") #{tx}
+                    CopyToClipboard.pug(text="#{tx}" on-copy=copied-inform(store) style=filter-icon)
+                        copy store
+                    .pug.gray(style=lightText)
+                        span.pug #{lang.created}:
+                            | #{time-ago}
+                        if pending is yes
+                            span.pug
+                                span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
+                        else
+                            span.pug
+                                span.pug.bold.confirmed.done #{lang.confirmed}
+                        span.pug.smart-contract
+                            .pug.tooltip #{about}
+                            img.help.pug(src="#{about-icon}")
                 .cell.pug.divider
                 .cell.pug.divider2
                     .pug.gray(style=lightText)

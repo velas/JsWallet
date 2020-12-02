@@ -304,7 +304,7 @@ module.exports = (store, web3t)->
         store.current.current-epoch = no
     if store.current.device is \desktop
         .choose-account.pug
-            .pug.current-epoch.h1(class="#{show-class}")
+            .pug.current-epoch.h1(class="#{show-class}" on-mouse-leave=on-exit)
                 span.name.pug(on-click=open-epoch) #{lang.epoch}
                 span.pug.icon(on-click=open-epoch class="#{rotate-class}")
                     img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
