@@ -28,8 +28,7 @@ module.exports = ({ store })->
     style = get-primary-info store
     copy-style=
         color: style.app.text
-        background: "rgb(255 255 255 / 10%)"
-        backdrop-filter: "blur(5px)"
+        background: style.app.bg-primary-light
         border: "1px solid #{style.app.border}"
     .pug.hovered-address(style=copy-style)
         .pug.text #{store.current.try-copy}
