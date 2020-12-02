@@ -176,6 +176,7 @@ require! {
                     >.input-wrapper
                         position: relative
                         width: 65%
+                        border-radius: 6px 0 0 6px
                         &.choose-currency
                             display: inline-flex
                             width: 45% !important
@@ -200,6 +201,7 @@ require! {
                             margin-left: -1px
                         &.small
                             width: 35%
+                            border-radius: 0 6px 6px 0
                         display: inline-block
                         box-sizing: border-box
                         margin: 0
@@ -377,7 +379,9 @@ send = ({ store, web3t })->
     border-style=
         border: "1px solid #{style.app.border}"
     amount-style=
-        border: "1px solid #{style.app.background}"
+        background: style.app.input
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
     icon-style =
         color: style.app.icon
     use-max-style =
@@ -389,6 +393,7 @@ send = ({ store, web3t })->
         background-color: style.app.primary3-spare
     crypto-background =
         background: style.app.wallet
+        width: "50%"
     more-text=
         color: style.app.text
     border-header =
@@ -455,19 +460,19 @@ send = ({ store, web3t })->
                 form-group lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
-                            .input-wrapper.pug
-                                .label.crypto.pug(style=crypto-background)
+                            .input-wrapper.pug(style=input-style)
+                                .label.crypto.pug
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     | #{token-display}
-                                input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}" id="send-amount")
+                                input.pug.amount(type='text' style=crypto-background on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}" id="send-amount")
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug $
-                                    input.pug.amount-usd(type='text' style=input-style on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}" id="send-amount-usd")
+                                    input.pug.amount-usd(type='text' style=crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}" id="send-amount-usd")
                             if active-eur is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug €
-                                    input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}" id="send-amount-eur")
+                                    input.pug.amount-eur(type='text'  style=crypto-background on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}" id="send-amount-eur")
                         .pug.usd
                             button.pug.send-all(on-click=use-max-amount style=button-primary3-style type="button" id="send-max") #{lang.use-max}
                             span.pug #{lang.balance}
