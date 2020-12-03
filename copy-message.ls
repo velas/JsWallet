@@ -45,8 +45,7 @@ module.exports = (store)->
         #r.to-upper-case!
     copy-style=
         color: style.app.text
-        background: "rgb(255 255 255 / 10%)"
-        backdrop-filter: "blur(5px)"
+        background: style.app.bg-primary-light
         border: "1px solid #{style.app.border}"
     .copied.pug(class="#{copied-class}" key="copy-message" style=copy-style)
         .pug.mb-5 #{lang.copied}
