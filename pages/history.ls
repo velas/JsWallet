@@ -512,7 +512,7 @@ require! {
                                     top: 0px
                                     margin: 0 10px 0 0
                                     height: 25px
-                                    border-radius: 6px
+                                    border-radius: var(--border-btn)
                             .browse
                                 right: 0px
                                 padding: 0

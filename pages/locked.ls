@@ -22,6 +22,7 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    background-size: cover !important
     .notice
         max-width: 300px
         text-align: center
@@ -351,6 +352,7 @@ locked = ({ store, web3t })->
         color: info.app.text
         background-image: info.app.background-image
         background-size: "cover"
+        background: info.app.glitch
     txt-style=
         color: info.app.text
     logo-style =

@@ -261,6 +261,7 @@ require! {
                 background: $logo-op
                 background-repeat: no-repeat
                 background-position: left 10px
+                background-size: contain
             padding: 30px 20px
             display: flex
             @media (max-width: 800px)
