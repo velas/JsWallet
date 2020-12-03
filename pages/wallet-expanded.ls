@@ -120,7 +120,7 @@ require! {
                         width: 25px
                         height: 25px
                         background: #f7618a
-                        border-radius: 6px
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-bottom: 6px
                         .icon-svg

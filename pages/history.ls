@@ -573,7 +573,7 @@ require! {
                         width: 25px
                         height: 25px
                         background: var(--primary1)
-                        border-radius: 6px
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px
                 .txhash a
@@ -592,7 +592,7 @@ require! {
                         width: 25px
                         height: 25px
                         background: var(--primary2)
-                        border-radius: 6px
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px
                 .txhash a

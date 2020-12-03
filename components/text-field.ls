@@ -48,7 +48,6 @@ module.exports = ({ store, value, on-change, placeholder, type, on-key-down, id 
         color: style.app.text
         overflow-x: \auto
         margin-bottom: \5px
-        border-radius: \6px
     btn-icon =
         filter: style.app.btn-icon
     actual-placeholder = placeholder ? ""

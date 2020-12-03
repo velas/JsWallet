@@ -88,7 +88,7 @@ require! {
             height: 36px
             background: transparent
             border: 0
-            border-radius: $border
+            border-radius: var(--border-btn)
             outline: none
             width: 130px
             margin-bottom: 5px

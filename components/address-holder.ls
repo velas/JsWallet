@@ -44,7 +44,7 @@ require! {
         left: 4px
         top: 3px
         height: 30px
-        border-radius: 5px
+        border-radius: var(--border-btn)
         margin: 0px
         z-index: 2
     >span
@@ -66,6 +66,7 @@ require! {
         overflow: hidden
         user-select: text !important
         cursor: auto
+        border-radius: var(--border-btn) !important
         @media screen and (max-width: 390px)
             padding-right: 25px
         a
