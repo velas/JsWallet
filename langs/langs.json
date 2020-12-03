@@ -1721,7 +1721,7 @@
             "Exit is not allowed until the end of the current epoch"
         ],
         "balanceLessStaking": [
-            "You balance is less than minimum staking amount",
+            "Your balance is less than minimum staking amount",
             "У вас баланс меньше минимальной суммы ставок",
             "У вас баланс менше мінімальної суми ставок",
             "Vous l'équilibre est moins que le minimum de jalonnement montant",

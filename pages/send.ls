@@ -477,8 +477,6 @@ send = ({ store, web3t })->
                                     span.pug #{token-display}
                                 if +wallet.pending-sent >0 and no
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
-                            button.pug.send-all.switch-currency(on-click=activate-eur class="#{active-eur}" style=use-max-style type="button") eur
-                            button.pug.send-all.switch-currency(on-click=activate-usd class="#{active-usd}" style=use-max-style type="button") usd
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->

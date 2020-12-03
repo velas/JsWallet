@@ -670,9 +670,10 @@ staking-content = (store, web3t)->
         #min =
         #    | +store.staking.stake-amount-total >= 1000000 => 1
         #    | _ => data `div` (10^18)
-        min = 10000
-        max = get-balance! `minus` 0.1
-        return cb lang.balanceLessStaking if +min > + max
+        balance = get-balance! `minus` 0.1
+        stake = store.staking.stake-amount-total
+        return cb lang.balanceLessStaking if 10000 > +stake
+        return cb lang.balanceLessStaking if +balance < +stake
         cb null, { min, max }
     use-min = ->
         err, options <- get-options

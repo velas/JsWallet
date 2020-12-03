@@ -101,4 +101,3 @@ module.exports = ({ store, value, on-change, placeholder })->
         .show-details.pug
             .panel.pug
                 .pug USD: #{round usd}
-                .pug EUR: #{round eur}

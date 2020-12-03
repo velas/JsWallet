@@ -4,3 +4,4 @@ module.exports =
     BlockReward  : "0x2000000000000000000000000000000000000001"
     Upgrade      : "0x4000000000000000000000000000000000000001"
     Development  : "0x08ac4Abfeb5Df5415e8dDbE2A5Ab35b3377562aa"
+    VelasDevelopmentVoting : "0x10476d702d840a68abe2ed3fa941d178451fef24"
