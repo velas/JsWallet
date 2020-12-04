@@ -37,7 +37,7 @@ require! {
         width: calc(100% - 20px)
         box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
         input
-            border-radius: $border
+            border-radius: var(--border-btn)
             height: 36px
             width: 90px
             line-height: 36px
@@ -53,7 +53,7 @@ require! {
         >.text
             padding: 10px
             input
-                border-radius: $border
+                border-radius: var(--border-btn)
         >.buttons
             text-align: center
             >.button
@@ -64,7 +64,7 @@ require! {
                 font-weight: bold
                 font-size: 10px
                 text-transform: uppercase
-                border-radius: $border
+                border-radius: var(--border-btn)
                 border: 1px solid #CCC
                 margin: 15px 5px
                 padding: 0px 6px

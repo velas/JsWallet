@@ -17,6 +17,7 @@ require! {
 }
 #
 .wallet-detailed
+    @import scheme
     height: 200px
     box-sizing: border-box
     $tablet: 1200px
@@ -49,7 +50,7 @@ require! {
                 margin-left: 5px
                 letter-spacing: 2px
                 cursor: pointer
-                border-radius: 5px
+                border-radius: var(--border-btn)
             >.address-holder
                 margin-top: 10px
                 width: calc((130px * 2) + 10px)
@@ -105,6 +106,7 @@ require! {
                         letter-spacing: 2px
                     .token-balance
                         font-size: 24px
+                        font-weight: bold
                     .usd-balance
                         font-size: 14px
                         opacity: .5
@@ -114,7 +116,6 @@ require! {
                 .counts
                     margin-bottom: 5px
                     .label
-                        font-weight: bold
                         font-size: 12px
                     .label-icon
                         width: 25px

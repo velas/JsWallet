@@ -19,11 +19,11 @@ require! {
                 text-align: top
                 box-sizing: border-box
                 &:first-child
-                    border-top-left-radius: $border
-                    border-bottom-left-radius: $border
+                    border-top-left-radius: var(--border-btn)
+                    border-bottom-left-radius: var(--border-btn)
                 &:last-child
-                    border-top-right-radius: $border
-                    border-bottom-right-radius: $border
+                    border-top-right-radius: var(--border-btn)
+                    border-bottom-right-radius: var(--border-btn)
 create-button = (store, web3t)-> (text)->
     use = ->
         web3t.set-theme text

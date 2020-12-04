@@ -308,7 +308,7 @@ require! {
             letter-spacing: .5px
             padding: 0px 3px 1px 0px
             &.done
-                background-image: linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)
+                background-image: var(--confirm)
                 -webkit-text-fill-color: transparent
                 -webkit-background-clip: text
     .syncing

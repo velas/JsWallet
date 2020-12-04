@@ -15,7 +15,7 @@ require! {
 }
 .search
     @import scheme
-    $border-radius: $border
+    $border-radius: var(--border-btn)
     $smooth: opacity .15s ease-in-out
     position: relative
     display: block

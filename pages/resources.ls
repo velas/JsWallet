@@ -70,7 +70,7 @@ require! {
                 width: 100%
                 z-index: 1
                 position: relative
-                border-radius: $border
+                border-radius: var(--border-btn)
                 border: 0
                 background: #E6F0FF
                 box-sizing: border-box
@@ -96,7 +96,7 @@ require! {
             text-transform: uppercase
             font-weight: 600
             margin: 0
-            border-radius: $border $border 0 0
+            border-radius: var(--border-btn) var(--border-btn) 0 0
             &:first-letter
                 color: orange
         .price
@@ -133,7 +133,7 @@ require! {
     button
         background-color: $primary
         border: 1px solid $primary
-        border-radius: $border
+        border-radius: var(--border-btn)
         color: white
         height: 36px
         width: 100%
@@ -239,7 +239,7 @@ require! {
                 width: 100%
                 z-index: 1
                 position: relative
-                border-radius: $border
+                border-radius: var(--border-btn)
                 border: 0
                 background: #E6F0FF
                 margin-top: 20px
@@ -313,7 +313,7 @@ resources = ({ store, web3t })->
         color: info.app.text
         border: "1px solid #{info.app.border}"
         background: info.app.header
-        border-radius: \6px
+        border-radius: info.app.border-btn
     resource-header =
         color: info.app.text
         background: info.app.th

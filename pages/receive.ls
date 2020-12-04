@@ -45,7 +45,7 @@ require! {
             height: auto
             padding: 10px
             background: #fff
-            border-radius: $border
+            border-radius: var(--border-btn)
 qrcode = (store, wallet)->
     info = get-primary-info store
     return null if not wallet?address?

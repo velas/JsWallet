@@ -24,7 +24,7 @@ module.exports =
         input-bg: \#161c48
         stats-style: \#1c2048
         wallet-light: \#080e35
-        alert: "linear-gradient(40deg, rgb(216 129 153) 2%, rgb(63 135 255) 180%)"
+        alert: \#0037c1
         alert-spare: \#ff98b5
         header: \#05061f
         account-bg: \#080e35
@@ -40,6 +40,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#213040
         text: \#FFF
+        text-invert: \#292b55
         text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
@@ -61,6 +62,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(33, 48, 64, 0.78)"
         left-side: \#05061f
+        filter: "invert(105%)"
+        confirm: "linear-gradient(90deg, #0bffb7 42%, #0bffb7 150%)"
     velas2:
         clip: "none"
         border-btn: "6px"
@@ -102,6 +105,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#213040
         text: \#FFF
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
@@ -123,6 +127,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(33, 48, 64, 0.78)"
         left-side: \#151A42
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"
     violet:
         clip: "none"
         border-btn: "6px"
@@ -162,6 +168,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: "rgba(107, 38, 142, 0.40)"
         text: \#fff
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#fff
         text-primary: \#9c41eb
@@ -183,6 +190,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(51, 20, 97, 0.78)"
         left-side: "transparent"
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"
     dark:
         clip: "none"
         border-btn: "6px"
@@ -221,6 +230,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#405b77
         text: \#FFF
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#FFF
         text-primary: \#FFF
@@ -242,6 +252,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(33, 48, 64, 0.7)"
         left-side: "transparent"
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"
     testnet:
         clip: "none"
         border-btn: "6px"
@@ -280,6 +292,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#3e4048
         text: \#FFF
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
@@ -301,6 +314,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(47, 48, 53, 0.68)"
         left-side: "transparent"
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"
     dark_mojave:
         clip: "none"
         border-btn: "6px"
@@ -339,6 +354,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#3e4048
         text: \#FFF
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
@@ -360,6 +376,8 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(47, 48, 53, 0.68)"
         left-side: "transparent"
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"
     monochrome:
         clip: "none"
         border-btn: "6px"
@@ -398,6 +416,7 @@ module.exports =
         bg-btn: "transparent"
         border-light: \#213040
         text: \#FFF
+        text-invert: \#FFF
         text2: \#9d41eb
         text3: \#677897
         text-primary: \#FFF
@@ -419,3 +438,5 @@ module.exports =
         color-td: \#b6efe1
         drag-bg: "rgba(33, 48, 64, 0.78)"
         left-side: "transparent"
+        filter: "none"
+        confirm: "linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)"

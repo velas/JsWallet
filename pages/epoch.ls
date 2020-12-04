@@ -44,7 +44,7 @@ require! {
         display: inline-grid
         z-index: 3
         box-shadow: 0px 13px 20px 0px rgba(0, 0, 0, 0.15)
-        border-radius: 0 0 $border $border
+        border-radius: 0 0 var(--border-btn) var(--border-btn)
         .folder-menu
             width: 100%
             span
@@ -89,7 +89,7 @@ require! {
                     border: 1px solid
                     padding: 0
                     box-sizing: border-box
-                    border-radius: $border
+                    border-radius: var(--border-btn)
                     font-size: 10px
                     padding: 0 6px
                     height: 36px
