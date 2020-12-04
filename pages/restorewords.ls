@@ -108,7 +108,7 @@ require! {
             margin: 5px
             font-size: 14px
             min-width: 25%
-            border-radius: 40px
+            border-radius: calc(var(--border-btn) * 10)
             -ms-user-select: none
             cursor: default
             @media(max-width: 500px)

@@ -33,7 +33,7 @@ require! {
         position: fixed
         width: 100%
         margin: 10px
-        border-radius: 10px
+        border-radius: var(--border-btn)
         width: calc(100% - 20px)
         box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
         input
