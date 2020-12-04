@@ -708,7 +708,7 @@ staking-content = (store, web3t)->
             | _ => round-human item.my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
-            page = \choosestaker-pool
+            page = \choosestaker
             store.pages.push(page) if store.pages.length > 0 and page isnt store.pages[store.pages.length - 1]
             cb = (err, data)->
                 alert store, err, console~log if err?
