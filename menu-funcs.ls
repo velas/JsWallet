@@ -130,7 +130,7 @@ module.exports = (store, web3t)->
         refresh!
     change-account-index = (event)->
         return if not event?target
-        val = event.target.value ? \1
+        val = event.target.value
         return if not val.match(/[0-9]+/)?
         val = parse-int val
         val = 1 if val < 1 or val > 999999999
