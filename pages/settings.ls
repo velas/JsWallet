@@ -341,6 +341,7 @@ list-language = (store, web3t)->
     lang = get-lang store
     set-lang = (lang)->
         #return alert "lang is not available" if not store.langs[store.lang]?
+        local-storage.set-item \lang, lang
         store.lang = lang
     change-lang-en = ->
         store.current.language-menu = no

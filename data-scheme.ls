@@ -47,7 +47,7 @@ store =
     url-hash-params: url-hash-params
     root: null
     theme: localStorage.get-item('theme') ? \velas
-    lang: \en
+    lang: localStorage.get-item('lang') ? \en
     langs: langs
     icons: \icons
     registry: []
