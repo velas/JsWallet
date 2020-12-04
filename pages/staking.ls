@@ -904,6 +904,8 @@ staking-content = (store, web3t)->
     become-validator = ->
         err <- can-make-staking store, web3t
         return alert err if err?
+        err <- get-options
+        return alert err if err?
         stake = store.staking.add.add-validator-stake `times` (10^18)
         #console.log stake, pairs.mining.address
         #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
@@ -975,19 +977,21 @@ staking-content = (store, web3t)->
         err, data <- web3t.velas.Staking.candidateMinStake
         return cb err if err?
         min =
-            | +store.staking.stake-amount-total >= 1000000 => 1
+            | +store.staking.add.add-validator-stake >= 1000000 => 1
             | _ => data `div` (10^18)
         max = get-balance! `minus` 0.1
         return cb lang.balanceLessStaking if +min > + max
+        return cb lang.balanceLessStaking if +max < 1000000
+        return cb lang.balanceLessStaking if +store.staking.add.add-validator-stake < 1000000
         cb null, { min, max }
     use-min = ->
-        err, options <- get-options
-        return alert err if err?
-        store.staking.add.add-validator-stake = options.min
+        #err, options <- get-options
+        #return alert err if err?
+        store.staking.add.add-validator-stake = 1000000
     use-max = ->
-        err, options <- get-options
-        return alert err if err?
-        store.staking.add.add-validator-stake = options.max
+        #err, options <- get-options
+        #return alert err if err?
+        store.staking.add.add-validator-stake = get-balance! `minus` 0.1
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert err if err?

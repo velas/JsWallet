@@ -665,24 +665,25 @@ staking-content = (store, web3t)->
     get-options = (cb)->
         i-am-staker = i-stake-choosen-pool!
         return cb null if i-am-staker
-        #err, data <- web3t.velas.Staking.candidateMinStake
-        #return cb err if err?
-        #min =
-        #    | +store.staking.stake-amount-total >= 1000000 => 1
-        #    | _ => data `div` (10^18)
+        err, data <- web3t.velas.Staking.candidateMinStake
+        return cb err if err?
+        min =
+            | +store.staking.stake-amount-total >= 10000 => 1
+            | _ => data `div` (10^18)
         balance = get-balance! `minus` 0.1
-        stake = store.staking.stake-amount-total
+        stake = store.staking.add.add-validator-stake
         return cb lang.balanceLessStaking if 10000 > +stake
         return cb lang.balanceLessStaking if +balance < +stake
+        max = +balance
         cb null, { min, max }
     use-min = ->
-        err, options <- get-options
-        return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = options.min
+        #err, options <- get-options
+        #return alert store, err, cb if err?
+        store.staking.add.add-validator-stake = 10000
     use-max = ->
-        err, options <- get-options
-        return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = options.max
+        #err, options <- get-options
+        #return alert store, err, cb if err?
+        store.staking.add.add-validator-stake = get-balance! `minus` 0.1
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert store, err, cb if err?
@@ -694,7 +695,7 @@ staking-content = (store, web3t)->
         err <- web3t.vlx2.send-transaction { to, data, amount }
         store.current.page = \staking
     your-balance = " #{round-human get-balance!} "
-    your-staking-amount = store.staking.stake-amount-total `div` (10^18)
+    your-staking-amount = store.staking.add.add-validator-stake `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
     #calc-reward-click = ->
