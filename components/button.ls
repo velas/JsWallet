@@ -41,7 +41,7 @@ get-button-style = (store, type)->
         background-color: style.app.primary1-spare
     button-primary3-style=
         border: "0"
-        color: style.app.text2
+        color: style.app.text4
         background: style.app.primary3
         background-color: style.app.primary3-spare
     button-primary2-style=

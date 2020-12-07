@@ -245,12 +245,12 @@ require! {
                     border-radius: $border 0 0 0
                     img
                         filter: invert(105%)
-                    background: var(--primary1)
+                    background: var(--primary2)
                 &.IN
                     border-radius: 0 $border 0 0
                     img
                         filter: invert(105%)
-                    background: var(--primary2)
+                    background: var(--primary1)
         .separator
             min-width: 2px
             display: inline-block
@@ -568,16 +568,16 @@ require! {
                     img
                         filter: invert(105%)
                         vertical-align: bottom
-                    color: #be6ed2
+                    color: #0037c1
                     &.label-icon
                         width: 25px
                         height: 25px
-                        background: var(--primary1)
+                        background: var(--primary2)
                         border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px
                 .txhash a
-                    color: #be6ed2
+                    color: #0037c1
             &.IN
                 &.record
                     .tx-top
@@ -587,11 +587,11 @@ require! {
                     img
                         filter: invert(105%)
                         vertical-align: bottom
-                    color: #3465d2
+                    color: #0bffb7
                     &.label-icon
                         width: 25px
                         height: 25px
-                        background: var(--primary2)
+                        background: var(--primary1)
                         border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px

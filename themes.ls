@@ -41,8 +41,9 @@ module.exports =
         border-light: \#213040
         text: \#FFF
         text-invert: \#292b55
-        text2: \#9d41eb
+        text2: \#0037c1
         text3: \#677897
+        text4: \#0b0c27
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#0b0c27
@@ -107,6 +108,7 @@ module.exports =
         text: \#FFF
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#677897
         text-primary: \#FFF
         color3: \#677897
@@ -170,6 +172,7 @@ module.exports =
         text: \#fff
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#fff
         text-primary: \#9c41eb
         color3: \#cccccc
@@ -232,6 +235,7 @@ module.exports =
         text: \#FFF
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#FFF
         text-primary: \#FFF
         color3: \#677897
@@ -294,6 +298,7 @@ module.exports =
         text: \#FFF
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#677897
         text-primary: \#FFF
         color3: \#677897
@@ -356,6 +361,7 @@ module.exports =
         text: \#FFF
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#677897
         text-primary: \#FFF
         color3: \#677897
@@ -418,6 +424,7 @@ module.exports =
         text: \#FFF
         text-invert: \#FFF
         text2: \#9d41eb
+        text4: \#0b0c27
         text3: \#677897
         text-primary: \#FFF
         color3: \#677897
