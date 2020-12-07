@@ -252,8 +252,8 @@ require! {
 item = (store, web3t)-> (vote)->
     lang = get-lang store
     info = get-primary-info store
-    [description, url, progress, votesUpWeight, votesDownWeight] = vote
-    vote = votesUpWeight `minus` votesDownWeight
+    #[description, name, progress, votesUpWeight, votesDownWeight] = vote
+    #vote = votesUpWeight `minus` votesDownWeight
     border=border-bottom: "1px solid #{info.app.border}"
     background=background: "#{info.app.primary}"
     add-class = ->
@@ -273,20 +273,14 @@ item = (store, web3t)-> (vote)->
             ul.pug
                 li.pug(class="#{raise}" on-click=add-class)
                     img.pug(src="#{icons.rate}")
-                li.pug #{vote}
-                li.pug(class="#{lower}" on-click=add-class)
-                    img.pug(src="#{icons.rate}")
-        .pug.screen
-            a.pug(href="#")
-                img.pug(src="https://res.cloudinary.com/dfbhd7liw/image/upload/v1586441544/velas/Bitmap.png")
+                li.pug #{vote.votes.toString()}
         .pug.description
-            .pug.header #{description}
-            .pug.sub-header #{url}
+            .pug.header #{vote.description}
+            .pug.sub-header #{vote.name}
             .pug.progress
-                progress.pug(value="#{progress}" max="100")
+                progress.pug(value="#{50}" max="100")
                 span.pug Start
                 span.pug End
-urlR = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/
 content = (store, web3t)->
     lang = get-lang store
     info = get-primary-info store
@@ -301,6 +295,7 @@ content = (store, web3t)->
         margin-top: "-11px"
     add-class = ->
         store.current.view = not store.current.view
+    vote-for = ->
     view =
         if store.current.view then \compact else \ ""
     newp = store.development.new-proposal
@@ -308,25 +303,21 @@ content = (store, web3t)->
         newp.opened = yes
     change-description = ->
         newp.description = it.target.value
-    change-url = ->
-        newp.url = it.target.value
-    change-progress = ->
-        newp.progress = it.target.value
+    change-name = ->
+        newp.name = it.target.value
     apply-new-vote = ->
         cb = alert
-        return cb "description should be longer" if newp.description.length < 10
-        return cb "url must be defined" if not newp.url.match(urlR)?
-        return cb "progress must be defined" if not newp.progress.match(/[0-9]+/)?
-        data = web3t.velas.Development.add-proposal.get-data newp.description, newp.url, newp.progress
+        return cb "description should be at least 10 characters" if newp.description.length < 10
+        return cb "name should be at least 3 characters" if newp.name.length < 3
+        data = web3t.velas.Development.add-proposal.get-data newp.description, newp.name
         return cb err if err?
         to = web3t.velas.Development.address
-        amount = 0
+        amount = 1
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
-        #newp.description, newp.url
+        newp.opened = no
     cancel-new-vote = ->
         newp.description = ""
-        newp.url = ""
-        newp.progress = \0
+        newp.name = ""
         newp.opened = no
     .pug.side
         .pug.filter(style=style)
@@ -355,8 +346,7 @@ content = (store, web3t)->
         if newp.opened is yes
             .pug.create-new-proposal.main-content(style=border-style)
                 text-field { store, value: newp.description , on-change: change-description , placeholder: "description" }
-                text-field { store, value: newp.url , on-change: change-url , placeholder: "url" }
-                text-field { store, value: newp.progress , on-change: change-progress , placeholder: "progress" }
+                text-field { store, value: newp.name , on-change: change-name , placeholder: "name" }
                 button { store, on-click: apply-new-vote , type: \primary , icon : \apply , text: \btnApply }
                 button { store, on-click: cancel-new-vote , icon : \close2 , text: \cancel }
         .pug.main-content(style=style)
@@ -385,21 +375,27 @@ vote = ({ store, web3t })->
         .pug.wrapper
             content store, web3t
 module.exports = vote
-build-proposal-view = ({ web3t, store }, index, cb)->
-    err, proposal <- web3t.velas.Development.getProposalByIndex index
+build-proposal-view = ({ web3t, store }, index, cb) ->
+    err, proposal <- web3t.velas.Development.getProposalByIndex index+1
     return cb err if err?
     cb null, proposal
 build-proposal-views = ({ web3t, store }, length, cb)->
     return cb null, [] if length is 0
     <- set-immediate
     next-length = length - 1
-    err, proposal-view <- build-proposal-view { web3t, store }, next-length
-    return cb err if err?
     err, rest <- build-proposal-views { web3t, store }, next-length
     return cb err if err?
-    cb null
+    err, proposal-view <- build-proposal-view { web3t, store }, next-length
+    return cb err if err?
+    proposal-view = {
+        name: proposal-view.0
+        description: proposal-view.1,
+        votes: proposal-view.2,
+        weight: proposal-view.3,
+    }
+    cb null, [...rest, proposal-view]
 module.exports.init = ({ web3t, store }, cb)->
-    err, length <- web3t.velas.Development.proposal-length!
+    err, length <- web3t.velas.Development.get-proposals-count!
     return cb err if err?
     err, proposals <- build-proposal-views { web3t, store }, +length
     return cb err if err?

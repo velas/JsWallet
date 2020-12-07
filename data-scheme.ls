@@ -58,7 +58,7 @@ store =
         proposals: []
         new-proposal:
             description: ""
-            url: ""
+            name: ""
             opened: no
             progress: \0
             update-progress: null
