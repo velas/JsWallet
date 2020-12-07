@@ -30,7 +30,7 @@ module.exports =
         account-bg: \#080e35
         tooltip: \#213040
         icon: \#ffffff80
-        btn-icon: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(1.5)"
+        btn-icon: "grayscale(30%) brightness(30%) sepia(170%) hue-rotate(-170deg) saturate(510%) contrast(51.5)"
         icon1: "grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-240deg) saturate(790%) contrast(1.5)"
         icon2: "grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-220deg) saturate(790%) contrast(1.5)"
         icon3: "grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-500deg) saturate(790%) contrast(1.5)"
@@ -47,7 +47,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#0b0c27
-        stats: \#080e3d
+        stats: \#05061f
         filterIcon: "brightness(1)"
         filterLogo: "drop-shadow(0 0 23px rgb(6 206 241 / 60%))"
         nothingIcon: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) hue-rotate(75deg)"

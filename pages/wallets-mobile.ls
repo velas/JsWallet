@@ -42,6 +42,7 @@ require! {
         margin-top: 0px
     .wallets
         @import scheme
+        $border: var(--border-btn)
         $real-height: 300px
         $cards-height: 296px
         $pad: 20px

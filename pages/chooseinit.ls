@@ -147,7 +147,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.wallet
     button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
+        border: "0"
         color: style.app.text
         background: style.app.primary2
         background-color: style.app.primary2-spare
