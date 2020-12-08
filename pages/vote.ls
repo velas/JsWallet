@@ -304,7 +304,7 @@ content = (store, web3t)->
         if store.current.view then \compact else \ ""
     newp = store.development.new-proposal
     create-new-vote = ->
-        newp.opened = yes
+        #newp.opened = yes
     change-description = ->
         newp.description = it.target.value
     change-name = ->
