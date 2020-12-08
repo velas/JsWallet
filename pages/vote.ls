@@ -262,7 +262,7 @@ item = (store, web3t)-> (vote)->
         if not vote.voted then \ "" else \active
     view =
         if store.current.view then \compact else \ ""
-    call-vote = ->
+    vote-for = ->
         data = web3t.velas.Development.vote.get-data +vote.index
         return cb err if err?
         to = web3t.velas.Development.address
@@ -275,7 +275,7 @@ item = (store, web3t)-> (vote)->
         span.pug.label(style=background) Sphere
         .pug.rate
             ul.pug
-                li.pug(class="#{raise}" on-click=call-vote)
+                li.pug(class="#{raise}" on-click=vote-for)
                     img.pug(src="#{icons.rate}")
                 li.pug #{vote.votes.toString()}
         .pug.description
