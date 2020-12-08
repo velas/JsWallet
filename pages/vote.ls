@@ -128,11 +128,13 @@ require! {
                     position: relative
                     transition: all .5s
                     &.active
-                        border-bottom: 1px solid #ffffff12
                         transform: scale(1.04)
-                        background: #080d3d
-                        border: 1px solid #373f8c
-                        box-shadow: 0 0 20px 0 #1b2269
+                        background: var(--bg-primary-light)
+                        border: 1px solid var(--border)
+                        box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.05)
+                        z-index: 1
+                        .label
+                            background: var(--dark-theme)
                     &.compact
                         padding: 10px
                         .screen
