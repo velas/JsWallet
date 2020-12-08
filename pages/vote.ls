@@ -259,11 +259,15 @@ item = (store, web3t)-> (vote)->
     add-class = ->
         store.current.rate = not store.current.rate
     raise =
-        if store.current.rate then \ "" else \active
-    lower =
-        if store.current.rate then \active else \ ""
+        if not vote.voted then \ "" else \active
     view =
         if store.current.view then \compact else \ ""
+    call-vote = ->
+        data = web3t.velas.Development.vote.get-data +vote.index
+        return cb err if err?
+        to = web3t.velas.Development.address
+        amount = 1
+        err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
     update-progress = ->
         newp = store.development.new-proposal
         newp.update-progress = progress
@@ -271,7 +275,7 @@ item = (store, web3t)-> (vote)->
         span.pug.label(style=background) Sphere
         .pug.rate
             ul.pug
-                li.pug(class="#{raise}" on-click=add-class)
+                li.pug(class="#{raise}" on-click=call-vote)
                     img.pug(src="#{icons.rate}")
                 li.pug #{vote.votes.toString()}
         .pug.description
@@ -295,7 +299,6 @@ content = (store, web3t)->
         margin-top: "-11px"
     add-class = ->
         store.current.view = not store.current.view
-    vote-for = ->
     view =
         if store.current.view then \compact else \ ""
     newp = store.development.new-proposal
@@ -339,8 +342,8 @@ content = (store, web3t)->
                     img.pug(src="#{icons.compact}")
                     img.pug(src="#{icons.classic}")
                 li.pug(on-click=create-new-vote)
-                    img.pug(src="#{icons.create}")
-                    img.pug(src="#{icons.create}")
+                    img.pug(src="#{icons.create}" width=18 height=18)
+                    img.pug(src="#{icons.create}" width=18 height=18)
         if newp.update-progress
             .pug.create-new-proposal.main-content(style=border-style) Please make upgrade process here
         if newp.opened is yes
@@ -376,7 +379,7 @@ vote = ({ store, web3t })->
             content store, web3t
 module.exports = vote
 build-proposal-view = ({ web3t, store }, index, cb) ->
-    err, proposal <- web3t.velas.Development.getProposalByIndex index+1
+    err, proposal <- web3t.velas.Development.getProposalByIndex index+1, store.staking.keystore.staking.address
     return cb err if err?
     cb null, proposal
 build-proposal-views = ({ web3t, store }, length, cb)->
@@ -392,6 +395,8 @@ build-proposal-views = ({ web3t, store }, length, cb)->
         description: proposal-view.1,
         votes: proposal-view.2,
         weight: proposal-view.3,
+        voted: proposal-view.4,
+        index: next-length+1,
     }
     cb null, [...rest, proposal-view]
 module.exports.init = ({ web3t, store }, cb)->
