@@ -65,7 +65,7 @@ module.exports =
         left-side: \#05061f
         filter: "invert(105%)"
         confirm: "linear-gradient(90deg, #0bffb7 42%, #0bffb7 150%)"
-    velas2:
+    deep_blue:
         clip: "none"
         border-btn: "6px"
         background: "linear-gradient(155deg, rgb(46 49 91) 5%, rgb(8 14 53) 96%)"
