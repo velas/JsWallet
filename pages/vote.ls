@@ -127,6 +127,12 @@ require! {
                     text-align: left
                     position: relative
                     transition: all .5s
+                    &.active
+                        border-bottom: 1px solid #ffffff12
+                        transform: scale(1.04)
+                        background: #080d3d
+                        border: 1px solid #373f8c
+                        box-shadow: 0 0 20px 0 #1b2269
                     &.compact
                         padding: 10px
                         .screen
