@@ -172,8 +172,6 @@ require! {
                                 padding: 5px
                                 &:nth-child(2)
                                     opacity: 1
-                                &:last-child
-                                    transform: rotate(180deg)
                                 &.active
                                     opacity: 1
                     .screen
@@ -261,8 +259,11 @@ item = (store, web3t)-> (vote)->
     raise =
         if not vote.voted then \ "" else \active
     view =
-        if store.current.view then \compact else \ ""
+        if store?url-hash-params?vote is vote.index.toString() then \active else \ ""
     vote-for = ->
+        err, pool <- web3t.velas.Staking.getStakerPools(store.staking.keystore.staking.address)
+        return alert err if err?
+        return alert "You should stake before you can vote" if pool.length < 1
         data = web3t.velas.Development.vote.get-data +vote.index
         return cb err if err?
         to = web3t.velas.Development.address
@@ -279,10 +280,10 @@ item = (store, web3t)-> (vote)->
                     img.pug(src="#{icons.rate}")
                 li.pug #{vote.votes.toString()}
         .pug.description
-            .pug.header #{vote.description}
-            .pug.sub-header #{vote.name}
+            .pug.header #{vote.name}
+            .pug.sub-header #{vote.description}
             .pug.progress
-                progress.pug(value="#{50}" max="100")
+                progress.pug(value="#{vote.progress}" max="100")
                 span.pug Start
                 span.pug End
 content = (store, web3t)->
@@ -395,7 +396,8 @@ build-proposal-views = ({ web3t, store }, length, cb)->
         description: proposal-view.1,
         votes: proposal-view.2,
         weight: proposal-view.3,
-        voted: proposal-view.4,
+        progress: proposal-view.4,
+        voted: proposal-view.5,
         index: next-length+1,
     }
     cb null, [...rest, proposal-view]

@@ -22,28 +22,28 @@ get-page = (store, page, prev) ->
     init-flow prev
 init-control = (scope, name, cb) !->
     #<- set-timeout _, 1
-    control = pages[name] 
+    control = pages[name]
     return cb null if typeof! control?init isnt \Function
     control.init scope, cb
 focus-control = (scope, name, cb) !->
     scroll-top!
-    control = pages[name] 
+    control = pages[name]
     return cb null if typeof! control?focus isnt \Function
     control.focus scope, cb
 perform-ask-pin = (store, page)->
     scroll-top!
     store.current.page = \locked
-    store.current.page-pin = page    
-module.exports = (store, web3t, page, ask-pin) !->
+    store.current.page-pin = page
+module.exports = (store, web3t, page, ask-pin, cb) !->
     return perform-ask-pin store, page if ask-pin is yes
     return alert "store is required" if not store?
     return alert "web3t is required" if not web3t?
     scroll-top!
     <- set-timeout _, 1
-    if page? and page isnt \loading and page isnt \:init   
-        store.pages.push(page) if store.pages.length > 0 and (store.pages.index-of(page) < 0)  
+    if page? and page isnt \loading and page isnt \:init
+        store.pages.push(page) if store.pages.length > 0 and (store.pages.index-of(page) < 0)
     store.pages = [\wallets] if page is \wallets
-    prev = store.current.page 
+    prev = store.current.page
     store.current.page = \loading
     store.current.loading = yes
     name = get-page store, page, prev
@@ -51,3 +51,4 @@ module.exports = (store, web3t, page, ask-pin) !->
     store.current.page = name
     store.current.loading = no
     <- focus-control { store, web3t }, name
+    cb! if cb?

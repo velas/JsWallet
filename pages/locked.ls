@@ -202,7 +202,8 @@ check-pin = (store, web3t)->
     store.current.pin = ""
     store.current.loading = yes
     if store.current.page-pin?
-        store.current.page = store.current.page-pin
+        <- navigate store, web3t, \:init, no
+        navigate store, web3t, store.current.page-pin
         store.current.page-pin = null
     else
         navigate store, web3t, \:init

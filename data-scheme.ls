@@ -182,7 +182,7 @@ store =
     releases: []
     current:
         address-suffix: ''
-        page-pin: null
+        page-pin: url-hash-params.page ? null
         try-copy: null
         hovered-address:
             address: null
