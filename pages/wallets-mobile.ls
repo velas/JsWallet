@@ -172,7 +172,7 @@ require! {
             .address-holder
                 div
                     a
-                        padding-right: 20px
+                        padding-right: 10px
             &.title-balance
                 display: none
 mobile = ({ store, web3t })->

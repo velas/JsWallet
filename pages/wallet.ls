@@ -291,8 +291,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                             img.icon.pug(src="#{icons.open}" style=btn-icon)
                     span.pug.icon(on-click=expand)
                         img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
-                button { store, on-click=send-click, text: \send , icon: \send , type: \primary }
-                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary }
+                button { store, on-click=send-click, text: \send , icon: \send , type: \secondary }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary }
         .wallet-middle.pug(style=border)
             address-holder { store, wallet, type: \bg }
             if wallet.coin.token not in <[ btc vlx2 ]>

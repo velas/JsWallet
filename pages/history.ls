@@ -264,7 +264,7 @@ require! {
             margin-left: -1px
             padding: 0
             &.active
-                border-color: #9d40eb
+                border-color: var(--primary2)
                 background: rgba(59, 213, 175, 0.25)
                 border-width: 3px
             line-height: 12px
