@@ -68,7 +68,7 @@ require! {
                 padding-left: 3px
                 font-size: 13px
             input
-                $border-radius: 6px
+                $border-radius: var(--border-btn)
                 outline: none
                 width: 100%
                 box-sizing: border-box
