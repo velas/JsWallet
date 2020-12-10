@@ -9,7 +9,6 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \./epoch.ls
-    \./alert-demo.ls
     \prelude-ls : { map }
     \../math.ls : { minus }
     \../components/text-field.ls
@@ -104,7 +103,7 @@ require! {
                             width: 13px
             .main-content
                 height: 100vh
-                margin: 0px 20px 10px 20px
+                margin: 60px 20px 10px 20px
                 &.create-new-proposal
                     height: auto
                     input
@@ -128,11 +127,13 @@ require! {
                     position: relative
                     transition: all .5s
                     &.active
-                        transform: scale(1.04)
                         background: var(--bg-primary-light)
                         border: 1px solid var(--border)
                         box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.05)
                         z-index: 1
+                        .rate
+                            button
+                                opacity: 1
                         .label
                             background: var(--dark-theme)
                     &.compact
@@ -153,6 +154,12 @@ require! {
                         background: var(--bg-primary-light)
                         transition: all .5s
                         cursor: pointer
+                        .rate
+                            button
+                                opacity: 1
+                        .label
+                            transition: all .5s
+                            background: var(--dark-theme)
                     .label
                         position: absolute
                         background: var(--bg-primary-light)
@@ -164,11 +171,17 @@ require! {
                         border-bottom-right-radius: 3px
                         border-bottom-left-radius: 3px
                         right: 15px
+                        transition: all .5s
                         box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.05)
                     .rate
                         margin-right: 15px
                         padding: 3px 0
-                        width: 50px
+                        width: 90px
+                        text-align: center
+                        button
+                            opacity: .55
+                        .votes
+                            text-align: center
                         ul
                             padding: 0
                             margin: 0
@@ -283,12 +296,10 @@ item = (store, web3t)-> (vote)->
         newp = store.development.new-proposal
         newp.update-progress = progress
     .pug.item(style=border class="#{view}" on-click=vote-on-click)
-        span.pug.label(style=background) Sphere
+        span.pug.label(style=background) Vote
         .pug.rate
-            ul.pug
-                li.pug(class="#{raise}" on-click=vote-for)
-                    img.pug(src="#{icons.rate}")
-                li.pug #{vote.votes.toString()}
+            .votes.pug #{vote.votes.toString()}
+            button { store, on-click=vote-for, text: \vote, icon: \rate  , type : \primary }
         .pug.description
             .pug.header #{vote.name}
             .pug.sub-header #{vote.description}
@@ -379,7 +390,6 @@ vote = ({ store, web3t })->
     show-class =
         if store.current.open-menu then \hide else \ ""
     .pug.vote
-        alert-demo store, web3t
         .pug.title(style=border-style)
             .pug.header(class="#{show-class}") Vote
             .pug.close(on-click=goto-search)
