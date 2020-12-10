@@ -324,7 +324,6 @@ item = (store, web3t)-> (vote)->
         newp = store.development.new-proposal
         newp.update-progress = progress
     .pug.item(style=border class="#{view}" on-click=vote-on-click)
-        span.pug.label(style=background) Vote
         .pug.rate
             .votes.pug #{vote.votes.toString()}
             button { store, on-click=vote-for, text: \vote, icon: \rate  , type : \primary }
