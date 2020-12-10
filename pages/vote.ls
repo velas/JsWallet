@@ -14,6 +14,9 @@ require! {
     \../components/text-field.ls
     \../components/button.ls
     \../components/burger.ls
+    \../../web3t/providers/deps.js : { hdkey, bip39 }
+    \md5
+    \../seed.ls : seedmem
 }
 .vote
     @import scheme
@@ -272,6 +275,26 @@ require! {
                         margin-top: 0px
                 @media(max-width:800px)
                     margin: 20px
+get-pair = (wallet, path, index, password, with-keystore)->
+    w = wallet.derive-path(path).derive-child(index).get-wallet!
+    address  = "0x" + w.get-address!.to-string(\hex)
+    salt = Buffer.from('dc9e4a98886738bd8aae134a1f89aaa5a502c3fbd10e336136d4d5fe47448ad6', 'hex')
+    iv = Buffer.from('cecacd85e9cb89788b5aab2f93361233', 'hex')
+    uuid = Buffer.from('7e59dc028d42d09db29aa8a0f862cc81', 'hex')
+    kdf = 'pbkdf2'
+    #console.log \keystore, with-keystore
+    keystore =
+        | with-keystore => w.toV3String(password, { salt, iv, uuid, kdf })
+        | _ => ""
+    { address, keystore }
+to-keystore = (store, with-keystore)->
+    seed = bip39.mnemonic-to-seed(seedmem.mnemonic)
+    wallet = hdkey.from-master-seed(seed)
+    index = store.current.account-index
+    password = md5 wallet.derive-path("m1").derive-child(index).get-wallet!.get-address!.to-string(\hex)
+    staking = get-pair wallet, \m0 , index, password, no
+    mining  = get-pair wallet, \m0/2 , index, password, with-keystore
+    { staking, mining, password }
 item = (store, web3t)-> (vote)->
     lang = get-lang store
     info = get-primary-info store
@@ -288,6 +311,7 @@ item = (store, web3t)-> (vote)->
     vote-on-click = ->
         store.current.vote-index = vote.index
     vote-for = ->
+        return alert "You already voted for this" if vote.voted
         err, pool <- web3t.velas.Staking.getStakerPools(store.staking.keystore.staking.address)
         return alert err if err?
         return alert "You should stake before you can vote" if pool.length < 1
@@ -430,6 +454,7 @@ build-proposal-views = ({ web3t, store }, length, cb)->
     }
     cb null, [...rest, proposal-view]
 module.exports.init = ({ web3t, store }, cb)->
+    store.staking.keystore = to-keystore store, no
     if store?url-hash-params?vote
         store.current.vote-index = parse-int store?url-hash-params?vote
     err, length <- web3t.velas.Development.get-proposals-count!
