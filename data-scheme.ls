@@ -263,6 +263,7 @@ store =
         trx-type: "custom"
         allow-mining-claim-call: undefined
         search: ""
+        vote-index: null
     history:
         filter-open: no
         tx-details: no

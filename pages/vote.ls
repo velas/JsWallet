@@ -267,7 +267,9 @@ item = (store, web3t)-> (vote)->
     raise =
         if not vote.voted then \ "" else \active
     view =
-        if store?url-hash-params?vote is vote.index.toString() then \active else \ ""
+        if store.current.vote-index is vote.index then \active else ""
+    vote-on-click = ->
+        store.current.vote-index = vote.index
     vote-for = ->
         err, pool <- web3t.velas.Staking.getStakerPools(store.staking.keystore.staking.address)
         return alert err if err?
@@ -280,7 +282,7 @@ item = (store, web3t)-> (vote)->
     update-progress = ->
         newp = store.development.new-proposal
         newp.update-progress = progress
-    .pug.item(style=border class="#{view}")
+    .pug.item(style=border class="#{view}" on-click=vote-on-click)
         span.pug.label(style=background) Sphere
         .pug.rate
             ul.pug
@@ -332,27 +334,28 @@ content = (store, web3t)->
         newp.name = ""
         newp.opened = no
     .pug.side
-        .pug.filter(style=style)
-            ul.pug
-                li.pug
-                    img.pug(src="#{icons.best}")
-                    | Best
-                li.pug.active
-                    img.pug(src="#{icons.hot}")
-                    | Hot
-                li.pug
-                    img.pug(src="#{icons.new}")
-                    | New
-                li.pug
-                    img.pug(src="#{icons.top}")
-                    | Top
-            ul.pug.view
-                li.pug(class="#{view}" on-click=add-class)
-                    img.pug(src="#{icons.compact}")
-                    img.pug(src="#{icons.classic}")
-                li.pug(on-click=create-new-vote)
-                    img.pug(src="#{icons.create}" width=18 height=18)
-                    img.pug(src="#{icons.create}" width=18 height=18)
+        if no
+            .pug.filter(style=style)
+                ul.pug
+                    li.pug
+                        img.pug(src="#{icons.best}")
+                        | Best
+                    li.pug.active
+                        img.pug(src="#{icons.hot}")
+                        | Hot
+                    li.pug
+                        img.pug(src="#{icons.new}")
+                        | New
+                    li.pug
+                        img.pug(src="#{icons.top}")
+                        | Top
+                ul.pug.view
+                    li.pug(class="#{view}" on-click=add-class)
+                        img.pug(src="#{icons.compact}")
+                        img.pug(src="#{icons.classic}")
+                    li.pug(on-click=create-new-vote)
+                        img.pug(src="#{icons.create}" width=18 height=18)
+                        img.pug(src="#{icons.create}" width=18 height=18)
         if newp.update-progress
             .pug.create-new-proposal.main-content(style=border-style) Please make upgrade process here
         if newp.opened is yes
@@ -410,6 +413,8 @@ build-proposal-views = ({ web3t, store }, length, cb)->
     }
     cb null, [...rest, proposal-view]
 module.exports.init = ({ web3t, store }, cb)->
+    if store?url-hash-params?vote
+        store.currrent.vote-index = parse-int store?url-hash-params?vote
     err, length <- web3t.velas.Development.get-proposals-count!
     return cb err if err?
     err, proposals <- build-proposal-views { web3t, store }, +length
