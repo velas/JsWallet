@@ -195,7 +195,7 @@ require! {
                             line-height: 36px
                             button.small
                                 outline: none
-                                border-radius: $border
+                                border-radius: var(--border-btn)
                                 line-height: 10px
                                 text-align: center
                                 height: 16px
@@ -258,9 +258,9 @@ require! {
                             border-color: #ffffff21
                             box-sizing: border-box
                             &:first-child
-                                border-radius: $border 0 0 $border
+                                border-radius: var(--border-btn) 0 0 var(--border-btn)
                             &:last-child
-                                border-radius: 0 $border $border 0
+                                border-radius: 0 var(--border-btn) var(--border-btn) 0
                                 border-right: 0
                             @media (max-width: 800px)
                                 width: 50%
@@ -274,7 +274,7 @@ require! {
                         overflow: scroll
                         background: #1b1b1b
                         text-align: left
-                        border-radius: $border
+                        border-radius: var(--border-btn)
                         .copy
                             float: right
                             margin-top: 11px
@@ -393,7 +393,7 @@ require! {
                 font-size: 14px
                 margin: 5px 0
                 border: 0px
-                border-radius: $border
+                border-radius: var(--border-btn)
                 box-shadow: none
                 &.change-index
                     margin: 0 !important
@@ -429,7 +429,7 @@ require! {
     button
         background-color: $primary
         border: 1px solid $primary
-        border-radius: $border
+        border-radius: var(--border-btn)
         color: white
         height: 36px
         width: 130px

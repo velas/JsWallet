@@ -32,6 +32,7 @@ require! {
     \./pages/monitor.ls
     \./pages/notification.ls
     \./pages/offlinewallets.ls
+    \./pages/downloadwallet.ls
     \./pages/vote.ls
     \./pages/util.ls
 }
@@ -54,6 +55,7 @@ if is-in-iframe
     export reviewwords
 else
     export offlinewallets
+    export downloadwallet
     export monitor
     export resources
     export staking

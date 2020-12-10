@@ -1,1 +1,1 @@
-module.exports = <[ locked reviewwords restorewords send chooseinit newseedrestore loading loading2 verifyseed terms terms2 privacy ]>
+module.exports = <[ locked reviewwords restorewords send chooseinit newseedrestore loading loading2 verifyseed terms terms2 privacy downloadwallet]>

@@ -107,8 +107,9 @@ require! {
             padding: 0 3px
             margin: 5px
             font-size: 14px
+            font-weight: 400
             min-width: 25%
-            border-radius: 40px
+            border-radius: calc(var(--border-btn) * 10)
             -ms-user-select: none
             cursor: default
             @media(max-width: 500px)
@@ -144,7 +145,7 @@ require! {
                     display: inline-block
                     padding: 4px
                     float: left
-                    border-radius: 50px
+                    border-radius: var(--border-btn)
                     width: 11px
                     height: 10px
                     font-size: 10px
@@ -157,7 +158,7 @@ require! {
                         color: #fff
                         display: inline-block
                         padding: 4px
-                        border-radius: 50px
+                        border-radius: var(--border-btn)
                         width: 11px
                         height: 10px
                         font-size: 10px

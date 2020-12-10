@@ -36,12 +36,12 @@ get-button-style = (store, type)->
     style = get-primary-info store
     button-primary1-style=
         border: "0"
-        color: style.app.text
+        color: style.app.text-invert
         background: style.app.primary1
         background-color: style.app.primary1-spare
     button-primary3-style=
         border: "0"
-        color: style.app.text2
+        color: style.app.text4
         background: style.app.primary3
         background-color: style.app.primary3-spare
     button-primary2-style=
@@ -56,15 +56,20 @@ get-button-style = (store, type)->
     button-style
 button-active = ({ store, text, loading, on-click, icon, type, id })->
     lang = get-lang store
+    style = get-primary-info store
     applied-text = lang[text] ? text ? ""
     applied-icon = icons[icon ? text] ? icons.more
     button-style = get-button-style store, type
+    filter=
+        filter: style.app.filter
+    icon-style=
+        | type is \primary => filter
     button.pug.btn(on-click=on-click style=button-style id=id)
         if store.current.device is \mobile
-            img.icon-svg.pug(src="#{applied-icon}" title="#{applied-text}")
+            img.icon-svg.pug(src="#{applied-icon}" title="#{applied-text}" style=icon-style)
         else
             span.pug
-                img.icon-svg.pug(src="#{applied-icon}")
+                img.icon-svg.pug(src="#{applied-icon}" style=icon-style)
                 span.pug #{applied-text}
 component = (config)->
     return button-loading(config) if config.loading is yes

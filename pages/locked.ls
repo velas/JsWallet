@@ -22,6 +22,7 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    background-size: cover !important
     .notice
         max-width: 300px
         text-align: center
@@ -88,7 +89,7 @@ require! {
             height: 36px
             background: transparent
             border: 0
-            border-radius: $border
+            border-radius: var(--border-btn)
             outline: none
             width: 130px
             margin-bottom: 5px
@@ -341,6 +342,7 @@ create-wallet = (store, web3t)->
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
+    style = get-primary-info store
     title =
         | not exists! => lang.enter-pin
         | _ => lang.enter-pin
@@ -352,10 +354,18 @@ locked = ({ store, web3t })->
         color: info.app.text
         background-image: info.app.background-image
         background-size: "cover"
+        background: info.app.glitch
+    button-primary2-style=
+        border: "1px solid #{style.app.primary2}"
+        color: style.app.text
+        background: style.app.primary2
+        background-color: style.app.primary2-spare
     txt-style=
         color: info.app.text
     logo-style =
         filter: info.app.filterLogo
+    download = ->
+        navigate store, web3t, \downloadwallet
     .pug.locked(key="locked" style=locked-style)
         .pug.logo
             img.pug(src="#{info.branding.logo}")
@@ -366,6 +376,8 @@ locked = ({ store, web3t })->
             input store, web3t
         export-import-seed store
         footer store, web3t
+        .pug.downloadwallet
+            button { store, on-click=download, text: \install , icon: \download  , type : \primary }
 focus = ({ store }, cb)->
     cb null
 locked.focus = focus

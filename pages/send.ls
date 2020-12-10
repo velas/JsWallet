@@ -21,7 +21,7 @@ require! {
 .content
     position: relative
     @import scheme
-    $border-radius: $border
+    $border-radius: var(--border-btn)
     $label-padding: 3px
     $label-font: 13px
     width: calc(100% - 0px) !important
@@ -75,7 +75,7 @@ require! {
         right: 0
         width: 150px
         box-shadow: 0px 0px 2px black
-        border-radius: $border
+        border-radius: var(--border-btn)
         text-align: left
         padding-bottom: 3px
         >.more
@@ -103,7 +103,7 @@ require! {
         >form
             >table
                 background: transparent
-                border-radius: 0 0 $border $border
+                border-radius: 0 0 var(--border-btn) var(--border-btn)
                 width: 100%
                 border-spacing: 0
                 tr
@@ -139,7 +139,7 @@ require! {
                             left: 4px
                             top: 3px
                             height: 30px
-                            border-radius: 5px
+                            border-radius: var(--border-btn)
                             margin: 0px
                         input
                             text-align: center
@@ -176,7 +176,7 @@ require! {
                     >.input-wrapper
                         position: relative
                         width: 65%
-                        border-radius: 6px 0 0 6px
+                        border-radius: var(--border-btn) 0 0 var(--border-btn)
                         &.choose-currency
                             display: inline-flex
                             width: 45% !important
@@ -201,7 +201,7 @@ require! {
                             margin-left: -1px
                         &.small
                             width: 35%
-                            border-radius: 0 6px 6px 0
+                            border-radius: 0 var(--border-btn) var(--border-btn) 0
                         display: inline-block
                         box-sizing: border-box
                         margin: 0

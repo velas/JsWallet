@@ -17,6 +17,7 @@ require! {
 }
 #
 .wallet-detailed
+    @import scheme
     height: 200px
     box-sizing: border-box
     $tablet: 1200px
@@ -49,7 +50,7 @@ require! {
                 margin-left: 5px
                 letter-spacing: 2px
                 cursor: pointer
-                border-radius: 5px
+                border-radius: var(--border-btn)
             >.address-holder
                 margin-top: 10px
                 width: calc((130px * 2) + 10px)
@@ -105,6 +106,7 @@ require! {
                         letter-spacing: 2px
                     .token-balance
                         font-size: 24px
+                        font-weight: bold
                     .usd-balance
                         font-size: 14px
                         opacity: .5
@@ -114,13 +116,12 @@ require! {
                 .counts
                     margin-bottom: 5px
                     .label
-                        font-weight: bold
                         font-size: 12px
                     .label-icon
                         width: 25px
                         height: 25px
                         background: #f7618a
-                        border-radius: 6px
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-bottom: 6px
                         .icon-svg
@@ -191,11 +192,11 @@ module.exports = (store, web3t, wallets, wallet)-->
     text=
         color: style.app.text
     color-label=
-        background: style.app.primary1
-        background-color: style.app.primary1-spare
-    color-label2=
         background: style.app.primary2
         background-color: style.app.primary2-spare
+    color-label2=
+        background: style.app.primary1
+        background-color: style.app.primary1-spare
     token-display = if token == \VLX2 then \VLX else token
     .wallet-detailed.pug(key="#{token}" style=wallet-style)
         .wallet-part.left.pug(style=text)
@@ -220,8 +221,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }
             .buttons.pug
-                button { store, on-click=send-click, text: \send , icon: \send , type: \primary, id: "wallets-send" }
-                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \secondary, id: "wallets-receive" }
+                button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send" }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive" }
             .details.pug
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}

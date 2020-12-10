@@ -42,6 +42,7 @@ require! {
         margin-top: 0px
     .wallets
         @import scheme
+        $border: var(--border-btn)
         $real-height: 300px
         $cards-height: 296px
         $pad: 20px
@@ -171,7 +172,7 @@ require! {
             .address-holder
                 div
                     a
-                        padding-right: 20px
+                        padding-right: 10px
             &.title-balance
                 display: none
 mobile = ({ store, web3t })->

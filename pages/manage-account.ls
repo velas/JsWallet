@@ -37,7 +37,7 @@ require! {
         margin-top: 5vh
         margin-bottom: 25vh
         padding-bottom: 50px
-        border-radius: $border
+        border-radius: var(--border-btn)
         position: relative
         max-height: 70vh
         box-sizing: border-box
@@ -68,14 +68,14 @@ require! {
                 input
                     width: 104px
             input
-                border-radius: $border
+                border-radius: var(--border-btn)
                 height: 36px
                 width: 40px
                 line-height: 36px
                 text-align: center
                 font-size: 13px
             textarea
-                border-radius: $border
+                border-radius: var(--border-btn)
             input, textarea
                 outline: none
                 margin-bottom: 3px
@@ -85,7 +85,7 @@ require! {
             button
                 background-color: $primary
                 border: 1px solid $primary
-                border-radius: $border
+                border-radius: var(--border-btn)
                 color: white
                 height: 36px
                 width: 104px
@@ -124,15 +124,15 @@ require! {
                     display: inline-block
                     color: white
                     padding: 9px
-                    border-radius: $border
+                    border-radius: var(--border-btn)
                     cursor: pointer
                     vertical-align: top
                     &:hover
                         background: gray
                     &.left
-                        border-radius: $border 0 0 $border
+                        border-radius: var(--border-btn) 0 0 var(--border-btn)
                     &.right
-                        border-radius: 0 $border $border 0
+                        border-radius: 0 var(--border-btn) var(--border-btn) 0
                 .mb-12
                     margin-bottom: 12px
         .bold

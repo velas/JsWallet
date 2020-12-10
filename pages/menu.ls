@@ -107,6 +107,7 @@ require! {
                     margin-top: 5px
             >.amount
                 font-size: 25px
+                font-weight: bold
                 .symbol
                     font-size: 15px
                     vertical-align: unset
