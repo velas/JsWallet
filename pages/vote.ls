@@ -59,8 +59,13 @@ require! {
         padding: 0
         .side
             display: inline-grid
-            margin: 0 auto
+            margin: 60px auto 0
             width: 70%
+            .notice
+                text-align: left
+                margin: 0px 20px 10px 20px
+                .danger
+                    color: orange
             @media(max-width:800px)
                 width: 100%
             .filter
@@ -103,7 +108,7 @@ require! {
                             width: 13px
             .main-content
                 height: 100vh
-                margin: 60px 20px 10px 20px
+                margin: 0px 20px 10px 20px
                 &.create-new-proposal
                     height: auto
                     input
@@ -128,7 +133,6 @@ require! {
                     transition: all .5s
                     &.active
                         background: var(--bg-primary-light)
-                        border: 1px solid var(--border)
                         box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.05)
                         z-index: 1
                         .rate
@@ -367,6 +371,9 @@ content = (store, web3t)->
                     li.pug(on-click=create-new-vote)
                         img.pug(src="#{icons.create}" width=18 height=18)
                         img.pug(src="#{icons.create}" width=18 height=18)
+        .pug.notice
+            span.pug.danger Important.
+            span.pug Voting costs 1 VLX. A requirement for voting is active participation in Velas staking.
         if newp.update-progress
             .pug.create-new-proposal.main-content(style=border-style) Please make upgrade process here
         if newp.opened is yes
