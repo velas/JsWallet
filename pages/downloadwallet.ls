@@ -13,7 +13,7 @@ require! {
     @media(max-width:$ipad)
         width: 100%
         margin: 0
-    margin-left: $left-margin
+    margin-left: 0
     >.title
         position: sticky
         position: -webkit-sticky
@@ -141,15 +141,12 @@ header = (store, web3t)->
         border-bottom: "1px solid #{info.app.border}"
         background: info.app.background
         background-color: info.app.bgspare
-    goto-search = ->
-        navigate store, web3t, \search
-    show-class =
-        if store.current.open-menu then \hide else \ ""
+    lock = ->
+        navigate store, web3t, \locked
     .pug.title(style=border-style)
-        .pug.header(class="#{show-class}") Download Wallets
-        .pug.close(on-click=goto-search)
+        .pug.header Download Wallets
+        .pug.close(on-click=lock)
             img.icon-svg.pug(src="#{icons.arrow-left}")
-        burger store, web3t
 module.exports = ({ store, web3t })->
     .pug.wallets
         header store, web3t
