@@ -125,7 +125,7 @@ build-version = (store, release)-->
         .pug.source
             a.pug(href="#{source}" style=button-primary3-style target="_blank") Source Code
         .pug.download
-            a.pug(href="#{release.browser_download_url}" style=button-primary1-style target="_blank") Download
+            a.pug(href="#{release.browser_download_url}" style=button-primary1-style target="_blank") Upload
         .pug.source.link
             a.pug(href="#{md5-file?browser_download_url}" style=button-link target="_blank") MD5
 only-version = (item)->
@@ -144,7 +144,7 @@ header = (store, web3t)->
     lock = ->
         navigate store, web3t, \locked
     .pug.title(style=border-style)
-        .pug.header Download Wallets
+        .pug.header Upload Wallets
         .pug.close(on-click=lock)
             img.icon-svg.pug(src="#{icons.arrow-left}")
 module.exports = ({ store, web3t })->
