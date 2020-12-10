@@ -424,7 +424,7 @@ build-proposal-views = ({ web3t, store }, length, cb)->
     cb null, [...rest, proposal-view]
 module.exports.init = ({ web3t, store }, cb)->
     if store?url-hash-params?vote
-        store.currrent.vote-index = parse-int store?url-hash-params?vote
+        store.current.vote-index = parse-int store?url-hash-params?vote
     err, length <- web3t.velas.Development.get-proposals-count!
     return cb err if err?
     err, proposals <- build-proposal-views { web3t, store }, +length
