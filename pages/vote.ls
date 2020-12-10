@@ -318,7 +318,7 @@ item = (store, web3t)-> (vote)->
         data = web3t.velas.Development.vote.get-data +vote.index
         return cb err if err?
         to = web3t.velas.Development.address
-        amount = 1
+        amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
     update-progress = ->
         newp = store.development.new-proposal
@@ -364,7 +364,7 @@ content = (store, web3t)->
         data = web3t.velas.Development.add-proposal.get-data newp.description, newp.name
         return cb err if err?
         to = web3t.velas.Development.address
-        amount = 1
+        amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 9600000, gas-price: 1000000 }
         newp.opened = no
     cancel-new-vote = ->
@@ -396,7 +396,7 @@ content = (store, web3t)->
                         img.pug(src="#{icons.create}" width=18 height=18)
         .pug.notice
             span.pug.danger Important.
-            span.pug Voting costs 1 VLX. A requirement for voting is active participation in Velas staking.
+            span.pug A requirement for voting is active participation in Velas staking.
         if newp.update-progress
             .pug.create-new-proposal.main-content(style=border-style) Please make upgrade process here
         if newp.opened is yes
