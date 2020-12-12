@@ -37,7 +37,7 @@ require! {
         width: 100%
         margin-top: 5vh
         margin-bottom: 25vh
-        border-radius: $border
+        border-radius: var(--border-btn)
         position: relative
         height: 65vh
         overflow: hidden
@@ -70,7 +70,7 @@ require! {
                     margin-top: 10px
                     border: 1px solid #CCC
                     padding: 9px
-                    border-radius: $border
+                    border-radius: var(--border-btn)
                     width: 100%
                     padding-left: 35px
                     box-sizing: border-box
@@ -101,7 +101,7 @@ require! {
                         margin-bottom: 10px
                         display: inline-block
                         background: #642dbd
-                        border-radius: $border
+                        border-radius: var(--border-btn)
                         padding: 10px
                         text-align: left
                         float: left
@@ -121,7 +121,7 @@ require! {
                             box-sizing: border-box
                         input
                             margin: 0 5px
-                            border-radius: $border
+                            border-radius: var(--border-btn)
                             width: calc(100% - 90px)
                             border: 0
                             padding: 5px 10px
@@ -129,7 +129,7 @@ require! {
                             font-size: 15px
                         img
                             width: 40px
-                            border-radius: 100px
+                            border-radius: 0px
                         .title
                             margin-left: 10px
                             color: gray
@@ -138,7 +138,7 @@ require! {
                             width: 40px
                             height: 40px
                             line-height: 45px
-                            border-radius: $border
+                            border-radius: var(--border-btn)
                             border: 0 !important
                             box-sizing: border-box
                             padding: 0

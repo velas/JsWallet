@@ -138,7 +138,7 @@ require! {
                     margin: 0
                     li
                         &:hover
-                            color: #9264b6 !important
+                            color: #0bffb7 !important
                             transition: .5s
                             img
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
@@ -150,7 +150,7 @@ require! {
                         &:last-child
                             margin-bottom: 0
                         &.active
-                            color: #9264b6 !important
+                            color: #0bffb7 !important
                             img
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                         img
@@ -366,42 +366,42 @@ module.exports = (store, web3t)->
         menu { store, web3t }
         .pug.menu-items
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}")
+                .menu-item.pug(on-click=wallet style=icon-style class="#{wallets}" id="menu-wallets")
                     span.arrow_box.pug #{lang.your-wallets}
                     img.pug(src="#{icons.wallet}" style=wallet-icon)
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking + ' ' + info-active + ' ' + staking-active + ' ' + delegate-active}" on-mouse-leave=menu-out)
+                .menu-item.pug(on-click=open-submenu style=icon-style class="#{staking + ' ' + menu-staking + ' ' + info-active + ' ' + staking-active + ' ' + delegate-active}" on-mouse-leave=menu-out id="menu-staking")
                     span.arrow_box.pug #{lang.staking}
                     img.pug(src="#{icons.staking}"style=icon-color)
                     img.more.pug(src="#{icons.arrow-down}")
                     .menu.pug.arrow_box
                         ul.pug
-                            li.pug(on-click=goto-staking style=icon-style class="#{staking-active}")
+                            li.pug(on-click=goto-staking style=icon-style class="#{staking-active}" id="menu-node")
                                 img.pug(src="#{icons.node}" style=icon-node)
                                 | #{lang.install-node}
-                            li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}")
+                            li.pug(on-click=goto-choose-staker style=icon-style class="#{delegate-active}" id="menu-delegate")
                                 img.pug(src="#{icons.delegate}" style=icon-node)
                                 | #{lang.delegate-stake}
                             if no
                                 li.pug(on-click=goto-claim style=icon-style class="#{claim-active}")
                                     img.pug(src="#{icons.claim}" style=icon-node)
                                     | #{lang.claim-reward}
-                            li.pug(on-click=goto-info style=icon-style class="#{info-active}")
+                            li.pug(on-click=goto-info style=icon-style class="#{info-active}" id="menu-stats")
                                 img.pug(src="#{icons.info}" style=icon-node)
                                 | #{lang.stats}
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-search style=icon-style class="#{search}")
+                .menu-item.pug(on-click=goto-search style=icon-style class="#{search}" id="menu-search")
                     span.arrow_box.pug #{lang.search}
                     img.pug(src="#{icons.search}" style=icon-color)
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}")
+                .menu-item.pug(on-click=goto-settings style=icon-style class="#{settings}" id="menu-settings")
                     span.arrow_box.pug #{lang.settings}
                     img.pug(src="#{icons.setting}" style=icon-color)
             if store.preference.settings-visible is yes
-                .menu-item.pug(on-click=goto-support style=icon-style)
+                .menu-item.pug(on-click=goto-support style=icon-style id="menu-support")
                     span.arrow_box.pug #{lang.support}
                     img.pug(src="#{icons.support}" style=icon-color)
             if store.current.network is \testnet
-                .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}")
+                .menu-item.pug.testnet(on-click=goto-mainnet style=icon-style class="#{settings}" id="menu-testnet")
                     span.arrow_box.pug Testnet
                     img.pug(src="#{icons.test}" style=icon-color)

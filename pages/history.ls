@@ -245,12 +245,12 @@ require! {
                     border-radius: $border 0 0 0
                     img
                         filter: invert(105%)
-                    background: var(--primary1)
+                    background: var(--primary2)
                 &.IN
                     border-radius: 0 $border 0 0
                     img
                         filter: invert(105%)
-                    background: var(--primary2)
+                    background: var(--primary1)
         .separator
             min-width: 2px
             display: inline-block
@@ -264,7 +264,7 @@ require! {
             margin-left: -1px
             padding: 0
             &.active
-                border-color: #9d40eb
+                border-color: var(--primary2)
                 background: rgba(59, 213, 175, 0.25)
                 border-width: 3px
             line-height: 12px
@@ -308,7 +308,7 @@ require! {
             letter-spacing: .5px
             padding: 0px 3px 1px 0px
             &.done
-                background-image: linear-gradient(90deg, rgb(247, 97, 139) 42%, rgb(42, 122, 255) 150%)
+                background-image: var(--confirm)
                 -webkit-text-fill-color: transparent
                 -webkit-background-clip: text
     .syncing
@@ -512,7 +512,7 @@ require! {
                                     top: 0px
                                     margin: 0 10px 0 0
                                     height: 25px
-                                    border-radius: 6px
+                                    border-radius: var(--border-btn)
                             .browse
                                 right: 0px
                                 padding: 0
@@ -568,16 +568,16 @@ require! {
                     img
                         filter: invert(105%)
                         vertical-align: bottom
-                    color: #be6ed2
+                    color: #0037c1
                     &.label-icon
                         width: 25px
                         height: 25px
-                        background: var(--primary1)
-                        border-radius: 6px
+                        background: var(--primary2)
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px
                 .txhash a
-                    color: #be6ed2
+                    color: #0037c1
             &.IN
                 &.record
                     .tx-top
@@ -587,12 +587,12 @@ require! {
                     img
                         filter: invert(105%)
                         vertical-align: bottom
-                    color: #3465d2
+                    color: #0bffb7
                     &.label-icon
                         width: 25px
                         height: 25px
-                        background: var(--primary2)
-                        border-radius: 6px
+                        background: var(--primary1)
+                        border-radius: var(--border-btn)
                         text-align: center
                         margin-top: 7px
                 .txhash a

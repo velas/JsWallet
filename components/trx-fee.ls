@@ -8,7 +8,7 @@ require! {
 }
 .trx-fee
     @import scheme
-    $border-radius: $border
+    $border-radius: var(--border-btn)
     table
         margin-bottom: -1px
         border-radius: $border-radius $border-radius 0 0

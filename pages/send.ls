@@ -21,7 +21,7 @@ require! {
 .content
     position: relative
     @import scheme
-    $border-radius: $border
+    $border-radius: var(--border-btn)
     $label-padding: 3px
     $label-font: 13px
     width: calc(100% - 0px) !important
@@ -75,7 +75,7 @@ require! {
         right: 0
         width: 150px
         box-shadow: 0px 0px 2px black
-        border-radius: $border
+        border-radius: var(--border-btn)
         text-align: left
         padding-bottom: 3px
         >.more
@@ -103,7 +103,7 @@ require! {
         >form
             >table
                 background: transparent
-                border-radius: 0 0 $border $border
+                border-radius: 0 0 var(--border-btn) var(--border-btn)
                 width: 100%
                 border-spacing: 0
                 tr
@@ -139,7 +139,7 @@ require! {
                             left: 4px
                             top: 3px
                             height: 30px
-                            border-radius: 5px
+                            border-radius: var(--border-btn)
                             margin: 0px
                         input
                             text-align: center
@@ -176,6 +176,7 @@ require! {
                     >.input-wrapper
                         position: relative
                         width: 65%
+                        border-radius: var(--border-btn) 0 0 var(--border-btn)
                         &.choose-currency
                             display: inline-flex
                             width: 45% !important
@@ -200,6 +201,7 @@ require! {
                             margin-left: -1px
                         &.small
                             width: 35%
+                            border-radius: 0 var(--border-btn) var(--border-btn) 0
                         display: inline-block
                         box-sizing: border-box
                         margin: 0
@@ -377,7 +379,9 @@ send = ({ store, web3t })->
     border-style=
         border: "1px solid #{style.app.border}"
     amount-style=
-        border: "1px solid #{style.app.background}"
+        background: style.app.input
+        border: "1px solid #{style.app.border}"
+        color: style.app.text
     icon-style =
         color: style.app.icon
     use-max-style =
@@ -389,6 +393,7 @@ send = ({ store, web3t })->
         background-color: style.app.primary3-spare
     crypto-background =
         background: style.app.wallet
+        width: "50%"
     more-text=
         color: style.app.text
     border-header =
@@ -451,25 +456,25 @@ send = ({ store, web3t })->
                 form-group lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
-                        input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}")
+                        input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}" id="send-recipient")
                 form-group lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
-                            .input-wrapper.pug
-                                .label.crypto.pug(style=crypto-background)
+                            .input-wrapper.pug(style=input-style)
+                                .label.crypto.pug
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     | #{token-display}
-                                input.pug.amount(type='text' style=input-style on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}")
+                                input.pug.amount(type='text' style=crypto-background on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}" id="send-amount")
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug $
-                                    input.pug.amount-usd(type='text' style=input-style on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}")
+                                    input.pug.amount-usd(type='text' style=crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}" id="send-amount-usd")
                             if active-eur is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug €
-                                    input.pug.amount-eur(type='text'  style=input-style on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}")
+                                    input.pug.amount-eur(type='text'  style=crypto-background on-change=amount-eur-change placeholder="0" title="#{send.amount-send-eur}" value="#{round-money send.amount-send-eur}" id="send-amount-eur")
                         .pug.usd
-                            button.pug.send-all(on-click=use-max-amount style=button-primary3-style type="button") #{lang.use-max}
+                            button.pug.send-all(on-click=use-max-amount style=button-primary3-style type="button" id="send-max") #{lang.use-max}
                             span.pug #{lang.balance}
                             span.pug.balance
                                 span.pug(title="#{wallet.balance}") #{round-human wallet.balance}
@@ -477,8 +482,6 @@ send = ({ store, web3t })->
                                     span.pug #{token-display}
                                 if +wallet.pending-sent >0 and no
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
-                            button.pug.send-all.switch-currency(on-click=activate-eur class="#{active-eur}" style=use-max-style type="button") eur
-                            button.pug.send-all.switch-currency(on-click=activate-usd class="#{active-usd}" style=use-max-style type="button") usd
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
                     form-group 'Data', icon-style, ->
@@ -502,8 +505,8 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error }
-                    button { store, text: \cancel , on-click: cancel, icon: \close2 }
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, id: "send-confirm" }
+                    button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t

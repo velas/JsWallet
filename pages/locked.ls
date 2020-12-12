@@ -1,7 +1,7 @@
 require! {
     \react
     \prelude-ls : { map }
-    \../pin.ls : { set, check, exists, del, setbkp } 
+    \../pin.ls : { set, check, exists, del, setbkp }
     \../navigate.ls
     \../get-primary-info.ls
     \../get-lang.ls
@@ -22,6 +22,7 @@ require! {
     height: 100vh
     box-sizing: border-box
     text-align: center
+    background-size: cover !important
     .notice
         max-width: 300px
         text-align: center
@@ -43,7 +44,7 @@ require! {
         &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
             -webkit-appearance: none
         -moz-appearance: textfield
-    >.logo 
+    >.logo
         margin: 4rem 0
         >img
             height: 80px
@@ -88,7 +89,7 @@ require! {
             height: 36px
             background: transparent
             border: 0
-            border-radius: $border
+            border-radius: var(--border-btn)
             outline: none
             width: 130px
             margin-bottom: 5px
@@ -202,7 +203,8 @@ check-pin = (store, web3t)->
     store.current.pin = ""
     store.current.loading = yes
     if store.current.page-pin?
-        store.current.page = store.current.page-pin
+        <- navigate store, web3t, \:init, no
+        navigate store, web3t, store.current.page-pin
         store.current.page-pin = null
     else
         navigate store, web3t, \:init
@@ -250,7 +252,7 @@ input = (store, web3t)->
     drag =
         if store.current.pin-trial is 0 then \ "" else \drag
     .pug
-        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key }
+        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key, id="locked-password" }
         if exists!
             .pug
                 button { store, on-click: enter, type: \primary , text: \enter }
@@ -315,7 +317,7 @@ setup-button = (store, web3t)->
     btn-icon =
         filter: style.app.btn-icon
     .pug(key="setup-button")
-        button.setup.pug(on-click=setup style=button-style)
+        button.setup.pug(on-click=setup style=button-style id="locked-continue")
             span.pug
                 img.icon-svg.pug(src="#{icons.key}" style=btn-icon)
                 | #{lang.setup}
@@ -340,6 +342,7 @@ create-wallet = (store, web3t)->
 locked = ({ store, web3t })->
     return null if store.current.loading is yes
     lang = get-lang store
+    style = get-primary-info store
     title =
         | not exists! => lang.enter-pin
         | _ => lang.enter-pin
@@ -351,10 +354,18 @@ locked = ({ store, web3t })->
         color: info.app.text
         background-image: info.app.background-image
         background-size: "cover"
+        background: info.app.glitch
+    button-primary2-style=
+        border: "1px solid #{style.app.primary2}"
+        color: style.app.text
+        background: style.app.primary2
+        background-color: style.app.primary2-spare
     txt-style=
         color: info.app.text
     logo-style =
         filter: info.app.filterLogo
+    download = ->
+        navigate store, web3t, \downloadwallet
     .pug.locked(key="locked" style=locked-style)
         .pug.logo
             img.pug(src="#{info.branding.logo}")
@@ -365,6 +376,8 @@ locked = ({ store, web3t })->
             input store, web3t
         export-import-seed store
         footer store, web3t
+        .pug.downloadwallet
+            button { store, on-click=download, text: \install , icon: \download  , type : \primary }
 focus = ({ store }, cb)->
     cb null
 locked.focus = focus

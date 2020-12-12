@@ -35,7 +35,7 @@ require! {
             vertical-align: bottom
     >.menu-item
         &.active
-            color: #9264b6 !important
+            color: #0bffb7 !important
             transition: $smooth
             -webkit-transition: $smooth
             -moz-transition: $smooth
@@ -141,7 +141,7 @@ require! {
                     margin: 0
                     li
                         &:hover
-                            color: #9264b6 !important
+                            color: #0bffb7 !important
                             transition: .5s
                             img
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
@@ -151,7 +151,7 @@ require! {
                         &:last-child
                             margin-bottom: 0
                         &.active
-                            color: #9264b6 !important
+                            color: #0bffb7 !important
                             img
                                 filter: grayscale(100%) brightness(40%) sepia(120%) hue-rotate(-140deg) saturate(790%) contrast(0.5)
                         img
@@ -196,7 +196,7 @@ require! {
                         border-width: 8px
                         margin-top: 0px
         &.active
-            color: #9264b6 !important
+            color: #0bffb7 !important
             transition: $smooth
             -webkit-transition: $smooth
             -moz-transition: $smooth

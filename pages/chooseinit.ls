@@ -16,7 +16,7 @@ require! {
     height: $height
     box-sizing: border-box
     height: 100%
-    >.logo 
+    >.logo
         margin: 3rem 0
         >img
             height: 80px
@@ -147,7 +147,7 @@ newseed = ({ store, web3t })->
         color: style.app.text
         background: style.app.wallet
     button-primary2-style=
-        border: "1px solid #{style.app.primary2}"
+        border: "0"
         color: style.app.text
         background: style.app.primary2
         background-color: style.app.primary2-spare
@@ -186,11 +186,11 @@ newseed = ({ store, web3t })->
             .title.pug(style=text-style) #{style.branding.title}
         .welcome.pug(style=text-style) #{lang.welcome-wallet}
         .pug.align-v
-            button.pug.left(style=button-primary2-style on-click=new-wallet)
+            button.pug.left(style=button-primary2-style on-click=new-wallet id="btn-create")
                 span.pug
                     img.icon-svg.pug(src="#{icons.create-wallet}")
                     | #{lang.new-wallet}
-            button.pug.right(style=button-primary3-style on-click=restore-option)
+            button.pug.right(style=button-primary3-style on-click=restore-option id="btn-restore")
                 span.pug
                     img.icon-svg.pug(src="#{icons.restore}" style=btn-icon)
                     | #{lang.restore-wallet}

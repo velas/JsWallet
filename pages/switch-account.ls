@@ -57,7 +57,7 @@ require! {
         text-align: right
         display: block
         z-index: 2
-        border-radius: 0 0 $border $border
+        border-radius: 0 0 var(--border-btn) var(--border-btn)
         @media(max-width: 620px)
             .name, .icon
                 visibility: hidden
@@ -77,7 +77,7 @@ require! {
             width: 90px
             text-align: right
             cursor: default
-            display: inline-block
+            display: contents
             vertical-align: middle
         input
             outline: none

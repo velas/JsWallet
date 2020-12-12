@@ -120,19 +120,21 @@ module.exports = (store, web3t)->
         store.current.choose-language = no
     account-left = ->
         cb = console.log
-        return alert store, "0 is smallest account index", cb if store.current.account-index is 0
+        return alert store, "0 is smallest account index", cb if !(store.current.account-index >= 1)
         store.current.account-index -= 1
         refresh!
     account-right = ->
         cb = console.log
-        return alert store, "999999999 is highest account index", cb if store.current.account-index > 999999999
+        return alert store, "999999999 is highest account index", cb if !(store.current.account-index <= 999999999)
         store.current.account-index += 1
         refresh!
     change-account-index = (event)->
         return if not event?target
-        val = event.target.value ? \1
+        val = event.target.value
         return if not val.match(/[0-9]+/)?
-        store.current.account-index = +val
+        val = parse-int val
+        val = 1 if val < 1 or val > 999999999
+        store.current.account-index = val
         change-account-index.timer = clear-timeout change-account-index.timer
         change-account-index.timer = set-timeout refresh, 2000
     export-private-key = ->

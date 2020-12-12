@@ -33,11 +33,11 @@ require! {
         position: fixed
         width: 100%
         margin: 10px
-        border-radius: 10px
+        border-radius: var(--border-btn)
         width: calc(100% - 20px)
         box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
         input
-            border-radius: $border
+            border-radius: var(--border-btn)
             height: 36px
             width: 90px
             line-height: 36px
@@ -53,7 +53,7 @@ require! {
         >.text
             padding: 10px
             input
-                border-radius: $border
+                border-radius: var(--border-btn)
         >.buttons
             text-align: center
             >.button
@@ -64,7 +64,7 @@ require! {
                 font-weight: bold
                 font-size: 10px
                 text-transform: uppercase
-                border-radius: $border
+                border-radius: var(--border-btn)
                 border: 1px solid #CCC
                 margin: 15px 5px
                 padding: 0px 6px
@@ -105,7 +105,7 @@ alert-modal = (store)->
             .pug.header(style=confirmation-style) Alert
             .pug.text(style=confirmation-style2) #{store.current.alert}
             .pug.buttons
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="alert-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
@@ -141,11 +141,11 @@ confirmation-modal = (store)->
             .pug.header(style=confirmation-style) #{lang.confirmation}
             .pug.text(style=confirmation-style2) #{store.current.confirmation}
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style)
+                button.pug.button(on-click=confirm style=button-style id="confirmation-confirm")
                     span.apply.pug
                         img.icon-svg-apply.pug(src="#{icons.apply}")
                         | #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="confirmation-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
@@ -172,7 +172,7 @@ prompt-modal = (store)->
         background-color: style.app.bgspare
         color: style.app.text
     input-style =
-        background: style.app.wallet
+        background: style.app.input
         color: style.app.text
         border: "0"
     button-style=
@@ -188,13 +188,13 @@ prompt-modal = (store)->
             .pug.header(style=style=confirmation-style) #{lang.confirmation}
             .pug.text(style=style=confirmation-style) #{store.current.prompt}
             .pug
-                input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style)
+                input.pug(on-change=change-input value="#{store.current.prompt-answer}" style=input-style id="prompt-input")
             .pug.buttons
-                button.pug.button(on-click=confirm style=button-style)
+                button.pug.button(on-click=confirm style=button-style id="prompt-confirm")
                     span.apply.pug
                         img.icon-svg-apply.pug(src="#{icons.apply}")
                         | #{lang.confirm}
-                button.pug.button(on-click=cancel style=button-style)
+                button.pug.button(on-click=cancel style=button-style id="prompt-close")
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}

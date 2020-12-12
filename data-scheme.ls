@@ -47,7 +47,7 @@ store =
     url-hash-params: url-hash-params
     root: null
     theme: localStorage.get-item('theme') ? \velas
-    lang: \en
+    lang: localStorage.get-item('lang') ? \en
     langs: langs
     icons: \icons
     registry: []
@@ -58,7 +58,7 @@ store =
         proposals: []
         new-proposal:
             description: ""
-            url: ""
+            name: ""
             opened: no
             progress: \0
             update-progress: null
@@ -182,7 +182,7 @@ store =
     releases: []
     current:
         address-suffix: ''
-        page-pin: null
+        page-pin: url-hash-params.page ? null
         try-copy: null
         hovered-address:
             address: null
@@ -263,6 +263,7 @@ store =
         trx-type: "custom"
         allow-mining-claim-call: undefined
         search: ""
+        vote-index: null
     history:
         filter-open: no
         tx-details: no

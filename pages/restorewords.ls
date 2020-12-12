@@ -107,8 +107,9 @@ require! {
             padding: 0 3px
             margin: 5px
             font-size: 14px
+            font-weight: 400
             min-width: 25%
-            border-radius: 40px
+            border-radius: calc(var(--border-btn) * 10)
             -ms-user-select: none
             cursor: default
             @media(max-width: 500px)
@@ -144,7 +145,7 @@ require! {
                     display: inline-block
                     padding: 4px
                     float: left
-                    border-radius: 50px
+                    border-radius: var(--border-btn)
                     width: 11px
                     height: 10px
                     font-size: 10px
@@ -157,7 +158,7 @@ require! {
                         color: #fff
                         display: inline-block
                         padding: 4px
-                        border-radius: 50px
+                        border-radius: var(--border-btn)
                         width: 11px
                         height: 10px
                         font-size: 10px
@@ -189,10 +190,10 @@ restore-words = (store, web3t, next, item)-->
         next! if it.key-code is 13
     .pug.word(style=seed-style)
         if store.current.seed-words.length is 1
-            textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances before use." on-change=change-part)
+            textarea.pug(value="#{item.part}" placeholder="Enter your custom seed phrase here. Please check your addresses and balances before use." on-change=change-part id="seedphrase-custom")
         else
             [
-                typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list }
+                typeahead { store, value: item.part, placeholder: "#{lang.word} ##{index}", on-change: change-part, on-key-down, list, id: "seed-phrase-word"}
                 span.effect.pug #{index}
             ]
 restore-words-panel = (store, web3t)->
@@ -232,10 +233,10 @@ restore-words-panel = (store, web3t)->
                 |> filter current-word store.current.verify-seed-index
                 |> map restore-words store, web3t, next
         .pug
-            button.pug.right(on-click=back style=button-primary3-style )
+            button.pug.right(on-click=back style=button-primary3-style  id="seed-phrase-back")
                 img.icon-svg.pug(src="#{icons.close2}" style=btn-icon)
                 | #{lang.cancel }
-            button.pug.right(on-click=next style=button-primary1-style )
+            button.pug.right(on-click=next style=button-primary1-style id="seed-phrase-next")
                 img.icon-svg.pug(src="#{icons.right}")
                 | #{lang.next }
         .pug.hint(style=text-style) #{lang.new-seed-warning-restore}

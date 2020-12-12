@@ -7,7 +7,7 @@ click-provide-address = ->
         return
     wallets = window.store.current.account.wallets
     vlx2 = wallets.find (.coin.token is \vlx2)
-    message = JSON.stringify {type: \address , address: vlx2.address}
+    message = JSON.stringify {type: \address , address: vlx2.address, eth-address: toEthAddress vlx2.address}
     window.parent.post-message message, window.store.interop.origin
     return
     data = store.url-hash-params.transaction

@@ -4,6 +4,7 @@ require! {
     \./get-lang.ls
 }
 .copied
+    @import scheme
     position: fixed
     background: #74cee1
     z-index: 9999999
@@ -15,10 +16,10 @@ require! {
     padding: 10px
     left: 0
     text-align: center
-    border-radius: 0px 0px 5px 5px
+    border-radius: 0px 0px var(--border-btn) var(--border-btn)
     box-shadow: 0px 0px 0px 0px #aee7f3
     margin: 10px
-    border-radius: 10px
+    border-radius: calc(var(--border-btn) * 2)
     width: calc(100% - 20px)
     box-shadow: 7px 10px 13px #0000001f, -16px 20px 13px #00000024
     @keyframes top
@@ -45,8 +46,7 @@ module.exports = (store)->
         #r.to-upper-case!
     copy-style=
         color: style.app.text
-        background: "rgb(255 255 255 / 10%)"
-        backdrop-filter: "blur(5px)"
+        background: style.app.bg-primary-light
         border: "1px solid #{style.app.border}"
     .copied.pug(class="#{copied-class}" key="copy-message" style=copy-style)
         .pug.mb-5 #{lang.copied}

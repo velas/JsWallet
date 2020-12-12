@@ -12,13 +12,13 @@ module.exports = (store, web3t)->
             |> filter -> it.1 is send.to
             |> map -> it.0
             |> -> it ? send.to
+    token-display = if send.coin.token == \vlx2 then \vlx else send.coin.token
     funtype =
-        if +send.amount-send > 0 then "Send #{send.amount-send} #{send.coin.token} to #{contract} contract" else "Execute the #{contract} contract"
+        if +send.amount-send > 0 then "Send #{send.amount-send} #{token-display} to #{contract} contract" else "Execute the #{contract} contract"
     text-parts-contract =
         * funtype
-        * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{send.coin.token}."
-    token-display = if send.coin.token == \vlx2 then \vlx else send.coin.token
+        * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{token-display}."
     text-parts-regular =
         * "Send #{round-human send.amount-send} #{token-display} to #{send.to}"
-        * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{send.coin.token}."
+        * "You are allowed to spend your resources on execution #{round-human send.amount-send-fee} #{token-display}."
     if is-data then text-parts-contract else text-parts-regular

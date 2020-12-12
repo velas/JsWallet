@@ -23,7 +23,7 @@ require! {
             width: 80%
             input
                 float: left
-                border-radius: $border
+                border-radius: var(--border-btn)
                 margin-top: 11px
                 margin-left: 12px
                 height: 36px
