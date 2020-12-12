@@ -21,6 +21,9 @@ wallets.init = ({ store, web3t }, cb)->
     err <- web3t.init
     #console.log err
     cb null
+    <- set-immediate
+    if store.url-hash-params.page?
+        store.current.page = store.url-hash-params.page
 wallets.focus = ({ store, web3t }, cb)->
     err <- web3t.refresh
     cb err
