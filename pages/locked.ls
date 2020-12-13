@@ -376,8 +376,9 @@ locked = ({ store, web3t })->
             input store, web3t
         export-import-seed store
         footer store, web3t
-        .pug.downloadwallet
-            button { store, on-click=download, text: \install , icon: \download  , type : \primary }
+        if not process?versions?electron?
+            .pug.downloadwallet
+                button { store, on-click=download, text: \install , icon: \download  , type : \primary }
 focus = ({ store }, cb)->
     cb null
 locked.focus = focus
