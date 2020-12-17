@@ -526,12 +526,12 @@ require! {
                                 @media screen and (min-width: 1921px)
                                     width: 340px
                                 @media screen and (min-width: 1441px) and (max-width: 1920px)
-                                    width: 340px
+                                    width: 100%
                                 a
                                     img
                                         height: 16px
                                 div
-                                    width: 310px
+                                    width: 90%
                                     margin-right: 0px
                                     a
                                         padding: 0
