@@ -47,6 +47,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#0b0c27
+        bg-primary-light2: \#12133a
         stats: \#05061f
         filterIcon: "brightness(1)"
         filterLogo: "drop-shadow(0 0 23px rgb(6 206 241 / 60%))"
@@ -113,6 +114,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#292b55
+        bg-primary-light2: \#292b55
         stats: \#080e3d
         filterIcon: "brightness(1)"
         filterLogo: "drop-shadow(0 0 23px rgb(6 206 241 / 60%))"
@@ -177,6 +179,7 @@ module.exports =
         text-primary: \#9c41eb
         color3: \#cccccc
         bg-primary-light: \#6234ab
+        bg-primary-light2: \#6234ab
         stats: \#3b1771
         filterIcon: "brightness(2.5)"
         filterLogo: "brightness(1)"
@@ -240,6 +243,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#2f4156
+        bg-primary-light2: \#2f4156
         stats: \#2f4156
         filterIcon: "brightness(1.5)"
         filterLogo: "brightness(1)"
@@ -303,6 +307,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#383942
+        bg-primary-light2: \#383942
         stats: \#1c1c21
         filterIcon: "brightness(1)"
         filterLogo: "brightness(1)"
@@ -366,6 +371,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#383942
+        bg-primary-light2: \#383942
         stats: \#1c1c21
         filterIcon: "brightness(1)"
         filterLogo: "brightness(1)"
@@ -429,6 +435,7 @@ module.exports =
         text-primary: \#FFF
         color3: \#677897
         bg-primary-light: \#283b50
+        bg-primary-light2: \#283b50
         stats: \#283b50
         filterIcon: "brightness(1)"
         filterLogo: "brightness(1)"

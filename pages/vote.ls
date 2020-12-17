@@ -135,7 +135,7 @@ require! {
                     position: relative
                     transition: all .5s
                     &.active
-                        background: var(--bg-primary-light)
+                        background: var(--bg-primary-light2)
                         box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.05)
                         z-index: 1
                         .rate
@@ -158,7 +158,7 @@ require! {
                         .label
                             right: 10px
                     &:hover
-                        background: var(--bg-primary-light)
+                        background: var(--bg-primary-light2)
                         transition: all .5s
                         cursor: pointer
                         .rate
@@ -169,7 +169,7 @@ require! {
                             background: var(--dark-theme)
                     .label
                         position: absolute
-                        background: var(--bg-primary-light)
+                        background: var(--bg-primary-light2)
                         font-size: 8px
                         text-transform: uppercase
                         letter-spacing: 2px
