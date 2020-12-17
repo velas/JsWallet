@@ -7,6 +7,7 @@ require! {
     \bignumber.js
     \../get-lang.ls
     \../history-funcs.ls
+    \../stake-funcs.ls : { query-pools }
     \./icon.ls
     \prelude-ls : { map, split, filter, find, foldl, sort-by, unique, head, each }
     \../math.ls : { div, times, plus, minus }
@@ -751,7 +752,7 @@ staking-content = (store, web3t)->
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
             td.pug(data-column='Amount') #{stake}
-            td.pug #{vote-power}
+            td.pug #{item.validator-probability*100 + \%}
             td.pug(data-column='Amount') #{my-stake}
             td.pug(data-column='Stakers') #{item.stakers}
             td.pug
@@ -911,21 +912,44 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.chosen-pool = null
     store.staking.add.add-validator-stake = 0
     return cb null if store.staking.pools.length > 0
-    err, pools-inactive <- web3t.velas.Staking.getPoolsInactive
-    return cb err if err?
-    err, pools <- web3t.velas.Staking.getPools
-    return cb err if err?
-    err, active-pools <- web3t.velas.Staking.getPoolsToBeElected
-    return cb err if err?
-    store.staking.pools-inactive = pools-inactive
-    store.staking.pools-active = active-pools
-    all-pools = pools ++ pools-inactive
+    #err, pools-inactive <- web3t.velas.Staking.getPoolsInactive
+    #return cb err if err?
+    #err, pools <- web3t.velas.Staking.getPools
+    #return cb err if err?
+    #err, active-pools <- web3t.velas.Staking.getPoolsToBeElected
+    #return cb err if err?
+    #store.staking.pools-inactive = pools-inactive
+    #store.staking.pools-active = active-pools
+    #all-pools = pools ++ pools-inactive
+    #store.staking.pools =
+    #    all-pools
+    #        |> unique
+    #        |> map -> { address: it , checked: no, stake: '..', stakers: '..', eth: no, is-validator: '..', status: '', reward-amount: '..', validator-reward-percent: '..', my-stake: '..' }
+    err, pools <- query-pools store
     store.staking.pools =
-        all-pools
-            |> unique
-            |> map -> { address: it , checked: no, stake: '..', stakers: '..', eth: no, is-validator: '..', status: '', reward-amount: '..', validator-reward-percent: '..', my-stake: '..' }
+        pools
+            |> map -> {
+                address: it.address,
+                checked: no,
+                stake: it.stake `div` (10^18),
+                stakers: it.delegators+1,
+                eth: no,
+                is-validator: it.my_stake isnt \0,
+                status: it.status,
+                reward-amount: '..',
+                validator-reward-percent: '..',
+                my-stake: it.my_stake,
+                validator-probability: it.validator-probability
+            }
+    return cb err if err?
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
+    store.staking.pools-inactive =
+        store.staking.pools
+            |> filter -> it.status is \inactive or it.status is \banned
+    store.staking.pools-active =
+        store.staking.pools
+            |> filter -> it.status is \active
     err <- exit-stake.init { store, web3t }
     cb null
 module.exports = staking
@@ -980,9 +1004,9 @@ fill-pools-in-parallel = ({ store, web3t}, cb)->
     cb null
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'
-    console.log \Filling
-    err <- fill-pools { store, web3t }, store.staking.pools
-    return cb err if err?
-    err <- fill-vote-power { store, web3t }
+    #console.log \Filling
+    #err <- fill-pools { store, web3t }, store.staking.pools
+    #return cb err if err?
+    #err <- fill-vote-power { store, web3t }
     cb null
 #V31V1kD7DpT9eoRcdXf7T1fbFqcNh

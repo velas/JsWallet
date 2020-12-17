@@ -150,7 +150,7 @@ require! {
                     line-height: 11px
                     @media(max-width: 500px)
                         margin-right: 5px
-                &.effect    
+                &.effect
                     &:last-child
                         background: #7651ae
                         color: #fff
@@ -209,16 +209,16 @@ review-words-panel = (store, web3t)->
         window.open('https://drive.google.com/file/d/1mE53JDe2722D0BY2Mi7qIcXUFtwqSZFx/view')
     .pug
         .pug.words
-            store.current.seed-words.map((word, index) -> create-word store, index, word ) 
+            store.current.seed-words.map((word, index) -> create-word store, index, word )
         .pug
             .pug.button-container
-                button.pug.right(on-click=back style=button-primary3-style )
+                button.pug.right(on-click=back style=button-primary3-style id='seed-back')
                     img.icon-svg.pug(src="#{icons.arrow-left}" style=btn-icon)
                     | #{lang.back}
-                button.pug.right.doc(on-click=print style=button-primary2-style)
+                button.pug.right.doc(on-click=print style=button-primary2-style id='seed-print')
                     img.icon-svg.pug(src="#{icons.print}")
                     | #{lang.print }
-                button.pug.right.save(on-click=next style=button-primary1-style)
+                button.pug.right.save(on-click=next style=button-primary1-style id='seed-next')
                     img.icon-svg.pug(src="#{icons.right}")
                     | #{lang.next }
         .pug.hint(style=text-style) #{lang.new-seed-warning}
