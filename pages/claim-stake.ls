@@ -107,7 +107,7 @@ require! {
         background-image: $reward
         background-repeat: no-repeat
         background-position: 10% 20%
-        background-size: auto
+        background-size: 200px
         background-color: var(--bg-secondary)
         @media(max-width: 800px)
             background-image: none
