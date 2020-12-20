@@ -703,10 +703,10 @@ staking-content = (store, web3t)->
     #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
-        stake = round-human item.stake
+        stake = item.stake
         my-stake =
-            | +item.my-stake is 0 => round-human item.withdraw-amount
-            | _ => round-human item.my-stake
+            | +item.my-stake is 0 => item.withdraw-amount
+            | _ => item.my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
             page = \choosestaker
@@ -751,10 +751,13 @@ staking-content = (store, web3t)->
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
-            td.pug(data-column='Amount') #{stake}
-            td.pug #{item.validator-probability*100 + \%}
-            td.pug(data-column='Amount') #{my-stake}
-            td.pug(data-column='Stakers') #{item.stakers}
+            td.pug #{stake}
+            td.pug #{item.node-stake}
+            td.pug #{item.delegate-stake}
+            td.pug #{item.node-roi}
+            td.pug #{item.delegate-roi}
+            td.pug #{my-stake}
+            td.pug #{item.stakers}
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
@@ -801,14 +804,16 @@ staking-content = (store, web3t)->
                     .description.pug.table-scroll
                         table.pug
                             thead.pug
-                                tr.pug
-                                    th.pug(width="3%" style=stats) #
-                                    th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
-                                    th.pug(width="25%" style=stats) #{lang.total-stake}
-                                    th.pug(width="5%" style=stats) #{lang.vote-power}
-                                    th.pug(width="25%" style=stats) #{lang.my-stake}
-                                    th.pug(width="5%" style=stats) #{lang.stakers}
-                                    th.pug(width="4%" style=stats) #{lang.selectPool}
+                                th.pug(width="3%" style=stats) #
+                                th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
+                                th.pug(width="25%" style=stats) #{lang.total-stake}
+                                th.pug(width="25%" style=stats) #{"Node stake"}
+                                th.pug(width="5%" style=stats) #{"Delegate stake"}
+                                th.pug(width="5%" style=stats) #{"Node roi"}
+                                th.pug(width="5%" style=stats) #{"Delegate roi"}
+                                th.pug(width="25%" style=stats) #{lang.my-stake}
+                                th.pug(width="5%" style=stats) #{lang.stakers}
+                                th.pug(width="4%" style=stats) #{lang.selectPool}
                             tbody.pug
                                 store.staking.pools |> map build-staker store, web3t
                 else
@@ -899,6 +904,24 @@ staking = ({ store, web3t })->
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
+convert-pools-to-view-model = (pools) ->
+    pools
+        |> map -> {
+            address: it.address,
+            checked: no,
+            stake: if it.stake? then round-human(parse-float it.stake `div` (10^18)) else '..',
+            node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
+            delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
+            stakers: if it.stakers? then it.stakers else '..',
+            eth: no,
+            is-validator: it.my-stake isnt \0,
+            status: it.status,
+            my-stake: if it.my-stake? then round-human(parse-float it.my-stake `div` (10^18)) else '..',
+            withdraw-amount: \0,
+            validator-probability: if it.validator-probability? then round-human(it.validator-probability*100) + \% else '..',
+            delegate-roi: if it.delegate-reward? then (it.delegate-reward && round-human(it.delegate-reward / (it.stake - it.node-stake) * 100)) + \% else '..',
+            node-roi: if it.node-reward? then (it.node-reward && round-human(it.node-reward / it.node-stake * 100)) + \% else '..'
+        }
 staking.init = ({ store, web3t }, cb)->
     # err <- web3t.refresh
     # return cb err if err?
@@ -912,96 +935,17 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.chosen-pool = null
     store.staking.add.add-validator-stake = 0
     return cb null if store.staking.pools.length > 0
-    #err, pools-inactive <- web3t.velas.Staking.getPoolsInactive
-    #return cb err if err?
-    #err, pools <- web3t.velas.Staking.getPools
-    #return cb err if err?
-    #err, active-pools <- web3t.velas.Staking.getPoolsToBeElected
-    #return cb err if err?
-    #store.staking.pools-inactive = pools-inactive
-    #store.staking.pools-active = active-pools
-    #all-pools = pools ++ pools-inactive
-    #store.staking.pools =
-    #    all-pools
-    #        |> unique
-    #        |> map -> { address: it , checked: no, stake: '..', stakers: '..', eth: no, is-validator: '..', status: '', reward-amount: '..', validator-reward-percent: '..', my-stake: '..' }
-    err, pools <- query-pools store
-    store.staking.pools =
-        pools
-            |> map -> {
-                address: it.address,
-                checked: no,
-                stake: it.stake `div` (10^18),
-                stakers: it.delegators+1,
-                eth: no,
-                is-validator: it.my_stake isnt \0,
-                status: it.status,
-                reward-amount: '..',
-                validator-reward-percent: '..',
-                my-stake: it.my_stake,
-                validator-probability: it.validator-probability
-            }
+    store.staking.pools = []
     return cb err if err?
     err, epoch <- web3t.velas.Staking.stakingEpoch
     store.staking.epoch = epoch.to-fixed!
-    store.staking.pools-inactive =
-        store.staking.pools
-            |> filter -> it.status is \inactive or it.status is \banned
-    store.staking.pools-active =
-        store.staking.pools
-            |> filter -> it.status is \active
-    err <- exit-stake.init { store, web3t }
     cb null
+    on-progress = ->
+        store.staking.pools = convert-pools-to-view-model [...it]
+    err, pools <- query-pools store, web3t, on-progress
+    return cb err if err?
+    store.staking.pools = convert-pools-to-view-model pools
 module.exports = staking
-fill-pools = ({ store, web3t }, [item, ...rest], cb)->
-    staking-address = store.staking.keystore.staking.address
-    return cb null if not item?
-    err, data <- web3t.velas.Staking.stakeAmountTotal item.address
-    return cb err if err?
-    item.stake = data `div` (10^18)
-    err, delegators <- web3t.velas.Staking.poolDelegators(item.address)
-    return cb err if err?
-    item.stakers = delegators.length + 1
-    err, mining-address <- web3t.velas.ValidatorSet.miningByStakingAddress(item.address)
-    return cb err if err?
-    item.mining-address = mining-address
-    err, validator-reward-percent <- web3t.velas.BlockReward.validatorRewardPercent item.address
-    return cb err if err?
-    item.validator-reward-percent = validator-reward-percent `div` 10000
-    err, is-validator-banned <- web3t.velas.ValidatorSet.isValidatorBanned(mining-address)
-    return cb err if err?
-    err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
-    return cb err if err?
-    err, withdraw-amount <- web3t.velas.Staking.orderedWithdrawAmount item.address, staking-address
-    return cb err if err?
-    item.withdraw-amount = withdraw-amount `div` (10^18)
-    item.my-stake = amount `div` (10^18)
-    item.status =
-        | is-validator-banned => \banned
-        | store.staking.pools-active.index-of(item.address) > -1 => \active
-        | store.staking.pools-inactive.index-of(item.address) > -1 => \inactive
-        | _ => \pending
-    fill-pools { store, web3t }, rest, cb
-fill-vote-power = ({ store, web3t }, cb)->
-    total-stake =
-        store.staking.pools
-            |> map (.stake)
-            |> foldl plus, 0
-    total-stake-percent = 100 `div` total-stake
-    fill-power = (it)->
-        it.vote-power =  round5(it.stake `times` total-stake-percent)
-    store.staking.pools |> each fill-power
-    cb null
-fill-pools-in-parallel = ({ store, web3t}, cb)->
-    create-promise = (pool)->
-        new Promise (resolve, reject)->
-            cb = (err, value)->
-                resolve value
-            fill-pools { store, web3t }, [pool], cb
-    promises =
-        store.staking.pools |> map create-promise
-    values <- Promise.all promises .then
-    cb null
 staking.focus = ({ store, web3t }, cb)->
     #return cb null if store.staking.pools.0.stake isnt '...'
     #console.log \Filling
