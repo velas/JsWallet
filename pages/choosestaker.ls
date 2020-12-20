@@ -756,6 +756,7 @@ staking-content = (store, web3t)->
             td.pug #{item.delegate-stake}
             td.pug #{item.node-roi}
             td.pug #{item.delegate-roi}
+            td.pug #{item.validator-probability}
             td.pug #{my-stake}
             td.pug #{item.stakers}
             td.pug
@@ -811,6 +812,7 @@ staking-content = (store, web3t)->
                                 th.pug(width="5%" style=stats) #{"Delegate stake"}
                                 th.pug(width="5%" style=stats) #{"Node roi"}
                                 th.pug(width="5%" style=stats) #{"Delegate roi"}
+                                th.pug(width="5%" style=stats) #{"Validator probability"}
                                 th.pug(width="25%" style=stats) #{lang.my-stake}
                                 th.pug(width="5%" style=stats) #{lang.stakers}
                                 th.pug(width="4%" style=stats) #{lang.selectPool}

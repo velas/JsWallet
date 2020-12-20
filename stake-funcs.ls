@@ -2,6 +2,9 @@ require! {
     \prelude-ls : { map, split, filter, find, foldl, drop, take, sum, unique }
     \./math.ls : { div, times, plus, minus }
 }
+SIMULATION_COUNT = 14600
+EPOCHS_PER_YEAR = 1460
+VALIDATOR_COUNT = 19
 as-callback = (p, cb)->
     p.catch (err) -> cb err
     p.then (data)->
@@ -20,7 +23,7 @@ choose-random-pool = (pools) ->
 simulate-choose-validators = (pools) ->
     pools-copy = [...pools]
     validators = []
-    for i from 1 to 19
+    for i from 1 to VALIDATOR_COUNT
         pool-index = choose-random-pool pools-copy
         validators.push pools-copy[pool-index]
         pools-copy.splice pool-index, 1
@@ -33,24 +36,28 @@ simulate-validators-stats = (pools, count, pool, stake) ->
             pool.stake = \0
             pool.node-stake = \0
     pools-copy[pool-index].stake += stake if pool-index isnt -1
-    rewards-per-index = [0] * pools.length
+    rewards-per-index = []
+    for i from 1 to pools.length
+        rewards-per-index.push {rewards: 0, validator-count: 0}
     for i from 1 to count
         validators = simulate-choose-validators pools-copy
         validators-stake = validators.reduce ((acc, curr) -> acc + parse-float curr.stake), 0
-        validator-reward = 5/6147.368421052632/100 * validators-stake / 19
+        validator-reward = 5/6147.368421052632/100 * validators-stake / VALIDATOR_COUNT
         for validator in validators
-            rewards-per-index[validator.index] += validator-reward
+            rewards-per-index[validator.index].rewards += validator-reward
+            rewards-per-index[validator.index].validator-count++
     return rewards-per-index
 calc-pools-rewards = (all-pools, pool, stake) ->
-    stat = simulate-validators-stats all-pools, 14600
+    stat = simulate-validators-stats all-pools, SIMULATION_COUNT
     for i from 0 to all-pools.length - 1
         pool = all-pools[i]
         node-stake = parse-float pool.node-stake
         total-stake = parse-float pool.stake
         delegator-part = Math.min(0.6, (total-stake - node-stake) / total-stake)
         node-part = 1 - delegator-part
-        all-pools[i].delegate-reward = delegator-part * stat[i] / 14600 * 1460
-        all-pools[i].node-reward = node-part * stat[i] / 14600 * 1460
+        all-pools[i].delegate-reward = delegator-part * stat[i].rewards / SIMULATION_COUNT * EPOCHS_PER_YEAR
+        all-pools[i].node-reward = node-part * stat[i].rewards / SIMULATION_COUNT * EPOCHS_PER_YEAR
+        all-pools[i].validator-probability = stat[i].validator-count / SIMULATION_COUNT
     return all-pools
 fill-pools = ({ store, web3t, on-progress, on-finish }, [item, ...rest]) ->
     staking-address = store.staking.keystore.staking.address
