@@ -42,7 +42,7 @@ simulate-validators-stats = (pools, count, pool, stake) ->
     for i from 1 to count
         validators = simulate-choose-validators pools-copy
         validators-stake = validators.reduce ((acc, curr) -> acc + parse-float curr.stake), 0
-        validator-reward = 5/6147.368421052632/100 * validators-stake / VALIDATOR_COUNT
+        validator-reward = 8/EPOCHS_PER_YEAR/100 * validators-stake / VALIDATOR_COUNT
         for validator in validators
             rewards-per-index[validator.index].rewards += validator-reward
             rewards-per-index[validator.index].validator-count++
