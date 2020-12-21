@@ -417,10 +417,13 @@ send = ({ store, web3t })->
         if store.current.open-menu then \hide else \ ""
     token-display = if token == \VLX2 then \VLX else token
     fee-token-display = if fee-token == \VLX2 then \VLX else fee-token
+    go-back-from-send = ->
+        send.error = ''
+        go-back!         
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
-            .pug.close(on-click=go-back)
+            .pug.close(on-click=go-back-from-send)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             burger store, web3t
             epoch store, web3t
