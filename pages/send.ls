@@ -419,7 +419,8 @@ send = ({ store, web3t })->
     fee-token-display = if fee-token == \VLX2 then \VLX else fee-token
     go-back-from-send = ->
         send.error = ''
-        go-back!         
+        go-back!  
+    makeDisabled = send.amount-send <= 0 
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
@@ -508,7 +509,7 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, id: "send-confirm" }
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, makeDisabled: makeDisabled, id: "send-confirm" }
                     button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->

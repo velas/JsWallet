@@ -26,6 +26,8 @@ require! {
     &:hover
         background: rgba(#6CA7ED, 0.2)
         opacity: 0.9
+    &:disabled
+        opacity: 0.3
 button-loading = ({ store, text, loading, on-click, icon, type })->
     style = get-primary-info store
     lang = get-lang store
@@ -54,7 +56,7 @@ get-button-style = (store, type)->
         | type is \secondary => button-primary2-style
         | _ => button-primary3-style
     button-style
-button-active = ({ store, text, loading, on-click, icon, type, id })->
+button-active = ({ store, text, loading, on-click, icon, type, id, error, makeDisabled })->
     lang = get-lang store
     style = get-primary-info store
     applied-text = lang[text] ? text ? ""
@@ -64,7 +66,8 @@ button-active = ({ store, text, loading, on-click, icon, type, id })->
         filter: style.app.filter
     icon-style=
         | type is \primary => filter
-    button.pug.btn(on-click=on-click style=button-style id=id)
+    disabled = (makeDisabled? and makeDisabled) or (error? and typeof! error is \String and error.length > 0)
+    button.pug.btn(on-click=on-click style=button-style id=id disabled=disabled)
         if store.current.device is \mobile
             img.icon-svg.pug(src="#{applied-icon}" title="#{applied-text}" style=icon-style)
         else
