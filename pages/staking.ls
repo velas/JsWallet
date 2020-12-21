@@ -1100,7 +1100,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, show-details: yes }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1154,7 +1154,7 @@ staking-content = (store, web3t)->
                                             li.pug #{lang.your-status2}
                             hr.pug
                             label.pug #{lang.stake-more}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, show-details: yes }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}

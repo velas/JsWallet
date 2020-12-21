@@ -17,6 +17,7 @@ require! {
     \./send-contract.ls
     \../history-funcs.ls
     \../components/burger.ls
+    \../components/amount-field.ls
 }
 .content
     position: relative
@@ -180,6 +181,8 @@ require! {
                         &.choose-currency
                             display: inline-flex
                             width: 45% !important
+                        .input-area
+                            margin: 0
                         select
                             -webkit-appearance: none
                             -moz-appearance: none
@@ -468,7 +471,7 @@ send = ({ store, web3t })->
                                 .label.crypto.pug
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     | #{token-display}
-                                input.pug.amount(type='text' style=crypto-background on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}" id="send-amount")
+                                amount-field { store, value: "#{round5edit send.amount-send}", on-change: amount-change, placeholder="0", id="send-amount" }
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug $

@@ -38,8 +38,8 @@ require! {
             display: inline-block
         >.icon
             width: 15px
-            margin-bottom: -3px
-            margin-right: 3px
+            margin-bottom: -1px
+            margin-right: 5px
     >.show-details
         display: none
     &:hover
@@ -61,7 +61,7 @@ require! {
                 max-width: 250px
                 min-width: 250px
                 text-align: left
-module.exports = ({ store, value, on-change, placeholder })->
+module.exports = ({ store, value, on-change, placeholder, id, show-details })->
     style = get-primary-info store
     input-style =
         background: style.app.input
@@ -87,17 +87,21 @@ module.exports = ({ store, value, on-change, placeholder })->
         [first=\0, second=\0] = it.split('.')
         "#{parse-int first}.#{second}"
     get-number = (value)->
-        | value is "" => \0
-        | typeof! value not in <[String Number]> => \0
-        | _ => normalize value.match(/\d+(\.)?(\d{1,})?/)?0
+        return \0 if value is ""
+        value = value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
+        value2 =
+            | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
+            | _ => value
+        value2
     on-change-internal = (it)->
         value = get-number it.target?value
         on-change { target: { value } }
     .pug.input-area
-        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change-internal placeholder=actual-placeholder)
+        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change-internal placeholder=actual-placeholder id="#{id}")
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
             span.pug VLX
-        .show-details.pug
-            .panel.pug
-                .pug USD: #{round usd}
+        if show-details? and show-details then   
+            .show-details.pug
+                .panel.pug
+                    .pug USD: #{round usd}
