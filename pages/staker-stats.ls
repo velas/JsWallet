@@ -6,10 +6,10 @@ require! {
 }
 get-stake = (it)->
     | it.stake is '..' => 0
-    | _ => +it.stake
+    | _ => +it.stake / 1e18
 get-color = (items)-> (it)->
     index = items.index-of(it)
-    base = 
+    base =
         | it.status is \active => 3986863 + ( index * 2 )
         | it.status is \inactive => 3872625
         | it.status is \banned => 16730920

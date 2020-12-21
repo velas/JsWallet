@@ -11,7 +11,7 @@ build-dataset = (items)->
     data: items |> map (-> +it.reward)
     backgroundColor: items |> map get-color items
 build-data = (items)->
-    datasets: items |> map build-dataset 
+    datasets: items |> map build-dataset
     labels: items |> map (.epoch)
 legend =
     display: false

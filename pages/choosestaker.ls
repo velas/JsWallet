@@ -703,7 +703,6 @@ staking-content = (store, web3t)->
     #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
-        stake = item.stake
         my-stake =
             | +item.my-stake is 0 => item.withdraw-amount
             | _ => item.my-stake
@@ -751,13 +750,13 @@ staking-content = (store, web3t)->
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
-            td.pug #{stake}
-            td.pug #{item.node-stake}
-            td.pug #{item.delegate-stake}
+            td.pug #{stringify item.stake}
+            td.pug #{stringify item.node-stake}
+            td.pug #{stringify item.delegate-stake}
             td.pug #{item.node-roi}
             td.pug #{item.delegate-roi}
             td.pug #{item.validator-probability}
-            td.pug #{my-stake}
+            td.pug #{stringify my-stake}
             td.pug #{item.stakers}
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
@@ -911,19 +910,24 @@ convert-pools-to-view-model = (pools) ->
         |> map -> {
             address: it.address,
             checked: no,
-            stake: if it.stake? then round-human(parse-float it.stake `div` (10^18)) else '..',
-            node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
-            delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
+            stake: it.stake,
+            node-stake: it.node-stake,
+            delegate-stake: if it.node-stake? then (it.stake `minus` it.node-stake) else it.node-stake,
             stakers: if it.stakers? then it.stakers else '..',
             eth: no,
             is-validator: it.my-stake isnt \0,
             status: it.status,
-            my-stake: if it.my-stake? then round-human(parse-float it.my-stake `div` (10^18)) else '..',
+            my-stake: it.my-stake,
             withdraw-amount: \0,
             validator-probability: if it.validator-probability? then round-human(it.validator-probability*100) + \% else '..',
             delegate-roi: if it.delegate-reward? then (it.delegate-reward && round-human(it.delegate-reward / (it.stake - it.node-stake) * 100)) + \% else '..',
             node-roi: if it.node-reward? then (it.node-reward && round-human(it.node-reward / it.node-stake * 100)) + \% else '..'
         }
+stringify = (value) ->
+    if value? then
+        round-human(parse-float value `div` (10^18))
+    else
+        '..'
 staking.init = ({ store, web3t }, cb)->
     # err <- web3t.refresh
     # return cb err if err?
