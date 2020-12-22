@@ -752,10 +752,6 @@ staking-content = (store, web3t)->
             td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
             td.pug #{stake}
-            td.pug #{item.node-stake}
-            td.pug #{item.delegate-stake}
-            td.pug #{item.node-roi}
-            td.pug #{item.delegate-roi}
             td.pug #{item.validator-probability}
             td.pug #{my-stake}
             td.pug #{item.stakers}
@@ -808,10 +804,6 @@ staking-content = (store, web3t)->
                                 th.pug(width="3%" style=stats) #
                                 th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
                                 th.pug(width="25%" style=stats) #{lang.total-stake}
-                                th.pug(width="25%" style=stats) #{"Node stake"}
-                                th.pug(width="5%" style=stats) #{"Delegate stake"}
-                                th.pug(width="5%" style=stats) #{"Node roi"}
-                                th.pug(width="5%" style=stats) #{"Delegate roi"}
                                 th.pug(width="5%" style=stats) #{"Validator probability"}
                                 th.pug(width="25%" style=stats) #{lang.my-stake}
                                 th.pug(width="5%" style=stats) #{lang.stakers}
@@ -912,17 +904,17 @@ convert-pools-to-view-model = (pools) ->
             address: it.address,
             checked: no,
             stake: if it.stake? then round-human(parse-float it.stake `div` (10^18)) else '..',
-            node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
-            delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
+            #node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
+            #delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
             stakers: if it.stakers? then it.stakers else '..',
             eth: no,
             is-validator: it.my-stake isnt \0,
             status: it.status,
             my-stake: if it.my-stake? then round-human(parse-float it.my-stake `div` (10^18)) else '..',
             withdraw-amount: \0,
-            validator-probability: if it.validator-probability? then round-human(it.validator-probability*100) + \% else '..',
-            delegate-roi: if it.delegate-reward? then (it.delegate-reward && round-human(it.delegate-reward / (it.stake - it.node-stake) * 100)) + \% else '..',
-            node-roi: if it.node-reward? then (it.node-reward && round-human(it.node-reward / it.node-stake * 100)) + \% else '..'
+            validator-probability: if it.validator-probability? then round-human(it.validator-probability*100) + \% else '..'
+            #delegate-roi: if it.delegate-reward? then (it.delegate-reward && round-human(it.delegate-reward / (it.stake - it.node-stake) * 100)) + \% else '..',
+            #node-roi: if it.node-reward? then (it.node-reward && round-human(it.node-reward / it.node-stake * 100)) + \% else '..'
         }
 staking.init = ({ store, web3t }, cb)->
     # err <- web3t.refresh
