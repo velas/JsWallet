@@ -753,7 +753,7 @@ staking-content = (store, web3t)->
                 address-holder { store, wallet }
             td.pug #{stake}
             td.pug #{item.validator-probability}
-            td.pug #{my-stake}
+            td.pug #{stringify my-stake}
             td.pug #{item.stakers}
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
@@ -910,12 +910,17 @@ convert-pools-to-view-model = (pools) ->
             eth: no,
             is-validator: it.my-stake isnt \0,
             status: it.status,
-            my-stake: if it.my-stake? then round-human(parse-float it.my-stake `div` (10^18)) else '..',
+            my-stake: it.my-stake,
             withdraw-amount: \0,
             validator-probability: if it.validator-probability? then round-human(it.validator-probability*100) + \% else '..'
             #delegate-roi: if it.delegate-reward? then (it.delegate-reward && round-human(it.delegate-reward / (it.stake - it.node-stake) * 100)) + \% else '..',
             #node-roi: if it.node-reward? then (it.node-reward && round-human(it.node-reward / it.node-stake * 100)) + \% else '..'
         }
+stringify = (value) ->
+    if value? then
+        round-human(parse-float value `div` (10^18))
+    else
+        '..'
 staking.init = ({ store, web3t }, cb)->
     # err <- web3t.refresh
     # return cb err if err?
