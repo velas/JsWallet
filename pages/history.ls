@@ -724,9 +724,6 @@ render-transaction = (store, web3t, tran)-->
     coin =
         coins |> find (.token is token)
     return null if not coin?
-    if (from is to and (seen-txs.tx?)) then
-        type = if seen-txs.tx.type is "IN" then "OUT" else "IN"
-    seen-txs.tx = {type: type}
     network = coin[store.current.network]
     request = { network, tx }
     tx-details = ->
