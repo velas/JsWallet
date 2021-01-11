@@ -187,7 +187,6 @@ module.exports = (store, web3t)->
         err, amount-send-fee <- calc-fee { token, send.network, amount: amount-send, send.fee-type, send.tx-type, send.to, send.data, account }
         if send.fee-type is \custom
             amount-send-fee = send.amount-send-fee
-        #console.log amount-send, err
         return cb null, { amount-send, amount-send-fee } if not err?
         return cb err if err? and err isnt "Balance is not enough to send tx"
         return cb "Fee cannot be calculated" if not amount-send-fee?
