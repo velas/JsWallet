@@ -560,10 +560,6 @@ require! {
                 overflow: hidden
                 text-transform: uppercase
             &.OUT
-                &.record
-                    .tx-top
-                        .details-from
-                            display: none
                 .direction
                     img
                         filter: invert(105%)
@@ -579,10 +575,6 @@ require! {
                 .txhash a
                     color: #0037c1
             &.IN
-                &.record
-                    .tx-top
-                        .details-to
-                            display: none
                 .direction
                     img
                         filter: invert(105%)
@@ -764,26 +756,28 @@ render-transaction = (store, web3t, tran)-->
             .cell.pug.text-center.network
                 .pug.direction.label-icon
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
-            .cell.pug.details-from
-                .pug.gray(style=lightText)
-                    span.action.pug
-                        address-holder { store, wallet: wallet-from }
-                    if no
-                        span.from-to.pug
-                            span.pug.smart-contract
-                                .pug.tooltip #{about}
-                                img.help.pug(src="#{about-icon}")
-                            span.pug #{lang.from}
-            .cell.pug.details-to
-                .pug.gray(style=lightText)
-                    span.action.pug
-                        address-holder { store, wallet: wallet-to }
-                    if no
-                        span.from-to.pug
-                            span.pug.smart-contract
-                                .pug.tooltip #{about}
-                                img.help.pug(src="#{about-icon}")
-                            span.pug #{lang.to}
+            if type is \IN
+                .pug.cell.details-from
+                    .pug.gray(style=lightText)
+                        span.action.pug
+                            address-holder { store, wallet: wallet-from }
+                        if no
+                            span.from-to.pug
+                                span.pug.smart-contract
+                                    .pug.tooltip #{about}
+                                    img.help.pug(src="#{about-icon}")
+                                span.pug #{lang.from}
+            else
+                .pug.cell.details-to
+                    .pug.gray(style=lightText)
+                        span.action.pug
+                            address-holder { store, wallet: wallet-to }
+                        if no
+                            span.from-to.pug
+                                span.pug.smart-contract
+                                    .pug.tooltip #{about}
+                                    img.help.pug(src="#{about-icon}")
+                                span.pug #{lang.to}
             .cell.pug.created
                 .time-ago.pug #{time-ago}
             .cell.pug.amount(style=menu-style)
