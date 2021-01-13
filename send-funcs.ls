@@ -2,7 +2,7 @@ require! {
     \mobx : { toJS }
     \./math.ls : { times, minus, div }
     \./api.ls : { create-transaction, push-tx }
-    \./calc-amount.ls : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
+    \./calc-amount.ls : { change-amount-no-fiat, change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
     \./send-form.ls : { notify-form-result }
     \./get-name-mask.ls
     \./resolve-address.ls
@@ -12,11 +12,12 @@ require! {
     \./round.ls
     \./round5.ls
     \./round5edit.ls
+    \./round-number.ls    
     \./topup.ls
     \./get-primary-info.ls
     \./pending-tx.ls : { create-pending-tx }
     \./transactions.ls : { rebuild-history }
-    \prelude-ls : { map }
+    \prelude-ls : { map, find }
     \./web3.ls
     \./api.ls : { calc-fee }
     \./pages/confirmation.ls : { confirm }
@@ -125,7 +126,7 @@ module.exports = (store, web3t)->
         <- change-amount store, to-send , no
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
-        <- change-amount store, to-send, no
+        <- change-amount-no-fiat store, to-send, no
     amount-eur-change = (event)->
         value = get-value event
         send.amount-send-eur = value
@@ -133,8 +134,16 @@ module.exports = (store, web3t)->
         amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 500
     amount-usd-change = (event)->
         value = get-value event
-        value = value ? 0
+        value = value ? 0 
+        { wallets } = store.current.account
+        { token } = store.current.send.coin
+        wallet =
+            wallets |> find (-> it.coin.token is token)
+        { balance, usdRate } = wallet 
+        available = round-number(balance * usdRate, {decimals: 8})
+        return no if +available < +value
         send.amount-send-usd = value
+        return no if +value is 0    
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500
     encode-decode = ->

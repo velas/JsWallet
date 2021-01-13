@@ -8,6 +8,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \../round-human.ls
+    \../round-number.ls
     \../wallets-funcs.ls
     \./epoch.ls
     \../components/button.ls
@@ -230,6 +231,8 @@ require! {
                             outline: none
                             ::placeholder
                                 color: #eee
+                            &:disabled
+                                opacity:.2
                             &.amount
                                 border-radius: $border-radius 0 0 $border-radius
                                 border-right: 0
@@ -397,6 +400,8 @@ send = ({ store, web3t })->
     crypto-background =
         background: style.app.wallet
         width: "50%"
+    just-crypto-background =
+        background: style.app.wallet
     more-text=
         color: style.app.text
     border-header =
@@ -423,7 +428,9 @@ send = ({ store, web3t })->
     go-back-from-send = ->
         send.error = ''
         go-back!  
-    makeDisabled = send.amount-send <= 0 
+    makeDisabled = send.amount-send <= 0
+    token = store.current.send.coin.token 
+    disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1  
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
@@ -471,11 +478,11 @@ send = ({ store, web3t })->
                                 .label.crypto.pug
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     | #{token-display}
-                                amount-field { store, value: "#{round5edit send.amount-send}", on-change: amount-change, placeholder="0", id="send-amount" }
+                                amount-field { store, value: "#{round5edit send.amount-send}", on-change: amount-change, placeholder="0", id="send-amount", token, disabled }
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug $
-                                    input.pug.amount-usd(type='text' style=crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}" id="send-amount-usd")
+                                    input.pug.amount-usd(type='text' style=just-crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-number send.amount-send-usd, {decimals: 8}}" id="send-amount-usd" disabled=disabled)
                             if active-eur is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug €

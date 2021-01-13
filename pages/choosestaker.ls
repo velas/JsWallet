@@ -749,7 +749,7 @@ staking-content = (store, web3t)->
         tr.pug(class="#{item.status}")
             td.pug
                 span.pug.circle(class="#{item.status}") #{index}
-            td.pug(data-column='Staker Address' title="#{ethToVlx item.address}")
+            td.pug(datacolumn='Staker Address' title="#{ethToVlx item.address}")
                 address-holder { store, wallet }
             td.pug #{stake}
             td.pug #{item.validator-probability}
@@ -824,7 +824,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
@@ -846,7 +846,7 @@ staking-content = (store, web3t)->
                                 span.pug.color #{vlx-token}
                             hr.pug
                             label.pug #{lang.stakeMore}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
