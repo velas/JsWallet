@@ -104,14 +104,15 @@ module.exports = (store, web3t)->
     cancel = (event)->
         navigate store, web3t, \wallets
         notify-form-result send.id, "Cancelled by user"
-    recipient-change = (event)->
+    recipient-change = (event)!->
         _to = event.target.value
+        send.to = _to    
         _to = _to.trim!
         err <- resolve-address { store, address: _to, coin: send.coin, network: send.network }
-        console.error "An error occured during address resolving:" err if err?
-        send.error = err ? ''
-        send.to = _to ? ""
+        return send.error = err if err? 
+        send.error = '' 
     get-value = (event)->
+        console.log "event.target" event.target    
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)

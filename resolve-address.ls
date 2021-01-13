@@ -4,7 +4,7 @@ require! {
     \./api.ls : { is-valid-address }
 }
 module.exports = (config, cb)->
-    { store, network, coin, address, send } = config
+    { store, network, coin, address} = config
     return cb "Address not found" if address.trim! is ""
     err, isValid <- is-valid-address { network, address }
     return cb null, address if isValid
