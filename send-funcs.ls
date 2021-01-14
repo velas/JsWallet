@@ -61,14 +61,16 @@ module.exports = (store, web3t)->
         cb err, tx
     perform-send-safe = (cb)->
         err, to <- resolve-address { store, address: send.to, coin: send.coin, network: send.network }
+        _coin = if send.coin.token is \vlx2 then \vlx else send.coin.token   
+        err = "Address is not valid #{_coin} address" if err? and err.index-of "Invalid checksum"
         #send.propose-escrow = err is "Address not found" and send.coin.token is \eth
         #return cb err if err?
         resolved =
             | err? => send.to
             | _ => to
         send.to = resolved
-        #send.error = err.message ? err if err?
-        #return cb err if err?
+        send.error = err if err?
+        return cb err if err?
         send-tx { wallet, ...send }, cb
     perform-send-unsafe = (cb)->
         send-tx { wallet, ...send }, cb
@@ -112,7 +114,6 @@ module.exports = (store, web3t)->
         return send.error = err if err? 
         send.error = '' 
     get-value = (event)->
-        console.log "event.target" event.target    
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
@@ -141,10 +142,8 @@ module.exports = (store, web3t)->
         wallet =
             wallets |> find (-> it.coin.token is token)
         { balance, usdRate } = wallet 
-        available = round-number(balance * usdRate, {decimals: 8})
-        return no if +available < +value
         send.amount-send-usd = value
-        return no if +value is 0    
+        #return no if +value is 0    
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500
     encode-decode = ->
@@ -176,13 +175,19 @@ module.exports = (store, web3t)->
     fee-token = (wallet.network.tx-fee-in ? send.coin.token).to-upper-case!
     is-data = (send.data ? "").length > 0
     choose-auto = ->
+        return if has-send-error!  
         send.fee-type = \auto
         <- change-amount store, send.amount-send, no
     choose-cheap = ->
         send.fee-type = \cheap
         <- change-amount store, send.amount-send, no
     choose-custom = (amount)->
+        return if has-send-error!    
+        balance = send.wallet.balance
+        amount-send-fee = send.amount-send-fee      
         send.fee-type = \custom
+        max-amount = Math.max 1e8, balance
+        amount = round-number(amount, {decimals: send.network.decimals, maxValue:max-amount})
         send.amount-send-fee = send.fee-custom-amount = amount
         <- change-amount store, send.amount-send, no
     chosen-cheap = if send.fee-type is \cheap then \chosen else ""
@@ -227,6 +232,9 @@ module.exports = (store, web3t)->
     export use-max-amount = ->
         err <- use-max-try-catch
         alert "#{err}" if err?
+    export has-send-error = ->  
+        error = store.current.send.error.toString!
+        error? and error.length > 0 and error.toLowerCase! isnt "not enough funds"    
     export change-amount
     export send
     export wallet

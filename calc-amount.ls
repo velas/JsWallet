@@ -41,12 +41,13 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.error = "Balance is not loaded" if not wallet?
     return cb "Balance is not loaded" if not wallet?
     decimalsConfig = send.network.decimals
+    decimals = amountSend.toString!.split(".").1
+    if decimals? and (decimals.length >= decimalsConfig) then
+        return no
     if amount-send? then
-        balance = wallet.balance
-        return no if +amountSend > +balance 
-        decimals = amountSend.toString!.split(".").1
-        if decimals? and (decimals.length > decimalsConfig) then
-            return no
+        balance = +wallet.balance
+        max-amount = Math.max 1e8, balance
+        return no if +amountSend > max-amount 
     result-amount-send = amount-send ? 0
     { fee-type, tx-type, fee-custom-amount } = store.current.send
     usd-rate = wallet?usd-rate ? 0
@@ -79,7 +80,7 @@ change-amount-generic = (field)-> (store, amount-send, fast, cb)->
     send.amount-send-fee-usd = tx-fee `times` fee-usd-rate
     send.error =
         | wallet.balance is \... => "Balance is not yet loaded"
-        | parse-float(wallet.balance `minus` result-amount-send) < 0 => "Not Enough Funds"
+        | parse-float(wallet.balance `minus` result-amount-send `minus` send.amount-send-fee) < 0 => "Not Enough Funds"
         | _ => ""
     cb null
 export change-amount-no-fiat = (store, amount-send, fast, cb)->
@@ -97,7 +98,6 @@ export change-amount-no-fiat = (store, amount-send, fast, cb)->
     decimalsConfig = send.network.decimals
     if amount-send? then
         balance = wallet.balance
-        return no if +amountSend > +balance 
         decimals = amountSend.toString!.split(".").1
         if decimals? and (decimals.length > decimalsConfig) then
             return no
