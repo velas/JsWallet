@@ -1,8 +1,8 @@
 require! {
     \mobx : { toJS }
-    \./math.ls : { times, minus, div }
+    \./math.ls : { times, minus, div, plus }
     \./api.ls : { create-transaction, push-tx }
-    \./calc-amount.ls : { change-amount-no-fiat, change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
+    \./calc-amount.ls : { change-amount-calc-fiat, change-amount-send, change-amount, calc-crypto-from-eur, calc-crypto-from-usd, change-amount-without-fee }
     \./send-form.ls : { notify-form-result }
     \./get-name-mask.ls
     \./resolve-address.ls
@@ -128,7 +128,7 @@ module.exports = (store, web3t)->
         <- change-amount store, to-send , no
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
-        <- change-amount-no-fiat store, to-send, no
+        <- change-amount-calc-fiat store, to-send, no
     amount-eur-change = (event)->
         value = get-value event
         send.amount-send-eur = value
@@ -205,25 +205,15 @@ module.exports = (store, web3t)->
         return cb null, { amount-send, amount-send-fee } if not err?
         return cb err if err? and err isnt "Balance is not enough to send tx"
         return cb "Fee cannot be calculated" if not amount-send-fee?
-        next = amount-send-fee ? ( 10 `div` (10 ^ send.network.decimals) )
-        next-amount = amount-send `minus` next
-        next-trials = trials - 1
-        calc-amount-and-fee next-amount, next-trials, cb
-    use-max = (cb)->
-        return cb "Fee is not calculated" if !send.amount-send-fee
-        return cb "Please enter recipient address first" if !send.to
-        amount = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
-        return cb "Amount is too small" if +amount <= 0
-        #console.log { amount }
-        err, info <- calc-amount-and-fee amount, 10
-        #console.log { amount, wallet.balance, send.amount-send-fee }
-        return cb "#{err}" if err?
-        return cb "Amount is 0" if +info.amount-send is 0
-        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` (info.amount-send-fee ? 0)
-        send.amount-send-fee = info.amount-send-fee
-        <- change-amount store, send.amount-send, no
-        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` (send.amount-send-fee ? 0)
-        cb null
+        cb null 
+    flag = no   
+    use-max = (cb)!->
+        min-fee = send.wallet.network.txFeeOptions.cheap       
+        amount-send = wallet.balance `minus` (wallet.pending-sent ? 0)
+        amount-send = amount-send `minus` min-fee if not flag 
+        amount-send = 0 if amount-send < 0 
+        flag = yes   
+        <- change-amount-send store, amount-send, no
     use-max-try-catch = (cb)->
         try
             use-max cb
