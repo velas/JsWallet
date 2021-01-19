@@ -63,7 +63,7 @@ require! {
                 max-width: 250px
                 min-width: 250px
                 text-align: left
-module.exports = ({ store, value, on-change, placeholder, id, show-details, token, disabled=no })->
+module.exports = ({ store, value, on-change, placeholder, id, show-details, token="vlx2", disabled=no })->
     style = get-primary-info store
     input-style =
         background: style.app.input
