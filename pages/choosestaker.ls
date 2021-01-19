@@ -696,7 +696,7 @@ staking-content = (store, web3t)->
         err <- web3t.vlx2.send-transaction { to, data, amount }
         store.current.page = \staking
     your-balance = " #{round-human get-balance!} "
-    your-staking-amount = store.staking.add.add-validator-stake `div` (10^18)
+    your-staking-amount = store.staking.stakeAmountTotal `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
     #calc-reward-click = ->
