@@ -12,6 +12,7 @@ require! {
     \../icons.ls
     \../components/middle-ellipsis : MiddleEllipsis
     \../components/address-holder.ls
+    \../round-number.ls
 }
 .history
     @import scheme
@@ -751,6 +752,8 @@ render-transaction = (store, web3t, tran)-->
     time-ago =
         | time => ago time
         | _ => ""
+    wallet = store.current.account.wallets[store.current.walletIndex]
+    rounded-fee = round-number fee, {decimals: wallet.network.decimals}
     .record.pug(class="#{type}" key="#{tx + type}" style=border-style datatesting="transaction")
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
@@ -829,8 +832,9 @@ render-transaction = (store, web3t, tran)-->
                 .cell.pug.divider
                 .cell.pug.divider2
                     .pug.gray(style=lightText)
-                        span.pug.fee #{lang.fee}:
-                        amount-beautify fee, 10
+                        span.pug.fee #{lang.fee}:              
+                        .pug.balance
+                            span.color.pug #{rounded-fee}
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store
