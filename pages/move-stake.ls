@@ -8,10 +8,18 @@ require! {
     \../../web3t/addresses.js : { vlxToEth, ethToVlx }
     \../get-lang.ls
     \../math.ls : { div, times, plus, minus }
+    \../api.ls : { is-valid-address }
+    \prelude-ls : { filter } 
+    \../round-number.ls   
 }
-.move-stake
-    padding: 30px
-    text-align: left
+.section
+    .not-enough
+        color: red  
+        min-height: 33px
+        padding: 0 4px
+        font-size: 12px
+        max-height: 20px
+        overflow: hidden
 try-parse-address = (address, cb)->
     try 
         cb null, vlxToEth(address)
@@ -23,9 +31,14 @@ module.exports = (store, web3t)->
     staking-address = store.staking.keystore.staking?address
     return null if not staking-address?
     lang = get-lang store
+    store.staking.error = store.staking.error ? ""     
     cb = console.log
+    wallets = store.current.account.wallets |> filter (it) -> it.coin.token is \vlx2 
+    return cb "VLX Wallet not found" if wallets.length is 0
+    wallet = wallets.0   
     move-stake = ->
-        pool-address = store.staking.chosen-pool.address
+        return if (store.staking.error? and ("#{store.staking.error}" .length > 0)) or store.staking.add.new-address is ""         
+        pool-address = store.staking.chosen-pool.address      
         err, new-pool-address <- try-parse-address store.staking.add.new-address
         return alert store, err, cb if err?
         err <- can-make-staking store, web3t
@@ -41,9 +54,22 @@ module.exports = (store, web3t)->
         to = web3t.velas.Staking.address
         err <- web3t.vlx2.send-transaction { to, data, amount: 0 }
     change-stake = (it)->
-        store.staking.add.move-stake = it.target.value
-    change-address = (it)->
-        store.staking.add.new-address = it.target.value
+        amount = it.target.value    
+        decimalsConfig = wallet.network.decimals
+        decimals = amount.toString!.split(".").1
+        if decimals? and (decimals.length > decimalsConfig) then
+            amount = round-number amount, {decimals: decimalsConfig}   
+        max-amount = 1e18
+        return no if +amount > max-amount
+        store.staking.add.move-stake = amount 
+    change-address = (it)!->
+        address = (it.target.value ? "").trim!  
+        store.staking.add.new-address = address 
+        return store.staking.error = "Address is empty" if address.length is 0    
+        cb = console.log  
+        err <- is-valid-address { address: store.staking.add.new-address, network: wallet.network } 
+        return store.staking.error = "Address is not valid" if err? and ("#{err}".index-of "Given address is not valid Velas address") > -1   
+        store.staking.error = ''
     .pug.section
         .title.pug
             h3.pug #{lang.moveStake}
@@ -54,5 +80,6 @@ module.exports = (store, web3t)->
             .pug
                 label.pug #{lang.newPoolAddress}
                 text-field { store, value: store.staking.add.new-address , on-change: change-address , placeholder: lang.stake }
+                .pug.control-label.not-enough.text-left(title="#{store.staking.error}") #{store.staking.error}
             .pug
                 button { store, on-click: move-stake , type: \secondary , icon : \apply , text: \btnApply }

@@ -718,6 +718,7 @@ staking-content = (store, web3t)->
             item.checked = yes
             store.staking.chosen-pool = item
             store.staking.add.new-address = ""
+            store.staking.error = ""
             claim-stake.calc-reward store, web3t
             staking-address = store.staking.keystore.staking.address
             err, amount <- web3t.velas.Staking.stakeAmount item.address, staking-address
