@@ -14,6 +14,7 @@ choose-random-pool = (pools) ->
     for pool in pools
         total-stake += parse-float pool.stake
     point = Math.random! * total-stake
+    return 0 if +total-stake is 0    
     i = 0
     counter = 0
     while counter < point
@@ -24,18 +25,17 @@ simulate-choose-validators = (pools) ->
     pools-copy = [...pools]
     validators = []
     for i from 1 to VALIDATOR_COUNT
+        return validators if pools-copy.length is 0    
         pool-index = choose-random-pool pools-copy
         validators.push pools-copy[pool-index]
         pools-copy.splice pool-index, 1
     return validators
-simulate-validators-stats = (pools, count, pool, stake) ->
-    pool-index = pools.index-of pool
-    pools-copy = pools.map (item, index) -> {...item, index}
+simulate-validators-stats = (pools, count) ->
+    pools-copy = pools.filter((item) -> item).map((item, index) -> {...item, index})
     for pool in pools-copy
         if pool.status isnt \active
             pool.stake = \0
             pool.node-stake = \0
-    pools-copy[pool-index].stake += stake if pool-index isnt -1
     rewards-per-index = []
     for i from 1 to pools.length
         rewards-per-index.push {rewards: 0, validator-count: 0}
@@ -47,7 +47,7 @@ simulate-validators-stats = (pools, count, pool, stake) ->
             rewards-per-index[validator.index].rewards += validator-reward
             rewards-per-index[validator.index].validator-count++
     return rewards-per-index
-calc-pools-rewards = (all-pools, pool, stake) ->
+calc-pools-rewards = (all-pools) ->
     stat = simulate-validators-stats all-pools, SIMULATION_COUNT
     for i from 0 to all-pools.length - 1
         pool = all-pools[i]
