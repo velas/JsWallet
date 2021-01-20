@@ -673,7 +673,7 @@ staking-content = (store, web3t)->
             | _ => data `div` (10^18)
         balance = get-balance! `minus` 0.1
         stake = store.staking.add.add-validator-stake
-        return cb lang.balanceLessStaking if 10000 > +stake
+        return cb lang.amountLessStaking if 10000 > +stake
         return cb lang.balanceLessStaking if +balance < +stake
         max = +balance
         cb null, { min, max }
