@@ -1,8 +1,8 @@
 require! {
     \mobx : { toJS }
-    \./math.ls : { times, minus, div }
+    \./math.ls : { times, minus, div, plus }
     \./api.ls : { create-transaction, push-tx }
-    \./calc-amount.ls : { change-amount, calc-crypto-from-eur, calc-crypto-from-usd }
+    \./calc-amount.ls : { change-amount-calc-fiat, change-amount-send, change-amount, calc-crypto-from-eur, calc-crypto-from-usd, change-amount-without-fee }
     \./send-form.ls : { notify-form-result }
     \./get-name-mask.ls
     \./resolve-address.ls
@@ -12,11 +12,12 @@ require! {
     \./round.ls
     \./round5.ls
     \./round5edit.ls
+    \./round-number.ls    
     \./topup.ls
     \./get-primary-info.ls
     \./pending-tx.ls : { create-pending-tx }
     \./transactions.ls : { rebuild-history }
-    \prelude-ls : { map }
+    \prelude-ls : { map, find }
     \./web3.ls
     \./api.ls : { calc-fee }
     \./pages/confirmation.ls : { confirm }
@@ -60,14 +61,16 @@ module.exports = (store, web3t)->
         cb err, tx
     perform-send-safe = (cb)->
         err, to <- resolve-address { store, address: send.to, coin: send.coin, network: send.network }
+        _coin = if send.coin.token is \vlx2 then \vlx else send.coin.token   
+        err = "Address is not valid #{_coin} address" if err? and err.index-of "Invalid checksum"
         #send.propose-escrow = err is "Address not found" and send.coin.token is \eth
         #return cb err if err?
         resolved =
             | err? => send.to
             | _ => to
         send.to = resolved
-        #send.error = err.message ? err if err?
-        #return cb err if err?
+        send.error = err if err?
+        return cb err if err?
         send-tx { wallet, ...send }, cb
     perform-send-unsafe = (cb)->
         send-tx { wallet, ...send }, cb
@@ -103,13 +106,13 @@ module.exports = (store, web3t)->
     cancel = (event)->
         navigate store, web3t, \wallets
         notify-form-result send.id, "Cancelled by user"
-    recipient-change = (event)->
+    recipient-change = (event)!->
         _to = event.target.value
+        send.to = _to    
         _to = _to.trim!
         err <- resolve-address { store, address: _to, coin: send.coin, network: send.network }
-        console.error "An error occured during address resolving:" err if err?
-        send.error = err ? ''
-        send.to = _to ? ""
+        return send.error = err if err? 
+        send.error = '' 
     get-value = (event)->
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 =
@@ -125,7 +128,7 @@ module.exports = (store, web3t)->
         <- change-amount store, to-send , no
     perform-amount-usd-change = (value)->
         to-send = calc-crypto-from-usd store, value
-        <- change-amount store, to-send, no
+        <- change-amount-calc-fiat store, to-send, no
     amount-eur-change = (event)->
         value = get-value event
         send.amount-send-eur = value
@@ -133,8 +136,14 @@ module.exports = (store, web3t)->
         amount-eur-change.timer = set-timeout (-> perform-amount-eur-change value), 500
     amount-usd-change = (event)->
         value = get-value event
-        value = value ? 0
+        value = value ? 0 
+        { wallets } = store.current.account
+        { token } = store.current.send.coin
+        wallet =
+            wallets |> find (-> it.coin.token is token)
+        { balance, usdRate } = wallet 
         send.amount-send-usd = value
+        #return no if +value is 0    
         amount-usd-change.timer = clear-timeout amount-usd-change.timer
         amount-usd-change.timer = set-timeout (-> perform-amount-usd-change value), 500
     encode-decode = ->
@@ -166,13 +175,19 @@ module.exports = (store, web3t)->
     fee-token = (wallet.network.tx-fee-in ? send.coin.token).to-upper-case!
     is-data = (send.data ? "").length > 0
     choose-auto = ->
+        return if has-send-error!  
         send.fee-type = \auto
         <- change-amount store, send.amount-send, no
     choose-cheap = ->
         send.fee-type = \cheap
         <- change-amount store, send.amount-send, no
     choose-custom = (amount)->
+        return if has-send-error!    
+        balance = send.wallet.balance
+        amount-send-fee = send.amount-send-fee      
         send.fee-type = \custom
+        max-amount = Math.max 1e8, balance
+        amount = round-number(amount, {decimals: send.network.decimals, maxValue:max-amount})
         send.amount-send-fee = send.fee-custom-amount = amount
         <- change-amount store, send.amount-send, no
     chosen-cheap = if send.fee-type is \cheap then \chosen else ""
@@ -187,29 +202,18 @@ module.exports = (store, web3t)->
         err, amount-send-fee <- calc-fee { token, send.network, amount: amount-send, send.fee-type, send.tx-type, send.to, send.data, account }
         if send.fee-type is \custom
             amount-send-fee = send.amount-send-fee
-        #console.log amount-send, err
         return cb null, { amount-send, amount-send-fee } if not err?
         return cb err if err? and err isnt "Balance is not enough to send tx"
         return cb "Fee cannot be calculated" if not amount-send-fee?
-        next = amount-send-fee ? ( 10 `div` (10 ^ send.network.decimals) )
-        next-amount = amount-send `minus` next
-        next-trials = trials - 1
-        calc-amount-and-fee next-amount, next-trials, cb
-    use-max = (cb)->
-        return cb "Fee is not calculated" if !send.amount-send-fee
-        return cb "Please enter recipient address first" if !send.to
-        amount = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` send.amount-send-fee
-        return cb "Amount is too small" if +amount <= 0
-        #console.log { amount }
-        err, info <- calc-amount-and-fee amount, 10
-        #console.log { amount, wallet.balance, send.amount-send-fee }
-        return cb "#{err}" if err?
-        return cb "Amount is 0" if +info.amount-send is 0
-        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` (info.amount-send-fee ? 0)
-        send.amount-send-fee = info.amount-send-fee
-        <- change-amount store, send.amount-send, no
-        send.amount-send = wallet.balance `minus` (wallet.pending-sent ? 0) `minus` (send.amount-send-fee ? 0)
-        cb null
+        cb null 
+    flag = no   
+    use-max = (cb)!->
+        min-fee = send.wallet.network.txFeeOptions.cheap       
+        amount-send = wallet.balance `minus` (wallet.pending-sent ? 0)
+        amount-send = amount-send `minus` min-fee if not flag 
+        amount-send = 0 if amount-send < 0 
+        flag = yes   
+        <- change-amount-send store, amount-send, no
     use-max-try-catch = (cb)->
         try
             use-max cb
@@ -218,6 +222,9 @@ module.exports = (store, web3t)->
     export use-max-amount = ->
         err <- use-max-try-catch
         alert "#{err}" if err?
+    export has-send-error = ->  
+        error = store.current.send.error.toString!
+        error? and error.length > 0 and error.toLowerCase! isnt "not enough funds"    
     export change-amount
     export send
     export wallet

@@ -28,6 +28,8 @@ require! {
         width: calc(100% - 70px) !important
         padding: 0 10px
         border-radius: $border 0 0 $border !important
+        &:disabled
+            opacity: .2
     >.suffix
         $color: rgba(#ccc, 0.3)
         width: 70px
@@ -38,8 +40,8 @@ require! {
             display: inline-block
         >.icon
             width: 15px
-            margin-bottom: -3px
-            margin-right: 3px
+            margin-bottom: -1px
+            margin-right: 5px
     >.show-details
         display: none
     &:hover
@@ -61,7 +63,7 @@ require! {
                 max-width: 250px
                 min-width: 250px
                 text-align: left
-module.exports = ({ store, value, on-change, placeholder })->
+module.exports = ({ store, value, on-change, placeholder, id, show-details, token="vlx2", disabled=no })->
     style = get-primary-info store
     input-style =
         background: style.app.input
@@ -71,13 +73,13 @@ module.exports = ({ store, value, on-change, placeholder })->
         ref: null
     { wallets } = store.current.account
     wallet =
-        wallets |> find (-> it.coin.token is \vlx2)
-    value-vlx = value ? 0
+        wallets |> find (-> it.coin.token is token)
+    value-token = value ? 0
     usd =
-        | wallet.usd-rate? => (value-vlx || "0") `times` wallet.usd-rate
+        | wallet.usd-rate? => (value-token || "0") `times` wallet.usd-rate
         | _ => ".."
     eur =
-        | wallet.eur-rate? => (value-vlx || "0") `times` wallet.eur-rate
+        | wallet.eur-rate? => (value-token || "0") `times` wallet.eur-rate
         | _ => ".."
     actual-placeholder = placeholder ? ""
     normalize = ->
@@ -87,17 +89,23 @@ module.exports = ({ store, value, on-change, placeholder })->
         [first=\0, second=\0] = it.split('.')
         "#{parse-int first}.#{second}"
     get-number = (value)->
-        | value is "" => \0
-        | typeof! value not in <[String Number]> => \0
-        | _ => normalize value.match(/\d+(\.)?(\d{1,})?/)?0
+        return \0 if value is ""
+        value = value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
+        value2 =
+            | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
+            | _ => value
+        value2
     on-change-internal = (it)->
         value = get-number it.target?value
         on-change { target: { value } }
+    token = \vlx if token is \vlx2
+    token-label = token.to-upper-case!
     .pug.input-area
-        input.pug(type="text" value="#{value-vlx}" style=input-style on-change=on-change-internal placeholder=actual-placeholder)
+        input.pug(type="text" value="#{value-token}" style=input-style on-change=on-change-internal placeholder=actual-placeholder id="#{id}" disabled=disabled)
         span.suffix.pug(style=input-style)
             img.icon.pug(src="#{wallet.coin.image}")
-            span.pug VLX
-        .show-details.pug
-            .panel.pug
-                .pug USD: #{round usd}
+            span.pug #{token-label}
+        if show-details? and show-details then   
+            .show-details.pug
+                .panel.pug
+                    .pug USD: #{round usd}

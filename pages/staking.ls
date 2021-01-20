@@ -919,8 +919,6 @@ staking-content = (store, web3t)->
         return store.staking.add.result = "#{err}" if err?
         #store.staking.add.result = "success"
         <- staking.init { store, web3t }
-    change-address = ->
-        store.staking.add.add-validator = it.target.value
     change-stake = ->
         store.staking.add.add-validator-stake = it.target.value
     velas-node-applied-template =
@@ -1100,7 +1098,7 @@ staking-content = (store, web3t)->
                     .description.pug
                         .pug.left
                             label.pug #{lang.stake}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, show-details: yes, id:"vlx-stake-input", token:"vlx2" }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) Min
@@ -1154,7 +1152,7 @@ staking-content = (store, web3t)->
                                             li.pug #{lang.your-status2}
                             hr.pug
                             label.pug #{lang.stake-more}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake }
+                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, show-details: yes, id: "vlx-stake-input", token:"vlx2" }
                             .pug.balance
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}

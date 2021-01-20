@@ -98,7 +98,7 @@ require! {
             box-sizing: border-box
             padding: 0 10px
             margin-bottom: 20px
-            &:last-child   
+            &:last-child
                 @media (max-width: 800px)
                     padding-bottom: $ios-m-b
             >div
@@ -174,7 +174,7 @@ staking-amount = (store, web3t)->
     stats=
         background: info.app.stats
     amount =
-        store.staking.pools |> map (.stake) |> foldl plus, 0
+        store.staking.pools |> map (-> +it.stake / 1e18) |> foldl plus, 0
     .pug.col.col-4
         .pug(style=stats)
             .value.pug
@@ -187,7 +187,7 @@ my-stake = (store, web3t)->
     stats=
         background: info.app.stats
     amount =
-        store.staking.pools |> map (.my-stake) |> foldl plus, 0
+        store.staking.pools |> map (-> +it.my-stake / 1e18) |> foldl plus, 0
     .pug.col.col-4
         .pug(style=stats)
             .value.pug

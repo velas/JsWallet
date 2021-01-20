@@ -9,6 +9,8 @@ require! {
 .trx-fee
     @import scheme
     $border-radius: var(--border-btn)
+    &.disabled
+        opacity:.2
     table
         margin-bottom: -1px
         border-radius: $border-radius $border-radius 0 0
@@ -71,10 +73,10 @@ trx-fee = ({ store, web3t, wallet })->
     active-class= (fee-type) ->
         return null if fee-type isnt send.fee-type
         return \active
-    { choose-cheap, choose-custom, choose-auto} = send-funcs store, web3t
+    { choose-cheap, choose-custom, choose-auto, has-send-error} = send-funcs store, web3t
+    disabled-class = if has-send-error! then "disabled" else ""
     select-custom = ->
-        # send.fee-custom-amount = send.amount-send-fee
-        # send.fee-type = \custom
+        return if has-send-error!
         choose-custom send.amount-send-fee
     on-fee-change = (ev) ->
         {value} = ev.target
@@ -115,7 +117,7 @@ trx-fee = ({ store, web3t, wallet })->
         td.pug(on-click=choose-auto class="#{active-class \auto}")
             .pug.field.type #{lang.auto}
             .pug.field.coin #{if send.amount-send-fee-options.auto then send.amount-send-fee-options.auto + " " + token-display else ""}
-    .pug.trx-fee
+    .pug.trx-fee(class="#{disabled-class}")
         label.pug(style=text) Transaction Fee
         table.pug.fee(style=border-style)
             tbody.pug

@@ -298,7 +298,7 @@ module.exports = (store, web3t)->
             if store.current.device is \mobile
                 tor store, web3t
             if store.current.device is \mobile
-                button.pug.button.lock.mt-5(on-click=show style=button-primary4-style class="#{show-class}")
+                button.pug.button.lock.mt-5(on-click=show style=button-primary4-style class="#{show-class}" id="menu-hamb-mobile")
                     img.icon-svg-plus.pug(src="#{icons.menu}")
             if no
                 if store.current.device is \mobile

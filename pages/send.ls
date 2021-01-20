@@ -8,6 +8,7 @@ require! {
     \./switch-account.ls
     \../icons.ls
     \../round-human.ls
+    \../round-number.ls
     \../wallets-funcs.ls
     \./epoch.ls
     \../components/button.ls
@@ -17,6 +18,7 @@ require! {
     \./send-contract.ls
     \../history-funcs.ls
     \../components/burger.ls
+    \../components/amount-field.ls
 }
 .content
     position: relative
@@ -180,6 +182,8 @@ require! {
                         &.choose-currency
                             display: inline-flex
                             width: 45% !important
+                        .input-area
+                            margin: 0
                         select
                             -webkit-appearance: none
                             -moz-appearance: none
@@ -227,6 +231,8 @@ require! {
                             outline: none
                             ::placeholder
                                 color: #eee
+                            &:disabled
+                                opacity:.2
                             &.amount
                                 border-radius: $border-radius 0 0 $border-radius
                                 border-right: 0
@@ -394,6 +400,8 @@ send = ({ store, web3t })->
     crypto-background =
         background: style.app.wallet
         width: "50%"
+    just-crypto-background =
+        background: style.app.wallet
     more-text=
         color: style.app.text
     border-header =
@@ -417,10 +425,16 @@ send = ({ store, web3t })->
         if store.current.open-menu then \hide else \ ""
     token-display = if token == \VLX2 then \VLX else token
     fee-token-display = if fee-token == \VLX2 then \VLX else fee-token
+    go-back-from-send = ->
+        send.error = ''
+        go-back!  
+    makeDisabled = send.amount-send <= 0
+    token = store.current.send.coin.token 
+    disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1  
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
-            .pug.close(on-click=go-back)
+            .pug.close(on-click=go-back-from-send)
                 img.icon-svg.pug(src="#{icons.arrow-left}")
             burger store, web3t
             epoch store, web3t
@@ -464,11 +478,11 @@ send = ({ store, web3t })->
                                 .label.crypto.pug
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     | #{token-display}
-                                input.pug.amount(type='text' style=crypto-background on-change=amount-change placeholder="0" title="#{send.amount-send}" value="#{round5edit send.amount-send}" id="send-amount")
+                                amount-field { store, value: "#{round5edit send.amount-send}", on-change: amount-change, placeholder="0", id="send-amount", token, disabled }
                             if active-usd is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug $
-                                    input.pug.amount-usd(type='text' style=crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-money send.amount-send-usd}" id="send-amount-usd")
+                                    input.pug.amount-usd(type='text' style=just-crypto-background on-change=amount-usd-change placeholder="0" title="#{send.amount-send-usd}" value="#{round-number send.amount-send-usd, {decimals: 8}}" id="send-amount-usd" disabled=disabled)
                             if active-eur is \active
                                 .input-wrapper.small.pug(style=amount-style)
                                     .label.lusd.pug €
@@ -505,7 +519,7 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, id: "send-confirm" }
+                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, makeDisabled: makeDisabled, id: "send-confirm" }
                     button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->

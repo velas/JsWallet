@@ -12,6 +12,7 @@ require! {
     \../icons.ls
     \../components/middle-ellipsis : MiddleEllipsis
     \../components/address-holder.ls
+    \../round-number.ls
 }
 .history
     @import scheme
@@ -342,7 +343,7 @@ require! {
         width: 100%
         overflow-y: scroll
         margin-top: -1px
-        height: calc(100vh - 270px)
+        height: calc(100vh - 390px)
         opacity: .8
         .head, .record
             &.record
@@ -560,10 +561,6 @@ require! {
                 overflow: hidden
                 text-transform: uppercase
             &.OUT
-                &.record
-                    .tx-top
-                        .details-from
-                            display: none
                 .direction
                     img
                         filter: invert(105%)
@@ -579,10 +576,6 @@ require! {
                 .txhash a
                     color: #0037c1
             &.IN
-                &.record
-                    .tx-top
-                        .details-to
-                            display: none
                 .direction
                     img
                         filter: invert(105%)
@@ -699,6 +692,7 @@ loader = ({ store, web3t })->
             path.pug(d='M9.92611111,10.59 L11.4527778,13.2366667 C11.6055556,13.5027778 11.5155556,13.8411111 11.25,13.995 C10.9838889,14.1483333 10.6438889,14.0572222 10.4905556,13.7938889 L8.96277778,11.1455556 C8.80944444,10.8805556 8.90111111,10.5411111 9.16666667,10.3872222 C9.43277778,10.2355556 9.77277778,10.325 9.92611111,10.59 Z')
             path.pug(d='M10.3866667,9.16777778 C10.54,8.90111111 10.8794444,8.80888889 11.145,8.96388889 L13.7922222,10.4905556 C14.0583333,10.6455556 14.1477778,10.9844444 13.9944444,11.2505556 C13.8416667,11.5166667 13.5011111,11.6061111 13.2333333,11.4538889 L10.5894444,9.92666667 C10.3238889,9.77222222 10.2338889,9.43277778 10.3866667,9.16777778 Z')
             path.pug(d='M14.4433333,6.94388889 L11.3872222,6.94388889 C11.0805556,6.94388889 10.8311111,7.19277778 10.8311111,7.5 C10.8311111,7.80666667 11.0794444,8.05555556 11.3872222,8.05555556 L14.4433333,8.05555556 C14.7511111,8.05555556 15,7.80666667 15,7.5 C15,7.19222222 14.7511111,6.94388889 14.4433333,6.94388889 Z')
+#seen-txs = {}
 render-transaction = (store, web3t, tran)-->
     { transaction-info, coins, checked, arrow, arrow-lg, sign, delete-pending-tx, amount-beautify, ago } = history-funcs store, web3t
     style = get-primary-info store
@@ -718,7 +712,7 @@ render-transaction = (store, web3t, tran)-->
     icon1=
         filter: style.app.icon1
     tooltip=
-        background: "#000"
+        background: "black"
     { token, tx, amount, fee, time, url, type, pending, from, to, recipient-type, description } = tran
     coin =
         coins |> find (.token is token)
@@ -727,8 +721,8 @@ render-transaction = (store, web3t, tran)-->
     request = { network, tx }
     tx-details = ->
         store.history.tx-details =
-            | store.history.tx-details is tx => null
-            | _ => tx
+            | store.history.tx-details is "#{tx}#{type}" => null
+            | _ => "#{tx}#{type}"
     icon-pending=
         filter: if pending is yes then 'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-370deg) saturate(790%) contrast(0.5)' else style.app.icon-filter
     amount-pending=
@@ -758,31 +752,35 @@ render-transaction = (store, web3t, tran)-->
     time-ago =
         | time => ago time
         | _ => ""
-    .record.pug(class="#{type}" key="#{tx + type}" style=border-style)
+    wallet = store.current.account.wallets[store.current.walletIndex]
+    rounded-fee = round-number fee, {decimals: wallet.network.decimals}
+    .record.pug(class="#{type}" key="#{tx + type}" style=border-style datatesting="transaction")
         .pug.tx-top(style=line-style)
             .cell.pug.text-center.network
                 .pug.direction.label-icon
                     img.icon-svg.pug(src="#{arrow-lg(type)}")
-            .cell.pug.details-from
-                .pug.gray(style=lightText)
-                    span.action.pug
-                        address-holder { store, wallet: wallet-from }
-                    if no
-                        span.from-to.pug
-                            span.pug.smart-contract
-                                .pug.tooltip #{about}
-                                img.help.pug(src="#{about-icon}")
-                            span.pug #{lang.from}
-            .cell.pug.details-to
-                .pug.gray(style=lightText)
-                    span.action.pug
-                        address-holder { store, wallet: wallet-to }
-                    if no
-                        span.from-to.pug
-                            span.pug.smart-contract
-                                .pug.tooltip #{about}
-                                img.help.pug(src="#{about-icon}")
-                            span.pug #{lang.to}
+            if type is \IN
+                .pug.cell.details-from
+                    .pug.gray(style=lightText)
+                        span.action.pug
+                            address-holder { store, wallet: wallet-from }
+                        if no
+                            span.from-to.pug
+                                span.pug.smart-contract
+                                    .pug.tooltip #{about}
+                                    img.help.pug(src="#{about-icon}")
+                                span.pug #{lang.from}
+            else
+                .pug.cell.details-to
+                    .pug.gray(style=lightText)
+                        span.action.pug
+                            address-holder { store, wallet: wallet-to }
+                        if no
+                            span.from-to.pug
+                                span.pug.smart-contract
+                                    .pug.tooltip #{about}
+                                    img.help.pug(src="#{about-icon}")
+                                span.pug #{lang.to}
             .cell.pug.created
                 .time-ago.pug #{time-ago}
             .cell.pug.amount(style=menu-style)
@@ -809,7 +807,7 @@ render-transaction = (store, web3t, tran)-->
             .cell.pug.divider.more(on-click=tx-details)
                 img.icon-svg1.more.pug(src="#{icons.arrow-down}" style=icon1)
                 .arrow_box.pug(style=tooltip) #{lang.details}
-        if store.history.tx-details is tx
+        if store.history.tx-details is "#{tx}#{type}"
             .pug.tx-middle(style=light-style on-click=transaction-info(request))
                 .cell.pug.divider
                     if no
@@ -834,8 +832,9 @@ render-transaction = (store, web3t, tran)-->
                 .cell.pug.divider
                 .cell.pug.divider2
                     .pug.gray(style=lightText)
-                        span.pug.fee #{lang.fee}:
-                        amount-beautify fee, 10
+                        span.pug.fee #{lang.fee}:              
+                        .pug.balance
+                            span.color.pug #{rounded-fee}
 module.exports = ({ store, web3t })->
     { go-back, switch-type-in, switch-type-out, coins, is-active, switch-filter } = history-funcs store, web3t
     style = get-primary-info store

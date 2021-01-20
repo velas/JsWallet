@@ -128,7 +128,7 @@ module.exports = (store, web3t)->
         store.current.search = event.target.value
     .pug.header(style=header)
         .left-side.pug
-            button.pug.button.menu(style=button-add on-click=show class="#{show-class}")
+            button.pug.button.menu(style=button-add on-click=show class="#{show-class}" id="menu-hamb-tablet")
                 img.icon-svg-plus.pug(src="#{icons.menu}")
             .search-area.pug
                 input.pug(type='text' style=input-style placeholder="Search" value=store.current.search on-change=search-on-change)

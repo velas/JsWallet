@@ -38,7 +38,7 @@ require! {
         @keyframes spin
             from
                 transform: rotate(0deg)
-            to 
+            to
                 transform: rotate(360deg)
         animation-name: spin
         animation-duration: 4000ms
@@ -82,7 +82,7 @@ require! {
                         @keyframes spin
                             from
                                 transform: rotate(0deg)
-                            to 
+                            to
                                 transform: rotate(360deg)
                         animation-name: spin
                         animation-duration: 4000ms
@@ -181,7 +181,7 @@ module.exports = ({ store, web3t })->
                 .currency.h1.pug #{lang.balance}
                 .amount.pug(class="#{placeholder}")
                     .symbol.pug $
-                    .number.pug(title="#{current.balance-usd}") #{round-human current.balance-usd}
+                    .number.pug(title="#{current.balance-usd}" id='balance-total') #{round-human current.balance-usd}
                 .pug
                     if store.current.device is \desktop
                         if store.preference.refresh-visible is yes
@@ -193,6 +193,6 @@ module.exports = ({ store, web3t })->
                                 img.icon-svg-plus.pug(src="#{icons.create}")
                     if store.current.device is \desktop
                         tor store, web3t
-            if store.current.device is \mobile    
+            if store.current.device is \mobile
                 your-account store, web3t
             project-links { store, web3t }

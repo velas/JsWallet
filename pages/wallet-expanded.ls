@@ -198,6 +198,7 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.primary1
         background-color: style.app.primary1-spare
     token-display = if token == \VLX2 then \VLX else token
+    makeDisabled = store.current.refreshing
     .wallet-detailed.pug(key="#{token}" style=wallet-style)
         .wallet-part.left.pug(style=text)
             .wallet-header.pug
@@ -221,8 +222,8 @@ module.exports = (store, web3t, wallets, wallet)-->
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }
             .buttons.pug
-                button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send" }
-                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive" }
+                button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
+                button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
             .details.pug
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}
