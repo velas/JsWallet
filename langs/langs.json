@@ -1720,6 +1720,16 @@
             "在当前纪元结束之前不允许退出",
             "Exit is not allowed until the end of the current epoch"
         ],
+		"amountLessStaking": [
+			"Your amount is less than the minimum staking amount" ,
+			"Ваша сумма меньше минимальной суммы стейкинга",
+			"Ваша сума менше мінімальної суми стейкінга",
+			"Votre montant est inférieur au montant de mise minimum",
+			"Su monto es menor que el monto mínimo de apuesta",
+			"您的金額少於最低投注額",
+			"귀하의 금액이 최소 스테이 킹 금액보다 적습니다.",
+			"المبلغ الخاص بك أقل من الحد الأدنى لمبلغ التخزين"
+		],
         "balanceLessStaking": [
             "Your balance is less than minimum staking amount",
             "У вас баланс меньше минимальной суммы стейкинга",
