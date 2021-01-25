@@ -41,7 +41,7 @@ require! {
             position: absolute
             right: 8px
             top: 13px
-module.exports = ({ store, value, on-change, placeholder, type, on-key-down, id })->
+module.exports = ({ ref, store, value, on-change, placeholder, type, on-key-down, id })->
     style = get-primary-info store
     input-style =
         background: style.app.input
@@ -55,7 +55,7 @@ module.exports = ({ store, value, on-change, placeholder, type, on-key-down, id 
         | type is \password => \password
         | _ => \text
     .pug.input-area
-        input.pug(type="#{chosen-type}" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder auto-complete="off" on-key-down=on-key-down id=id)
+        input.pug(ref=ref, type="#{chosen-type}" value="#{value}" style=input-style on-change=on-change placeholder=actual-placeholder auto-complete="off" on-key-down=on-key-down id=id)
         if store.current.device isnt \mobile
             span.keyboard-panel.pug
                 img.icon-svg.pug(src="#{icons.keyboard}")

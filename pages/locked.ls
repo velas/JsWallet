@@ -251,8 +251,10 @@ input = (store, web3t)->
         reset-wallet store
     drag =
         if store.current.pin-trial is 0 then \ "" else \drag
+    focus-input = (ref)!->
+        ref.focus! if ref?
     .pug
-        text-field { store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key, id="locked-password" }
+        text-field { ref:(c)->{ a = focus-input(c)}, store, type: 'password' value: store.current.pin, placeholder: lang.pin-placeholder, on-change: change , on-key-down: catch-key, id="locked-password" }
         if exists!
             .pug
                 button { store, on-click: enter, type: \primary , text: \enter }
