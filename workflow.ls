@@ -24,6 +24,8 @@ class Parallel
         @results = []
         @callbacks = []
         @done = no
+        @errors = null 
+        @errors-cb = (err)-> console.error "An error occured:" err
         @notify = ->
             if @done
                 res = @results |> pairs-to-obj
@@ -37,27 +39,38 @@ class Parallel
     then : (func)->
         @callbacks.push func
         @notify!
+        return @
+    catch : (cb) !->
+        @errors-cb = cb if not !cb? 
     run : (val) ->
-        for pair in @tasks
-            const composition = 
-                switch typeof! pair[1]
-                    case \Function
-                        [  pair[1] ]
-                    case \Array
-                        pair[1]
-            const array = composition ++ [ @success pair[0] ]
-            go array, val
+        console.log "val", val   
+        try    
+            for pair in @tasks
+                const composition = 
+                    switch typeof! pair[1]
+                        case \Function
+                            [  pair[1] ]
+                        case \Array
+                            pair[1]
+                const array = composition ++ [ @success pair[0] ]
+                go array, val
+        catch err
+            @errors = err 
+            @errors-cb err
 max = 50
 #create the parallel process from the object 
 make-parallel = (o, val, success)->
     tasks = 
         o |> obj-to-pairs
     if tasks.length is 0
-        #console.log \success, success
         return success {}
     if tasks.length <= max
         parallel = new Parallel tasks
-        parallel.then success
+        parallel
+            .then success
+            .catch (err) -> 
+                console.error "Caught error: " err  
+                return success {}
         parallel.run val
     else 
         head = tasks |> take max |> pairs-to-obj
