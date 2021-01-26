@@ -28,6 +28,7 @@ try-parse-address = (address, cb)->
 module.exports = (store, web3t)->
     return null if not store.staking.chosen-pool?
     return null if +store.staking.stake-amount-total is 0
+    return null if +store.staking.maxWithdrawAllowed is 0
     staking-address = store.staking.keystore.staking?address
     return null if not staking-address?
     lang = get-lang store
