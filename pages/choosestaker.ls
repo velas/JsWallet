@@ -684,7 +684,7 @@ staking-content = (store, web3t)->
     use-max = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = get-balance! `minus` 0.1
+        store.staking.add.add-validator-stake = Math.max (get-balance! `minus` 0.1), 0
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert store, err, cb if err?
