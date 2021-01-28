@@ -61,7 +61,14 @@ calc-pools-rewards = (all-pools) ->
     return all-pools
 fill-pools = ({ store, web3t, on-progress, on-finish }, [item, ...rest]) ->
     staking-address = store.staking.keystore.staking.address
-    return on-finish null, [] if not item?
+    if not item? then
+        store.staking.all-pools-loaded = yes
+        store.staking.pools-are-loading = no
+        return on-finish null, [] 
+    if store.current.page isnt \choosestaker then
+        store.staking.all-pools-loaded = no
+        store.staking.pools-are-loading = no
+        return on-finish null, []      
     err, data <- web3t.velas.Staking.stakeAmountTotal item.address
     return on-finish err if err?
     item.stake = data
@@ -106,6 +113,7 @@ query-pools-web3t = (store, web3t, on-progress, on-finish) ->
                 status: | (pools.index-of it) isnt -1 => \active
                     | otherwise => \inactive
             }
+    store.staking.pools-are-loading = yes
     fill-pools { store, web3t, on-progress, on-finish }, all-pools
 query-pools = (store, web3t, on-progress, on-finish) ->
     #p = fetch ""
