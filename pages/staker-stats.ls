@@ -7,7 +7,7 @@ require! {
 }
 get-stake = (it)->
     | it.stake is '..' => 0
-    | _ => +it.stake-initial `div` 1e18
+    | _ => +it.stake-initial
 get-color = (items)-> (it)->
     index = items.index-of(it)
     base =
