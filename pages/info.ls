@@ -13,7 +13,7 @@ require! {
     \./staker-stats.ls
     \./staker-stats2.ls
     \./staker-stats3.ls
-    \prelude-ls : { map, foldl }
+    \prelude-ls : { map, foldl, filter }
     \../math.ls : { plus, div }
     \../round-human.ls
     \./epoch.ls
@@ -174,7 +174,7 @@ staking-amount = (store, web3t)->
     stats=
         background: info.app.stats
     amount =
-        store.staking.pools |> map (-> +it.stake / 1e18) |> foldl plus, 0
+        store.staking.pools |> map (-> +it.stakeInitial) |> foldl plus, 0
     .pug.col.col-4
         .pug(style=stats)
             .value.pug
@@ -187,12 +187,15 @@ my-stake = (store, web3t)->
     stats=
         background: info.app.stats
     amount =
-        store.staking.pools |> map (-> +it.my-stake / 1e18) |> foldl plus, 0
+        store.staking.pools
+            |> filter (-> not !it.my-stake?) 
+            |> map (-> +it.my-stake `div` 1e18) 
+            |> foldl plus, 0
     .pug.col.col-4
         .pug(style=stats)
             .value.pug
                 .symbol.pug
-                .number.pug(title='') #{round-human(amount)}
+                .number.pug(title='') #{round-human(+amount)}
             .pug.header #{lang.total-my-stake}
 chart-amount-sizes = (store, web3t)->
     lang = get-lang store
@@ -289,6 +292,7 @@ feel-rewards = ({ store, web3t }, [epoch, ...epochs], cb)->
     all = [data] ++ rest
     cb null, all
 module.exports.init = ({ store, web3t }, cb)->
+    return cb null if store.staking.pools-are-loading is yes
     err, data <- choosestaker.init { store, web3t }
     cb null
 module.exports.focus = ({ store, web3t}, cb)->

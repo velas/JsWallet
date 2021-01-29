@@ -207,7 +207,6 @@ module.exports.init = ({ store, web3t}, cb)->
     return cb err if err?
     store.staking.orderedWithdrawAmount = amount.to-fixed!
     err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(store.staking.chosen-pool.address, staking-address)
-    console.log "web3t.velas.Staking.orderWithdrawEpoch('#{store.staking.chosen-pool.address}', '#{staking-address}')"
     return cb "#{err}" if err?
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?

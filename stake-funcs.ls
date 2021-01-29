@@ -65,7 +65,7 @@ fill-pools = ({ store, web3t, on-progress, on-finish }, [item, ...rest]) ->
         store.staking.all-pools-loaded = yes
         store.staking.pools-are-loading = no
         return on-finish null, [] 
-    if store.current.page isnt \choosestaker then
+    if ([\choosestaker, \info].index-of(store.current.page)) is -1 then
         store.staking.all-pools-loaded = no
         store.staking.pools-are-loading = no
         return on-finish null, []      

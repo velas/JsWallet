@@ -3,10 +3,11 @@ require! {
     \react
     \prelude-ls : { map }
     \../../web3t/addresses.js : { ethToVlx }
+    \../math.ls : { plus, div }
 }
 get-stake = (it)->
     | it.stake is '..' => 0
-    | _ => +it.stake / 1e18
+    | _ => +it.stake-initial `div` 1e18
 get-color = (items)-> (it)->
     index = items.index-of(it)
     base =

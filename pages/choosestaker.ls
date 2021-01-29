@@ -921,6 +921,7 @@ convert-pools-to-view-model = (pools) ->
             address: it.address,
             checked: no,
             stake: if it.stake? then round-human(parse-float it.stake `div` (10^18)) else '..',
+            stake-initial: if it.stake? then parse-float it.stake `div` (10^18) else 0,
             #node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
             #delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
             stakers: if it.stakers? then it.stakers else '..',
