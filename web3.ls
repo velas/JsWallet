@@ -192,7 +192,7 @@ module.exports = (store, config)->
         page = pages[store.current.page]
         return cb null if not page?
         return cb null if typeof! page.init isnt \Function
-        <- page.init { store, web3t }
+        <- page.init { store, web3t, call-again: no }
         return cb null if typeof! page.focus isnt \Function
         <- page.focus { store, web3t }
     refresh = (cb)->

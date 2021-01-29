@@ -1210,8 +1210,13 @@ staking = ({ store, web3t })->
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
-staking.init = ({ store, web3t }, cb)->
+call-refresh = ({web3t, call-again}, cb) ->
+    return cb null if not call-again? or call-again is no
     err <- web3t.refresh
+    cb err if err?
+    cb null
+staking.init = ({ store, web3t, call-again }, cb)->
+    err <- call-refresh {web3t, call-again}
     store.staking.keystore = to-keystore store, no
     store.staking.chosen-pool =
         address: store.staking.keystore.staking.address
