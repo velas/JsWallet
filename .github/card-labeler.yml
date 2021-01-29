@@ -1,0 +1,13 @@
+Bug triage:
+  dup:
+    - 'duplicate'
+  sv:
+    - 'bug'
+  vv:
+    - 'bug'
+  xv:
+    - 'bug'
+  oos:
+    - 'out of scope'
+  dnfi:
+    - 'dnfi'

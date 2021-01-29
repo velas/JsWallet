@@ -103,7 +103,6 @@ export load-all-transactions = (store, web3, cb)->
         loaders
             |> map -> [loaders.index-of(it).to-string!, it]
             |> pairs-to-obj
-    err <- run [tasks] .then
-    return cb err if err?
+    <- run [tasks] .then    
     apply-transactions store
     cb null

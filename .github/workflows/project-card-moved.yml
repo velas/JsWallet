@@ -1,0 +1,14 @@
+on:
+  project_card:
+    types: [moved]
+name: Project Card Event
+jobs:
+  triage:
+    name: Auto card labeler
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move card
+        if: github.event.project_card.column_id != 12514532
+        uses: technote-space/auto-card-labeler@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -902,6 +902,7 @@ staking-content = (store, web3t)->
             return cb null, web3t.velas.Staking.add-pool.get-data(stake, pairs.mining.address)
         return cb null, web3t.velas.Staking.stake.get-data(pairs.staking.address, stake)
     become-validator = ->
+        console.log "[become-validator]"
         err <- can-make-staking store, web3t
         return alert err if err?
         err <- get-options
@@ -975,12 +976,11 @@ staking-content = (store, web3t)->
         err, data <- web3t.velas.Staking.candidateMinStake
         return cb err if err?
         min =
-            | +store.staking.add.add-validator-stake >= 1000000 => 1
+            | +(store.staking.add.add-validator-stake `plus` store.staking.stake-amount-total) >= 1000000 => 1
             | _ => data `div` (10^18)
         max = get-balance! `minus` 0.1
-        return cb lang.balanceLessStaking if +min > + max
-        return cb lang.balanceLessStaking if +max < 1000000
-        return cb lang.balanceLessStaking if +store.staking.add.add-validator-stake < 1000000
+        return cb lang.balanceLessStaking if +store.staking.add.add-validator-stake > +max
+        return cb lang.amountLessStaking if +store.staking.add.add-validator-stake < +min 
         cb null, { min, max }
     use-min = ->
         #err, options <- get-options
@@ -1210,8 +1210,13 @@ staking = ({ store, web3t })->
             epoch store, web3t
             switch-account store, web3t
         staking-content store, web3t
-staking.init = ({ store, web3t }, cb)->
+call-refresh = ({web3t, call-again}, cb) ->
+    return cb null if not call-again? or call-again is no
     err <- web3t.refresh
+    cb err if err?
+    cb null
+staking.init = ({ store, web3t, call-again }, cb)->
+    err <- call-refresh {web3t, call-again}
     store.staking.keystore = to-keystore store, no
     store.staking.chosen-pool =
         address: store.staking.keystore.staking.address

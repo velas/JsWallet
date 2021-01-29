@@ -13,7 +13,6 @@ calc-wallet = (store, cb)->
     { rates } = store
     state =
         balance-usd: 0
-    return cb err if err?
     build-loader = (wallet)-> task (cb)->
         { token } = wallet.coin
         #wallet.balance = \..
@@ -70,7 +69,6 @@ calc-wallet = (store, cb)->
             |> map -> [loaders.index-of(it).to-string!, it]
             |> pairs-to-obj
     <- run [tasks] .then
-    return cb err if err?
     store.current.balance-usd = state.balance-usd
     cb null
 module.exports = calc-wallet

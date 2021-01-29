@@ -55,6 +55,18 @@ require! {
         svg
             width: 12px
             cursor: pointer
+        &.spin > svg   
+            @keyframes spin
+                from
+                    transform: rotate(0deg)
+                to
+                    transform: rotate(360deg)
+            animation-name: spin
+            animation-duration: 4000ms
+            animation-iteration-count: infinite
+            animation-timing-function: linear
+        &.disabled
+            opacity: 0.3    
     .icon-right
         height: 12px
         top: 2px
@@ -684,7 +696,7 @@ staking-content = (store, web3t)->
     use-max = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = get-balance! `minus` 0.1
+        store.staking.add.add-validator-stake = Math.max (get-balance! `minus` 0.1), 0
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert store, err, cb if err?
@@ -699,6 +711,7 @@ staking-content = (store, web3t)->
     your-staking-amount = store.staking.stakeAmountTotal `div` (10^18)
     your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
+    isSpinned = if ((store.staking.all-pools-loaded is no or !store.staking.all-pools-loaded?) and store.staking.pools-are-loading is yes) then "spin disabled" else ""
     #calc-reward-click = ->
     #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->
@@ -717,6 +730,7 @@ staking-content = (store, web3t)->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
+            store.staking.pool-was-choosed = yes
             store.staking.add.new-address = ""
             store.staking.error = ""
             claim-stake.calc-reward store, web3t
@@ -759,8 +773,8 @@ staking-content = (store, web3t)->
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
-        go-back!
         store.staking.chosen-pool = null
+        store.staking.pool-was-choosed = no
     activate = (step)-> ->
         store.current.step = step
     activate-first = activate \first
@@ -772,11 +786,13 @@ staking-content = (store, web3t)->
     active-second = active-class \second
     active-third = active-class \third
     refresh = ->
+        store.staking.all-pools-loaded = no
+        if ((store.staking.all-pools-loaded is no or !store.staking.all-pools-loaded?) and store.staking.pools-are-loading is yes)
+            return no
+        store.staking.pools-are-loading = yes
         cb = console.log
-        store.staking.pools.length = 0
+        #store.staking.accountIndex = "non-exists"
         err <- staking.init { store, web3t }
-        return cb err if err?
-        err <- staking.focus { store, web3t }
         return cb err if err?
         cb null, \done
     icon-style =
@@ -794,11 +810,11 @@ staking-content = (store, web3t)->
             .pug.section
                 .title.pug
                     h3.pug #{lang.select-pool}
-                    if not store.staking.chosen-pool?
+                    if not store.staking.pool-was-choosed
                         .pug
-                            .loader.pug(on-click=refresh style=icon-style title="refresh")
+                            .loader.pug(on-click=refresh style=icon-style title="refresh" class="#{isSpinned}")
                                 icon \Sync, 25
-                if not store.staking.chosen-pool?
+                if not store.staking.pool-was-choosed
                     .description.pug.table-scroll
                         table.pug
                             thead.pug
@@ -817,7 +833,7 @@ staking-content = (store, web3t)->
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
                         .buttons.pug
-                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: "#{lang.btn-select}" }
+                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: "#{lang.btn-select}" id="cancel-pool"}
             if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
                 .pug.section
                     .title.pug
@@ -905,6 +921,7 @@ convert-pools-to-view-model = (pools) ->
             address: it.address,
             checked: no,
             stake: if it.stake? then round-human(parse-float it.stake `div` (10^18)) else '..',
+            stake-initial: if it.stake? then parse-float it.stake `div` (10^18) else 0,
             #node-stake: if it.node-stake? then round-human(parse-float it.node-stake `div` (10^18)) else '..',
             #delegate-stake: if it.node-stake? then round-human(parse-float (it.stake - it.node-stake) `div` (10^18)) else '..',
             stakers: if it.stakers? then it.stakers else '..',
@@ -932,9 +949,17 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.stake-amount-total = 0
     store.staking.keystore = to-keystore store, no
     store.staking.reward = null
+    store.staking.all-pools-loaded = no
+    store.staking.pools-are-loading = yes
     store.staking.chosen-pool = null
+    store.staking.pool-was-choosed = no
     store.staking.add.add-validator-stake = 0
-    return cb null if store.staking.pools.length > 0
+    index-is-different = store.current.accountIndex isnt store.staking.accountIndex
+    if store.staking.pools-network is store.current.network then
+        if (store.staking.all-pools-loaded? and store.staking.all-pools-loaded is yes and not index-is-different)
+            return cb null        
+    else
+        store.staking.pools-network = store.current.network
     store.staking.pools = []
     return cb err if err?
     err, epoch <- web3t.velas.Staking.stakingEpoch

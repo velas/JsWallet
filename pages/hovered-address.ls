@@ -24,6 +24,9 @@ require! {
     >.text
         font-size: 11px
         padding: 10px 0px
+    >.qr-border
+        padding-top: 10px
+        background: white
 module.exports = ({ store })->
     return null if not store.current.try-copy?
     style = get-primary-info store
@@ -33,4 +36,5 @@ module.exports = ({ store })->
         border: "1px solid #{style.app.border}"
     .pug.hovered-address(style=copy-style)
         .pug.text #{store.current.try-copy}
-        qrcode { store, address: store.current.try-copy } 
+        .pug.qr-border
+            qrcode { store, address: store.current.try-copy } 

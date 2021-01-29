@@ -822,10 +822,9 @@ render-transaction = (store, web3t, tran)-->
                             | #{time-ago}
                         if pending is yes
                             span.pug
-                                span.pug.bold.delete(on-click=delete-pending-tx(tran)) #{lang.delete}
+                                span.pug.bold #{lang.created}
                         else
-                            span.pug
-                                span.pug.bold.confirmed.done #{lang.confirmed}
+                            span.pug.bold.confirmed.done #{lang.confirmed}
                         span.pug.smart-contract
                             .pug.tooltip #{about}
                             img.help.pug(src="#{about-icon}")
