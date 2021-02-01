@@ -195,6 +195,8 @@ store =
         list: 0
         prompt-answer: ""
         prompt: no
+        prompt-password: no 
+        prompt-password-answer: ""
         step: "first"
         verify-seed-indexes: []
         switch-account: no

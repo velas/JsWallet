@@ -7,7 +7,7 @@ require! {
     \./navigate.ls
     \./get-primary-info.ls
     \copy-to-clipboard
-    \./pages/confirmation.ls : { confirm, prompt, alert, notify }
+    \./pages/confirmation.ls : { confirm, prompt, alert, notify, prompt-password }
     \./get-lang.ls
     \../web3t/providers/deps.ls : { bip39 }
 }
@@ -139,7 +139,7 @@ module.exports = (store, web3t)->
         change-account-index.timer = set-timeout refresh, 2000
     export-private-key = ->
         cb = console.log
-        pin <- prompt store, lang.private-key-enter-pin
+        pin <- prompt-password store, lang.private-key-enter-pin
         return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
         store.current.prompt-answer = "VLX"

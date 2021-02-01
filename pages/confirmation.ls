@@ -3,7 +3,8 @@ require! {
     \../get-primary-info.ls
     \../get-lang.ls
     \./icon.ls
-    \../icons.ls
+    \../icons.ls 
+    \../components/text-field.ls   
 }
 .confirmation
     @import scheme
@@ -78,6 +79,31 @@ require! {
                 .cancel
                     vertical-align: middle
                     margin-right: 2px
+    .pin-input
+        .input-area
+            max-width: 200px;
+            margin: auto;
+        input
+            text-align: left
+            font-size: 12px
+            display: inline-block
+            height: 36px
+            background: transparent
+            border: 0
+            border-radius: var(--border-btn)
+            outline: none
+            width: 130px
+            margin-bottom: 5px
+            letter-spacing: 5px
+            padding: 7px 25px 7px 7px
+            box-sizing: border-box
+            &:focus
+                border-color: #248295
+            &:placeholder
+                color: $primary + 40
+            @media screen and (max-width: 800px)
+                padding: 7px 0
+                text-align: center
 alert-modal = (store)->
     return null if typeof! store.current.alert isnt \String
     cancel = ->
@@ -229,12 +255,66 @@ prompt-modal = (store)->
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
+prompt-password-modal = (store)->
+    return null if typeof! store.current.prompt-password isnt \String
+    confirm = ->
+        store.current.prompt-password = yes
+        callback = state.callback
+        state.callback = null
+        prompt-answer = store.current.prompt-password-answer
+        store.current.prompt-password-answer = ""
+        callback prompt-answer if typeof! callback is \Function
+    cancel = ->
+        store.current.prompt-password = no
+        callback = state.callback
+        state.callback = null
+        callback null if typeof! callback is \Function
+        store.current.prompt-password-answer = ""
+    change-input = (e)->
+        store.current.prompt-password-answer = e.target.value
+    style = get-primary-info store
+    confirmation-style =
+        background: style.app.background
+        background-color: style.app.bgspare
+        color: style.app.text
+    input-style =
+        background: style.app.input
+        color: style.app.text
+        border: "0"
+    button-style=
+        color: style.app.text
+    confirmation=
+        background: style.app.background
+        background-color: style.app.bgspare
+        color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
+    catch-key = ->
+        confirm! if it.key-code is 13
+    focus-input = (ref)!->
+        ref.focus! if ref?
+    lang = get-lang store
+    .pug.confirmation
+        .pug.confirmation-body(style=confirmation)
+            .pug.header(style=style=confirmation-style) #{lang.confirmation}
+            .pug.text(style=style=confirmation-style) #{store.current.prompt-password}
+            .pug.pin-input
+                text-field { ref:(c)->{ a = focus-input(c)}, store, type: 'password' value: store.current.prompt-password-answer, placeholder: "", on-change: change-input , on-key-down: catch-key, id="prompt-input" }  
+            .pug.buttons
+                button.pug.button(on-click=confirm style=button-style id="prompt-confirm")
+                    span.apply.pug
+                        img.icon-svg-apply.pug(src="#{icons.apply}")
+                        | #{lang.confirm}
+                button.pug.button(on-click=cancel style=button-style id="prompt-close")
+                    span.cancel.pug
+                        img.icon-svg-cancel.pug(src="#{icons.close}")
+                        | #{lang.cancel}
 export confirmation-control = (store)->
     #for situation when we ask peen before action. this window should be hidden
     return null if store.current.page-pin?
     .pug
         confirmation-modal store
         prompt-modal store
+        prompt-password-modal store
         alert-modal store
         notification-modal store
 state=
@@ -247,6 +327,9 @@ export notify = (store, text, cb)->
     state.callback = cb
 export prompt = (store, text, cb)->
     store.current.prompt = text
+    state.callback = cb
+export prompt-password = (store, text, cb)->
+    store.current.prompt-password = text
     state.callback = cb
 export alert = (store, text, cb)->
     store.current.alert = text
