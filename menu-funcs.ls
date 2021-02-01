@@ -140,10 +140,12 @@ module.exports = (store, web3t)->
     export-private-key = ->
         cb = console.log
         pin <- prompt-password store, lang.private-key-enter-pin
+        return if pin+"".trim!.length is 0
         return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
         store.current.prompt-answer = "VLX"
         token-input <- prompt store, lang.private-key-enter-coin
+        return if token-input+"".trim!.length is 0
         if token-input is \VLX
             token-input = \VLX2
         return alert store, "token is empty", cb if not token-input?
