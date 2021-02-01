@@ -229,6 +229,7 @@ store =
         manage-account: no
         filter-plugins: ""
         confirmation: null
+        notification: null    
         alert: null
         demo: location.href.index-of('web3.space/wallet') > -1
         network: \mainnet

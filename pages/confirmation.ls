@@ -109,6 +109,37 @@ alert-modal = (store)->
                     span.cancel.pug
                         img.icon-svg-cancel.pug(src="#{icons.close}")
                         | #{lang.cancel}
+notification-modal = (store)->
+    return null if typeof! store.current.notification isnt \String
+    cancel = ->
+        store.current.notification = no
+        callback = state.callback
+        state.callback = null
+        callback no if typeof! callback is \Function
+    style = get-primary-info store
+    confirmation-style =
+        background: style.app.background
+        background-color: style.app.bgspare
+        color: style.app.text
+    confirmation-style2 =
+        color: style.app.text
+    button-style=
+        color: style.app.text
+    confirmation=
+        background: style.app.background
+        background-color: style.app.bgspare
+        color: style.app.text
+        border-bottom: "1px solid #{style.app.border}"
+    lang = get-lang store
+    .pug.confirmation
+        .pug.confirmation-body(style=confirmation)
+            .pug.header(style=confirmation-style) Alert
+            .pug.text(style=confirmation-style2) #{store.current.notification}
+            .pug.buttons
+                button.pug.button(on-click=cancel style=button-style id="notification-close")
+                    span.cancel.pug
+                        img.icon-svg-apply.pug(src="#{icons.apply}")
+                        | Ok
 confirmation-modal = (store)->
     return null if typeof! store.current.confirmation isnt \String
     confirm = ->
@@ -205,10 +236,14 @@ export confirmation-control = (store)->
         confirmation-modal store
         prompt-modal store
         alert-modal store
+        notification-modal store
 state=
     callback: null
 export confirm = (store, text, cb)->
     store.current.confirmation = text
+    state.callback = cb
+export notify = (store, text, cb)->
+    store.current.notification = text
     state.callback = cb
 export prompt = (store, text, cb)->
     store.current.prompt = text

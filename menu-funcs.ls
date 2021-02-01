@@ -7,7 +7,7 @@ require! {
     \./navigate.ls
     \./get-primary-info.ls
     \copy-to-clipboard
-    \./pages/confirmation.ls : { confirm, prompt, alert }
+    \./pages/confirmation.ls : { confirm, prompt, alert, notify }
     \./get-lang.ls
     \../web3t/providers/deps.ls : { bip39 }
 }
@@ -153,6 +153,6 @@ module.exports = (store, web3t)->
             wallets |> find (.coin?token is token)
         return alert store, "Wallet not found for #{token}", cb if not wallet?
         message = "This is your Private KEY"
-        copy-to-clipboard wallet.private-key
-        alert store, "Your Private KEY is copied into your clipboard", cb
+        copy-to-clipboard wallet.private-key 
+        notify store, "Your Private KEY is copied into your clipboard", cb
     { export-private-key, check-pin, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, open-language, close-language, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }
