@@ -13,7 +13,6 @@ require! {
     \../components/button.ls
     \../components/address-holder.ls
 }
-#
 .wallet
     @import scheme
     $cards-height: 324px

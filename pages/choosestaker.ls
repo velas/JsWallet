@@ -27,6 +27,7 @@ require! {
     \../icons.ls
     \./placeholder.ls
     \./claim-stake.ls
+    \./lockups/lockups.ls
     \../staking/can-make-staking.ls
     \./epoch.ls
     \./confirmation.ls : { alert }
@@ -203,6 +204,8 @@ require! {
                         -moz-transition: breathe 3s ease-in infinite
                         -web-kit-transition: breathe 3s ease-in infinite
                         height: calc(100vh - 105px)
+                        &.lockup
+                            height: auto
                         .address-holder
                             a
                                 padding-left: 30px !important
@@ -215,6 +218,8 @@ require! {
                         td
                             &:nth-child(2)
                                 cursor: pointer
+                            &.with-stake
+                                filter: saturate(6.5)
                         tr
                             &.active
                                 color: var(--color-td)
@@ -712,21 +717,23 @@ staking-content = (store, web3t)->
     your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
     isSpinned = if ((store.staking.all-pools-loaded is no or !store.staking.all-pools-loaded?) and store.staking.pools-are-loading is yes) then "spin disabled" else ""
-    #calc-reward-click = ->
-    #    calc-reward store, web3t
     build-staker = (store, web3t)-> (item)->
         checked = item.checked
         stake = item.stake
         my-stake =
             | +item.my-stake is 0 => item.withdraw-amount
             | _ => item.my-stake
+        my-stake = 0 if !my-stake?
+        lockupStaking = store.lockups.lockupStaking[item.address]
+        if (not !my-stake?) and lockupStaking? and lockupStaking.length > 0 then
+            extra-stake = lockupStaking |> foldl plus, 0
+            my-stake = extra-stake `plus` my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
             page = \choosestaker
             store.pages.push(page) if store.pages.length > 0 and page isnt store.pages[store.pages.length - 1]
             cb = (err, data)->
                 alert store, err, console~log if err?
-            #store.staking.data-generation += 1
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
@@ -761,6 +768,7 @@ staking-content = (store, web3t)->
         vote-power =
             | item.vote-power? => "#{item.vote-power}%"
             | _ => "..."
+        mystake-class = if +my-stake > 0 then "with-stake" else ""
         tr.pug(class="#{item.status}")
             td.pug
                 span.pug.circle(class="#{item.status}") #{index}
@@ -768,7 +776,7 @@ staking-content = (store, web3t)->
                 address-holder { store, wallet }
             td.pug #{stake}
             td.pug #{item.validator-probability}
-            td.pug #{stringify my-stake}
+            td.pug(class="#{mystake-class}") #{stringify my-stake}
             td.pug #{item.stakers}
             td.pug
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
@@ -805,77 +813,82 @@ staking-content = (store, web3t)->
     stats=
         background: style.app.stats
     .pug.staking-content.delegate
-        .form-group.pug
-            alert-txn { store }
-            .pug.section
-                .title.pug
-                    h3.pug #{lang.select-pool}
-                    if not store.staking.pool-was-choosed
-                        .pug
-                            .loader.pug(on-click=refresh style=icon-style title="refresh" class="#{isSpinned}")
-                                icon \Sync, 25
-                if not store.staking.pool-was-choosed
-                    .description.pug.table-scroll
-                        table.pug
-                            thead.pug
-                                th.pug(width="3%" style=stats) #
-                                th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
-                                th.pug(width="25%" style=stats) #{lang.total-stake}
-                                th.pug(width="5%" style=stats) #{"Validator probability"}
-                                th.pug(width="25%" style=stats) #{lang.my-stake}
-                                th.pug(width="5%" style=stats) #{lang.stakers}
-                                th.pug(width="4%" style=stats) #{lang.selectPool}
-                            tbody.pug
-                                store.staking.pools |> map build-staker store, web3t
-                else
+        if not store.staking.pool-was-choosed and not store.lockups.lockup-was-choosed
+            .pug.main-sections
+                lockups {store, web3t}
+                .form-group.pug(id="pools")
+                    alert-txn { store }
+                    .pug.section
+                        .title.pug
+                            h3.pug #{lang.select-pool}
+                            .pug
+                                .loader.pug(on-click=refresh style=icon-style title="refresh" class="#{isSpinned}")
+                                    icon \Sync, 25
+                        .description.pug.table-scroll
+                            table.pug
+                                thead.pug
+                                    th.pug(width="3%" style=stats) #
+                                    th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
+                                    th.pug(width="25%" style=stats) #{lang.total-stake}
+                                    th.pug(width="5%" style=stats) #{"Validator probability"}
+                                    th.pug(width="25%" style=stats) #{lang.my-stake}
+                                    th.pug(width="5%" style=stats) #{lang.stakers}
+                                    th.pug(width="4%" style=stats) #{lang.selectPool}
+                                tbody.pug
+                                    store.staking.pools |> map build-staker store, web3t              
+        if store.staking.pool-was-choosed
+            .pug.single-section.form-group(id="choosen-pull")
+                .pug.section
+                    .title.pug
+                        h3.pug Pool
                     .pug.chosen-pool(title="#{store.staking.chosen-pool}")
                         span.pug
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
                         .buttons.pug
-                            button { store, on-click: cancel-pool , type: \secondary , icon : \choose , text: "#{lang.btn-select}" id="cancel-pool"}
-            if store.staking.chosen-pool? and +store.staking.stake-amount-total is 0
-                .pug.section
-                    .title.pug
-                        h3.pug #{lang.validator}
-                    .description.pug
-                        .pug.left
-                            label.pug #{lang.stake}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
-                            .pug.balance
-                                span.pug.small-btns
-                                    button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
-                                    button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug #{lang.balance}:
-                                span.pug.color #{your-balance}
-                                    img.label-coin.pug(src="#{icons.vlx-icon}")
+                            button { store, on-click: cancel-pool , type: \secondary , icon : "back" , text: "Back to Pools" id="cancel-pool"}
+                if +store.staking.stake-amount-total is 0
+                    .pug.section
+                        .title.pug
+                            h3.pug #{lang.validator}
+                        .description.pug
+                            .pug.left
+                                label.pug #{lang.stake}
+                                amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
+                                .pug.balance
+                                    span.pug.small-btns
+                                        button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                        button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
+                                    span.pug #{lang.balance}:
+                                    span.pug.color #{your-balance}
+                                        img.label-coin.pug(src="#{icons.vlx-icon}")
+                                        span.pug.color #{vlx-token}
+                            button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
+                if +store.staking.stake-amount-total > 0
+                    .pug.section
+                        .title.pug
+                            h3.pug #{lang.staking}
+                        .description.pug
+                            .pug.left
+                                .pug.balance
+                                    span.pug #{lang.yourStaking}:
+                                    span.pug.color #{your-staking}
                                     span.pug.color #{vlx-token}
-                        button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
-            if store.staking.chosen-pool? and +store.staking.stake-amount-total > 0
-                .pug.section
-                    .title.pug
-                        h3.pug #{lang.staking}
-                    .description.pug
-                        .pug.left
-                            .pug.balance
-                                span.pug #{lang.yourStaking}:
-                                span.pug.color #{your-staking}
-                                span.pug.color #{vlx-token}
-                            hr.pug
-                            label.pug #{lang.stakeMore}
-                            amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
-                            .pug.balance
-                                span.pug.small-btns
-                                    button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
-                                    button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug #{lang.balance}:
-                                span.pug.color #{your-balance}
-                                    img.label-coin.pug(src="#{icons.vlx-icon}")
-                                    span.pug.color #{vlx-token}
-                        button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
-            claim-stake store, web3t
-            exit-stake store, web3t
-            move-stake store, web3t
+                                hr.pug
+                                label.pug #{lang.stakeMore}
+                                amount-field { store, value: store.staking.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
+                                .pug.balance
+                                    span.pug.small-btns
+                                        button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                        button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
+                                    span.pug #{lang.balance}:
+                                    span.pug.color #{your-balance}
+                                        img.label-coin.pug(src="#{icons.vlx-icon}")
+                                        span.pug.color #{vlx-token}
+                            button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
+                claim-stake store, web3t
+                exit-stake store, web3t
+                move-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
@@ -940,8 +953,9 @@ stringify = (value) ->
     else
         '..'
 staking.init = ({ store, web3t }, cb)->
-    # err <- web3t.refresh
-    # return cb err if err?
+    store.staking.pool-was-choosed = no
+    err <- lockups.init { store, web3t }
+    return cb err if err?
     store.staking.max-withdraw = 0
     random = ->
         Math.random!
@@ -952,7 +966,6 @@ staking.init = ({ store, web3t }, cb)->
     store.staking.all-pools-loaded = no
     store.staking.pools-are-loading = yes
     store.staking.chosen-pool = null
-    store.staking.pool-was-choosed = no
     store.staking.add.add-validator-stake = 0
     index-is-different = store.current.accountIndex isnt store.staking.accountIndex
     if store.staking.pools-network is store.current.network then

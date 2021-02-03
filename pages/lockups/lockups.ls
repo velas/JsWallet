@@ -151,8 +151,6 @@ lockups-content = (store, web3t)->
             td.pug #{lockedFunds}
             td.pug #{stake} 
             td.pug #{lockedUntil}       
-            td.pug
-                button { store, on-click: choose , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
         store.staking.chosen-pool = null
         store.staking.pool-was-choosed = no
@@ -187,7 +185,6 @@ lockups-content = (store, web3t)->
                                     th.pug(width="20%" style=stats) Locked Amount
                                     th.pug(width="20%" style=stats) Staked Amount
                                     th.pug(width="10%" style=stats) Locked Until
-                                    th.pug(width="9%" style=stats) Select
                                 tbody.pug
                                     store.lockups.lockupContracts |> map build store, web3t                            
 lockups = ({ store, web3t })->
