@@ -107,6 +107,10 @@ store =
     interop:
         is-address-queried: no
         origin: no
+    lockups:
+        lockup-was-choosed: no
+        lockupStaking: {}
+        lockupContracts: [] 
     staking:
         reward-info: []
         exit-tab: ''
@@ -134,12 +138,14 @@ store =
         data-generation: 1
         tab: "line"
         pools: []
+        pool-was-choosed: no  
         chosen-pool: null
         stake-amount-total: 0
         max-withdraw: 0
         delegators: 0
         reward-loading: no
         wait-for-epoch-change: no
+        lockups: []    
     filestore:
         menu-open: no
         file-tree: no
