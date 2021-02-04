@@ -17,4 +17,5 @@ module.exports = (store)->
     delete web3.eth.getAccounts
     delete web3.eth.sign
     web3.eth.provider-url = network
+    console.log "web3" web3
     web3

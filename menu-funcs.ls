@@ -7,7 +7,7 @@ require! {
     \./navigate.ls
     \./get-primary-info.ls
     \copy-to-clipboard
-    \./pages/confirmation.ls : { confirm, prompt, alert }
+    \./pages/confirmation.ls : { confirm, prompt, alert, notify, prompt-password }
     \./get-lang.ls
     \../web3t/providers/deps.ls : { bip39 }
 }
@@ -139,11 +139,13 @@ module.exports = (store, web3t)->
         change-account-index.timer = set-timeout refresh, 2000
     export-private-key = ->
         cb = console.log
-        pin <- prompt store, lang.private-key-enter-pin
+        pin <- prompt-password store, lang.private-key-enter-pin
+        return if pin+"".trim!.length is 0
         return alert store, "wrong pin", cb if not check pin
         index = store.current.account-index
         store.current.prompt-answer = "VLX"
         token-input <- prompt store, lang.private-key-enter-coin
+        return if token-input+"".trim!.length is 0
         if token-input is \VLX
             token-input = \VLX2
         return alert store, "token is empty", cb if not token-input?
@@ -153,6 +155,6 @@ module.exports = (store, web3t)->
             wallets |> find (.coin?token is token)
         return alert store, "Wallet not found for #{token}", cb if not wallet?
         message = "This is your Private KEY"
-        copy-to-clipboard wallet.private-key
-        alert store, "Your Private KEY is copied into your clipboard", cb
+        copy-to-clipboard wallet.private-key 
+        notify store, "Your Private KEY is copied into your clipboard", cb
     { export-private-key, check-pin, change-account-index, account-left, account-right, open-account, close-account, open-migration, close-migration, open-language, close-language, current, wallet-style, info, activate-s1, activate-s2, activate-s3, switch-network, generate, enter-pin, cancel-try, edit-seed, save-seed, change-seed, refresh, lock }

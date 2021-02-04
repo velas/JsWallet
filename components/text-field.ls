@@ -34,6 +34,7 @@ require! {
             left: 0px
             z-index: 9999
             width: 400px
+            box-shadow: 1px 2px 3px black;
         &:hover
             >.show-details
                 display: inline-block

@@ -15,7 +15,6 @@ require! {
     \../components/address-holder.ls
     \./wallet-stats.ls
 }
-#
 .wallet-detailed
     @import scheme
     height: 200px

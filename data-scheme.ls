@@ -107,6 +107,15 @@ store =
     interop:
         is-address-queried: no
         origin: no
+    lockups:
+        withdrawAmount: 0  
+        lockup-was-choosed: no
+        chosen-lockup: null    
+        lockupStaking: {}
+        lockupContracts: [] 
+        add:
+            move-stake: 0
+            add-validator-stake: ""  
     staking:
         reward-info: []
         exit-tab: ''
@@ -134,12 +143,14 @@ store =
         data-generation: 1
         tab: "line"
         pools: []
+        pool-was-choosed: no  
         chosen-pool: null
         stake-amount-total: 0
         max-withdraw: 0
         delegators: 0
         reward-loading: no
         wait-for-epoch-change: no
+        lockups: []    
     filestore:
         menu-open: no
         file-tree: no
@@ -195,6 +206,8 @@ store =
         list: 0
         prompt-answer: ""
         prompt: no
+        prompt-password: no 
+        prompt-password-answer: ""
         step: "first"
         verify-seed-indexes: []
         switch-account: no
@@ -229,6 +242,7 @@ store =
         manage-account: no
         filter-plugins: ""
         confirmation: null
+        notification: null    
         alert: null
         demo: location.href.index-of('web3.space/wallet') > -1
         network: \mainnet
