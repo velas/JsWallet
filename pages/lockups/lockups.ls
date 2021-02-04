@@ -53,52 +53,66 @@ to-keystore = (store, with-keystore)->
 show-validator = (store, web3t)-> (validator)->
     li.pug #{validator}
 lockups-content = (store, web3t)->
+    style = get-primary-info store
+    lang = get-lang store
+    button-primary3-style=
+        border: "1px solid #{style.app.primary3}"
+        color: style.app.text2
+        background: style.app.primary3
+        background-color: style.app.primary3-spare
     return if store.lockups.lockupContracts.length is 0
     info = get-primary-info store
     style = get-primary-info store
     { go-back } = history-funcs store, web3t
     lang = get-lang store
     pairs = store.staking.keystore
-    become-validator = ->
+    stake-to-contract = ->
         err, options <- get-options
         return alert store, err, cb if err?
-        err <- can-make-staking store, web3t
-        return alert store, err, cb if err?
-        return alert store, "please choose the pool", cb if not store.staking.chosen-pool?
-        type = typeof! store.staking.add.add-validator-stake
+        #err <- can-make-staking store, web3t
+        #return alert store, err, cb if err?
+        return alert store, "please choose the contract", cb if not store.lockups.chosen-lockup?
+        type = typeof! store.lockups.add.add-validator-stake
         return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
-        stake = store.staking.add.add-validator-stake `times` (10^18)
-        data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
-        to = web3t.velas.Staking.address
-        amount = store.staking.add.add-validator-stake
-        err <- web3t.vlx2.send-transaction { to, data, amount }
+        stake-amount = store.lockups.add.add-validator-stake `times` (10^18)
+        contract = store.lockups.chosen-lockup.address
+        TimeLock = web3t.velas.Timelock.at(contract)
+        #console.log "before we stake: " store.lockups.chosen-lockup.lockedPool, stake-amount
+        err, lockedPool <- TimeLock.getDefaultPool!
+        return cb err if err?
+        data = TimeLock.stake.get-data store.lockups.chosen-lockup.address, stake-amount
+        console.log "data sifn" data
+        to = TimeLock.address
+        console.log "web3t.vlx2.send-transaction ... to:" to
+        amount = store.lockups.add.add-validator-stake
+        err <- web3t.vlx2.send-transaction { to, data, amount } 
+        return cb err if err?
+#        data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
+#        to = web3t.velas.Staking.address
+#        amount = store.staking.add.add-validator-stake
+#        err <- web3t.vlx2.send-transaction { to, data, amount }
         #return cb err if err?
-        return store.staking.add.result = "#{err}" if err?
-        <- staking.init { store, web3t }
+        return store.lockups.add.result = "#{err}" if err?
+        <- lockups.init { store, web3t }
     change-address = ->
         store.staking.add.add-validator = it.target.value
     change-stake = !->
         try
             value = new bignumber(it.target.value).toFixed!.to-string!
-            store.staking.add.add-validator-stake = value
+            store.lockups.add.add-validator-stake = value
         catch err
             console.log "[Change-stake]: #{err}"
     return null if not pairs.mining?
-    get-balance = ->
-        wallet =
-            store.current.account.wallets
-                |> find -> it.coin.token is \vlx2
-        wallet.balance
     get-options = (cb)->
         #i-am-staker = i-stake-choosen-pool!
         #return cb null if i-am-staker
         err, data <- web3t.velas.Staking.candidateMinStake
         return cb err if err?
         min =
-            | +store.staking.stake-amount-total >= 10000 => 1
+            | +store.lockups.stake-amount-total >= 10000 => 1
             | _ => data `div` (10^18)
-        balance = get-balance! `minus` 0.1
-        stake = store.staking.add.add-validator-stake
+        balance = (store.lockups.chosen-lockup.locked-funds-raw `div` (10^18)) `minus` 0.1
+        stake = store.lockups.add.add-validator-stake
         return cb lang.amountLessStaking if 10000 > +stake
         return cb lang.balanceLessStaking if +balance < +stake
         max = +balance
@@ -106,11 +120,12 @@ lockups-content = (store, web3t)->
     use-min = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = 10000
+        store.lockups.add.add-validator-stake = 10000
     use-max = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
-        store.staking.add.add-validator-stake = Math.max (get-balance! `minus` 0.1), 0
+        balance = store.lockups.chosen-lockup.locked-funds-raw `div` (10^18)
+        store.lockups.add.add-validator-stake = Math.max (balance `minus` 0.1), 0
     vote-for-change = ->
         err, can <- web3t.velas.ValidatorSet.emitInitiateChangeCallable
         return alert store, err, cb if err?
@@ -121,19 +136,13 @@ lockups-content = (store, web3t)->
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount }
         store.current.page = \staking
-    your-balance = " #{round-human get-balance!} "
-    your-staking-amount = store.staking.stakeAmountTotal `div` (10^18)
-    your-staking = " #{round-human your-staking-amount}"
     vlx-token = "VLX"
-    choose = ->
-        page = \choosestaker
-        store.lockups.lockup-was-choosed = yes
-        store.lockups.choosed-lockup = item
-        item.checked = yes
-        store.lockups.error = ""
-        cb null
+    hide-stake-place = ->
+        console.log "hide()"
+        store.lockups.lockupStakingAddress = null
+        null
     build = (store, web3t)-> (item)->
-        { address, lockedFunds, stake, lockedFundsReleaseTime } = item
+        { address, lockedFunds, lockedPool, stake, lockedFundsReleaseTime } = item
         stake = round-human(parse-float item.stake `div` (10^18))
         index = store.lockups.lockupContracts.index-of(item) + 1  
         vlx2 =
@@ -142,8 +151,20 @@ lockups-content = (store, web3t)->
             address: ethToVlx item.address
             network: vlx2.network
             coin: vlx2.coin
-        lockedUntil = if lockedFundsReleaseTime? then moment(lockedFundsReleaseTime).format("DD MM YYYY hh:mm") else ".."
-        tr.pug(class="#{item.status}")
+        choose = ->
+            item.checked = yes
+            store.lockups.error = ""
+            lockedPool = item.lockedPool
+            contract = item.address
+            err, amount <- web3t.velas.Staking.stakeAmount lockedPool, contract
+            store.lockups.stake-amount-total = amount.to-fixed! 
+            store.lockups.chosen-lockup = item         
+            cb null
+        show-stake-place = ->
+            store.lockups.lockupStakingAddress = lockedPool  
+            null
+        lockedUntil = if lockedFundsReleaseTime? then moment(lockedFundsReleaseTime).format("DD/MM/YYYY hh:mm") else ".."
+        tr.pug(class="#{item.status}" key="#{item.address}" on-mouse-enter=show-stake-place on-mouse-leave=hide-stake-place)
             td.pug
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(datacolumn='Staker Address' title="#{ethToVlx item.address}")
@@ -151,9 +172,11 @@ lockups-content = (store, web3t)->
             td.pug #{lockedFunds}
             td.pug #{stake} 
             td.pug #{lockedUntil}       
-    cancel-pool = ->
-        store.staking.chosen-pool = null
-        store.staking.pool-was-choosed = no
+            td.pug
+                button { store, on-click: choose , type: \secondary , icon : \arrowRight }
+    cancel = ->
+        store.lockups.chosen-lockup = null
+        store.lockups.add.add-validator-stake = 0
     refresh = ->
         store.staking.all-pools-loaded = no
         if ((store.staking.all-pools-loaded is no or !store.staking.all-pools-loaded?) and store.staking.pools-are-loading is yes)
@@ -171,22 +194,75 @@ lockups-content = (store, web3t)->
     stats=
         background: style.app.stats
     .pug.staking-content.delegate
-        if not store.staking.pool-was-choosed and not store.lockups.lockup-was-choosed
+        if not store.staking.chosen-pool? and not store.lockups.chosen-lockup?
             .pug.main-sections
                 .form-group.pug(id="lockups")
                     .pug.section
                         .title.pug
                             h3.pug Lock-up contracts
-                        .description.pug.table-scroll.lockup
+                        .description.pug.table-scroll.lockup(on-mouse-leave=hide-stake-place)
                             table.pug
                                 thead.pug
-                                    th.pug(width="3%" style=stats) #
-                                    th.pug(width="40%" style=staker-pool-style) Address
-                                    th.pug(width="20%" style=stats) Locked Amount
-                                    th.pug(width="20%" style=stats) Staked Amount
-                                    th.pug(width="10%" style=stats) Locked Until
+                                    tr.pug
+                                        td.pug(width="3%" style=stats) #
+                                        td.pug(width="40%" style=staker-pool-style) Address
+                                        td.pug(width="20%" style=stats) Locked Amount
+                                        td.pug(width="20%" style=stats) Staked Amount
+                                        td.pug(width="10%" style=stats) Locked Until
+                                        td.pug(width="9%" style=stats) Select
                                 tbody.pug
-                                    store.lockups.lockupContracts |> map build store, web3t                            
+                                    store.lockups.lockupContracts |> map build store, web3t 
+        if store.lockups.chosen-lockup?
+            .pug.single-section.form-group(id="choosen-lockup")
+                .pug.section
+                    .title.pug
+                        h3.pug Lock-up contract
+                    .pug.chosen-pool(title="#{store.lockups.chosen-lockup.address}")
+                        span.pug
+                            | #{ethToVlx store.lockups.chosen-lockup.address}
+                            img.pug.check(src="#{icons.img-check}")
+                        .buttons.pug
+                            button { store, on-click: cancel , type: \secondary , icon : "back" , text: "Back" id="cancel-pool"}    
+                .pug.section
+                    .title.pug
+                        h3.pug #{lang.staking}
+                    .description.pug
+                        if store.lockups.chosen-lockup.isForwardingEnabled is yes
+                            .pug.left
+                                label.pug #{lang.stake}
+                                amount-field { store, value: store.lockups.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
+                                .pug.balance
+                                    span.pug.small-btns
+                                        button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                        button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
+                                    span.pug #{lang.balance}:
+                                    span.pug.color #{round-human store.lockups.chosen-lockup.locked-funds}
+                                        img.label-coin.pug(src="#{icons.vlx-icon}")
+                                        span.pug.color #{vlx-token}
+                                button { store, on-click: stake-to-contract , type: \secondary , icon : \apply , text: \btnApply }    
+                        else    # Manually lock amount on contract and then choose at which pool 
+                            .pug.left
+                                if +store.lockups.stake-amount-total > 0
+                                    my-stake = round-human (store.lockups.stake-amount-total `div` (10^18))
+                                    .pug.div
+                                        .pug.balance
+                                            span.pug #{lang.yourStaking}:
+                                            span.pug.color #{my-stake}
+                                            span.pug.color #{vlx-token}
+                                        hr.pug
+                                        label.pug #{lang.stakeMore}
+                                else
+                                    label.pug #{lang.stake}
+                                amount-field { store, value: store.lockups.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
+                                .pug.balance
+                                    span.pug.small-btns
+                                        button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
+                                        button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
+                                    span.pug #{lang.balance}:
+                                    span.pug.color #{round-human store.lockups.chosen-lockup.locked-funds}
+                                        img.label-coin.pug(src="#{icons.vlx-icon}")
+                                        span.pug.color #{vlx-token}
+                                button { store, on-click: stake-to-contract , type: \secondary , icon : \apply , text: \btnApply }
 lockups = ({ store, web3t })->
     .pug.lockups-content
         lockups-content store, web3t
@@ -199,7 +275,7 @@ fill-lockup-contract = ({web3t, store},[contract, ...contracts], cb)->
     return cb null, [] if not contract? 
     item = {}
     TimeLock = web3t.velas.Timelock.at(contract)
-    err, lockedFunds <- TimeLock.getLockedFunds!
+    err, lockedFunds <- TimeLock.getNonStakedFunds!
     return cb err if err? 
     item.address = contract
     item.lockedFundsRaw = lockedFunds
@@ -216,6 +292,9 @@ fill-lockup-contract = ({web3t, store},[contract, ...contracts], cb)->
     err, lockedFundsReleaseTime <- TimeLock.getLockedFundsReleaseTime!
     return cb err if err?
     item.lockedFundsReleaseTime = lockedFundsReleaseTime
+    err, isForwardingEnabled <- TimeLock.isForwardingEnabled!
+    return cb err if err?
+    item.isForwardingEnabled = isForwardingEnabled
     _item = [item]
     err, rest <- fill-lockup-contract {web3t, store}, contracts
     all = _item ++ rest
@@ -227,16 +306,13 @@ fill-lockup-contracts = ({web3t, store}, contracts, cb)->
 lockups.init = ({ store, web3t }, cb)->
     store.lockups.lockup-was-choosed = no
     store.staking.pool-was-choosed = no
+    store.lockups.chosen-lockup = null
     vlx2 = store.current.account.wallets |> find (.coin.token is \vlx2)
     err, lockups <- web3t.velas.Resolver.getLockups vlx2.address2  
     return cb err if err?
     store.lockups.lockupStaking = {}
-    #try
     err, result <- fill-lockup-contracts {web3t, store}, lockups
-    console.log "result" result
     store.lockups.lockupContracts = result
-    #catch err
-    console.error err
     cb null 
 module.exports = lockups
 #V31V1kD7DpT9eoRcdXf7T1fbFqcNh

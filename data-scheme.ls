@@ -109,8 +109,12 @@ store =
         origin: no
     lockups:
         lockup-was-choosed: no
+        chosen-lockup: null    
         lockupStaking: {}
         lockupContracts: [] 
+        add:
+            move-stake: 0
+            add-validator-stake: ""  
     staking:
         reward-info: []
         exit-tab: ''

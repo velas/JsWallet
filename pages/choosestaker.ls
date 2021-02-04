@@ -20,7 +20,7 @@ require! {
     \../copied-inform.ls
     \../copy.ls
     \../round5.ls
-    \../../web3t/addresses.js : { ethToVlx }
+    \../../web3t/addresses.js : { ethToVlx, vlxToEth }
     \./switch-account.ls
     \../round-human.ls
     \./exit-stake.ls
@@ -204,6 +204,8 @@ require! {
                         -moz-transition: breathe 3s ease-in infinite
                         -web-kit-transition: breathe 3s ease-in infinite
                         height: calc(100vh - 105px)
+                        .stake-pointer
+                            background: rgb(37, 87, 127)   
                         &.lockup
                             height: auto
                         .address-holder
@@ -606,16 +608,12 @@ staking-content = (store, web3t)->
         return alert store, err, cb if err?
         return alert store, "please choose the pool", cb if not store.staking.chosen-pool?
         type = typeof! store.staking.add.add-validator-stake
-        #console.log \correct_amount , type, store.staking.add.add-validator-stake
         return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
         stake = store.staking.add.add-validator-stake `times` (10^18)
-        #console.log { stake }
-        #console.log stake, pairs.mining.address
-        #data = web3t.velas.Staking.stake.get-data pairs.staking.address, stake
-        #console.log "Staking.getData('#{store.staking.chosen-pool}', '#{stake}')"
         data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
         #console.log \after-stake
         to = web3t.velas.Staking.address
+        console.log "Staking to" to
         #console.log \to, { to, data, amount }
         amount = store.staking.add.add-validator-stake
         #console.log \after-stake, to, amount
@@ -737,7 +735,6 @@ staking-content = (store, web3t)->
             store.staking.pools |> map (-> it.checked = no)
             item.checked = yes
             store.staking.chosen-pool = item
-            store.staking.pool-was-choosed = yes
             store.staking.add.new-address = ""
             store.staking.error = ""
             claim-stake.calc-reward store, web3t
@@ -769,7 +766,8 @@ staking-content = (store, web3t)->
             | item.vote-power? => "#{item.vote-power}%"
             | _ => "..."
         mystake-class = if +my-stake > 0 then "with-stake" else ""
-        tr.pug(class="#{item.status}")
+        pointer-class = if store.lockups.lockupStakingAddress? and (store.lockups.lockupStakingAddress is item.address) then "stake-pointer" else ""
+        tr.pug(class="#{item.status} #{pointer-class}")
             td.pug
                 span.pug.circle(class="#{item.status}") #{index}
             td.pug(datacolumn='Staker Address' title="#{ethToVlx item.address}")
@@ -782,7 +780,6 @@ staking-content = (store, web3t)->
                 button { store, on-click: choose-pull , type: \secondary , icon : \arrowRight }
     cancel-pool = ->
         store.staking.chosen-pool = null
-        store.staking.pool-was-choosed = no
     activate = (step)-> ->
         store.current.step = step
     activate-first = activate \first
@@ -813,9 +810,9 @@ staking-content = (store, web3t)->
     stats=
         background: style.app.stats
     .pug.staking-content.delegate
-        if not store.staking.pool-was-choosed and not store.lockups.lockup-was-choosed
-            .pug.main-sections
-                lockups {store, web3t}
+        .pug.main-sections
+            lockups {store, web3t}
+            if not store.staking.chosen-pool? and not store.lockups.chosen-lockup?
                 .form-group.pug(id="pools")
                     alert-txn { store }
                     .pug.section
@@ -827,21 +824,22 @@ staking-content = (store, web3t)->
                         .description.pug.table-scroll
                             table.pug
                                 thead.pug
-                                    th.pug(width="3%" style=stats) #
-                                    th.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
-                                    th.pug(width="25%" style=stats) #{lang.total-stake}
-                                    th.pug(width="5%" style=stats) #{"Validator probability"}
-                                    th.pug(width="25%" style=stats) #{lang.my-stake}
-                                    th.pug(width="5%" style=stats) #{lang.stakers}
-                                    th.pug(width="4%" style=stats) #{lang.selectPool}
+                                    tr.pug
+                                        td.pug(width="3%" style=stats) #
+                                        td.pug(width="10%" style=staker-pool-style) #{lang.staker-pool}
+                                        td.pug(width="25%" style=stats) #{lang.total-stake}
+                                        td.pug(width="5%" style=stats) #{"Validator probability"}
+                                        td.pug(width="25%" style=stats) #{lang.my-stake}
+                                        td.pug(width="5%" style=stats) #{lang.stakers}
+                                        td.pug(width="4%" style=stats) #{lang.selectPool}
                                 tbody.pug
                                     store.staking.pools |> map build-staker store, web3t              
-        if store.staking.pool-was-choosed
+        if store.staking.chosen-pool?
             .pug.single-section.form-group(id="choosen-pull")
                 .pug.section
                     .title.pug
                         h3.pug Pool
-                    .pug.chosen-pool(title="#{store.staking.chosen-pool}")
+                    .pug.chosen-pool(title="#{store.staking.chosen-pool.address}")
                         span.pug
                             | #{ethToVlx store.staking.chosen-pool.address}
                             img.pug.check(src="#{icons.img-check}")
@@ -953,7 +951,6 @@ stringify = (value) ->
     else
         '..'
 staking.init = ({ store, web3t }, cb)->
-    store.staking.pool-was-choosed = no
     err <- lockups.init { store, web3t }
     return cb err if err?
     store.staking.max-withdraw = 0
@@ -991,4 +988,4 @@ staking.focus = ({ store, web3t }, cb)->
     #return cb err if err?
     #err <- fill-vote-power { store, web3t }
     cb null
-#V31V1kD7DpT9eoRcdXf7T1fbFqcNh
+#0x7ef9a83b223e4c6bf56cfbadff77d570b1596fe7
