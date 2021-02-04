@@ -108,6 +108,7 @@ store =
         is-address-queried: no
         origin: no
     lockups:
+        withdrawAmount: 0  
         lockup-was-choosed: no
         chosen-lockup: null    
         lockupStaking: {}
