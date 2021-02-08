@@ -71,6 +71,7 @@
 			"type": "function"
 		},
 		{
+            "constant": true,
 			"inputs": [],
 			"name": "enableForwarding",
 			"outputs": [],
@@ -78,6 +79,7 @@
 			"type": "function"
 		},
 		{
+            "constant": true,
 			"inputs": [],
 			"name": "disableForwarding",
 			"outputs": [],
@@ -163,6 +165,7 @@
 			"type": "function"
 		},
 		{
+			"constant": true,
 			"inputs": [
 				{
 					"internalType": "address",
@@ -200,6 +203,7 @@
 			"type": "function"
 		},
 		{
+			"constant": true,
 			"inputs": [
 				{
 					"internalType": "address",
