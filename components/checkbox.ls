@@ -7,105 +7,51 @@ require! {
     \../math.ls : { times }
     \./keyboard.ls
 }
-.input-area
-    @import scheme
-    position: relative
-    margin: 10px 0
-    width: 100%
-    box-sizing: border-box
-    height: 36px
-    line-height: 36px
-    >*
+.outer-checkbox
+    .active-checkbox
+        position: relative
         display: inline-block
-        box-sizing: border-box
-        margin: 0 !important
-        height: inherit
-        line-height: inherit
-        vertical-align: top
-        z-index: 1
-    >input
-        display: inline-block
-        width: calc(100% - 70px) !important
-        padding: 0 10px
-        border-radius: $border 0 0 $border !important
-        &:disabled
-            opacity: .2
-    >.suffix
-        $color: rgba(#ccc, 0.3)
-        width: 70px
-        border-left: 1px solid $color
-        text-align: center
-        border-radius: 0 $border $border 0
-        >*
-            display: inline-block
-        >.icon
-            width: 15px
-            margin-bottom: -1px
-            margin-right: 5px
-    >.show-details
-        display: none
-    &:hover
-        >.show-details
-            display: block
+        width: 48px
+        height: 20px
+        margin-top: 7px
+        margin-right: 0px
+        input
+            display: none
+            &:checked + .track
+                background-color: #3cd5af
+                &:before
+                    -webkit-transform: translateX(28px)
+                    transform: translateX(28px)
+        .track
+            cursor: pointer
             position: absolute
-            top: 36px
+            top: 0
+            left: 0
             right: 0
-            width: auto
-            padding: 0
-            color: white
-            height: 90px
-            text-align: right
-            background: transparent
-            >.panel
-                padding: 10px
-                background: rgba(black, 0.8)
-                display: inline-block
-                max-width: 250px
-                min-width: 250px
-                text-align: left
-module.exports = ({ store, value, on-change, placeholder, id, show-details, token="vlx2", disabled=no })->
+            bottom: 0
+            background-color: #463f50
+            -webkit-transition: 0.25s
+            transition: 0.25s
+            &:before
+                content: ""
+                position: absolute
+                box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)
+                background-color: #fafafa
+                -webkit-transition: 0.25s
+                transition: 0.25s
+        .thumb
+            border-radius: 35px
+            &:before
+                top: 0px
+                right: 28px
+                width: 20px
+                height: 20px
+                border-radius: 50%
+module.exports = ({ store, type, value, on-change, on-click, checked, id, disabled=no, style })->
+    classString = ""
+    console.log "on-change" on-change
     style = get-primary-info store
-    input-style =
-        background: style.app.input
-        color: style.app.text
-        overflow-x: \auto
-    current=
-        ref: null
-    { wallets } = store.current.account
-    wallet =
-        wallets |> find (-> it.coin.token is token)
-    value-token = value ? 0
-    usd =
-        | wallet.usd-rate? => (value-token || "0") `times` wallet.usd-rate
-        | _ => ".."
-    eur =
-        | wallet.eur-rate? => (value-token || "0") `times` wallet.eur-rate
-        | _ => ".."
-    actual-placeholder = placeholder ? ""
-    normalize = ->
-        return \0 if not it?
-        return parse-int it if it.index-of('.') is -1
-        return parse-int(it) + "." if it.substr(it.length - 1, 1) is "."
-        [first=\0, second=\0] = it.split('.')
-        "#{parse-int first}.#{second}"
-    get-number = (value)->
-        return \0 if value is ""
-        value = value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
-        value2 =
-            | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
-            | _ => value
-        value2
-    on-change-internal = (it)->
-        value = get-number it.target?value
-        on-change { target: { value } }
-    token = \vlx if token is \vlx2
-    token-label = token.to-upper-case!
-    .pug.input-area
-        input.pug(type="text" value="#{value-token}" style=input-style on-change=on-change-internal placeholder=actual-placeholder id="#{id}" disabled=disabled)
-        span.suffix.pug(style=input-style)
-            img.icon.pug(src="#{wallet.coin.image}")
-            span.pug #{token-label}
-        if show-details? and show-details then   
-            .show-details.pug
-                .panel.pug
-                    .pug USD: #{round usd}
+    .pug.outer-checkbox
+        label.active-checkbox.pug
+            input.pug(type='checkbox' value=value on-change=on-change checked=checked id="#{id}")
+            .track.thumb.pug
