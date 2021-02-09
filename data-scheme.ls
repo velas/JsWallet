@@ -108,6 +108,13 @@ store =
         is-address-queried: no
         origin: no
     lockups:
+        currentTimelock: null    
+        stake-amount-total: 0  
+        exit-tab: '' 
+        wait-for-epoch-change: no   
+        maxWithdrawAllowed: 0   
+        orderedWithdrawAmount: 0  
+        maxWithdrawOrderAllowed: 0
         withdraw-amount: 0 
         unstake-amount: 0 
         current-pool: null    

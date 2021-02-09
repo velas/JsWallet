@@ -138,10 +138,10 @@ lockups-content = (store, web3t)->
         vlx-address = vlx2.address2
         err, lockedPool <- TimeLock.getDefaultPool!
         return cb err if err?
-        data = TimeLock.stakeAmount.get-data vlx-address, stake
+        data = TimeLock.stake.get-data vlx-address, stake
         to = TimeLock.address
         amount = store.lockups.add.add-validator-stake
-        err <- web3t.vlx2.send-transaction { to, amount } 
+        err <- web3t.vlx2.send-transaction { to, data, amount } 
         return cb err if err?
 #        data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
 #        to = web3t.velas.Staking.address
@@ -210,14 +210,18 @@ lockups-content = (store, web3t)->
             coin: vlx2.coin
         # Select contract from list
         choose = ->
+            cb = console.log
             item.checked = yes
             store.lockups.error = ""
             lockedPool = item.lockedPool
             contract = item.address
+            store.lockups.currentTimelock = web3t.velas.Timelock.at(contract)
             err, amount <- web3t.velas.Staking.stakeAmount lockedPool, contract
             store.lockups.stake-amount-total = amount.to-fixed! 
             store.lockups.chosen-lockup = item 
-            err <- pools-list.init { store, web3t }        
+            err <- pools-list.init { store, web3t } 
+            #err <- withdraw-unstake.init { store, web3t }
+            return cb err if err?       
             cb null
         show-stake-place = ->
             store.lockups.lockupStakingAddress = lockedPool  
@@ -330,7 +334,7 @@ lockups-content = (store, web3t)->
                                         pools-list({store, web3t})
                                     if store.lockups.chosen-lockup-action is \choose then 
                                         .pug
-                                            button {store, text: "Select default pool", no-icon:yes, on-click: choose-pool-from-list, style: {width: \auto}}
+                                            button {store, classes: "width-auto", text: "Select default pool", no-icon:yes, on-click: choose-pool-from-list, style: {width: \auto}}
                 .pug.section
                     .title.pug
                         h3.pug #{lang.withdraw}
@@ -339,39 +343,15 @@ lockups-content = (store, web3t)->
                             .pug.left
                                 label.pug
                                 .pug.balance
-                                button { store, on-click: withdraw , type: \secondary , icon : \apply , text: \Withdraw }    
+                                button { store, on-click: withdraw, classes: "width-auto" type: \secondary , icon : \apply , text: "Withdraw #{(store.lockups.chosen-lockup.maxWithdrawAllowed `div` (10^18))} VLX" }    
                         else
                             .pug.balance
                                 span.pug You have no available 
                                 span.pug.color VLX 
                                 span.pug to withdraw
-                if no and store.lockups.chosen-lockup.isForwardingEnabled is yes
-                    .pug.left
-                        .pug.balance
-                            span.pug #{lang.yourStaking}:
-                            span.pug.color #{round-human (store.lockups.stake-amount-total `div` (10^18))}
-                            span.pug.color #{vlx-token}
-                        amount-field { store, value: store.lockups.add.add-validator-stake , on-change: change-stake , placeholder: lang.stake, token: "vlx2", id:"choose-staker-vlx-input" }
-                        .pug.balance
-                            span.pug.small-btns
-                                button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
-                                button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                            span.pug #{lang.balance}:
-                            span.pug.color #{your-balance}
-                                img.label-coin.pug(src="#{icons.vlx-icon}")
-                                span.pug.color #{vlx-token}
-                        button { store, on-click: stake-to-contract , type: \secondary , icon : \apply , text: \btnApply }
-                else
-                    request-stake store, web3t 
-                if  +store.lockups.stake-amount-total <= 0 
-                    .pug.section
-                        .title.pug
-                            h3.pug Unstake
-                        .description.pug
-                            .pug.left
-                                label.pug You have no available stake yet.    
+                request-stake store, web3t 
                 # if we have some funds to unstake
-                if  +store.lockups.stake-amount-total > 0
+                if no and  +store.lockups.stake-amount-total > 0
                     use-min2 = ->
                         store.lockups.unstakeAmount = 0
                     use-max2 = ->
@@ -391,7 +371,7 @@ lockups-content = (store, web3t)->
                         vlx-address = vlx2.address2 
                         data = Timelock.unstake.get-data(vlx-address, amount) 
                         to = pool-address
-                        err <- web3t.vlx2.send-transaction { to, data, amount:0 }
+                        err <- web3t.vlx2.send-transaction { to, data, amount:0, gas: 4600000, gas-price: 1000000 }
                         return cb err if err?
                     .pug.section
                         .title.pug
@@ -456,9 +436,12 @@ lockups.fill-lockup-contracts = fill-lockup-contracts
 lockups.init = ({ store, web3t }, cb)->
     store.lockups.stake.step = "topup"
     store.lockups.stake.choosen-pull = null
+    store.lockups.currentTimelock = null
     store.lockups.chosen-lockup-action = ''
     store.lockups.withdrawAmount = 0
     store.lockups.unstakeAmount = 0
+    store.lockups.add.add-validator-stake = 0
+    store.lockups.add.add-topup-stake = 0
     store.lockups.lockup-was-choosed = no
     store.staking.pool-was-choosed = no
     store.lockups.chosen-lockup = null

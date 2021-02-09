@@ -237,6 +237,7 @@
 			"type": "function"
 		},
 		{
+			"constant": true,
 			"inputs": [
 				{
 					"internalType": "address",
@@ -255,6 +256,7 @@
 			"type": "function"
 		},
 		{
+			"constant": true,
 			"inputs": [
 				{
 					"internalType": "address",

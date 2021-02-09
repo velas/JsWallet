@@ -132,7 +132,6 @@ order-withdraw-process = (store, web3t)->
             return if not current-contract-has-defaultPool
         store.lockups.stake.step = step
     if lockedFundsRaw > 0 then
-        console.log "2nd step activate"
         activate \choose-pool
     if store.lockups.stake.choosen-pull? then
         activate \stake  
@@ -144,7 +143,6 @@ order-withdraw-process = (store, web3t)->
     active-first = active-class \topup
     active-second = active-class \choose-pool
     active-third = active-class \stake
-    console.log "active-first" active-first
     current-contract-has-defaultPool = current-contract.lockedPool? and (+current-contract.lockedPool isnt 0) 
     build-pool = (store, web3t)-> (item)->
         checked = item.checked
@@ -159,7 +157,6 @@ order-withdraw-process = (store, web3t)->
             my-stake = extra-stake `plus` my-stake
         index = store.staking.pools.index-of(item) + 1
         choose-pull = ->
-            console.log "choose pull"
             cb = (err, data)->
                 alert store, err, console~log if err?   
             store.lockups.success-cb = ->
@@ -209,14 +206,27 @@ order-withdraw-process = (store, web3t)->
             td.pug #{stake}
             td.pug(class="#{mystake-class}") #{stringify my-stake}
             td.pug
-                button { classes:"choose-pool", store, on-click: choose-pull , type: \secondary , icon : \arrowRight }  
+                button { classes:"choose-pool", store, on-click: choose-pull , type: \secondary , icon : \arrowRight } 
+    is-enough-to-stake = (stake, balance, cb)->
+        min-amount-stake = 10000
+        return cb "Staking amount more than Locked amount" if stake > balance
+        total = (store.lockups.stake-amount-total `div` (10^18)) `plus` store.staking.stake-amount-total
+        return cb null if total >= min-amount-stake
+        min =
+            | +total >= 10000 => 1
+            | _ => min-amount-stake
+        balance = balance `minus` 0.1
+        return cb lang.amountLessStaking if 10000 > +stake
+        return cb lang.balanceLessStaking if +balance < +stake
+        max = +balance
+        cb null, { min, max }  
     topup-the-contract = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
         return alert store, "please choose the contract", cb if not store.lockups.chosen-lockup?
-        type = typeof! store.lockups.add.add-validator-stake
+        type = typeof! store.lockups.add.add-validator-topup
         return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
-        stake = store.lockups.add.add-validator-stake `times` (10^18)
+        stake = store.lockups.add.add-validator-topup `times` (10^18)
         contract-address = store.lockups.chosen-lockup.address
         TimeLock = web3t.velas.Timelock.at(contract-address)
         vlx2 =
@@ -226,13 +236,41 @@ order-withdraw-process = (store, web3t)->
         return cb err if err?
         data = TimeLock.stakeAmount.get-data vlx-address, stake
         to = TimeLock.address
-        amount = store.lockups.add.add-validator-stake
+        amount = store.lockups.add.add-validator-topup
         err <- web3t.vlx2.send-transaction { to, amount } 
         return cb err if err?
         return store.lockups.add.result = "#{err}" if err?
         #<- lockups.init { store, web3t }
         #store.lockups.stake.step = \stake
         cb null
+    stake-locked-to-contract = ->
+        err <- can-make-staking store, web3t
+        return alert store, err, cb if err?
+        return alert store, "please choose the contract", cb if not store.lockups.chosen-lockup?
+        type = typeof! store.lockups.add.add-validator-stake
+        return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
+        stake = store.lockups.add.add-validator-stake `times` (10^18)
+        err <- is-enough-to-stake(store.lockups.add.add-validator-stake, (store.lockups.chosen-lockup.locked-funds-raw `div` (10^18)))
+        return alert store, "#{err}", cb if err? 
+        contract-address = store.lockups.chosen-lockup.address
+        TimeLock = web3t.velas.Timelock.at(contract-address)
+        vlx2 =
+            store.current.account.wallets |> find (.coin.token is \vlx2)
+        vlx-address = vlx2.address2
+        err, lockedPool <- TimeLock.getDefaultPool!
+        return cb err if err?
+        data = TimeLock.stake.get-data lockedPool, stake
+        to = TimeLock.address
+        amount = store.lockups.add.add-validator-stake
+        err <- web3t.vlx2.send-transaction { to, data, amount: 0 } 
+        return cb err if err?
+#        data = web3t.velas.Staking.stake.get-data store.staking.chosen-pool.address, stake
+#        to = web3t.velas.Staking.address
+#        amount = store.staking.add.add-validator-stake
+#        err <- web3t.vlx2.send-transaction { to, data, amount }
+        #return cb err if err?
+        return store.lockups.add.result = "#{err}" if err?
+        #<- lockups.init { store, web3t }
     stake-to-contract = ->
         #err, options <- get-options
         #return alert store, err, cb if err?
@@ -241,16 +279,16 @@ order-withdraw-process = (store, web3t)->
         return alert store, "please choose the contract", cb if not store.lockups.chosen-lockup?
         type = typeof! store.lockups.add.add-validator-stake
         return alert store, "please enter correct amount, got #{type}", cb if type not in <[ String Number ]>
+        err <- is-enough-to-stake(store.lockups.add.add-validator-stake, (get-balance! `times`(10^18)))
+        return alert store, "#{err}", cb if err?
         stake = store.lockups.add.add-validator-stake `times` (10^18)
         contract-address = store.lockups.chosen-lockup.address
         TimeLock = web3t.velas.Timelock.at(contract-address)
-        #console.log "before we stake: " store.lockups.chosen-lockup.lockedPool, stake
         vlx2 =
             store.current.account.wallets |> find (.coin.token is \vlx2)
         vlx-address = vlx2.address2
         err, lockedPool <- TimeLock.getDefaultPool!
         return cb err if err?
-        console.log ""
         data = TimeLock.stakeAmount.get-data vlx-address, stake
         to = TimeLock.address
         amount = store.lockups.add.add-validator-stake
@@ -263,6 +301,9 @@ order-withdraw-process = (store, web3t)->
         #return cb err if err?
         return store.lockups.add.result = "#{err}" if err?
         #<- lockups.init { store, web3t }
+    isForwardingEnabled = store.lockups.chosen-lockup.isForwardingEnabled
+    stake-func = stake-locked-to-contract 
+    stake-func = stake-to-contract if isForwardingEnabled 
     change-stake = ->
         try
             value = new bignumber(it.target.value).toFixed!.to-string!
@@ -334,11 +375,11 @@ order-withdraw-process = (store, web3t)->
                                 span.pug.small-btns
                                     button.small.pug(style=button-primary3-style on-click=use-min) #{lang.min}
                                     button.small.pug(style=button-primary3-style on-click=use-max) #{lang.max}
-                                span.pug Available:
+                                span.pug Locked Amount:
                                 span.pug.color #{round-human store.lockups.chosen-lockup.locked-funds}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                            button { store, on-click: stake-to-contract , type: \secondary , icon : \apply , text: \btnApply }    
+                            button { store, on-click: stake-func , type: \secondary , icon : \apply , text: \btnApply }    
         if store.lockups.chosen-lockup.isForwardingEnabled is yes    
             .pug.section
                 .title.pug
@@ -359,7 +400,7 @@ order-withdraw-process = (store, web3t)->
                                 span.pug.color #{round-human store.lockups.chosen-lockup.locked-funds}
                                     img.label-coin.pug(src="#{icons.vlx-icon}")
                                     span.pug.color #{vlx-token}
-                            button { store, on-click: stake-to-contract , type: \secondary , icon : \apply , text: \btnApply }    
+                            button { store, on-click: stake-func , type: \secondary , icon : \apply , text: \btnApply }    
 not-available-right-now = (store)->
     lang = get-lang store
     .pug.section

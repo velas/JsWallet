@@ -155,6 +155,7 @@ pools-list = ({ store, web3t })->
 pools-list.init = ({ store, web3t, select-action }, cb)->
     action = if select-action then \select else \choose
     store.lockups.chosen-lockup-action = \choose
+    current-contract = store.lockups.chosen-lockup
     if selected-action? then
         store.lockups.chosen-lockup-action = action
     else    
