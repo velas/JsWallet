@@ -28,6 +28,8 @@ require! {
         opacity: 0.9
     &:disabled
         opacity: 0.3
+    &.width-auto
+        width: auto !important
 loader = ->
     .loader-ios.pug
         svg.pug(width='15px' height='15px' viewbox='0 0 15 15' version='1.1' xmlns='http://www.w3.org/2000/svg')
@@ -84,7 +86,6 @@ button-active = ({ store, classes, text, loading, on-click, icon, type, mstyle, 
         | type is \primary => filter
     disabled = (makeDisabled? and makeDisabled) or (error? and typeof! error is \String and error.length > 0)
     custom-style = mstyle ? {}
-    button-style = button-style <<<< custom-style
     button.pug.btn(class="#{classes}" on-click=on-click style=button-style id=id disabled=disabled)
         if (no-icon? and no-icon is no) or !no-icon? then
             if store.current.device is \mobile

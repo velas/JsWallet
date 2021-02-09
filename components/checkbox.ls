@@ -49,7 +49,6 @@ require! {
                 border-radius: 50%
 module.exports = ({ store, type, value, on-change, on-click, checked, id, disabled=no, style })->
     classString = ""
-    console.log "on-change" on-change
     style = get-primary-info store
     .pug.outer-checkbox
         label.active-checkbox.pug
