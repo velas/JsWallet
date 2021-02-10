@@ -40,22 +40,20 @@ module.exports = (store, web3t)->
     move-stake = ->
         return if (store.staking.error? and ("#{store.staking.error}" .length > 0)) or store.staking.add.new-address is ""         
         pool-address = store.staking.chosen-pool.address
-        my-stake = store.staking.chosen-pool.my-stake `div` (10^18)
+        my-stake = store.staking.chosen-pool.my-stake `div` (10^18)       
+        err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
+        return cb err if err? 
+        new-pool-stake-rounded = +(new-pool-staked.to-fixed! `div` (10^18))
         # check if pool FROM has stake at least 20k and move-amount minus From stake is more or eq 10k 
-        if my-stake < 20000 then
-            return alert store, "Your stake must be at least 20000 VLX in order to move stake to another pool", cb 
+        if my-stake < 10000 then
+            return alert store, "Your stake must be more than 10000 VLX in order to move stake to another pool", cb 
         if (+my-stake - +store.staking.add.move-stake) < 10000 then
             max-move-amount = Math.max (+my-stake - +store.staking.add.move-stake), 0
-            return alert store, "Max amount to move is #{max-move-amount} VLX.", cb   
-        err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
-        return cb err if err?     
+            return alert store, "Max amount to move is #{max-move-amount} VLX.", cb       
         err, new-pool-address <- try-parse-address store.staking.add.new-address
         return alert store, err, cb if err?
-        # check if new-pool has stake and stake amount >= 10k OR amount < 10k and pool has already more than 10k stake 
-        err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
-        return cb err if err?
-        new-pool-stake-rounded = +(new-pool-staked.to-fixed! `div` (10^18))
-        if new-pool-stake-rounded < 10000 then
+        # check if new-pool has stake and stake amount >= 10k OR amount < 10k and pool has already more than 10k stake        
+        if new-pool-stake-rounded < 10000 and +store.staking.add.move-stake < 10000 then
             return alert store, "Move stake amount must be more or equal of 10000 VLX.", cb        
         err <- can-make-staking store, web3t
         return alert store, err, cb if err?
