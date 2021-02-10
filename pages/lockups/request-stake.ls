@@ -208,6 +208,8 @@ order-withdraw-process = (store, web3t)->
             td.pug
                 button { classes:"choose-pool", store, on-click: choose-pull , type: \secondary , icon : \arrowRight } 
     is-enough-to-stake = (stake, balance, cb)->
+        stake = +stake
+        balance = +balance
         min-amount-stake = 10000
         return cb "Staking amount more than Locked amount" if stake > balance
         total = (store.lockups.stake-amount-total `div` (10^18)) `plus` store.staking.stake-amount-total
