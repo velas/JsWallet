@@ -45,7 +45,7 @@ module.exports = (store, web3t)->
         return cb err if err? 
         new-pool-stake-rounded = +(new-pool-staked.to-fixed! `div` (10^18))
         # check if pool FROM has stake at least 20k and move-amount minus From stake is more or eq 10k 
-        if my-stake < 10000 then
+        if +my-stake < 10000 then
             return alert store, "Your stake must be more than 10000 VLX in order to move stake to another pool", cb
         if (+my-stake - +store.staking.add.move-stake) isnt 0 then 
             if (+my-stake - +store.staking.add.move-stake) < 10000 then
