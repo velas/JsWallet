@@ -141,7 +141,8 @@ pools-content = (store, web3t)->
                     td.pug(width="4%" style=stats) Action
         tbody.pug
             store.staking.pools
-                |> filter (it)-> 
+                |> filter (it)->
+                    return no if it.status is \banned
                     if store.lockups.chosenLockupAction is \select then
                         return yes
                     else
