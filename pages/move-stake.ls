@@ -39,7 +39,16 @@ module.exports = (store, web3t)->
     wallet = wallets.0   
     move-stake = ->
         return if (store.staking.error? and ("#{store.staking.error}" .length > 0)) or store.staking.add.new-address is ""         
-        pool-address = store.staking.chosen-pool.address      
+        pool-address = store.staking.chosen-pool.address
+        my-stake = store.staking.chosen-pool.my-stake `div` (10^18)
+        # check if pool FROM has stake at least 20k and move-amount minus From stake is more or eq 10k 
+        if my-stake < 20000 then
+            return alert store, "Your stake must be at least 20000 VLX in order to move stake to another pool", cb 
+        if (+my-stake - +store.staking.add.move-stake) < 10000 then
+            max-move-amount = Math.max (+my-stake - +store.staking.add.move-stake), 0
+            return alert store, "Max amount to move is #{max-move-amount} VLX.", cb   
+        err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
+        return cb err if err?     
         err, new-pool-address <- try-parse-address store.staking.add.new-address
         return alert store, err, cb if err?
         # check if new-pool has stake and stake amount >= 10k OR amount < 10k and pool has already more than 10k stake 
