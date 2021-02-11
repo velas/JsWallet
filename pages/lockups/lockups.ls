@@ -15,6 +15,7 @@ require! {
     \../../../web3t/addresses.js : { ethToVlx }
     \../../round-human.ls
     \./request-stake.ls
+    \./request-unstake.ls
     \./pools-list.ls
     \../../components/checkbox.ls
     \../../icons.ls
@@ -220,7 +221,7 @@ lockups-content = (store, web3t)->
             store.lockups.stake-amount-total = amount.to-fixed! 
             store.lockups.chosen-lockup = item 
             err <- pools-list.init { store, web3t } 
-            #err <- withdraw-unstake.init { store, web3t }
+            err <- request-unstake.init { store, web3t }
             return cb err if err?       
             cb null
         show-stake-place = ->
@@ -352,7 +353,8 @@ lockups-content = (store, web3t)->
                                 span.pug You have no available 
                                 span.pug.color VLX 
                                 span.pug to withdraw
-                request-stake store, web3t 
+                request-stake store, web3t
+                request-unstake store, web3t 
                 # if we have some funds to unstake
                 if no and  +store.lockups.stake-amount-total > 0
                     use-min2 = ->
