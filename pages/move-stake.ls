@@ -54,10 +54,10 @@ module.exports = (store, web3t)->
             # if after moving stake amount, pool FROM amount become LESS then 10k 
             if (+my-stake - +store.staking.add.move-stake) < 10000 then
                 max-move-amount = Math.max (+my-stake - +store.staking.add.move-stake), 0
-                return alert store, "The pool stake amount after moving #{store.staking.add.move-stake} VLX must be at least 10000 VLX.", cb             
+                return alert store, "The pool stake amount after moving #{store.staking.add.move-stake} VLX must be at least 10000 VLX or no stake at all.", cb             
         # check if new-pool has ZERO (<10k) STAKE & stake amount IS LESS than 10k 
         if +new-pool-stake-rounded < 10000 and +store.staking.add.move-stake < 10000 then
-            return alert store, "Move stake amount must be more or equal of 10000 VLX.", cb        
+            return alert store, "Move stake amount must be more or equal to 10000 VLX.", cb        
         err <- can-make-staking store, web3t
         return alert store, err, cb if err?
         stake = store.staking.add.move-stake

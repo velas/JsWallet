@@ -199,7 +199,7 @@ lockups-content = (store, web3t)->
         store.lockups.lockupStakingAddress = null
         null
     build = (store, web3t)-> (item)->
-        { address, lockedFunds, lockedPool, stake, lockedFundsReleaseTime } = item
+        { address, lockedFunds, lockedPool, stake, lockedFundsReleaseTime, lockThreshold } = item
         stake = round-human(parse-float item.stake `div` (10^18))
         index = store.lockups.lockupContracts.index-of(item) + 1  
         vlx2 =
@@ -227,6 +227,7 @@ lockups-content = (store, web3t)->
             store.lockups.lockupStakingAddress = lockedPool  
             null
         lockedUntil = if lockedFundsReleaseTime? then moment(lockedFundsReleaseTime * 1000).format("DD/MM/YYYY hh:mm") else ".."
+        lockedThreshold = if lockThreshold? then (lockThreshold `div`(10^18)) else ".." 
         tr.pug(class="#{item.status}" key="#{item.address}" on-mouse-enter=show-stake-place on-mouse-leave=hide-stake-place)
             td.pug
                 span.pug.circle(class="#{item.status}") #{index}
@@ -234,7 +235,8 @@ lockups-content = (store, web3t)->
                 address-holder { store, wallet }
             td.pug #{lockedFunds}
             td.pug #{stake} 
-            td.pug #{lockedUntil}               
+            td.pug #{lockedThreshold}    
+            td.pug #{lockedUntil}           
             td.pug
                 button { store, on-click: choose , type: \secondary , icon : \arrowRight }
     cancel = ->
@@ -273,6 +275,7 @@ lockups-content = (store, web3t)->
                                         td.pug(width="40%" style=staker-pool-style) Address
                                         td.pug(width="20%" style=stats) Non-staked Amount
                                         td.pug(width="20%" style=stats) Staked Amount
+                                        td.pug(width="7%" style=stats) Threshold, VLX
                                         td.pug(width="10%" style=stats) Locked Until
                                         td.pug(width="9%" style=stats) Select
                                 tbody.pug
@@ -424,6 +427,10 @@ fill-lockup-contract = ({web3t, store},[contract, ...contracts], cb)->
     err, max <- TimeLock.maxWithdrawAllowed!
     return cb err if err?
     item.maxWithdrawAllowed = max
+    err, lockThreshold <- TimeLock.getLockThreshold!
+    console.error "err:" err if err?
+    #return cb err if err?
+    item.lockThreshold = lockThreshold
     _item = [item]
     err, rest <- fill-lockup-contract {web3t, store}, contracts
     all = _item ++ rest
