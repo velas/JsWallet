@@ -46,14 +46,16 @@ module.exports = (store, web3t)->
         err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
         return cb err if err? 
         new-pool-stake-rounded = +(new-pool-staked.to-fixed! `div` (10^18))
-        # check if pool FROM has stake at least 20k and move-amount minus From stake is more or eq 10k 
+        # check if pool FROM has stake at least 10k and move-amount minus From stake is more or eq 10k 
         if +my-stake < 10000 then
             return alert store, "Your stake must be more than 10000 VLX in order to move stake to another pool", cb
-        if (+my-stake - +store.staking.add.move-stake) isnt 0 then 
+        # If try to move NOT FULL stake
+        if (+my-stake - +store.staking.add.move-stake) isnt 0 then
+            # if after moving stake amount, pool FROM amount become LESS then 10k 
             if (+my-stake - +store.staking.add.move-stake) < 10000 then
                 max-move-amount = Math.max (+my-stake - +store.staking.add.move-stake), 0
-                return alert store, "Max amount to move is #{max-move-amount} VLX.", cb             
-        # check if new-pool has stake and stake amount >= 10k OR amount < 10k and pool has already more than 10k stake        
+                return alert store, "The pool stake amount after moving #{store.staking.add.move-stake} VLX must be at least 10000 VLX.", cb             
+        # check if new-pool has ZERO (<10k) STAKE & stake amount IS LESS than 10k       
         if new-pool-stake-rounded < 10000 and +store.staking.add.move-stake < 10000 then
             return alert store, "Move stake amount must be more or equal of 10000 VLX.", cb        
         err <- can-make-staking store, web3t
