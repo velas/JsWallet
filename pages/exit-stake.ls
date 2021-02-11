@@ -151,9 +151,10 @@ fast-withdraw-process = (store, web3t)->
         return alert store, err, cb if err?
         staking-address = store.staking.keystore.staking.address
         pool-address = store.staking.chosen-pool.address
-        err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)
-        return alert store, "Max amount to withdraw is #{max `div` (10^18)}"
+        err, max <- web3t.velas.Staking.maxWithdrawAllowed(pool-address, staking-address)     
         amount = store.staking.withdrawAmount `times` (10^18)
+        if +amount > +max.to-fixed!
+            return alert store, "Max amount to withdraw is #{max `div` (10^18)}"
         return alert store, "Max amount to withdraw is #{max `div` (10^18)}" if +amount > +max.to-fixed!
         return alert store, lang.actionProhibited, cb if +amount is 0
         data = web3t.velas.Staking.withdraw.get-data(pool-address, amount)
