@@ -243,7 +243,7 @@ module.exports.init = ({ store, web3t}, cb)->
     console.log "last-epoch" last-epoch
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?
-    seconds = (last-epoch `minus` staking-epoch) `times` 5
+    seconds = (staking-epoch `minus` last-epoch) `times` 5
     return cb err if err?
     next = moment!.add(seconds, 'seconds').from-now!
     store.lockups.chosen-lockup.unstake-wait-time = next
