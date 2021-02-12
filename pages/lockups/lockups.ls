@@ -330,9 +330,10 @@ lockups-content = (store, web3t)->
                                         checkbox { store, value: isForwardingEnabled, id:"autostaking-switcher", on-change:  on-change-autostaking, checked:isForwardingEnabled} 
                                         span.pug Autostaking is #{autostaking-state}
                                 .pug.flex-container.flex-container-centered.settings-item
-                                    if store.lockups.chosen-lockup-action is \select then
-                                        button {store, on-click: cancel-choose-pool,  text: "Cancel", no-icon: yes, id="cancel-choose-pool"}
-                                    .pug.subtitle
+                                    if current-contract.lockedPool?
+                                        if store.lockups.chosen-lockup-action is \select then
+                                            button {store, on-click: cancel-choose-pool,  text: "Cancel", no-icon: yes, id="cancel-choose-pool"}
+                                    .pug.subtitle.color
                                         label.pug #{Locked-pool-label}
                                     .pug.table-non-scroll.min-height.description.width100
                                         pools-list({store, web3t})

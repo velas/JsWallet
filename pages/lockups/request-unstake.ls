@@ -10,79 +10,83 @@ require! {
     \../../components/amount-field.ls
     \../../components/button.ls
     \../confirmation.ls : { alert }
+    \moment
 }
-.steps
+.steps-holder    
     @media(max-width:800px)
         text-align: center
-    .step
-        display: inline-block
-        vertical-align: text-top
+    .status-note
         text-align: center
-        padding: 0 20px 0 0
-        margin-right: 20px
-        margin-bottom: 20px
-        width: 140px
-        opacity: .6
-        position: relative
-        cursor: pointer
-        transition: all .5s
-        @media(max-width:800px)
-            padding: 0 10px
-            width: auto
-            margin: 0 auto 30px
-            display: block
-        &:last-child
-            &:after
-                content: none !important
-        &:after
-            display: block
-            left: 150px
-            top: 18px
-            position: absolute
-            border-top: 2px solid grey
-            width: 20%
-            content: ""
-            @media(max-width:800px)
-                content: none
-        .step-content
-            font-size: 13px
-            button
-                width: 125px
-        button
-            width: auto
-            display: block
-            margin: 15px auto 0
-        .step-count
+    .steps
+        display: flex
+        .step
+            flex: 1
             display: inline-block
-            background: grey
-            padding: 10px 15px
-            border-radius: 50px
+            vertical-align: text-top
+            text-align: center
+            padding: 0 20px 20px 20px
             margin-bottom: 20px
-        &.active
-            opacity: 1
-            .step-count
-                background: #39dcb4
-                animation: pulse_step 1s linear
-                transform-origin: 50% 50%
+            opacity: .6
+            position: relative
+            cursor: pointer
+            transition: all .5s
+            @media(max-width:800px)
+                padding: 0 10px
+                width: auto
+                margin: 0 auto 30px
+                display: block
+            &:last-child
+                &:after
+                    content: none !important
             &:after
                 display: block
                 left: 150px
                 top: 18px
                 position: absolute
-                border-top: 2px solid #3cd5af
+                border-top: 2px solid grey
                 width: 20%
                 content: ""
                 @media(max-width:800px)
                     content: none
-    @keyframes pulse_step
-        0%
-            transform: scale(0.8)
-        25%
-            transform: scale(0.9)
-        50%
-            transform: scale(1.1)
-        100%
-            transform: scale(1)
+            .step-content
+                font-size: 13px
+                button
+                    width: 125px
+            button
+                width: auto
+                display: block
+                margin: 15px auto 0
+            .step-count
+                display: inline-block
+                background: grey
+                padding: 10px 15px
+                border-radius: 50px
+                margin-bottom: 20px
+            &.active
+                opacity: 1
+                .step-count
+                    background: #39dcb4
+                    animation: pulse_step 1s linear
+                    transform-origin: 50% 50%
+                &:after
+                    display: block
+                    left: 150px
+                    top: 18px
+                    position: absolute
+                    border-top: 2px solid #3cd5af
+                    width: 20%
+                    content: ""
+                    @media(max-width:800px)
+                        content: none
+        @keyframes pulse_step
+            0%
+                transform: scale(0.8)
+            25%
+                transform: scale(0.9)
+            50%
+                transform: scale(1.1)
+            100%
+                transform: scale(1)
 cb = console~log
 order-withdraw-process = (store, web3t)->
     lang = get-lang store
@@ -110,6 +114,7 @@ order-withdraw-process = (store, web3t)->
         return alert store, "#{lang.max} #{max.to-fixed! `div` (10^18)}" if +amount > +max.to-fixed!
         return alert store, lang.actionProhibited, cb if +amount is 0
         #
+        console.log "Timelock 1" Timelock
         data = Timelock.requestUnstake.get-data(lockedPoolAddress, amount)
         to = lockup-address
         amount = 0
@@ -127,30 +132,46 @@ order-withdraw-process = (store, web3t)->
     change-max = (it)->
         store.lockups.withdrawAmount = it.target.value
     epoch-next = store.dashboard.epoch-next ? 'loading...'
+    amount-requested = +store.lockups.orderedWithdrawAmount > 0 and store.lockups.wait-for-epoch-change
+    unstake-is-allowed = +store.lockups.orderedWithdrawAmount > 0
+    unstake-wait-time = store.lockups.chosen-lockup.unstake-wait-time
     .pug.section
         .title.pug
             h3.pug Unstake
         .description.pug
             .pug.left
-                .steps.pug
-                    .pug.step(on-click-commented=activate-first class="#{active-first}")
-                        .pug.step-count 1
-                        .pug.step-content
-                            .pug Request Unstake
-                            if active-first is \active
-                                .pug
+                .pug.steps-holder
+                    .steps.pug
+                        .pug.step(on-click-commented=activate-first class="#{active-first}")
+                            .pug.step-count 1
+                            .pug.step-content
+                                .pug Request Unstake
+                                if active-first is \active
                                     .pug
-                                        amount-field { store, value: store.lockups.withdrawAmount, on-change: change-max }
-                                    button { store, text: "Request Unstake", icon: 'exit', on-click: order, type: "secondary" }
-                    .pug.step(on-click-commented=activate-second class="#{active-second}")
-                        .pug.step-count 2
-                        .pug.step-content  Come back later for your unstaking amount
-                    .pug.step(on-click-commented=activate-third class="#{active-third}")
-                        .pug.step-count 3
-                        .pug.step-content
-                            .pug Unstake
-                            if active-third is \active
-                                button { store, text: "Unstake", icon: 'exit', on-click: exit, type: "secondary" }
+                                        .pug
+                                            amount-field { store, value: store.lockups.withdrawAmount, on-change: change-max }
+                                        button { store, text: "Request Unstake", icon: 'exit', on-click: order, type: "secondary" }
+                        .pug.step(on-click-commented=activate-second class="#{active-second}")
+                            .pug.step-count 2
+                            .pug.step-content  Come back later for your unstaking amount
+                        .pug.step(on-click-commented=activate-third class="#{active-third}")
+                            .pug.step-count 3
+                            .pug.step-content
+                                .pug Unstake
+                                if active-third is \active
+                                    button { store, text: "Unstake", icon: 'exit', on-click: exit, type: "secondary" }
+                    .pug.status-note
+                        if amount-requested then
+                            .pug.note.balance 
+                                span.pug.color #{(store.lockups.orderedWithdrawAmount `div` (10^18) )} 
+                                span.pug.color VLX 
+                                span.pug were requested to unstake and will be able
+                                span.pug.color #{unstake-wait-time}
+                        if unstake-is-allowed then
+                            .pug.note.balance 
+                                span.pug.color #{(store.lockups.orderedWithdrawAmount `div` (10^18) )} 
+                                span.pug.color VLX 
+                                span.pug are able to unstake 
 fast-withdraw-process = (store, web3t)->
     lang = get-lang store
     exit = ->
@@ -158,13 +179,15 @@ fast-withdraw-process = (store, web3t)->
         return alert store, err, cb if err?
         staking-address = store.lockups.keystore.lockups.address
         lockup-address = store.lockups.chosen-pool.address
+        lockedPoolAddress = store.lockups.chosen-pool.lockedPool
         err, max <- web3t.velas.Staking.maxWithdrawAllowed(lockup-address, staking-address)
         return alert store, "Max amount to withdraw is #{max `div` (10^18)}"
         amount = store.lockups.withdrawAmount `times` (10^18)
         return alert store, "Max amount to withdraw is #{max `div` (10^18)}" if +amount > +max.to-fixed!
         return alert store, lang.actionProhibited, cb if +amount is 0
-        data = web3t.velas.Staking.withdraw.get-data(lockup-address, amount)
-        to = web3t.velas.Staking.address
+        Timelock = store.lockups.currentTimelock
+        data = Timelock.unstake.get-data(lockedPoolAddress, amount)
+        to = lockup-address
         amount = 0
         err <- web3t.vlx2.send-transaction { to, data, amount, gas: 4600000, gas-price: 1000000 }
     change-max = (it)->
@@ -181,14 +204,14 @@ not-available-right-now = (store)->
     lang = get-lang store
     .pug.section
         .title.pug
-            h3.pug #{lang.exit}
+            h3.pug Unstake
         .description.pug
-            .pug #{lang.actionProhibited}
+            .pug The action is not available till next epoch.
 registry =
     \exit_ordered : order-withdraw-process
     \exit_order   : order-withdraw-process
     \exit_wait    : order-withdraw-process
-    \exit         : order-withdraw-process
+    \exit         : fast-withdraw-process
     \exit_closed  : not-available-right-now
 module.exports = (store, web3t)->
     func = registry[store.lockups.exit-tab]
@@ -200,6 +223,7 @@ module.exports.init = ({ store, web3t}, cb)->
     store.lockups.maxWithdrawAllowed = 0
     store.lockups.maxWithdrawOrderAllowed = 0
     store.lockups.orderedWithdrawAmount = 0
+    store.lockups.chosen-lockup.unstake-wait-time = 0
     return cb null if not store.lockups?chosen-lockup?
     lockup-address = store.lockups.chosen-lockup.address
     lockedPoolAddress = store.lockups.chosen-lockup.lockedPool
@@ -216,10 +240,17 @@ module.exports.init = ({ store, web3t}, cb)->
     #
     err, last-epoch <- web3t.velas.Staking.orderWithdrawEpoch(lockedPoolAddress, lockup-address)
     return cb "#{err}" if err?
+    console.log "last-epoch" last-epoch
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?
+    seconds = (last-epoch `minus` staking-epoch) `times` 5
+    return cb err if err?
+    next = moment!.add(seconds, 'seconds').from-now!
+    store.lockups.chosen-lockup.unstake-wait-time = next
+    console.log "staking-epoch" staking-epoch
     res = staking-epoch `minus` last-epoch
     store.lockups.wait-for-epoch-change = if +res is 0 then yes else no
+    store.lockups.waiting-epoch-for-change = +res
     store.lockups.exit-tab =
         | +store.lockups.orderedWithdrawAmount > 0 and store.lockups.wait-for-epoch-change => \exit_wait
         | +store.lockups.orderedWithdrawAmount > 0 => \exit_ordered
