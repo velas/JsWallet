@@ -38,16 +38,6 @@ require! {
             &:last-child
                 &:after
                     content: none !important
-            &:after
-                display: block
-                left: 150px
-                top: 18px
-                position: absolute
-                border-top: 2px solid grey
-                width: 20%
-                content: ""
-                @media(max-width:800px)
-                    content: none
             .step-content
                 font-size: 13px
                 button
@@ -68,16 +58,6 @@ require! {
                     background: #39dcb4
                     animation: pulse_step 1s linear
                     transform-origin: 50% 50%
-                &:after
-                    display: block
-                    left: 150px
-                    top: 18px
-                    position: absolute
-                    border-top: 2px solid #3cd5af
-                    width: 20%
-                    content: ""
-                    @media(max-width:800px)
-                        content: none
         @keyframes pulse_step
             0%
                 transform: scale(0.8)
@@ -165,13 +145,13 @@ order-withdraw-process = (store, web3t)->
                             .pug.note.balance 
                                 span.pug.color #{(store.lockups.orderedWithdrawAmount `div` (10^18) )} 
                                 span.pug.color VLX 
-                                span.pug were requested to unstake and will be able
+                                span.pug were requested to unstake and will be available
                                 span.pug.color #{unstake-wait-time}
                         if unstake-is-allowed then
                             .pug.note.balance 
                                 span.pug.color #{(store.lockups.orderedWithdrawAmount `div` (10^18) )} 
                                 span.pug.color VLX 
-                                span.pug are able to unstake 
+                                span.pug are available to unstake 
 fast-withdraw-process = (store, web3t)->
     lang = get-lang store
     exit = ->
@@ -206,7 +186,9 @@ not-available-right-now = (store)->
         .title.pug
             h3.pug Unstake
         .description.pug
-            .pug The action is not available till next epoch.
+            .pug.balance
+                span.pug The action is not available till next epoch 
+                span.pug.color (#{store.lockups.chosen-lockup.till-next-epoch})
 registry =
     \exit_ordered : order-withdraw-process
     \exit_order   : order-withdraw-process
@@ -243,14 +225,17 @@ module.exports.init = ({ store, web3t}, cb)->
     console.log "last-epoch" last-epoch
     err, staking-epoch <- web3t.velas.Staking.stakingEpoch
     return cb "#{err}" if err?
-    seconds = (staking-epoch `minus` last-epoch) `times` 5
+    err, next-block <- web3t.velas.Staking.stakingEpochEndBlock
+    block = next-block `plus` 1
+    err, current-block <- web3t.velas.web3.getBlockNumber
+    seconds = (block `minus` current-block) `times` 5
     return cb err if err?
     next = moment!.add(seconds, 'seconds').from-now!
+    store.lockups.chosen-lockup.till-next-epoch = next
     store.lockups.chosen-lockup.unstake-wait-time = next
     console.log "staking-epoch" staking-epoch
     res = staking-epoch `minus` last-epoch
-    store.lockups.wait-for-epoch-change = if +res is 0 then yes else no
-    store.lockups.waiting-epoch-for-change = +res
+    store.lockups.wait-for-epoch-change = if +res <= 0 then yes else no
     store.lockups.exit-tab =
         | +store.lockups.orderedWithdrawAmount > 0 and store.lockups.wait-for-epoch-change => \exit_wait
         | +store.lockups.orderedWithdrawAmount > 0 => \exit_ordered
