@@ -194,6 +194,14 @@ require! {
                         .color
                             color: orange
                             font-weight: 600
+                    &.min-height
+                        max-height: 300px
+                        overflow: scroll
+                        table
+                            td,td
+                                padding: 0 3px
+                        .choose-pool
+                            max-width: 50px 
                     &.table-scroll
                         overflow-x: scroll
                         background: linear-gradient(var(--color1) 30%, rgba(50,18,96, 0)), linear-gradient(rgba(50,18,96, 0), var(--color1) 70%) 0 100%, radial-gradient(farthest-side at 50% 0, var(--color2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, var(--color2), rgba(0,0,0,0)) 0 100%

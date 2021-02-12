@@ -143,6 +143,11 @@ require! {
             padding: 10px
             border-radius: 6px
             margin-bottom: 20px
+        .note
+            background: #3cd5af
+            padding: 10px
+            border-radius: 6px
+            margin-bottom: 20px
         .table
             width: 240px
             height: 240px
@@ -463,7 +468,7 @@ module.exports = (store, web3t)->
         .description.pug
             if store.staking.reward?
                 .pug
-                    .alert.pug #{lang.reward-alert}
+                    .note.pug #{lang.reward-alert}
                     .pug.balance
                         span.pug #{lang.available-reward}:
                         span.color.pug #{store.staking.reward}

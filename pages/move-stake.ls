@@ -39,9 +39,25 @@ module.exports = (store, web3t)->
     wallet = wallets.0   
     move-stake = ->
         return if (store.staking.error? and ("#{store.staking.error}" .length > 0)) or store.staking.add.new-address is ""         
-        pool-address = store.staking.chosen-pool.address      
+        pool-address = store.staking.chosen-pool.address
+        my-stake = store.staking.chosen-pool.my-stake `div` (10^18) 
         err, new-pool-address <- try-parse-address store.staking.add.new-address
-        return alert store, err, cb if err?
+        return alert store, err, cb if err?      
+        err, new-pool-staked <- web3t.velas.Staking.stakeAmount new-pool-address, staking-address
+        return cb err if err? 
+        new-pool-stake-rounded = +(new-pool-staked.to-fixed! `div` (10^18))
+        # check if pool FROM has stake at least 10k and move-amount minus From stake is more or eq 10k 
+        if +my-stake < 10000 then
+            return alert store, "Your stake must be more than 10000 VLX in order to move stake to another pool", cb
+        # If try to move NOT FULL stake
+        if (+my-stake - +store.staking.add.move-stake) isnt 0 then
+            # if after moving stake amount, pool FROM amount become LESS then 10k 
+            if (+my-stake - +store.staking.add.move-stake) < 10000 then
+                max-move-amount = Math.max (+my-stake - +store.staking.add.move-stake), 0
+                return alert store, "The pool stake amount after moving #{store.staking.add.move-stake} VLX must be at least 10000 VLX or no stake at all.", cb             
+        # check if new-pool has ZERO (<10k) STAKE & stake amount IS LESS than 10k 
+        if +new-pool-stake-rounded < 10000 and +store.staking.add.move-stake < 10000 then
+            return alert store, "Move stake amount must be more or equal to 10000 VLX.", cb        
         err <- can-make-staking store, web3t
         return alert store, err, cb if err?
         stake = store.staking.add.move-stake
@@ -51,7 +67,8 @@ module.exports = (store, web3t)->
         return alert store, "You cannot move from the pool which is a validator or going to become one. Please use Request Exit feature instead." if +max-allowed is 0  
         return alert store, "Stake must be lower or equal to max allowed #{max-allowed}", cb if +stake > +max-allowed
         return alert store, "Stake must be more then 0", cb if +stake is 0 
-        data = web3t.velas.Staking.move-stake.get-data pool-address, new-pool-address, stake
+        amount = stake `times`(10^18)
+        data = web3t.velas.Staking.move-stake.get-data pool-address, new-pool-address, amount
         to = web3t.velas.Staking.address
         err <- web3t.vlx2.send-transaction { to, data, amount: 0 }
     change-stake = (it)->

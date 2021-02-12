@@ -108,14 +108,29 @@ store =
         is-address-queried: no
         origin: no
     lockups:
-        withdrawAmount: 0  
+        currentTimelock: null    
+        stake-amount-total: 0  
+        exit-tab: '' 
+        wait-for-epoch-change: no   
+        maxWithdrawAllowed: 0   
+        orderedWithdrawAmount: 0  
+        maxWithdrawOrderAllowed: 0
+        withdraw-amount: 0 
+        unstake-amount: 0 
+        current-pool: null    
         lockup-was-choosed: no
-        chosen-lockup: null    
+        chosen-lockup: null 
+        chosen-lockup-action: ''   
         lockupStaking: {}
-        lockupContracts: [] 
+        lockupContracts: []
+        success-cb: null  
+        error: ""    
+        stake: 
+            step: "" 
         add:
             move-stake: 0
-            add-validator-stake: ""  
+            add-validator-stake: "" 
+            add-validator-topup: "" 
     staking:
         reward-info: []
         exit-tab: ''

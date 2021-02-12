@@ -43,7 +43,6 @@ class Parallel
     catch : (cb) !->
         @errors-cb = cb if not !cb? 
     run : (val) ->
-        console.log "val", val   
         try    
             for pair in @tasks
                 const composition = 
