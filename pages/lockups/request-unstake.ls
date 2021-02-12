@@ -133,7 +133,7 @@ order-withdraw-process = (store, web3t)->
         store.lockups.withdrawAmount = it.target.value
     epoch-next = store.dashboard.epoch-next ? 'loading...'
     amount-requested = +store.lockups.orderedWithdrawAmount > 0 and store.lockups.wait-for-epoch-change
-    unstake-is-allowed = +store.lockups.orderedWithdrawAmount > 0
+    unstake-is-allowed = +store.lockups.orderedWithdrawAmount > 0 and not store.lockups.wait-for-epoch-change
     unstake-wait-time = store.lockups.chosen-lockup.unstake-wait-time
     .pug.section
         .title.pug
