@@ -7,3 +7,6 @@ module.exports =
     ResolverAuRaMainnet : "0x80c56f0660A2f4dA65A0b09877c4c85B51e3d723"
     Development         : "0xd89fCa43728eAa5c306c3148DA32dE8A3Ef2963f"
     DevelopmentTest     : "0x4c4955d1a507f59DeC1755C30463825d4BEfE6d1"
+    HomeBridge          : "0x164fC3c7237fC6ADf78411B7B87D54154370AA14"
+    ForeignBridge       : "0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D" 
+    ERC20BridgeToken    : "0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"

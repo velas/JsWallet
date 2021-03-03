@@ -14,8 +14,10 @@ require! {
     \../web3t/plugins/ltc-coin.js : ltc
     \../web3t/plugins/usdt-coin.js : usdt
     \../web3t/plugins/usdt_erc20.json : usdt_erc20
+    #\../web3t/plugins/sol-coin.js : vlx_solana   
+    \../web3t/plugins/vlx_erc20-coin.js : vlx_erc20
 }
-current-configs = {dash, eth, syx, syx2, usdt, usdt_erc20, ltc}
+current-configs = {dash, eth, syx, syx2, usdt, usdt_erc20, ltc, vlx_erc20}
 required-fields = <[ type token enabled ]>
 not-in = (arr, arr2)->
     arr |> any -> arr2.index-of(it) is -1
