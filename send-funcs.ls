@@ -24,6 +24,7 @@ require! {
     \./get-lang.ls
     \./apply-transactions.ls
     \./get-tx-details.ls
+    \ethereumjs-util : {BN}
 }
 module.exports = (store, web3t)->
     return null if not store? or not web3t?
@@ -36,7 +37,7 @@ module.exports = (store, web3t)->
     primary-button-style =
         background: color
     default-button-style = { color }
-    send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price }, cb)->
+    send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price, swap }, cb)->
         { token } = send.coin
         tx-obj =
             account: { wallet.address, wallet.private-key }
@@ -50,6 +51,7 @@ module.exports = (store, web3t)->
             gas: gas
             gas-price: gas-price
             fee-type: fee-type
+            swap: swap    
         err, data <- create-transaction tx-obj
         return cb err if err?
         parts = get-tx-details store
@@ -63,8 +65,6 @@ module.exports = (store, web3t)->
         err, to <- resolve-address { store, address: send.to, coin: send.coin, network: send.network }
         _coin = if send.coin.token is \vlx2 then \vlx else send.coin.token   
         err = "Address is not valid #{_coin} address" if err? and err.index-of "Invalid checksum"
-        #send.propose-escrow = err is "Address not found" and send.coin.token is \eth
-        #return cb err if err?
         resolved =
             | err? => send.to
             | _ => to
@@ -103,6 +103,32 @@ module.exports = (store, web3t)->
         err <- send-to { name, amount-ethers }
     send-anyway = ->
         send-money!
+    to-hex = ->
+        new BN(it)
+    swap-back = -> 
+        return cb null if not store.current.send.amountSend?
+        return if wallet.balance is \...
+        return if send.sending is yes
+        err <- check-enough
+        return send.error = "#{err.message ? err}" if err?
+        send.sending = yes 
+        send.swap = \foreign_to_erc     
+        value = store.current.send.amountSend
+        to = web3t.velas.ForeignBridgeNativeToErc.address 
+        value = to-hex (value `times` (10^18))
+        token-address = web3t.velas.ERC20BridgeToken.address
+        data = web3t.velas.ERC20BridgeToken.transferAndCall.get-data(to, value, "0x")
+        send.data = data
+        send.to = token-address
+        send.amount = 0
+        send.amount-send = 0  
+        err, _data <- perform-send-safe 
+        return cb err if err?
+        notify-form-result send.id, null, _data
+        store.current.last-tx-url = | send.network.api.linktx => send.network.api.linktx.replace \:hash, _data
+            | send.network.api.url => "#{send.network.api.url}/tx/#{_data}"
+        navigate store, web3t, \sent
+        <- web3t.refresh 
     cancel = (event)->
         navigate store, web3t, \wallets
         notify-form-result send.id, "Cancelled by user"
@@ -113,7 +139,9 @@ module.exports = (store, web3t)->
         err <- resolve-address { store, address: _to, coin: send.coin, network: send.network }
         return send.error = err if err? 
         send.error = '' 
-    get-value = (event)->
+    get-value = (event)-> 
+        return null if not event.target?value      
+        return \0 if event.target?value is ""    
         value = event.target.value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
@@ -121,7 +149,7 @@ module.exports = (store, web3t)->
         value2
     amount-change = (event)->
         value = get-value event
-        value = value ? 0
+        return if not value?    
         <- change-amount store, value, no
     perform-amount-eur-change = (value)->
         to-send = calc-crypto-from-eur store, value
@@ -241,6 +269,7 @@ module.exports = (store, web3t)->
     export history
     export cancel
     export send-anyway
+    export swap-back    
     export choose-auto
     export choose-cheap
     export choose-custom
