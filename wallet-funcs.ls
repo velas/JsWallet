@@ -33,6 +33,20 @@ module.exports = (store, web3t, wallets, wallet)->
         network = wallet.coin[store.current.network]
         store.current.invoice <<<< { wallet.coin, wallet, network }
         navigate store, web3t, \invoice
+    swap = (wallet, event)-->
+        return alert "Not yet loaded" if not wallet?
+        return alert "Not yet loaded" if not web3t[wallet.coin.token]?
+        { send-transaction } = web3t[wallet.coin.token]
+        contract-address = if wallet.coin.token is \vlx2 then web3t.velas.HomeBridgeNativeToErc.address else web3t.velas.ForeignBridgeNativeToErc.address 
+        config = { to: contract-address, value: 0, swap: yes}
+        err <- send-transaction config
+    swap-back = (wallet, event)-->
+        return alert "Not yet loaded" if not wallet?
+        return alert "Not yet loaded" if not web3t[wallet.coin.token]?
+        { send-transaction } = web3t[wallet.coin.token]
+        token-address = web3t.velas.ERC20BridgeToken.address
+        err <- send-transaction { to: token-address, amount:0 }
+        return cb err if err?   
     usd-rate = wallet?usd-rate ? 0
     uninstall = (e)->
         e.stop-propagation!
@@ -66,4 +80,4 @@ module.exports = (store, web3t, wallets, wallet)->
     last = 
         | wallets.length < 4 and index + 1 is wallets.length => \last
         | _ => ""
-    { button-style, wallet, active, big, balance, balance-usd, pending, send, expand, usd-rate, last, receive, uninstall }
+    { button-style, wallet, active, big, balance, balance-usd, pending, send, swap, swap-back, expand, usd-rate, last, receive, uninstall }
