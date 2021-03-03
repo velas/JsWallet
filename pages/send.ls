@@ -1,7 +1,7 @@
 require! {
     \react
     \../send-funcs.ls
-    \prelude-ls : { map, find }
+    \prelude-ls : { map, find, keys, filter }
     \../get-primary-info.ls
     \./icon.ls
     \../get-lang.ls
@@ -19,6 +19,9 @@ require! {
     \../history-funcs.ls
     \../components/burger.ls
     \../components/amount-field.ls
+    \../math.ls : { times }
+    \ethereumjs-util : {BN}
+    \../velas/addresses.ls
 }
 .content
     position: relative
@@ -367,8 +370,9 @@ form-group = (title, style, content)->
         label.pug.control-label(style=style) #{title}
         content!
 send = ({ store, web3t })->
-    { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
+    { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, swap-back, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
+    send.sending = false
     { go-back } = history-funcs store, web3t
     return go-back! if not wallet?
     round-money = (val)->
@@ -429,8 +433,37 @@ send = ({ store, web3t })->
         send.error = ''
         go-back!  
     makeDisabled = send.amount-send <= 0
-    token = store.current.send.coin.token 
+    token = store.current.send.coin.token
+    send-func = if token is \vlx_erc20 then swap-back else send-anyway
     disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1  
+    is-contract = (address)->
+        return no if not address?
+        addresss = "#{address}".trim!
+        return no if addresss is ""  
+        found = 
+            addresses 
+                |> keys 
+                |> find (it)->
+                    addresses[it] is addresss
+        found? and found.length > 0
+    get-contract-name = (address)->
+        result = 
+            addresses 
+                |> keys 
+                |> filter (it)->
+                    addresses[it] is address
+        result[0]
+    get-recipient = (address)->
+        return "" if not address? or "#{address}".trim! is ""
+        address = "#{address}".trim!   
+        if is-contract(address)
+            recipient = get-contract-name(address)
+            if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
+                recipient = "TokenBridge: " + recipient
+            return recipient 
+        address
+    disabled-recipient-input = is-contract(send.to) 
+    recipient = get-recipient(send.to)
     .pug.content
         .pug.title(style=border-header)
             .pug.header(class="#{show-class}") #{lang.send}
@@ -470,7 +503,7 @@ send = ({ store, web3t })->
                 form-group lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
-                        input.pug(type='text' style=input-style on-change=recipient-change value="#{send.to}" placeholder="#{store.current.send-to-mask}" id="send-recipient")
+                        input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" disabled=disabled-recipient-input)
                 form-group lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
@@ -519,7 +552,7 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
             .pug.button-container
                 .pug.buttons
-                    button { store, text: \send , on-click: send-anyway , loading: send.sending, type: \primary, error: send.error, makeDisabled: makeDisabled, id: "send-confirm" }
+                    button { store, text: \send , on-click: send-func , loading: send.sending, type: \primary, error: send.error, makeDisabled: makeDisabled, id: "send-confirm" }
                     button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
@@ -534,4 +567,5 @@ module.exports.init = ({ store, web3t }, cb)->
     return cb null if not web3t[wallet.coin.token]?
     { send-transaction } = web3t[wallet.coin.token]
     err <- send-transaction { to: "", value: 0 }
+    send.sending = false
     cb null
