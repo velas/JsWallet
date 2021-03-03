@@ -107,6 +107,8 @@ store =
     interop:
         is-address-queried: no
         origin: no
+    HomeBridgeNativeToErc: {}
+    ForeignBridgeNativeToErc: {}   
     lockups:
         currentTimelock: null    
         stake-amount-total: 0  
