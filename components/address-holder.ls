@@ -6,6 +6,7 @@ require! {
     \../icons.ls
     \./identicon.ls
     \./copy.ls
+    \../contracts.ls
 }
 .address-holder
     @import scheme
@@ -123,6 +124,12 @@ module.exports = ({ store, wallet, type })->
             | store.current.address-suffix is '' and wallet.address2  => "2"
             | store.current.address-suffix is '2' and wallet.address3 => '3'
             | _ => ""
+    get-address = (wallet, address-suffix="")->
+        wallet["address#{address-suffix}"]
+    address = get-address(wallet, address-suffix)
+    #contract = contracts.get-contract-by-name(address)
+    is-contract = contracts.is-contract(address)
+    console.log "#{address} is contract" is-contract    
     .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details)
         identicon { store, address: address-title }
         span.pug(style=input)
@@ -132,8 +139,10 @@ module.exports = ({ store, wallet, type })->
             else
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
-            if address-display.length < 12
+            if is-contract
                 a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
+            else if address-display.length < 12 
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}    
             else
                 MiddleEllipsis.pug(key=address-title)
                     a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}

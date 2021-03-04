@@ -14,6 +14,7 @@ abis =
     ERC20BridgeToken: require("./contracts/ERC20BridgeToken.json").abi    
 module.exports = (store)->
     web3 = velas-web3 store
+    network = store.current.network
     Development-contract-address =
         if store.current.network is \testnet
             addresses.DevelopmentTest
@@ -24,6 +25,21 @@ module.exports = (store)->
             addresses.ResolverAuRaTestnet
         else
             addresses.ResolverAuRaMainnet
+    homeBridgeAddress = 
+        if network is \testnet
+            addresses.HomeBridgeTest    
+        else
+            addresses.HomeBridge
+    foreignBridgeAddress = 
+        if network is \testnet
+            addresses.ForeignBridgeTest    
+        else
+            addresses.ForeignBridge 
+    ERC20BridgeToken = 
+        if network is \testnet
+            addresses.ERC20BridgeTokenTest    
+        else
+            addresses.ERC20BridgeToken       
     api =
         Staking      : web3.eth.contract(abis.Staking).at(addresses.Staking)
         StakingLockup: web3.eth.contract(abis.Staking)
@@ -33,7 +49,7 @@ module.exports = (store)->
         Resolver     : web3.eth.contract(abis.Resolver).at(resolver-contract-address)
         Timelock     : web3.eth.contract(abis.Timelock) 
         web3         : web3.eth
-        HomeBridgeNativeToErc : web3.eth.contract(abis.HomeBridgeNativeToErc).at(addresses.HomeBridge)
-        ForeignBridgeNativeToErc : web3.eth.contract(abis.ForeignBridgeNativeToErc).at(addresses.ForeignBridge)
-        ERC20BridgeToken : web3.eth.contract(abis.ERC20BridgeToken).at(addresses.ERC20BridgeToken) 
+        HomeBridgeNativeToErc : web3.eth.contract(abis.HomeBridgeNativeToErc).at(homeBridgeAddress)
+        ForeignBridgeNativeToErc : web3.eth.contract(abis.ForeignBridgeNativeToErc).at(foreignBridgeAddress)
+        ERC20BridgeToken : web3.eth.contract(abis.ERC20BridgeToken).at(ERC20BridgeToken) 
     api

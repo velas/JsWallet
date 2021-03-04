@@ -1,6 +1,7 @@
 require! {
     \prelude-ls : { map, filter, obj-to-pairs }
     \./velas/addresses.ls
+    \./contracts.ls    
 }
 get-address-label = (wallet)->
     | wallet.coin.token in <[ xem eos ]> => \account
@@ -30,10 +31,5 @@ export get-address-display = (wallet, address-suffix) ->
         return address
     res = to-eth-address address
     if addressSuffix is ""
-        res =
-            addresses
-                |> obj-to-pairs
-                |> filter -> it.1 is res
-                |> map -> it.0
-                |> -> if it.length is 0 then address else it.0
+        res = contracts.get-contract-name(res)        
     res
