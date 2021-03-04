@@ -22,6 +22,7 @@ require! {
     \../math.ls : { times }
     \ethereumjs-util : {BN}
     \../velas/addresses.ls
+    \../contracts.ls
 }
 .content
     position: relative
@@ -435,34 +436,17 @@ send = ({ store, web3t })->
     makeDisabled = send.amount-send <= 0
     token = store.current.send.coin.token
     send-func = if token is \vlx_erc20 then swap-back else send-anyway
-    disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1  
-    is-contract = (address)->
-        return no if not address?
-        addresss = "#{address}".trim!
-        return no if addresss is ""  
-        found = 
-            addresses 
-                |> keys 
-                |> find (it)->
-                    addresses[it] is addresss
-        found? and found.length > 0
-    get-contract-name = (address)->
-        result = 
-            addresses 
-                |> keys 
-                |> filter (it)->
-                    addresses[it] is address
-        result[0]
+    disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1     
     get-recipient = (address)->
         return "" if not address? or "#{address}".trim! is ""
         address = "#{address}".trim!   
-        if is-contract(address)
-            recipient = get-contract-name(address)
+        if contracts.is-contract(address)
+            recipient = contracts.get-contract-name(address)
             if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
                 recipient = "TokenBridge: " + recipient
             return recipient 
         address
-    disabled-recipient-input = is-contract(send.to) 
+    disabled-recipient-input = contracts.is-contract(send.to) 
     recipient = get-recipient(send.to)
     .pug.content
         .pug.title(style=border-header)
