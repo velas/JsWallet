@@ -17,7 +17,7 @@ require! {
 }
 .wallet-detailed
     @import scheme
-    height: 200px
+    height: 240px
     box-sizing: border-box
     $tablet: 1200px
     >.wallet-part
@@ -35,19 +35,21 @@ require! {
                 margin: 0 5px 0 !important
                 &:first-child
                     margin-left: 0 !important
-            .wallet-swap
-                filter: invert(1);
+            .wallet-swap img
+                filter: invert(1)
         &.left
             text-align: left
             @media screen and (max-width: $tablet)
                 width: 60%
             >.buttons
                 margin-top: 15px
+                width: calc((130px * 2) + 10px)
                 .btn
                     margin: 0
                     width: 130px
                     &:last-child
                         margin-left: 10px
+                        margin: 0 0 5px !important
             >.details
                 display: none
             .uninstall
@@ -201,11 +203,6 @@ module.exports = (store, web3t, wallets, wallet)-->
         background: style.app.menu
     text=
         color: style.app.text
-    flex=
-        display: flex
-    flex-buttons=
-        flex: 1
-        margin: 0 6px 0
     color-label=
         background: style.app.primary2
         background-color: style.app.primary2-spare
@@ -237,19 +234,24 @@ module.exports = (store, web3t, wallets, wallet)-->
                                 span.pug -#{ pending }
             address-holder { store, wallet, type: \bg }
             if token is \VLX_ERC20 then
-                .buttons.with-swap.pug(style=flex)
-                    button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
-                    button { store, on-click=swap-back-click, text: \swap , icon: \swap  , type : \primary, id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
-                    button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
+                .buttons.pug
+                    .with-swap.pug
+                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
+                    .with-swap.pug
+                        button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
+                        button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
             else if token is \VLX2 then
-                .buttons.with-swap.pug(style=flex)
-                    button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
-                    button { store, on-click=swap-click, text: \swap , icon: \swap  , type : \primary, id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
-                    button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }  
+                .buttons.pug
+                    .with-swap.pug
+                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
+                    .with-swap.pug
+                        button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
+                        button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
             else
                 .buttons.pug
-                    button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
-                    button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
+                    .with-swap.pug
+                        button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
+                        button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
             .details.pug
                 .price.pug(class="#{placeholder}" title="#{balance-usd}") $#{ round-human balance-usd }
                 .name.pug(class="#{placeholder}" title="#{usd-rate}") $#{ round-human usd-rate}

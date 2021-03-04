@@ -103,6 +103,8 @@ require! {
             text-overflow: ellipsis
             @media screen and (min-width: 801px)
                 padding-top: 5px
+            @media screen and (max-width: 800px)
+                width: 15%
             >*
                 display: inline-block
             >.img
@@ -148,7 +150,8 @@ require! {
                 padding-left: 4px
                 position: relative
             @media screen and (max-width: 800px)
-                width: 35%
+                width: 50%
+                text-align: left
             >.balance
                 &:last-child
                     font-weight: bold
@@ -161,6 +164,8 @@ require! {
         >.top-right
             width: 40%
             text-align: right
+            .wallet-swap img
+                filter: invert(1)
             .icon
                 vertical-align: sub
                 .icon-svg-create
@@ -204,12 +209,12 @@ require! {
                     line-height: 30px
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
-    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
+    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, swap, swap-back, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
         | store.current.refreshing => \...
-        | _ => \ "#{lang.hide}"
+        | _ => "#{lang.hide}"
     wallet-style=
         color: style.app.text
     border-style =
@@ -256,8 +261,11 @@ module.exports = (store, web3t, wallets, wallet)-->
     #    #store.current.token-migration = "V123"
     receive-click = receive(wallet)
     send-click = send(wallet)
+    swap-click = swap(wallet)
+    swap-back-click = swap-back(wallet)
     token = wallet.coin.token.to-upper-case!
     token-display = if token == \VLX2 then \VLX else token
+    makeDisabled = store.current.refreshing
     .wallet.pug(class="#{big}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
@@ -290,6 +298,10 @@ module.exports = (store, web3t, wallets, wallet)-->
                             img.icon.pug(src="#{icons.open}" style=btn-icon)
                     span.pug.icon(on-click=expand)
                         img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
+                if token is \VLX_ERC20 then
+                    button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
+                else if token is \VLX2 then
+                    button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
                 button { store, on-click=send-click, text: \send , icon: \send , type: \secondary }
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary }
         .wallet-middle.pug(style=border)

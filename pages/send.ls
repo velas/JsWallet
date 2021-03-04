@@ -136,7 +136,7 @@ require! {
                 .identicon
                     ~ span
                         background: var(--input)
-                &:nth-child(2)
+                &:nth-child(2), &:nth-child(3)
                     div
                         position: relative
                         img
@@ -153,6 +153,24 @@ require! {
                     padding-top: 5px
                     padding-left: $label-padding
                     font-size: $label-font
+                &.network
+                    div
+                        position: relative
+                    .button
+                        width: 12px
+                        height: 16px
+                        display: inline-block
+                        padding: 9px
+                        border-radius: var(--border-btn)
+                        cursor: pointer
+                        vertical-align: top
+                        position: absolute
+                        &.left
+                            left: 0
+                        &.right
+                            right: 0
+                        svg
+                            vertical-align: inherit !important
                 margin-top: 4px
                 .address
                     padding: 0px
@@ -370,6 +388,27 @@ form-group = (title, style, content)->
     .pug.form-group
         label.pug.control-label(style=style) #{title}
         content!
+choose-network = (store, web3t)->
+    style = get-primary-info store
+    style2 = color: "#{style.app.icon}"
+    input-style2 =
+        background: style.app.input
+        color: style.app.text
+        border: "0"
+    button-primary2-style=
+        border: "1px solid #{style.app.wallet}"
+        color: style.app.text
+        background: style.app.primary2
+        background-color: style.app.primary2-spare
+    .pug.form-group.network
+        label.pug.control-label(style=style2) Choose Network
+        .pug
+            span.pug.button.left(on-click style=button-primary2-style)
+                icon \ChevronLeft, 15
+            span.pug.bold
+                input.pug.change-index(value style=input-style2 on-change)
+            span.pug.button.right(on-click style=button-primary2-style)
+                icon \ChevronRight, 15
 send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, swap-back, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
@@ -402,6 +441,11 @@ send = ({ store, web3t })->
         color: style.app.text2
         background: style.app.primary3
         background-color: style.app.primary3-spare
+    button-primary2-style=
+        border: "1px solid #{style.app.wallet}"
+        color: style.app.text
+        background: style.app.primary2
+        background-color: style.app.primary2-spare
     crypto-background =
         background: style.app.wallet
         width: "50%"
@@ -484,6 +528,7 @@ send = ({ store, web3t })->
                 form-group lang.from, icon-style, ->
                     .address.pug(style=border-style)
                         address-holder { store, wallet }
+                choose-network store, web3t
                 form-group lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
