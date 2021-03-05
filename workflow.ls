@@ -85,10 +85,13 @@ go = (fns, val) -->
     if !o? then return
     const process-val = (nval)->
         const next = go fns
+        #console.log "[process-val] next" next 
         if typeof! nval is \Object and typeof! nval.then is \Function
             nval.then next
         else 
-            next nval
+            #console.log "nval isnt Object or isnt function" nval
+            #console.log "next" next 
+            next nval   
     switch (typeof! o)
         case \Function
             val |> o |> process-val
