@@ -15,8 +15,8 @@ create-send =->
     id: ""
     to: ""
     chosen-network: 
-        testnet: "ropsten"
-        mainnet: "mainnet"    
+        testnet: "vlx_erc20"
+        mainnet: "vlx_erc20"    
     details: yes
     propose-escrow: no
     address: ''

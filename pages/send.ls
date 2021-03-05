@@ -19,6 +19,7 @@ require! {
     \../history-funcs.ls
     \../components/burger.ls
     \../components/amount-field.ls
+    \../components/sliders/network-slider.ls
     \../math.ls : { times }
     \ethereumjs-util : {BN}
     \../velas/addresses.ls
@@ -149,7 +150,7 @@ require! {
                             margin: 0px
                         input
                             text-align: center
-                >.control-label
+                .control-label
                     padding-top: 5px
                     padding-left: $label-padding
                     font-size: $label-font
@@ -384,31 +385,10 @@ require! {
                     &:hover
                         background: rgba(#6CA7ED, 0.2)
                         opacity: .9
-form-group = (title, style, content)->
-    .pug.form-group
+form-group = (classes, title, style, content)->
+    .pug.form-group(class="#{classes}")
         label.pug.control-label(style=style) #{title}
         content!
-choose-network = (store, web3t)->
-    style = get-primary-info store
-    style2 = color: "#{style.app.icon}"
-    input-style2 =
-        background: style.app.input
-        color: style.app.text
-        border: "0"
-    button-primary2-style=
-        border: "1px solid #{style.app.wallet}"
-        color: style.app.text
-        background: style.app.primary2
-        background-color: style.app.primary2-spare
-    .pug.form-group.network
-        label.pug.control-label(style=style2) Choose Network
-        .pug
-            span.pug.button.left(on-click style=button-primary2-style)
-                icon \ChevronLeft, 15
-            span.pug.bold
-                input.pug.change-index(value style=input-style2 on-change)
-            span.pug.button.right(on-click style=button-primary2-style)
-                icon \ChevronRight, 15
 send = ({ store, web3t })->
     { token, name, fee-token, network, send, wallet, pending, recipient-change, amount-change, amount-usd-change, amount-eur-change, use-max-amount, show-data, show-label, history, cancel, send-anyway, swap-back, choose-auto, round5edit, round5, is-data, encode-decode, change-amount, invoice } = send-funcs store, web3t
     return send-contract { store, web3t } if send.details is no
@@ -481,6 +461,7 @@ send = ({ store, web3t })->
     token = store.current.send.coin.token
     send-func = if token is \vlx_erc20 then swap-back else send-anyway
     disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1     
+    receiver-is-contract = contracts.is-contract(send.to)
     get-recipient = (address)->
         return "" if not address? or "#{address}".trim! is ""
         address = "#{address}".trim!   
@@ -525,15 +506,22 @@ send = ({ store, web3t })->
                                     icon \Inbox, 20
                                 span.pug.more-text(style=more-text) #{lang.history}
             form.pug
-                form-group lang.from, icon-style, ->
+                form-group \sender, lang.from, icon-style, ->
                     .address.pug(style=border-style)
                         address-holder { store, wallet }
-                choose-network store, web3t
-                form-group lang.to, icon-style, ->
+                .pug.slider.network.form-group
+                    if token is \vlx2 and receiver-is-contract then
+                        slider-style = {
+                            background: style.app.input
+                            color: style.app.text
+                            border: "0"
+                        }     
+                        network-slider { store, style=slider-style }
+                form-group \receiver, lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
                         input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" disabled=disabled-recipient-input)
-                form-group lang.amount, icon-style, ->
+                form-group \send-amount, lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
                             .input-wrapper.pug(style=input-style)
@@ -560,7 +548,7 @@ send = ({ store, web3t })->
                                     span.pug.pending #{'(' + pending + ' ' + lang.pending + ')'}
                         .pug.control-label.not-enough.text-left(title="#{send.error}") #{send.error}
                 if is-data
-                    form-group 'Data', icon-style, ->
+                    form-group \contract-data, 'Data', icon-style, ->
                         .pug.smart-contract(style=input-style) #{show-data!}
                 trx-fee { store, web3t, wallet }
                 table.pug(style=border-style)
@@ -587,6 +575,15 @@ module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
     { wallet } = send-funcs store, web3t
     return cb null if not wallet?
+    is-contract = contracts.is-contract(send.to)
+    if is-contract then
+        network-type = store.current.network
+        networks = wallet.coin["#{network-type}s"]
+        store.current.send.networks = networks
+        network-keys = networks |> keys
+        default-network = networks[network-keys.0].name
+        chosen-network = store.current.send.chosen-network["#{network-type}"]
+        store.current.send.chosen-network["#{network-type}"] = default-network if chosen-network is ""  
     { wallets } = wallets-funcs store, web3t
     current-wallet =
         wallets |> find (-> it.coin.token is wallet.coin.token)
