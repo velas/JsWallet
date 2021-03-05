@@ -14,7 +14,9 @@ saved-seed = seedmem.saved!
 create-send =->
     id: ""
     to: ""
-    chosen-network: ""
+    chosen-network: 
+        testnet: "ropsten"
+        mainnet: "mainnet"    
     details: yes
     propose-escrow: no
     address: ''
