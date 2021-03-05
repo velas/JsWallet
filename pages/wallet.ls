@@ -162,7 +162,7 @@ require! {
                 .title-balance
                     display: none
         >.top-right
-            width: 40%
+            width: 40%  
             text-align: right
             .wallet-swap img
                 filter: invert(1)
@@ -175,6 +175,9 @@ require! {
                     opacity: .3
             @media screen and (max-width: 800px)
                 width: 35%
+                display: flex
+                float: right
+                flex-direction: row-reverse
             >button
                 outline: none
                 margin-bottom: 5px
@@ -292,18 +295,16 @@ module.exports = (store, web3t, wallets, wallet)-->
                             .pug.pending
                                 span.pug -#{ pending }
             .top-right.pug
-                if store.current.device is \desktop
-                    if no
-                        button.btn-open.pug(on-click=expand style=button-primary3-style)
-                            img.icon.pug(src="#{icons.open}" style=btn-icon)
+                if no and store.current.device is \desktop                    
                     span.pug.icon(on-click=expand)
                         img.icon-svg-create.pug(src="#{icons.arrow-down}" style=icon-color)
-                if token is \VLX_ERC20 then
-                    button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
-                else if token is \VLX2 then
-                    button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
+                            .pug expand
                 button { store, on-click=send-click, text: \send , icon: \send , type: \secondary }
                 button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary }
+                if token is \VLX_ERC20 then
+                    button {    store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
+                else if token is \VLX2 then
+                    button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
         .wallet-middle.pug(style=border)
             address-holder { store, wallet, type: \bg }
             if wallet.coin.token not in <[ btc vlx2 ]>
