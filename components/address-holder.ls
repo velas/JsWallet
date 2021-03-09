@@ -112,7 +112,7 @@ module.exports = ({ store, wallet, type })->
         | store.current.refreshing is no => get-address-title wallet, address-suffix
         | _ => "..."
     address-display =
-        | store.current.refreshing is no => get-address-display wallet, address-suffix
+        | store.current.refreshing is no => get-address-display store, wallet, address-suffix
         | _ => "..."
     show-details = ->
         store.current.hovered-address.address = wallet.address
@@ -129,7 +129,6 @@ module.exports = ({ store, wallet, type })->
     address = get-address(wallet, address-suffix)
     #contract = contracts.get-contract-by-name(address)
     is-contract = contracts.is-contract(address)
-    console.log "#{address} is contract" is-contract    
     .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details)
         identicon { store, address: address-title }
         span.pug(style=input)

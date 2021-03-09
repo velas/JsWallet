@@ -25,11 +25,11 @@ export get-address-title = (wallet, address-suffix)->
         | typeof! address is \Null => "..."
         | _ => "n/a"
     res
-export get-address-display = (wallet, address-suffix) ->
+export get-address-display = (store, wallet, address-suffix) ->
     address = get-address(wallet, address-suffix)
     if not address.starts-with \V
         return address
     res = to-eth-address address
     if addressSuffix is ""
-        res = contracts.get-contract-name(res)        
+        res = contracts.get-contract-name(store, res)        
     res

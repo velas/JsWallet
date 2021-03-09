@@ -1,24 +1,34 @@
 require! {
     \prelude-ls : { map, find, keys, filter }
     \./velas/addresses.ls
+    \./math.ls : { div }
 }
-export get-contract-by-name = (name)->
-    addresses[name] 
-export get-contract-name = (address)->
+export get-contract-by-name = (store, name)->
+    network = store.current.network
+    addresses[network][name] 
+export get-contract-name = (store, address)->
     #res = to-eth-address address
+    network = store.current.network
     result = 
-        addresses 
+        addresses[network] 
             |> keys 
             |> filter (it)->
-                (addresses[it] ? "").to-lower-case! is address.to-lower-case!
+                (addresses[network][it] ? "").to-lower-case! is address.to-lower-case!
     result[0] ? address
-export is-contract = (address)->
+export is-contract = (store, address)->
     return no if not address?
+    network = store.current.network
     addresss = "#{address}".trim!
     return no if addresss is ""  
     found = 
-        addresses 
+        addresses[network] 
             |> keys 
             |> find (it)->
-                addresses[it] is addresss
+                addresses[network][it] is addresss
     found? and found.length > 0
+export get-home-network-fee = ({store, web3t}, address, cb)->
+    name = get-contract-name(store, address)
+    return cb null if name isnt "ForeignBridge"
+    err, fee <- web3t.velas.HomeBridgeNativeToErc.getHomeFee!
+    return cb err if err?
+    return cb null, (fee `div` (10^18))
