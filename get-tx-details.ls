@@ -8,8 +8,9 @@ module.exports = (store, web3t)->
     { send } = store.current
     decimalsConfig = send.network.decimals
     is-data = (send.data ? "").length > 0
+    network = store.current.network
     contract =
-        addresses
+        addresses[network]
             |> obj-to-pairs
             |> filter -> it.1 is send.to
             |> map -> it.0
