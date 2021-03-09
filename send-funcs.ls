@@ -39,6 +39,9 @@ module.exports = (store, web3t)->
     default-button-style = { color }
     send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price, swap }, cb)->
         { token } = send.coin
+        current-network = store.current.network
+        is-erc20 = (['vlx_erc20', 'eth', 'etc', 'sprkl'].index-of(token)) >= 0   
+        chain-id = if current-network is \testnet and is-erc20 then 3 else 1   
         tx-obj =
             account: { wallet.address, wallet.private-key }
             recipient: to
@@ -51,7 +54,8 @@ module.exports = (store, web3t)->
             gas: gas
             gas-price: gas-price
             fee-type: fee-type
-            swap: swap    
+            swap: swap
+        tx-obj <<<< { chain-id } if is-erc20  
         err, data <- create-transaction tx-obj
         return cb err if err?
         parts = get-tx-details store
@@ -105,7 +109,9 @@ module.exports = (store, web3t)->
         send-money!
     to-hex = ->
         new BN(it)
-    swap-back = -> 
+    swap-back = ->
+        cb = console.log  
+        console.log "[swap-back 1]"    
         return cb null if not store.current.send.amountSend?
         return if wallet.balance is \...
         return if send.sending is yes
