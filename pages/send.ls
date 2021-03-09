@@ -461,17 +461,17 @@ send = ({ store, web3t })->
     token = store.current.send.coin.token
     send-func = if token is \vlx_erc20 then swap-back else send-anyway
     disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1     
-    receiver-is-contract = contracts.is-contract(send.to)
+    receiver-is-contract = contracts.is-contract(store, send.to)
     get-recipient = (address)->
         return "" if not address? or "#{address}".trim! is ""
         address = "#{address}".trim!   
-        if contracts.is-contract(address)
-            recipient = contracts.get-contract-name(address)
+        if contracts.is-contract(store, address)
+            recipient = contracts.get-contract-name(store, address)
             if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
                 recipient = "TokenBridge: " + recipient
             return recipient 
         address
-    disabled-recipient-input = contracts.is-contract(send.to) 
+    disabled-recipient-input = contracts.is-contract(store, send.to) 
     recipient = get-recipient(send.to)
     .pug.content
         .pug.title(style=border-header)
@@ -567,15 +567,25 @@ send = ({ store, web3t })->
                                     img.label-coin.pug(src="#{send.coin.image}")
                                     span.pug(title="#{send.amount-send-fee}") #{fee-token-display}
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
+                        if +store.current.send.foreign-network-fee > 0
+                            tr.pug.orange
+                                td.pug Network Fee
+                                td.pug
+                                    span.pug(title="#{send.amount-send-fee}") #{send.foreign-network-fee}
+                                        img.label-coin.pug(src="#{send.coin.image}")
+                                        span.pug(title="#{send.foreign-network-fee}") #{fee-token-display}
+                                    .pug.usd $ #{round5 (send.amount-send-foreign-fee-usd ? 0)}
             .pug.button-container
                 .pug.buttons
                     button { store, text: \send , on-click: send-func , loading: send.sending, type: \primary, error: send.error, makeDisabled: makeDisabled, id: "send-confirm" }
                     button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
+    console.log "send [init]"
     { wallet } = send-funcs store, web3t
     return cb null if not wallet?
-    is-contract = contracts.is-contract(send.to)
+    store.current.send.foreign-network-fee = 0
+    is-contract = contracts.is-contract(store, send.to)
     if is-contract then
         network-type = store.current.network
         networks = wallet.coin["#{network-type}s"]
@@ -587,10 +597,15 @@ module.exports.init = ({ store, web3t }, cb)->
     { wallets } = wallets-funcs store, web3t
     current-wallet =
         wallets |> find (-> it.coin.token is wallet.coin.token)
-    return cb null if current-wallet.address is wallet.address
+    err, fee <- contracts.get-home-network-fee({store, web3t}, store.current.send.to)
+    return cb err if err?
+    store.current.send.foreign-network-fee = fee
     { wallet } = send-funcs store, web3t
+    if fee? then
+        store.current.send.amount-send-foreign-fee-usd = wallet.usdRate `times` fee
+    return cb null if current-wallet.address is wallet.address
     return cb null if not wallet?
-    return cb null if not web3t[wallet.coin.token]?
+    return cb null if not web3t[wallet.coin.token]?   
     { send-transaction } = web3t[wallet.coin.token]
     err <- send-transaction { to: "", value: 0 }
     send.sending = false
