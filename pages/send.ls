@@ -569,7 +569,7 @@ send = ({ store, web3t })->
                                 .pug.usd $ #{round5 send.amount-send-fee-usd}
                         if +store.current.send.foreign-network-fee > 0
                             tr.pug.orange
-                                td.pug Network Fee
+                                td.pug Token bridge fee
                                 td.pug
                                     span.pug(title="#{send.amount-send-fee}") #{send.foreign-network-fee}
                                         img.label-coin.pug(src="#{send.coin.image}")
