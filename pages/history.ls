@@ -787,14 +787,6 @@ render-transaction = (store, web3t, tran)-->
                 .pug(title="#{amount}" style=amount-pending)
                     span.sign.direction.pug #{sign(type)}
                     amount-beautify amount, 8
-                if no
-                    .pug(title="#{amount}" style=amount-pending)
-                        #span.sign.direction.pug #{sign(type)}
-                        #amount-beautify amount, 8
-                if no
-                    .pug.gray(style=lightText)
-                        span.pug.fee #{lang.fee}:
-                        amount-beautify fee, 10
             .cell.pug.status(style=menu-style)
                 if pending is yes
                     span.pug
