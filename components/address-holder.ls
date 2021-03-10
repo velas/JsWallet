@@ -127,7 +127,6 @@ module.exports = ({ store, wallet, type })->
     get-address = (wallet, address-suffix="")->
         wallet["address#{address-suffix}"]
     address = get-address(wallet, address-suffix)
-    #contract = contracts.get-contract-by-name(address)
     is-contract = contracts.is-contract(store, address)
     .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details)
         identicon { store, address: address-title }
