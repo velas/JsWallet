@@ -128,7 +128,7 @@ module.exports = ({ store, wallet, type })->
         wallet["address#{address-suffix}"]
     address = get-address(wallet, address-suffix)
     #contract = contracts.get-contract-by-name(address)
-    is-contract = contracts.is-contract(address)
+    is-contract = contracts.is-contract(store, address)
     .address-holder.pug(on-mouse-enter=show-details on-mouse-leave=hide-details)
         identicon { store, address: address-title }
         span.pug(style=input)
@@ -139,9 +139,8 @@ module.exports = ({ store, wallet, type })->
                 a.browse.pug(target="_blank" href="#{address-link}")
                     img.pug(src="#{icons.browse-open}" style=icon1)
             if is-contract
-                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
-            else if address-display.length < 12 
-                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}    
+                address-display = contracts.get-contract-name(store, address)
+                a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}     
             else
                 MiddleEllipsis.pug(key=address-title)
                     a.pug(target="_blank" href="#{address-link}" class="#{active}") #{address-display}
