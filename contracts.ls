@@ -2,6 +2,7 @@ require! {
     \prelude-ls : { map, find, keys, filter }
     \./velas/addresses.ls
     \./math.ls : { div }
+    \./swaping/addresses.ls : \swapping-addresses
 }
 export get-contract-by-name = (store, name)->
     network = store.current.network
@@ -24,7 +25,18 @@ export is-contract = (store, address)->
         addresses[network] 
             |> keys 
             |> find (it)->
-                addresses[network][it] is addresss
+                addresses[network][it].to-lower-case! is addresss.to-lower-case!
+    found? and found.length > 0
+export is-swap-contract = (store, address)->
+    return no if not address?
+    network = store.current.network
+    addresss = "#{address}".trim!
+    return no if addresss is ""  
+    found = 
+        swapping-addresses[network] 
+            |> keys 
+            |> find (it)->
+                swapping-addresses[network][it].to-lower-case! is addresss.to-lower-case!
     found? and found.length > 0
 export get-home-network-fee = ({store, web3t}, address, cb)->
     name = get-contract-name(store, address)
