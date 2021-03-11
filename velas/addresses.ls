@@ -6,7 +6,7 @@ module.exports =
         Upgrade             : "0x4000000000000000000000000000000000000001"
         ResolverAuRa        : "0x80c56f0660A2f4dA65A0b09877c4c85B51e3d723"
         Development         : "0xd89fCa43728eAa5c306c3148DA32dE8A3Ef2963f"
-        HomeBridge          : "0x593579578f10A730714b047f63D48A577aAB2Bcf"
+        HomeBridge          : "0x38E20F6224449eCB50A81188147cbf990a00eA44"
         ForeignBridge       : "0x1E4f16C92026B96D5bb42045993657d8b39253E9"
         ERC20BridgeToken    : "0x8C543AED163909142695f2d2aCd0D55791a9Edb9"
     testnet:
@@ -16,6 +16,6 @@ module.exports =
         Upgrade             : "0x4000000000000000000000000000000000000001"
         ResolverAuRa        : "0x9285bea804a386C650afAA63dc6e39e97C9f3f26"
         Development         : "0x4c4955d1a507f59DeC1755C30463825d4BEfE6d1"
-        HomeBridge          : "0x7f07eF9d72F941809Db8411cA0eDe287f91B75c7"
-        ForeignBridge       : "0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52" 
-        ERC20BridgeToken    : "0x82237607a996A545Bf1e0b447050aa73855300b0"
+        HomeBridge          : "0x57C7f6CD50a432943F40F987a1448181D5B11307"
+        ForeignBridge       : "0xBDeDd09D5283fB38EFF898E3859AbAE96B712aF9" 
+        ERC20BridgeToken    : "0xfEFF2e74eC612A288Ae55fe9F6e40c52817a1B6C"
