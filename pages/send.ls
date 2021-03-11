@@ -461,17 +461,17 @@ send = ({ store, web3t })->
     token = store.current.send.coin.token
     send-func = if token is \vlx_erc20 then swap-back else send-anyway
     disabled = not send.to? or send.to.trim!.length is 0 or (send.error.index-of "address") > -1     
-    receiver-is-contract = contracts.is-contract(store, send.to)
+    receiver-is-swap-contract = contracts.is-swap-contract(store, send.to)
     get-recipient = (address)->
         return "" if not address? or "#{address}".trim! is ""
-        address = "#{address}".trim!   
-        if contracts.is-contract(store, address)
-            recipient = contracts.get-contract-name(store, address)
-            if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
-                recipient = "TokenBridge: " + recipient
+        address = "#{address}".trim!  
+        if receiver-is-swap-contract
+            recipient = to-eth-address(wallet.address)
+            #if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
+                #recipient = "TokenBridge: " + recipient
             return recipient 
         address
-    disabled-recipient-input = contracts.is-contract(store, send.to) 
+    disabled-recipient-input = contracts.is-swap-contract(store, send.to) 
     recipient = get-recipient(send.to)
     .pug.content
         .pug.title(style=border-header)
@@ -510,7 +510,7 @@ send = ({ store, web3t })->
                     .address.pug(style=border-style)
                         address-holder { store, wallet }
                 .pug.slider.network.form-group
-                    if token is \vlx2 and receiver-is-contract then
+                    if token is \vlx2 and receiver-is-swap-contract then
                         slider-style = {
                             background: style.app.input
                             color: style.app.text
@@ -520,7 +520,7 @@ send = ({ store, web3t })->
                 form-group \receiver, lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
-                        input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" disabled=disabled-recipient-input)
+                        input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" )
                 form-group \send-amount, lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
@@ -581,12 +581,13 @@ send = ({ store, web3t })->
                     button { store, text: \cancel , on-click: cancel, icon: \close2, id: "send-cancel" }
 module.exports = send
 module.exports.init = ({ store, web3t }, cb)->
-    console.log "send [init]"
     { wallet } = send-funcs store, web3t
     return cb null if not wallet?
     store.current.send.foreign-network-fee = 0
-    is-contract = contracts.is-contract(store, send.to)
-    if is-contract then
+    is-swap-contract = contracts.is-swap-contract(store, send.to)
+    if is-swap-contract then
+        contract-address = if wallet.coin.token is \vlx2 then web3t.velas.HomeBridgeNativeToErc.address else web3t.velas.ForeignBridgeNativeToErc.address 
+        store.current.send.to = contract-address
         network-type = store.current.network
         networks = wallet.coin["#{network-type}s"]
         store.current.send.networks = networks
