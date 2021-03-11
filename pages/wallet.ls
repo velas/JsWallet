@@ -22,6 +22,10 @@ require! {
     cursor: pointer
     $card-height: 60px
     height: $card-height
+    &.disabled-wallet-item
+        opacity: 0.4
+        filter: grayscale(1)
+        cursor: no-drop
     &.last
         height: 60px
     $mt: 20px
@@ -212,7 +216,7 @@ require! {
                     line-height: 30px
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
-    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, swap, swap-back, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
+    { button-style, uninstall, wallet, active, big, balance, balance-usd, pending, send, receive, swap, expand, usd-rate, last } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
@@ -265,11 +269,13 @@ module.exports = (store, web3t, wallets, wallet)-->
     receive-click = receive(wallet)
     send-click = send(wallet)
     swap-click = swap(wallet)
-    swap-back-click = swap-back(wallet)
     token = wallet.coin.token.to-upper-case!
     token-display = if token == \VLX2 then \VLX else token
     makeDisabled = store.current.refreshing
-    .wallet.pug(class="#{big}" key="#{wallet.coin.token}" style=border-style)
+    wallet-is-disabled  = isNaN(wallet.balance) or isNaN(wallet.balanceUsd)
+    is-loading = store.current.refreshing is yes
+    disabled-class = if not is-loading and wallet-is-disabled then "disabled-wallet-item" else ""
+    .wallet.pug.wallet-item(class="#{big} #{disabled-class}" key="#{wallet.coin.token}" style=border-style)
         .wallet-top.pug(on-click=expand)
             .top-left.pug(style=wallet-style)
                 .img.pug(class="#{placeholder-coin}")
