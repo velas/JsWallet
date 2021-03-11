@@ -65,10 +65,8 @@ jobs:
           ECR_REPOSITORY: ${{ needs.docker-build-push.outputs.repository }}
           IMAGE_TAG: ${{ needs.docker-build-push.outputs.image_tag }}
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          NAMESPACE: testnet
         run: |
           if [ `helm plugin list|grep diff|wc -l` -eq '0' ]; then helm plugin install https://github.com/databus23/helm-diff ; fi
-          if [ ${GITHUB_REF##*/} = 'master' ]; then NAMESPACE=default; fi
           mkdir -p ~/.kube && echo $KUBE_CONFIG_DATA|base64 --decode > ~/.kube/config
           cd deploy
-          helmfile -e default -l namespace=${NAMESPACE},name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --skip-deps
+          helmfile -e prod-eu-north-1 -l namespace=default,name=velas-wallet apply  --set image.tag=$IMAGE_TAG,image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --skip-deps
