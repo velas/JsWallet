@@ -156,7 +156,7 @@ require! {
                 width: inherit
 cb = console~log
 module.exports = (store, web3t, wallets, wallet)-->
-    { uninstall, wallet, balance, balance-usd, pending, send, receive, swap, swap-back, usd-rate } = wallet-funcs store, web3t, wallets, wallet
+    { uninstall, wallet, balance, balance-usd, pending, send, receive, swap, usd-rate } = wallet-funcs store, web3t, wallets, wallet
     lang = get-lang store
     style = get-primary-info store
     label-uninstall =
@@ -173,8 +173,7 @@ module.exports = (store, web3t, wallets, wallet)-->
     name = wallet.coin.name ? wallet.coin.token
     receive-click = receive(wallet)
     send-click = send(wallet)
-    swap-click = swap(wallet)
-    swap-back-click = swap-back(wallet)
+    swap-click = swap(store, wallet)
     token = wallet.coin.token.to-upper-case!
     style = get-primary-info store
     color1 =
@@ -236,17 +235,17 @@ module.exports = (store, web3t, wallets, wallet)-->
             if token is \VLX_ERC20 then
                 .buttons.pug
                     .with-swap.pug
-                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
-                    .with-swap.pug
                         button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
                         button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
+                    .with-swap.pug
+                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
             else if token is \VLX2 then
                 .buttons.pug
                     .with-swap.pug
-                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }
-                    .with-swap.pug
                         button { store, on-click=send-click, text: \send , icon: \send , type: \secondary, id: "wallets-send", makeDisabled=no }
                         button { store, on-click=receive-click, text: \receive , icon: \get  , type : \primary, id: "wallets-receive", makeDisabled=no }
+                    .with-swap.pug
+                        button { store, on-click=swap-click, text: \swap , icon: \swap  , id: "wallet-swap", makeDisabled=no, classes="wallet-swap" }                           
             else
                 .buttons.pug
                     .with-swap.pug
