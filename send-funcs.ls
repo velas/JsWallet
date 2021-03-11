@@ -40,7 +40,7 @@ module.exports = (store, web3t)->
     send-tx = ({ to, wallet, network, amount-send, amount-send-fee, data, coin, tx-type, gas, gas-price, swap }, cb)->
         { token } = send.coin
         current-network = store.current.network
-        is-erc20 = (['vlx_erc20', 'eth', 'etc', 'sprkl'].index-of(token)) >= 0   
+        is-erc20 = (['vlx_erc20', 'eth', 'etc', 'sprkl', 'vlx2'].index-of(token)) >= 0   
         chain-id = if current-network is \testnet and is-erc20 then 3 else 1   
         tx-obj =
             account: { wallet.address, wallet.private-key }
@@ -111,7 +111,6 @@ module.exports = (store, web3t)->
         new BN(it)
     swap-back = ->
         cb = console.log  
-        console.log "[swap-back 1]"    
         return cb null if not store.current.send.amountSend?
         return if wallet.balance is \...
         return if send.sending is yes
