@@ -16,6 +16,6 @@ addresses =
         Upgrade             : "0x4000000000000000000000000000000000000001"
         ResolverAuRa        : "0x9285bea804a386C650afAA63dc6e39e97C9f3f26"
         Development         : "0x4c4955d1a507f59DeC1755C30463825d4BEfE6d1"
-addresses.mainnet = swapping-addresses.mainnet
-addresses.testnet = swapping-addresses.testnet
+addresses.mainnet <<<< swapping-addresses.mainnet
+addresses.testnet <<<< swapping-addresses.testnet
 module.exports = addresses
