@@ -466,10 +466,11 @@ send = ({ store, web3t })->
         return "" if not address? or "#{address}".trim! is ""
         address = "#{address}".trim!  
         if receiver-is-swap-contract
-            recipient = to-eth-address(wallet.address)
-            #if ["0x164fC3c7237fC6ADf78411B7B87D54154370AA14","0xD6933C1aE9E20A536D793E25Ea1C3ba38ce02c2D","0x3e0Aa75a75AdAfcf3cb800C812b66B4aaFe03B52"].index-of(address) isnt -1
-                #recipient = "TokenBridge: " + recipient
-            return recipient 
+            if token is \vlx2
+                return to-eth-address(wallet.address)
+            if token is \vlx_erc20
+                return wallet.vlxAddress         
+            return address 
         address
     disabled-recipient-input = contracts.is-swap-contract(store, send.to) 
     recipient = get-recipient(send.to)
@@ -520,7 +521,7 @@ send = ({ store, web3t })->
                 form-group \receiver, lang.to, icon-style, ->
                     .pug
                         identicon { store, address: send.to }
-                        input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" )
+                        input.pug(type='text' style=input-style on-change=recipient-change value="#{recipient}" placeholder="#{store.current.send-to-mask}" id="send-recipient" disabled=disabled-recipient-input )
                 form-group \send-amount, lang.amount, icon-style, ->
                     .pug
                         .pug.amount-field
