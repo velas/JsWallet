@@ -16,6 +16,7 @@ require! {
     \../../round-human.ls
     \./request-stake.ls
     \./request-unstake.ls
+    \./txs-history.ls
     \./pools-list.ls
     \../../components/checkbox.ls
     \../../icons.ls
@@ -340,6 +341,7 @@ lockups-content = (store, web3t)->
                                     if store.lockups.chosen-lockup-action is \choose then 
                                         .pug
                                             button {store, classes: "width-auto", text: "Select default pool", no-icon:yes, on-click: choose-pool-from-list, style: {width: \auto}}
+                #txs-history { store, web3t }                  
                 .pug.section
                     .title.pug
                         h3.pug #{lang.withdraw}
