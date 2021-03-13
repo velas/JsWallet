@@ -90,6 +90,7 @@ module.exports = ({ store, value, on-change, placeholder, id, show-details, toke
         "#{parse-int first}.#{second}"
     get-number = (value)->
         return \0 if value is ""
+        value = value.replace(/,/gi, '.')
         value = value.match(/^[0-9]+([.]([0-9]+)?)?$/)?0
         value2 =
             | value?0 is \0 and value?1? and value?1 isnt \. => value.substr(1, value.length)
