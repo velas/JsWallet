@@ -38,7 +38,7 @@ module.exports = (store, web3t, wallets, wallet)->
         return alert "Not yet loaded" if not web3t[wallet.coin.token]?
         { send-transaction } = web3t[wallet.coin.token]
         contract-address = if wallet.coin.token is \vlx2 then web3t.velas.HomeBridgeNativeToErc.address else web3t.velas.ForeignBridgeNativeToErc.address 
-        config = { to: contract-address, value: 0, swap: yes}
+        config = { to: contract-address, value: 0, swap: yes, gas: 4600000, gas-price: 1000000}
         err <- send-transaction config  
     usd-rate = wallet?usd-rate ? 0
     uninstall = (e)->
