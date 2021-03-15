@@ -894,7 +894,7 @@ staking-content = (store, web3t)->
                             button { store, on-click: become-validator , type: \secondary , icon : \apply , text: \btnApply }
                 claim-stake store, web3t
                 exit-stake store, web3t
-                move-stake store, web3t
+                #move-stake store, web3t
 staking = ({ store, web3t })->
     lang = get-lang store
     { go-back } = history-funcs store, web3t
